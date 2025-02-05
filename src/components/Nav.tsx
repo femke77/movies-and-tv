@@ -11,7 +11,7 @@ import NavDiscover from './NavComponents/NavDiscover';
 
 export default function Navigation() {
   return (
-    <Disclosure as='nav' className='bg-gray-900 h-16 '>
+    <Disclosure as='nav' className='bg-gray-900 h-16 relative z-50'>
       {({ open }) => (
         <>
           <div className='mx-auto px-4 sm:px-4 lg:px-4'>
