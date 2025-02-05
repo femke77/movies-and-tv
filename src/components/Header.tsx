@@ -6,7 +6,7 @@ interface HeaderProps {
 
 const Header = ({ children }: HeaderProps) => {
   return (
-    <header className='flex flex-1 justify-between items-center mx-4'>
+    <header className=' bg-gray-900 flex flex-1 justify-between items-center px-4 mt-2'>
       <h1>
         <Link to='/'>Movies Unlimited</Link>
       </h1>
