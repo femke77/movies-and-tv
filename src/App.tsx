@@ -4,11 +4,11 @@ import Nav from './components/Nav';
 
 function App() {
   return (
-    <div className='bg-black text-white min-h-screen'>
+    <div className='bg-black text-white h-full'>
       <Header>
         <Nav />
       </Header>
-      <main>
+      <main className='h-full'>
         <Outlet />
       </main>
     </div>

@@ -1,5 +1,8 @@
+import SwiperElement from "../components/Swiper";
+
 const Home = () => {
-  return <div></div>;
+  return <SwiperElement />
+  
 };
 
 export default Home;
