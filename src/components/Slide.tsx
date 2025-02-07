@@ -10,24 +10,31 @@ interface SlideProps {
 
 const Slide = ({ slide }: { slide: SlideProps }) => {
   return (
-    <div className="swiper-slide bg-black h-auto">
-      <div className="relative h-full w-full flex flex-col justify-end"> {/* Flex container for the full height */}
-        <img
-          className="w-full h-full object-contain"
-          src={`https://image.tmdb.org/t/p/original${slide.backdrop_path}`}
-          alt={slide.title}
-        />
+    <div className="swiper-slide bg-black h-96 flex items-center">
+      <div
+        className="relative w-full h-full bg-cover bg-top"
+        style={{
+          backgroundImage: `url('https://image.tmdb.org/t/p/original${slide.backdrop_path}')`,
+        }}
+      >
         <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full p-4 flex flex-col justify-end items-center mb-12"> {/* Bottom-aligned text */}
-          <h2 className="text-3xl font-bold text-white">{slide.title}</h2>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black via-transparent to-transparent" />
+
+        <div className="absolute mr-6 sm:mr-0 sm:w-1/2 ml-12 h-full flex flex-col justify-center  p-8">
+          <h2 className="text-4xl font-bold text-white mb-6">{slide.title}</h2>
           <p className="text-white">{slide.overview}</p>
+        </div>
+
+        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-8 md:mr-24 lg:mr-48 hidden sm:block">
+          <img
+            className="w-64 h-auto rounded-lg shadow-lg"
+            src={`https://image.tmdb.org/t/p/w185${slide.poster_path}`}
+            alt={slide.title}
+          />
         </div>
       </div>
     </div>
   );
 };
-
-
-
 
 export default Slide;

@@ -50,7 +50,7 @@ header {
 
 }
 
-.swiper-slide img {
+.swiper-slide img.bd {
   display: block;
   width: 100%;
   height: 100vh;
