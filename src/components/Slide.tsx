@@ -16,19 +16,21 @@ const Slide = ({ slide }: { slide: SlideProps }) => {
   return (
     <div className="swiper-slide bg-black h-96 flex items-center">
       <div
-        className="relative w-full h-full bg-cover bg-top"
+        className="relative w-full h-full bg-cover bg-center md:bg-top"
         style={{
           backgroundImage: `url('https://image.tmdb.org/t/p/original${slide.backdrop_path}')`,
         }}
       >
         <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent" />
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 sm:via-black/50 to-transparent" />
+
+
 
         <div className="absolute mr-6 sm:mr-0 sm:w-1/2 ml-12 h-full flex flex-col justify-center  p-8">
           <h2 className="text-4xl font-bold text-white mb-6">{slide.title}</h2>
           <p className="text-white">{slide.overview}</p>
 
-          <div className="flex items-center justify-around mt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-around mt-4">
             <UserRating rating={slide.vote_average} />
             <WatchButton />
           </div>
