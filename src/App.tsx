@@ -11,7 +11,7 @@ function App() {
       <Header>
         <Nav />
       </Header>
-      <main className=''>
+      <main>
         <Outlet />
       </main>
       <Footer />

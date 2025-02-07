@@ -41,7 +41,7 @@ export default function SwiperElement({ movies}: SwiperElementProps) {
       spaceBetween={30}
       centeredSlides={true}
       autoplay={{
-        delay: 8400,
+        delay: 10000,
         disableOnInteraction: false,
       }}
       pagination={{
