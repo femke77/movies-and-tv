@@ -57,7 +57,7 @@ header {
   background-repeat: no-repeat;
   height: 90vh;
 
-  background-size: contain;
+  background-size: cover;
 
 }
 
