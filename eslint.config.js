@@ -35,7 +35,7 @@ export default tseslint.config(
           singleQuote: true,
           semi: true,
           tabWidth: 2,
-          jsxSingleQuote: true,
+          jsxSingleQuote: true,       
         },
       ],
     },

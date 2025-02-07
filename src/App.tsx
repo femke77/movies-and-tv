@@ -7,14 +7,14 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 function App() {
   return (
     <div className='bg-black text-white h-full'>
-     <ReactQueryDevtools />
+      <ReactQueryDevtools />
       <Header>
         <Nav />
       </Header>
       <main className=''>
         <Outlet />
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
