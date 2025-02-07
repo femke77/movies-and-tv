@@ -1,11 +1,28 @@
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import Slide from './Slide';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-export default function SwiperElement() {
+interface SwiperElementProps {
+  movies: {
+    id: number;
+    title: string;
+    poster_path: string;
+    vote_average: number;
+    backdrop_path: string;
+    overview: string;
+  }[];
+
+}
+ 
+
+export default function SwiperElement({ movies}: SwiperElementProps) {
+  
+ 
+
   const progressCircle = useRef<SVGSVGElement>(null);
   const progressContent = useRef<HTMLSpanElement>(null);
 
@@ -34,15 +51,12 @@ export default function SwiperElement() {
       modules={[Autoplay, Pagination, Navigation]}
       onAutoplayTimeLeft={onAutoplayTimeLeft}
     >
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 5</SwiperSlide>
-      <SwiperSlide>Slide 6</SwiperSlide>
-      <SwiperSlide>Slide 7</SwiperSlide>
-      <SwiperSlide>Slide 8</SwiperSlide>
-      <SwiperSlide>Slide 9</SwiperSlide>
+      {movies && movies.map((movie) => (
+        <SwiperSlide key={movie.id}>
+          <Slide slide={movie} />
+        </SwiperSlide>
+      ))}
+
 
       <div className='autoplay-progress' slot='container-end'>
         <svg viewBox='0 0 48 48' ref={progressCircle}>

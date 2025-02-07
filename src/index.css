@@ -44,27 +44,16 @@ header {
 
 .swiper-slide {
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   background: transparent;
   color: black;
-  position: relative;
-  z-index: 0;
-  /* Center slide text vertically */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url('https://theredledger.net/wp-content/uploads/2024/12/share.jpg');
-  background-repeat: no-repeat;
-  height: 90vh;
-
-  background-size: cover;
 
 }
 
 .swiper-slide img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   object-fit: cover;
 }
 
