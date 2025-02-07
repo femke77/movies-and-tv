@@ -1,3 +1,7 @@
+
+import UserRating from "./UserRating";
+import WatchButton from "./WatchButton";
+
 interface SlideProps {
   id: number;
   title: string;
@@ -23,6 +27,11 @@ const Slide = ({ slide }: { slide: SlideProps }) => {
         <div className="absolute mr-6 sm:mr-0 sm:w-1/2 ml-12 h-full flex flex-col justify-center  p-8">
           <h2 className="text-4xl font-bold text-white mb-6">{slide.title}</h2>
           <p className="text-white">{slide.overview}</p>
+
+          <div className="flex items-center justify-around mt-4">
+            <UserRating rating={slide.vote_average} />
+            <WatchButton />
+          </div>
         </div>
 
         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-8 md:mr-24 lg:mr-48 hidden sm:block">
