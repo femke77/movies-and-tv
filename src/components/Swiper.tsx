@@ -5,21 +5,9 @@ import Slide from './Slide';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import type { IMovie } from '../interfaces/IMovie';
 
-interface SwiperElementProps {
-  movies: {
-    id: number;
-    title: string;
-    poster_path: string;
-    vote_average: number;
-    backdrop_path: string;
-    overview: string;
-  }[];
-
-}
- 
-
-export default function SwiperElement({ movies}: SwiperElementProps) {
+export default function SwiperElement({ movies}: {movies: IMovie[]}) {
   
  
 

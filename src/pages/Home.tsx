@@ -4,7 +4,10 @@ import { useNowPlayingMovies } from '../hooks/useNowPlayingMovies';
 const Home = () => {
 
   const { data, isLoading, isError } = useNowPlayingMovies();
-  const movies = data?.results;
+
+  const movies = data?? [];
+console.log(movies);
+
 
     if (isLoading) {
       return <div>Loading...</div>;

@@ -1,23 +1,29 @@
 import { TMDBClient } from "../utils/axiosConfig";
 import { useQuery } from "@tanstack/react-query";
+import type { IMovie } from "../interfaces/IMovie";
 
-const fetchNowPlayingMovies = async () => {
- 
-    const response = await TMDBClient.get("/movie/now_playing");
-    return response.data;
+const fetchNowPlayingMovies = async (): Promise<IMovie[]> => {
+  const response = await TMDBClient.get("/movie/now_playing");
+  const movies = response.data.results;
   
-}
-/**
- * Custom hook to fetch and return the list of now playing movies from TMDB.
- * Utilizes react-query's useQuery to manage the fetching state and caching.
- */
+  // Fetch logos for all movies
+  const moviesWithLogos = await Promise.all(
+    movies.map(async (movie: IMovie) => {
+      const { data: images } = await TMDBClient.get(`/movie/${movie.id}/images`);
+      const logo = images?.logos?.find((logo: any) => logo.iso_639_1 === "en")?.file_path || null;
+      return { ...movie, title_logo: logo };
+    })
+  );
+  
+  return moviesWithLogos;
+};
 
 export const useNowPlayingMovies = () => {
-    return useQuery({
-      queryKey: ["now_playing_movies"],
-      queryFn: fetchNowPlayingMovies,
-      staleTime: 1000 * 60 * 60, // 60 minutes before refetch
-      gcTime: 1000 * 60 * 70, // 70 minutes before garbage collection
-      refetchOnWindowFocus: false, // Prevent unnecessary refetching
-    });
-  };
+  return useQuery<IMovie[], Error>({
+    queryKey: ["now_playing_movies"],
+    queryFn: fetchNowPlayingMovies,
+    staleTime: 1000 * 60 * 60, // 60 minutes
+    gcTime: 1000 * 60 * 70, // 70 minutes
+    refetchOnWindowFocus: false,
+  });
+};
