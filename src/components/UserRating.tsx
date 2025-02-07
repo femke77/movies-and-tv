@@ -41,7 +41,7 @@ const UserRating = ({ rating }: UserRatingProps) => {
             fontSize="10"
             fontWeight="bold"
           >
-            {Math.round(rating).toFixed(1)}
+            {rating.toFixed(1)}
           </text>
         </svg>
       </div>
