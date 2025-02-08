@@ -31,7 +31,7 @@ const Slide = ({ slide }: { slide: IMovie }) => {
           <div className="flex flex-col items-center">
             {slide.title_logo ? (
               <img
-                className="mb-6"
+                className="mb-6 w-64 h-auto"
                 src={`https://image.tmdb.org/t/p/w185/${slide.title_logo}`}
               />
             ) : (
