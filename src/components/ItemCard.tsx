@@ -1,16 +1,17 @@
 import { IMovie } from "../interfaces/IMovie";
-
+import dayjs from 'dayjs';
 const ItemCard = ({ item }: { item: IMovie }) => {
+   const formattedDate = dayjs(item.release_date).format('MMM D, YYYY');
   return (
-    <div className="flex flex-col items-center justify-center bg-cover bg-center w-48 h-72 bg-white rounded-lg shadow-lg"
-    style={{
-      backgroundImage: `url('https://image.tmdb.org/t/p/original${item.poster_path}')`,
-    }}
-    >
-     
-      <div className="flex flex-col items-center justify-center w-full h-1/4 p-4">
-        <h1 className="text-lg font-bold">{item.title}</h1>
-        {/* <p className="text-sm text-center">{item.overview}</p> */}
+    <div className="flex flex-col items-center justify-center w-42 h-auto bg-white rounded-lg shadow-lg">
+      <img
+        className="w-42 rounded-t-lg"
+        src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+        alt={item.title}
+      />
+      <div className="flex flex-col items-start justify-start w-full h-18 pt-4 bg-black">
+        <h2 className="text-sm/6 font-bold">{item.title}</h2>
+  <p className="text-xs/6 font-light">{formattedDate}</p>
       </div>
     </div>
   );
