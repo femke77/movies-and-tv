@@ -64,8 +64,8 @@ export const useNowPlayingMovies = () => {
       const movies = response.data.results;
       return fetchFirstTwoLogos(movies);
     },
-    staleTime: 1000 * 60 * 60,
-    gcTime: 1000 * 60 * 70,
+    staleTime: 1000 * 60 * 360,
+    gcTime: 1000 * 60 * 370,
     refetchOnWindowFocus: false,
   });
 };
@@ -88,7 +88,7 @@ export const useNowPlayingMovies = () => {
  * - Caching logo data using React Query
  * - Prefetching the next movie's logo when current movie is visible
  * - Only English language logos are returned
- * - Implements stale time of 1 hour and garbage collection time of 70 minutes
+ * - Implements stale time of 6 hour and garbage collection time of 370 minutes
  * 
  * @example
  * ```typescript
@@ -115,8 +115,8 @@ export const useMovieLogo = (
       );
     },
     enabled: isVisible,
-    staleTime: 1000 * 60 * 60,
-    gcTime: 1000 * 60 * 70,
+    staleTime: 1000 * 60 * 360,
+    gcTime: 1000 * 60 * 370,
     refetchOnWindowFocus: false,
   });
 

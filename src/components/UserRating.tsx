@@ -1,13 +1,19 @@
 interface UserRatingProps {
   rating: number;
+  width?: number;
+  height?: number;
+  color?: string;
+  fontSize?: number;
+
 }
 
-const UserRating = ({ rating }: UserRatingProps) => {
+
+const UserRating = ({ rating, width=16, color="white", fontSize=10 }: UserRatingProps) => {
   return (
     <div className='flex items-center mt-4'>
       <svg
         xmlns='http://www.w3.org/2000/svg'
-        className='w-16 h-16 '
+        className={`w-${width} h-${width}`}
         viewBox='0 0 36 36'
       >
         <circle
@@ -23,7 +29,7 @@ const UserRating = ({ rating }: UserRatingProps) => {
           cx='18'
           cy='18'
           r='16'
-          stroke='white'
+          stroke={color}
           strokeWidth='3'
           fill='none'
           strokeDasharray='100'
@@ -36,7 +42,7 @@ const UserRating = ({ rating }: UserRatingProps) => {
           textAnchor='middle'
           alignmentBaseline='middle'
           fill='white'
-          fontSize='10'
+          fontSize={fontSize}
           fontWeight='bold'
         >
           {rating.toFixed(1)}

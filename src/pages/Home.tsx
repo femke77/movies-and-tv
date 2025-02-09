@@ -1,8 +1,8 @@
 import ItemCard from '../components/ItemCard';
 import SwiperElement from '../components/Swiper';
 
+// TEMP:
 const mockMovie = {
-  
     "adult": false,
     "backdrop_path": "/xZm5YUNY3PlYD1Q4k7X8zd2V4AK.jpg",
     "genre_ids": [
@@ -20,13 +20,14 @@ const mockMovie = {
     "video": false,
     "vote_average": 6.642,
     "vote_count": 795
-  
 }
+
 const Home = () => {
   return (
     <>
       <SwiperElement />
-      <ItemCard item={mockMovie}/>
+        {/* TEMP: */}
+      <ItemCard item={mockMovie}/>  
       </>);
 };
 

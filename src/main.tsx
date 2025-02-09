@@ -5,6 +5,7 @@ import App from './App.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import MovieDetail from './pages/MovieDetail.tsx';
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: 'movie/:movie_id',
+        element: <MovieDetail />,
       },
       {
         path: 'explore',
@@ -31,6 +36,15 @@ const router = createBrowserRouter([
           {
             path: 'popular',
             element: <h1>Popular</h1>,
+          },
+        ],
+      },
+      {
+        path: 'watch',
+        children: [
+          {
+            path: 'movie/:movie_id',
+            element: <h1>Watch Movie</h1>,
           },
         ],
       },
