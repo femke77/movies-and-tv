@@ -7,12 +7,16 @@
   
   A place to track and watch upcoming and favorite movie & tv shows.
 
-  This appication is in-progress.
+  This appication is in-progress. This is the client side. 
 
-  **Problem:** On page load, for the main page slide show, it is necessary to make 21+ api calls due to the information required and the way the TMDB api is set up. This brings me to my first interesting problem with this application. I don't want any performance issues due to this amount of calls.  
+  ### Interesting Problems Solved During Building
 
-  **Solution:** 
-  
+  **Problem:** On page load, for the main page slide show, it is necessary to make 21 api calls due to the information required and the way the TMDB api is set up. This brings me to my first interesting problem with this application. I don't want any performance issues due to this amount of calls.  
+
+  **Solution:** After weighing pros & cons of various approaches, and keeping React Query's power at the forefront of my thinking, I am making only 3 api calls on page load - the 20 movies, and the title logos for only two movies (the title logos require a separate hit by movie id to an images endpoint, this is where 20 extra fetches come into play). Then, as the slideshow goes on, or as the user hits the next button, I am prefetching the next logo that will be needed while filling up the React Query cache and then relying on the cache from that point forward. 
+  Initial load  850-1000ms  
+  New load time = 400-560ms  Roughly 50% improvement. 
+
   ## Table of Contents 📖
   
   [Installation](#installation)
@@ -41,7 +45,11 @@
   
   ## Usage 
   
-  Clone the repository, run the install command and then 'npm start'. Then navigate to the localhost port.
+  Clone the repository, run the install command and then 'npm run dev'. Then navigate to the localhost port, 3003.
+
+  You can also build with 'npm run build' and then run in production mode with 'npm run preview'
+
+  You will need a TMDB api key in an env.
 
   ### Deployed Link
   https://movies-unlimited.netlify.app/  
