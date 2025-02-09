@@ -40,7 +40,7 @@ const Slide = ({
       : slide.overview;
 
   return (
-    <div className='swiper-slide bg-black h-full flex items-center'>
+    <div className='swiper-slide bg-black h-full flex items-center '>
       {/* background image */}
       <div
         className='relative w-full h-full bg-cover bg-center md:bg-top'
@@ -53,15 +53,15 @@ const Slide = ({
         <div className='absolute inset-0 bg-gradient-to-r from-black via-black/80 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
 
         {/* card content */}
-        <div className='absolute sm:w-1/2 h-full flex flex-col justify-center p-16 sm:p-12 md:p-12 lg:p-26 '>
+        <div className='absolute sm:w-1/2 h-full flex flex-col justify-center p-16 sm:p-12 md:p-12 lg:p-26 xl:ml-10'>
           {/* left, top- genre, release date, title logo */}
           <div className='flex flex-col items-start'>
             <div className='flex items-center mb-12 '>
-              {width > 350 ? (
+              {width > 390 ? (
                 <>
                   {movieGenres &&
                     movieGenres.slice(0, 2).map((genre) => (
-                      <span key={genre} className='text-white font-light ml-2'>
+                      <span key={genre} className='text-white  ml-4'>
                         {genre}
                       </span>
                     ))}
@@ -70,13 +70,13 @@ const Slide = ({
                 <>
                   {movieGenres &&
                     movieGenres.slice(0, 1).map((genre) => (
-                      <span key={genre} className='text-white font-light ml-2'>
+                      <span key={genre} className='text-white  ml-0'>
                         {genre}
                       </span>
                     ))}
                 </>
               )}
-              <p className='text-white font-light ml-4'>{formattedDate}</p>
+              <p className='text-white font-light ml-8'>{formattedDate}</p>
             </div>
           </div>
 
