@@ -25,8 +25,8 @@ const UserRating = ({
           r='16'
           stroke='white'
           strokeWidth='4'
-          fill='none'
-          className='opacity-20'
+          fill='black'
+          className='opacity-40'
         />
         <circle
           cx='18'

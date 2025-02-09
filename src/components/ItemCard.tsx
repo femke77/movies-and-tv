@@ -7,8 +7,8 @@ import genreData from '../utils/data/genres.json';
 const ItemCard = ({ item }: { item: IMovie }) => {
   const formattedDate = dayjs(item.release_date).format('MMM D, YYYY');
   const getStrokeColor = (rating: number) => {
-    if (rating >= 7.2 && rating <= 10) return 'green';
-    if (rating >= 6 && rating < 7.2) return 'orange';
+    if (rating >= 7.0 && rating <= 10) return 'green';
+    if (rating >= 6 && rating < 7.0) return 'orange';
     return 'red';
   };
   const strokeColor = getStrokeColor(item.vote_average);
@@ -19,10 +19,10 @@ const ItemCard = ({ item }: { item: IMovie }) => {
   });
 
   return (
-    <div className='relative flex flex-col items-center justify-center w-42 h-auto bg-white rounded-lg shadow-lg'>
+    <div className='relative flex flex-col items-center justify-center w-48 h-auto bg-white rounded-lg shadow-lg'>
       <Link to={`/movie/${item.id}`}>
         <img
-          className='w-42 rounded-t-lg'
+          className='w-full rounded-t-lg'
           src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
           alt={item.title}
         />
@@ -36,8 +36,8 @@ const ItemCard = ({ item }: { item: IMovie }) => {
               />
               <p className='ml-12'>{movieGenres[0]}</p>
             </div>
-            <h2 className='text-sm/6 font-bold'>{item.title}</h2>
-            <p className='text-xs font-light'>{formattedDate}</p>
+            <h2 className='text-sm/6 font-bold -ml-2 mt-1'>{item.title}</h2>
+            <p className='text-xs font-light -ml-2 '>{formattedDate}</p>
           </div>
         </div>
       </Link>
