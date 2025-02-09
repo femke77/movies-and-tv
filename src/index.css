@@ -38,7 +38,7 @@ header {
   min-height: 100%;
   position: relative;
   z-index: 0;
-  height: 90vh;
+  height: 85vh;
 }
 
 
@@ -47,6 +47,7 @@ header {
   font-size: 16px;
   background: transparent;
   color: black;
+
 
 }
 
@@ -60,6 +61,7 @@ header {
 .swiper-button-next::after, .swiper-button-prev::after {
   color: white;
 }
+
 .autoplay-progress {
   position: absolute;
   right: 16px;
@@ -92,4 +94,13 @@ header {
 
 .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet{
   background-color: white;
+}
+
+
+@media screen and (orientation:landscape) { 
+
+  .swiper {
+    height: 120vh;
+  }
+
 }

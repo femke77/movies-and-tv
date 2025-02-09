@@ -76,7 +76,6 @@ const Slide = ({
                     ))}
                 </>
               )}
-
               <p className='text-white font-light ml-4'>{formattedDate}</p>
             </div>
           </div>
