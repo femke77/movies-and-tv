@@ -7,6 +7,22 @@ interface ILogo {
   iso_639_1: string;
   file_path: string;
 }
+
+/**
+ * Fetches and attaches English logo paths for the first two movies in the provided array.
+ * Makes parallel API requests to TMDB for movie images and extracts English logos.
+ * 
+ * @param movies - Array of movie objects to process
+ * @returns Promise resolving to the same array of movies with attached logo paths
+ *          in the 'title_logo' property. If no English logo is found, null is used.
+ * 
+ * @remarks
+ * - Only processes the first two movies in the array for performance
+ * - Specifically looks for English logos (iso_639_1 === 'en')
+ * - Handles API errors gracefully by setting logo to null
+ * - Preserves all original movie properties while adding the title_logo field
+ */
+
 const fetchFirstTwoLogos = async (movies: IMovie[]): Promise<IMovie[]> => {
   if (movies.length === 0) return [];
  
@@ -54,6 +70,32 @@ export const useNowPlayingMovies = () => {
   });
 };
 
+
+
+/**
+ * Custom hook to fetch and manage movie logo images with prefetching capabilities.
+ * 
+ * @param movieId - The ID of the movie to fetch the logo for
+ * @param isVisible - Boolean flag indicating if the movie component is currently visible
+ * @param currentIndex - Current index in the movie list
+ * @param movieList - Array of movie objects
+ * 
+ * @returns The URL path of the English language logo for the specified movie, or null if not found
+ * 
+ * @remarks
+ * This hook handles:
+ * - Fetching movie logo images from TMDB API
+ * - Caching logo data using React Query
+ * - Prefetching the next movie's logo when current movie is visible
+ * - Only English language logos are returned
+ * - Implements stale time of 1 hour and garbage collection time of 70 minutes
+ * 
+ * @example
+ * ```typescript
+ * const logo = useMovieLogo(movieId, isVisible, currentIndex, movieList);
+ * ```
+ */
+
 export const useMovieLogo = (
   movieId: number,
   isVisible: boolean,
@@ -84,7 +126,7 @@ export const useMovieLogo = (
       const nextIndex = currentIndex + 1;
       if (nextIndex < movieList.length) {
         const nextMovie = movieList[nextIndex];
-      
+ 
         const cachedData = queryClient.getQueryData([
           'movie-logo',
           nextMovie.id,
