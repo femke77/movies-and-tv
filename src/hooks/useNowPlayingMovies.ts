@@ -1,34 +1,109 @@
-import { TMDBClient } from "../utils/axiosConfig";
-import { useQuery } from "@tanstack/react-query";
-import type { IMovie } from "../interfaces/IMovie";
+import { TMDBClient } from '../utils/axiosConfig';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import type { IMovie } from '../interfaces/IMovie';
 
 interface ILogo {
-    iso_639_1: string;
-    file_path: string;
+  iso_639_1: string;
+  file_path: string;
 }
+const fetchFirstTwoLogos = async (movies: IMovie[]): Promise<IMovie[]> => {
+  if (movies.length === 0) return [];
+ 
+  const [firstMovie, secondMovie] = movies;
 
-const fetchNowPlayingMovies = async (): Promise<IMovie[]> => {
-  const response = await TMDBClient.get("/movie/now_playing");
-  const movies = response.data.results;
-  
-  // Fetch logos for all movies
-  const moviesWithLogos = await Promise.all(
-    movies.map(async (movie: IMovie) => {
-      const { data: images } = await TMDBClient.get(`/movie/${movie.id}/images`);
-      const logo = images?.logos?.find((logo: ILogo) => logo.iso_639_1 === "en")?.file_path || null;
-      return { ...movie, title_logo: logo };
-    })
+  const logoPromises = [firstMovie, secondMovie].map(async (movie) => {
+    if (!movie) return null;
+    try {
+      const { data: images } = await TMDBClient.get(
+        `/movies/${movie.id}/images`,
+      );
+      return {
+        id: movie.id,
+        logo:
+          images?.logos?.find((logo: ILogo) => logo.iso_639_1 === 'en')
+            ?.file_path || null,
+      };
+    } catch {
+      return { id: movie.id, logo: null };
+    }
+  });
+
+  const logos = await Promise.all(logoPromises);
+  const logoMap = new Map(
+    logos.filter(Boolean).map((item) => [item!.id, item!.logo]),
   );
-  
-  return moviesWithLogos;
+
+  return movies.map((movie) => ({
+    ...movie,
+    title_logo: logoMap.get(movie.id) || null,
+  }));
 };
 
 export const useNowPlayingMovies = () => {
   return useQuery<IMovie[], Error>({
-    queryKey: ["now_playing_movies"],
-    queryFn: fetchNowPlayingMovies,
-    staleTime: 1000 * 60 * 60, // 60 minutes
-    gcTime: 1000 * 60 * 70, // 70 minutes
+    queryKey: ['now_playing_movies'],
+    queryFn: async () => {
+      const response = await TMDBClient.get('/movie/now_playing');
+      const movies = response.data.results;
+      return fetchFirstTwoLogos(movies);
+    },
+    staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 70,
     refetchOnWindowFocus: false,
   });
+};
+
+export const useMovieLogo = (
+  movieId: number,
+  isVisible: boolean,
+  currentIndex: number,
+  movieList: IMovie[],
+) => {
+
+  const queryClient = useQueryClient();
+
+  const { data: logo } = useQuery({
+    queryKey: ['movie-logo', movieId],
+    queryFn: async () => {
+      const { data: images } = await TMDBClient.get(`/movie/${movieId}/images`);
+      return (
+        images?.logos?.find((logo: ILogo) => logo.iso_639_1 === 'en')
+          ?.file_path || null
+      );
+    },
+    enabled: isVisible,
+    staleTime: Infinity,
+  });
+
+  // prefetching for the next logo
+  useEffect(() => {
+    if (isVisible && movieList.length > 0) {
+      const nextIndex = currentIndex + 1;
+      if (nextIndex < movieList.length) {
+        const nextMovie = movieList[nextIndex];
+        // Check if the data is already in the cache
+        const cachedData = queryClient.getQueryData([
+          'movie-logo',
+          nextMovie.id,
+        ]);
+        if (!cachedData) {
+          queryClient.prefetchQuery({
+            queryKey: ['movie-logo', nextMovie.id],
+            queryFn: async () => {
+              const { data: images } = await TMDBClient.get(
+                `/movie/${nextMovie.id}/images`,
+              );
+              return (
+                images?.logos?.find((logo: ILogo) => logo.iso_639_1 === 'en')
+                  ?.file_path || null
+              );
+            },
+          });
+        }
+      }
+    }
+  }, [isVisible, currentIndex, movieList, queryClient]);
+
+  return logo;
 };
