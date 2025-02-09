@@ -73,7 +73,9 @@ export const useMovieLogo = (
       );
     },
     enabled: isVisible,
-    staleTime: Infinity,
+    staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 70,
+    refetchOnWindowFocus: false,
   });
 
   // prefetching for the next logo
@@ -82,7 +84,7 @@ export const useMovieLogo = (
       const nextIndex = currentIndex + 1;
       if (nextIndex < movieList.length) {
         const nextMovie = movieList[nextIndex];
-        // Check if the data is already in the cache
+      
         const cachedData = queryClient.getQueryData([
           'movie-logo',
           nextMovie.id,

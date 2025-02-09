@@ -3,6 +3,8 @@ import UserRating from './UserRating';
 import WatchButton from './WatchButton';
 import type { IMovie } from '../interfaces/IMovie';
 import { useMovieLogo } from '../hooks/useNowPlayingMovies';
+import genresData from '../utils/data/genres.json'
+
 
 const Slide = ({
   slide,
@@ -16,17 +18,26 @@ const Slide = ({
   movieList: IMovie[];
 }) => {
   const formattedDate = dayjs(slide.release_date).format('MMM D, YYYY');
+  const {genres} = genresData;
 
+  
   const logoFromQuery = useMovieLogo(
     slide.id,
     isVisible,
     currentIndex,
     movieList,
   );
-  const displayLogo = logoFromQuery || slide.title_logo;
+  const displayLogo = logoFromQuery || null;
+
+  const movieGenres = slide.genre_ids.map((genreId) => {
+    const genre = genres.find((g) => g.id === genreId);
+    return genre?.name;
+  });
+
+  const movieOverview = slide.overview.length > 225 ? `${slide.overview.slice(0, 225)}...` : slide.overview;  
 
   return (
-    <div className='swiper-slide bg-black h-96 flex items-center'>
+    <div className='swiper-slide bg-black h-full flex items-center'>
       {/* background image */}
       <div
         className='relative w-full h-full bg-cover bg-center md:bg-top'
@@ -39,14 +50,21 @@ const Slide = ({
         <div className='absolute inset-0 bg-gradient-to-r from-black via-black/80 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
 
         {/* card content */}
-        <div className='absolute mr-6 sm:mr-0 sm:w-1/2 ml-12 h-full flex flex-col justify-center  p-8'>
-          {/* top left - genre, release date, title logo */}
+        <div className='absolute sm:w-1/2 h-full flex flex-col justify-center p-16 sm:p-12 md:p-12 lg:p-26 '>
+
+          {/* left, top- genre, release date, title logo */}
           <div className='flex flex-col items-start'>
-            <p className='text-white font-light mb-12'>{formattedDate}</p>
-            {/* TODO genre */}
+            
+            <div className='flex items-center mb-12 '>
+
+            {movieGenres && movieGenres.slice(0,2).map((genre) => (
+              <span key={genre} className='text-white font-light ml-2'>{genre}</span>
+            ))}
+            <p className='text-white font-light ml-4'>{formattedDate}</p>
+            </div>
           </div>
 
-          {/* mid left- title or title logo, overview */}
+          {/* left mid - title or title logo, overview */}
           <div className='flex flex-col items-center'>
             {displayLogo ? (
               <img
@@ -58,23 +76,24 @@ const Slide = ({
                 {slide.title}
               </h2>
             )}
-            <p className='text-white'>{slide.overview}</p>
+            <p className='text-white text-center'>{movieOverview}</p>
           </div>
 
-          {/* bottom left- rating and watch componentns */}
-          <div className='flex flex-col sm:flex-row items-center justify-around mt-4'>
-            <UserRating rating={slide.vote_average} />
-            <WatchButton />
+          {/* left, bottom rating and watch componentns */}
+          <div className='flex flex-col sm:flex-row items-center justify-around mt-4 '>
+          <div className='mb-2'><UserRating rating={slide.vote_average} /></div> 
+          <div className='mb-6'>  <WatchButton /> </div>
           </div>
         </div>
 
-        {/* right - poster image */}
-        <div className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-8 md:mr-24 lg:mr-48 hidden sm:block'>
+        {/* right, only - poster image */}
+        <div className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-24 lg:mr-48 hidden sm:block'>
+        {slide.poster_path && (
           <img
-            className='w-64 h-auto rounded-lg shadow-lg'
+            className='w-72 h-auto rounded-lg shadow-lg'
             src={`https://image.tmdb.org/t/p/w185${slide.poster_path}`}
             alt={slide.title}
-          />
+          />)}
         </div>
       </div>
     </div>
