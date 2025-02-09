@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 
 /**
  * A custom hook that tracks and returns the current window dimensions.
- * 
+ *
  * @returns An object containing the current window width and height
  * @property {number} width - The current width of the window in pixels
  * @property {number} height - The current height of the window in pixels
- * 
+ *
  * @example
  * ```tsx
  * const { width, height } = useWindowSize();

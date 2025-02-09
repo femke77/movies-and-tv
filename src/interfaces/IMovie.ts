@@ -6,6 +6,6 @@ export interface IMovie {
   backdrop_path: string;
   overview: string;
   release_date: string;
-  genre_ids: number[];  
+  genre_ids: number[];
   title_logo?: string;
 }

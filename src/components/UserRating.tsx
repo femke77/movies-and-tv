@@ -4,11 +4,14 @@ interface UserRatingProps {
   height?: number;
   color?: string;
   fontSize?: number;
-
 }
 
-
-const UserRating = ({ rating, width=16, color="white", fontSize=10 }: UserRatingProps) => {
+const UserRating = ({
+  rating,
+  width = 16,
+  color = 'white',
+  fontSize = 10,
+}: UserRatingProps) => {
   return (
     <div className='flex items-center mt-4'>
       <svg

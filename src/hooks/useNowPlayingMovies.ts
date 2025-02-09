@@ -11,11 +11,11 @@ interface ILogo {
 /**
  * Fetches and attaches English logo paths for the first two movies in the provided array.
  * Makes parallel API requests to TMDB for movie images and extracts English logos.
- * 
+ *
  * @param movies - Array of movie objects to process
  * @returns Promise resolving to the same array of movies with attached logo paths
  *          in the 'title_logo' property. If no English logo is found, null is used.
- * 
+ *
  * @remarks
  * - Only processes the first two movies in the array for performance
  * - Specifically looks for English logos (iso_639_1 === 'en')
@@ -25,7 +25,7 @@ interface ILogo {
 
 const fetchFirstTwoLogos = async (movies: IMovie[]): Promise<IMovie[]> => {
   if (movies.length === 0) return [];
- 
+
   const [firstMovie, secondMovie] = movies;
 
   const logoPromises = [firstMovie, secondMovie].map(async (movie) => {
@@ -70,18 +70,16 @@ export const useNowPlayingMovies = () => {
   });
 };
 
-
-
 /**
  * Custom hook to fetch and manage movie logo images with prefetching capabilities.
- * 
+ *
  * @param movieId - The ID of the movie to fetch the logo for
  * @param isVisible - Boolean flag indicating if the movie component is currently visible
  * @param currentIndex - Current index in the movie list
  * @param movieList - Array of movie objects
- * 
+ *
  * @returns The URL path of the English language logo for the specified movie, or null if not found
- * 
+ *
  * @remarks
  * This hook handles:
  * - Fetching movie logo images from TMDB API
@@ -89,7 +87,7 @@ export const useNowPlayingMovies = () => {
  * - Prefetching the next movie's logo when current movie is visible
  * - Only English language logos are returned
  * - Implements stale time of 6 hour and garbage collection time of 370 minutes
- * 
+ *
  * @example
  * ```typescript
  * const logo = useMovieLogo(movieId, isVisible, currentIndex, movieList);
@@ -102,7 +100,6 @@ export const useMovieLogo = (
   currentIndex: number,
   movieList: IMovie[],
 ) => {
-
   const queryClient = useQueryClient();
 
   const { data: logo } = useQuery({
@@ -126,7 +123,7 @@ export const useMovieLogo = (
       const nextIndex = currentIndex + 1;
       if (nextIndex < movieList.length) {
         const nextMovie = movieList[nextIndex];
- 
+
         const cachedData = queryClient.getQueryData([
           'movie-logo',
           nextMovie.id,
