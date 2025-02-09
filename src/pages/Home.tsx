@@ -1,6 +1,6 @@
 import ItemCard from '../components/ItemCard';
 import SwiperElement from '../components/Swiper';
-
+import TrendingMovies from '../components/TrendingMovies';
 // TEMP:
 const mockMovie = {
   adult: false,
@@ -20,11 +20,13 @@ const mockMovie = {
   vote_count: 795,
 };
 
+
 const Home = () => {
   return (
     <>
       <SwiperElement />
       {/* TEMP: */}
+      <TrendingMovies />
       <ItemCard item={mockMovie} />
     </>
   );
