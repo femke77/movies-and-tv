@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 export default function SwiperElement() {
-  const { data: movies = [], isLoading } = useNowPlayingMovies();
+  const { data: movies = []} = useNowPlayingMovies();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const progressCircle = useRef<SVGSVGElement>(null);
@@ -24,7 +24,7 @@ export default function SwiperElement() {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+
 
   return (
     <>

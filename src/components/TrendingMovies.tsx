@@ -24,6 +24,7 @@ const TrendingMovies = () => {
 
   return (
     <div className="relative w-full">
+           <h2 className="text-2xl font-bold mb-8">Trending 🔥</h2>
       {/* Left Arrow */}
       <button
         onClick={scrollLeft}
