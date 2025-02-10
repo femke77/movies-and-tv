@@ -23,7 +23,7 @@ const TrendingMovies = () => {
   };
 
   return (
-    <div className='relative w-full'>
+    <div className='pl-6 relative w-full '>
       <h2 className='text-2xl font-bold mb-8'>Trending 🔥</h2>
       {/* Left Arrow */}
       <button
@@ -41,7 +41,7 @@ const TrendingMovies = () => {
       >
         {movies.map((movie) => (
           <div key={movie.id} className='snap-start'>
-            <ItemCard item={movie} type="movie"/>
+            <ItemCard item={movie} type='movie' />
           </div>
         ))}
       </div>

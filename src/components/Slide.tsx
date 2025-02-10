@@ -111,7 +111,7 @@ const Slide = ({
         <div className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-24 lg:mr-48 hidden md:block'>
           {slide.poster_path && (
             <img
-              className='w-72 h-auto rounded-lg shadow-lg '
+              className='w-78 h-auto rounded-lg shadow-lg '
               src={`https://image.tmdb.org/t/p/w185${slide.poster_path}`}
               alt={slide.title}
             />
