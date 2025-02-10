@@ -4,7 +4,7 @@ import ItemCard from './ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IMovie } from '../interfaces/IMovie';
 
-const SlideContainer = ({movies, headerTxt}: {movies: IMovie[], headerTxt: string}) => {
+const SlideContainer = ({items, headerTxt, type}: {items: IMovie[], headerTxt: string, type:string}) => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -39,9 +39,9 @@ const SlideContainer = ({movies, headerTxt}: {movies: IMovie[], headerTxt: strin
         className='flex space-x-4 px-4 py-2 w-full overflow-x-auto scroll-smooth scrollbar-hide snap-x snap-mandatory'
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {movies.map((movie) => (
+        {items.map((movie) => (
           <div key={movie.id} className='snap-start'>
-            <ItemCard item={movie} type='movie' />
+            <ItemCard item={movie} type={type} />
           </div>
         ))}
       </div>

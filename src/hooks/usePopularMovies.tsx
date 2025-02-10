@@ -2,15 +2,15 @@ import { TMDBClient } from '../utils/axiosConfig';
 import { useQuery } from '@tanstack/react-query';
 import type { IMovie } from '../interfaces/IMovie';
 
-const fetchTrendingMovies = async () => {
-  const { data } = await TMDBClient.get('/trending/movie/day?language=en-US');
+const fetchPopularMovies = async () => {
+  const { data } = await TMDBClient.get('/movie/popular');
   return data.results;
 };
 
-export const useTrendingMovies = () => {
+export const usePopularMovies = () => {
     return useQuery<IMovie[], Error>({
-      queryKey: ['trending-movies'],
-      queryFn: fetchTrendingMovies,
+      queryKey: ['popular-movies'],
+      queryFn: fetchPopularMovies,
       staleTime: 1000 * 60 * 60 * 24, // 24 hours
       gcTime: 1000 * 60 * 60 * 25, // 25 hours
       refetchOnWindowFocus: false,
