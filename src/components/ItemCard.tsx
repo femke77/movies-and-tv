@@ -19,7 +19,7 @@ const ItemCard = ({ item }: { item: IMovie }) => {
   });
 
   return (
-    <div className="relative flex flex-col items-center justify-between w-48 h-[375px] bg-white rounded-xl shadow-lg overflow-hidden">
+    <div className="relative flex flex-col items-center justify-between w-48 h-[375px] bg-black rounded-xl shadow-lg ">
   <Link to={`/movie/${item.id}`}>
     <img
       className="w-full h-72 object-cover rounded-t-lg"
@@ -29,7 +29,7 @@ const ItemCard = ({ item }: { item: IMovie }) => {
     <div className="flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black">
       <div className="relative -top-13 left-3 w-full">
         <div className="flex items-end">
-          <UserRating rating={item.vote_average} color={strokeColor} width={12} />
+          <UserRating rating={item.vote_average} color={strokeColor} width="w-12" height='h-12' />
           <p className="ml-12">{movieGenres[0]}</p>
         </div>
         <h2 className="text-sm/6 font-bold -ml-2 mt-1">{item.title}</h2>

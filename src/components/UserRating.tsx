@@ -1,22 +1,19 @@
 interface UserRatingProps {
   rating: number;
-  width?: number;
-  height?: number;
+  width?: string;
+  height?: string;
   color?: string;
   fontSize?: number;
+
 }
 
-const UserRating = ({
-  rating,
-  width = 16,
-  color = 'white',
-  fontSize = 10,
-}: UserRatingProps) => {
+
+const UserRating = ({ rating, width='w-16', height='h-16', color="white", fontSize=10 }: UserRatingProps) => {
   return (
     <div className='flex items-center mt-4'>
       <svg
         xmlns='http://www.w3.org/2000/svg'
-        className={`w-${width} h-${width}`}
+        className={`${width} ${height}`}
         viewBox='0 0 36 36'
       >
         <circle
@@ -35,7 +32,7 @@ const UserRating = ({
           stroke={color}
           strokeWidth='3'
           fill='black'
-          fillOpacity='0.2'
+          fillOpacity="0.2"
           strokeDasharray='100'
           strokeDashoffset={100 - (rating / 10) * 100}
           className='transition-all duration-300 ease-out'
