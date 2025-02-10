@@ -1,4 +1,3 @@
-
 import SwiperElement from '../components/Swiper';
 import TrendingMovies from '../components/TrendingMovies';
 
@@ -20,14 +19,12 @@ import TrendingMovies from '../components/TrendingMovies';
 //   vote_count: 795,
 // };
 
-
 const Home = () => {
   return (
     <>
       <SwiperElement />
-  
+
       <TrendingMovies />
- 
     </>
   );
 };

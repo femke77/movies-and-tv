@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 export default function SwiperElement() {
-  const { data: movies = []} = useNowPlayingMovies();
+  const { data: movies = [] } = useNowPlayingMovies();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const progressCircle = useRef<SVGSVGElement>(null);
@@ -23,8 +23,6 @@ export default function SwiperElement() {
       progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
     }
   };
-
-
 
   return (
     <>
