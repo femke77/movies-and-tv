@@ -16,13 +16,13 @@ export const usePopularMovies = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setShouldFetch(true);
-          observer.disconnect(); 
+          observer.disconnect();
         }
       },
-      { threshold: 0.1 } 
+      { threshold: 0.1, rootMargin: '-50px 0px' },
     );
 
-    const target = document.getElementById('observed-section');
+    const target = document.getElementById('pop-section');
     if (target) {
       observer.observe(target);
     }
