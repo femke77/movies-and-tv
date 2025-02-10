@@ -3,7 +3,7 @@ import ItemCard from './ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IMovie } from '../interfaces/IMovie';
 
-const SlideContainer = forwardRef<HTMLDivElement, { items: IMovie[]; itemType: string; headerTxt: string }>(({ items, itemType, headerTxt }, ref) => {
+const SlideContainer = forwardRef<HTMLDivElement, { items: IMovie[]; itemType: string; headerTxt: string, id:string }>(({ items, itemType, headerTxt, id}, ref) => {
     const scrollRef = useRef<HTMLDivElement>(null);
 
     const scrollLeft = () => {
@@ -19,7 +19,7 @@ const SlideContainer = forwardRef<HTMLDivElement, { items: IMovie[]; itemType: s
     };
 
     return (
-        <div ref={ref} id="observed-section" className="pl-6 relative w-full">
+        <div ref={ref} id={id} className="pl-6 relative w-full">
             <h2 className="text-2xl font-bold mb-8">{headerTxt}</h2>
             {/* Left Arrow */}
             <button

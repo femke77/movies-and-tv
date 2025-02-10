@@ -8,7 +8,7 @@ const TopRatedMovies = () => {
   
   return (
     <div className='mt-24'>
-      <SlideContainer ref={ref} items={movies} itemType='movie' headerTxt='Top Rated 🔝' />
+      <SlideContainer id="top-section" ref={ref} items={movies} itemType='movie' headerTxt='Top Rated 🔝' />
     </div>
   );
 };

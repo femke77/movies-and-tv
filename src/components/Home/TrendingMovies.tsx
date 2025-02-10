@@ -8,7 +8,7 @@ const TrendingMovies = () => {
 
   const ref = useRef<HTMLDivElement | null>(null); 
 
-  return <SlideContainer ref={ref} items={movies} itemType="movie" headerTxt="Trending 🔥" />;
+  return <SlideContainer ref={ref} items={movies} itemType="movie" headerTxt="Trending 🔥" id="trending-section"/>;
 };
 
 export default TrendingMovies;
