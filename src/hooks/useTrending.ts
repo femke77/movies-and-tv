@@ -19,7 +19,7 @@ export const useTrendingMovies = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.1, rootMargin: '-50px 0px' },
     );
 
     const target = document.getElementById('trending-section');
