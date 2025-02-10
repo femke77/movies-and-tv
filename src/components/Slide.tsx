@@ -53,7 +53,7 @@ const Slide = ({
         <div className='absolute inset-0 bg-gradient-to-r from-black via-black/80 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
 
         {/* card content */}
-        <div className='absolute sm:w-1/2 h-full flex flex-col justify-center p-16 sm:p-12 md:p-12 lg:p-26 xl:ml-10'>
+        <div className='absolute md:w-1/2 h-full flex flex-col justify-center p-16 md:p-18 lg:p-26 xl:ml-10'>
           {/* left, top- genre, release date, title logo */}
           <div className='flex flex-col items-start'>
             <div className='flex items-center mb-12 '>
@@ -108,10 +108,10 @@ const Slide = ({
         </div>
 
         {/* right, only - poster image */}
-        <div className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-24 lg:mr-48 hidden sm:block'>
+        <div className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-24 lg:mr-48 hidden md:block'>
           {slide.poster_path && (
             <img
-              className='w-72 h-auto rounded-lg shadow-lg'
+              className='w-78 h-auto rounded-lg shadow-lg '
               src={`https://image.tmdb.org/t/p/w185${slide.poster_path}`}
               alt={slide.title}
             />

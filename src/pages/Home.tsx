@@ -24,7 +24,9 @@ const Home = () => {
     <>
       <SwiperElement />
 
-      <TrendingMovies />
+      <div className='mt-46'>
+        <TrendingMovies />
+      </div>
     </>
   );
 };
