@@ -2,7 +2,7 @@ import PopularMovies from '../components/Home/PopularMovies';
 import SwiperElement from '../components/Home/Swiper';
 import TopRatedMovies from '../components/Home/TopRatedMovies';
 import TrendingMovies from '../components/Home/TrendingMovies';
-import UpcomingMovies from '../components/UpcomingMovies';
+
 // const mockMovie = {
 //   adult: false,
 //   backdrop_path: '/xZm5YUNY3PlYD1Q4k7X8zd2V4AK.jpg',
@@ -26,11 +26,10 @@ const Home = () => {
     <>
       <SwiperElement />
 
-      <div className='mt-46'>
+      <div className='my-46'>
         <TrendingMovies />
         <PopularMovies />
         <TopRatedMovies />
-
       </div>
     </>
   );

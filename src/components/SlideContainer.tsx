@@ -4,11 +4,16 @@ import ItemCard from './ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IMovie } from '../interfaces/IMovie';
 
-const SlideContainer = ({items, headerTxt, type}: {items: IMovie[], headerTxt: string, type:string}) => {
-
+const SlideContainer = ({
+  items,
+  headerTxt,
+  type,
+}: {
+  items: IMovie[];
+  headerTxt: string;
+  type: string;
+}) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-
-
 
   const scrollLeft = () => {
     if (scrollRef.current) {
