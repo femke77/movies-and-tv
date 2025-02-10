@@ -16,10 +16,10 @@ export const useTrendingMovies = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setShouldFetch(true);
-          observer.disconnect(); 
+          observer.disconnect();
         }
       },
-      { threshold: 0.1 } 
+      { threshold: 0.1 },
     );
 
     const target = document.getElementById('trending-section');
@@ -42,6 +42,4 @@ export const useTrendingMovies = () => {
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
     placeholderData: (previousData) => previousData,
   });
-
-
 };

@@ -7,7 +7,13 @@ const PopularMovies = () => {
   const ref = useRef<HTMLDivElement | null>(null);
   return (
     <div className='mt-24'>
-      <SlideContainer id="pop-section" ref={ref} items={movies} itemType='movies' headerTxt='Popular 📈' />
+      <SlideContainer
+        id='pop-section'
+        ref={ref}
+        items={movies}
+        itemType='movies'
+        headerTxt='Popular 📈'
+      />
     </div>
   );
 };
