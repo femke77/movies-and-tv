@@ -19,7 +19,7 @@ const SlideContainer = forwardRef<HTMLDivElement, { items: IMovie[]; itemType: s
     };
 
     return (
-        <div ref={ref} id="trending-section" className="pl-6 relative w-full">
+        <div ref={ref} id="observed-section" className="pl-6 relative w-full">
             <h2 className="text-2xl font-bold mb-8">{headerTxt}</h2>
             {/* Left Arrow */}
             <button

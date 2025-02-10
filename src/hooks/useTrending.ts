@@ -22,7 +22,7 @@ export const useTrendingMovies = () => {
       { threshold: 0.1 } 
     );
 
-    const target = document.getElementById('trending-section');
+    const target = document.getElementById('observed-section');
     if (target) {
       observer.observe(target);
     }
