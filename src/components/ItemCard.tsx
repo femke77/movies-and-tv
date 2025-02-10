@@ -3,8 +3,10 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import UserRating from './UserRating';
 
-const ItemCard = ({ item, type="Movie" }: { item: IMovie, type: string }) => {
+const ItemCard = ({ item, type }: { item: IMovie, type: string }) => {
+
   const formattedDate = dayjs(item.release_date).format('MMM D, YYYY');
+
   const getStrokeColor = (rating: number) => {
     if (rating >= 7.0 && rating <= 10) return 'green';
     else if (rating >= 6 && rating < 7.0) return 'orange';
@@ -16,7 +18,7 @@ const ItemCard = ({ item, type="Movie" }: { item: IMovie, type: string }) => {
 
   return (
     <div className='relative flex flex-col items-center justify-between w-48 h-[375px] bg-black rounded-xl shadow-lg overflow-hidden'>
-      <Link to={`/movie/${item.id}`}>
+      <Link to={`/${type}/${item.id}`}>
         <img
           className='w-full h-72 object-cover rounded-t-lg'
           src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
@@ -34,7 +36,7 @@ const ItemCard = ({ item, type="Movie" }: { item: IMovie, type: string }) => {
               {/* <p className='ml-12'>{movieGenres[0]}</p> */}
             </div>
             <h2 className='whitespace-pre max-w-[192px]  overflow-hidden text-sm/6 font-bold -ml-2 mt-1'>{item.title}</h2>
-            <p className='text-xs font-light -ml-2 '>{formattedDate} &#x2022; {type}</p>
+            <p className='text-xs font-light -ml-2 '>{formattedDate} &#x2022; {type.substring(0,1).toUpperCase()+type.substring(1)}</p>
           </div>
         </div>
       </Link>
