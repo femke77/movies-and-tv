@@ -2,9 +2,8 @@ import { IMovie } from '../interfaces/IMovie';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import UserRating from './UserRating';
-import genreData from '../utils/data/genres.json';
 
-const ItemCard = ({ item }: { item: IMovie }) => {
+const ItemCard = ({ item, type="Movie" }: { item: IMovie, type: string }) => {
   const formattedDate = dayjs(item.release_date).format('MMM D, YYYY');
   const getStrokeColor = (rating: number) => {
     if (rating >= 7.0 && rating <= 10) return 'green';
@@ -13,11 +12,7 @@ const ItemCard = ({ item }: { item: IMovie }) => {
     return 'red';
   };
   const strokeColor = getStrokeColor(item.vote_average);
-  const { genres } = genreData;
-  const movieGenres = item.genre_ids.map((genreId) => {
-    const genre = genres.find((g) => g.id === genreId);
-    return genre?.name;
-  });
+
 
   return (
     <div className='relative flex flex-col items-center justify-between w-48 h-[375px] bg-black rounded-xl shadow-lg overflow-hidden'>
@@ -36,10 +31,10 @@ const ItemCard = ({ item }: { item: IMovie }) => {
                 width='w-12'
                 height='h-12'
               />
-              <p className='ml-12'>{movieGenres[0]}</p>
+              {/* <p className='ml-12'>{movieGenres[0]}</p> */}
             </div>
-            <h2 className='text-sm/6 font-bold -ml-2 mt-1'>{item.title}</h2>
-            <p className='text-xs font-light -ml-2 '>{formattedDate}</p>
+            <h2 className='whitespace-pre max-w-[192px]  overflow-hidden text-sm/6 font-bold -ml-2 mt-1'>{item.title}</h2>
+            <p className='text-xs font-light -ml-2 '>{formattedDate} &#x2022; {type}</p>
           </div>
         </div>
       </Link>

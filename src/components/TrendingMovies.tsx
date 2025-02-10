@@ -41,7 +41,7 @@ const TrendingMovies = () => {
       >
         {movies.map((movie) => (
           <div key={movie.id} className='snap-start'>
-            <ItemCard item={movie} />
+            <ItemCard item={movie} type="Movie"/>
           </div>
         ))}
       </div>
