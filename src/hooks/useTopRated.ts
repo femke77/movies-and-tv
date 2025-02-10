@@ -38,7 +38,7 @@ export const useTopRatedMovies = () => {
     refetchInterval: 1000 * 60 * 30, // 30 minutes
     retry: 2,
     enabled: shouldFetch,
-    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
     placeholderData: (previousData) => previousData,
   });
 };

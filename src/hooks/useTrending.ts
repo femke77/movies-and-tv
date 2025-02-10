@@ -39,7 +39,7 @@ export const useTrendingMovies = () => {
     refetchInterval: 1000 * 60 * 30, // 30 minutes
     enabled: shouldFetch,
     retry: 2,
-    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
     placeholderData: (previousData) => previousData,
   });
 };
