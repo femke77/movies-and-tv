@@ -17,6 +17,10 @@
   Initial load  850-1000ms  
   New load time = 400-560ms  Roughly 50% improvement. 
 
+  **Problem:** The addition of three sliding movie components below the slide increased loading time for three additional api calls. 
+
+  **Solution:** Created a fetch on demand only when the user scrolls down, as caught by the react intersection observer. This prevents any fetching if the user never scrolls down, and fetches when the slider component is at a threshold of 0.1. 
+
   ## Table of Contents 📖
   
   [Installation](#installation)
