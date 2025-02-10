@@ -8,6 +8,7 @@ const fetchTrendingMovies = async () => {
 };
 
 export const useTrendingMovies = () => {
+    
   return useQuery<IMovie[], Error>({
     queryKey: ['trending-movies'],
     queryFn: fetchTrendingMovies,

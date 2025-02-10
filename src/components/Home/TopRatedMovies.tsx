@@ -6,7 +6,7 @@ const TopRatedMovies = () => {
 
   return (
     <div className='mt-24'>
-      <SlideContainer items={movies} type='movie' headerTxt='Top Rated 🔝' />
+      <SlideContainer items={movies} itemType='movie' headerTxt='Top Rated 🔝' />
     </div>
   );
 };

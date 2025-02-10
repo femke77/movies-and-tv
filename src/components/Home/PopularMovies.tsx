@@ -7,7 +7,7 @@ const PopularMovies = () => {
 
   return (
     <div className='mt-24'>
-      <SlideContainer items={movies} type='movies' headerTxt='Popular 📈' />
+      <SlideContainer items={movies} itemType='movies' headerTxt='Popular 📈' />
     </div>
   );
 };

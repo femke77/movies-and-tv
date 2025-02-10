@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import UserRating from './UserRating';
 
-const ItemCard = ({ item, type }: { item: IMovie; type: string }) => {
+const ItemCard = ({ item, itemType }: { item: IMovie; itemType: string }) => {
   const formattedDate = dayjs(item.release_date).format('MMM D, YYYY');
 
   const getStrokeColor = (rating: number) => {
@@ -16,7 +16,7 @@ const ItemCard = ({ item, type }: { item: IMovie; type: string }) => {
 
   return (
     <div className='relative flex flex-col items-center justify-between w-48 h-[375px] bg-black rounded-xl shadow-lg overflow-hidden'>
-      <Link to={`/${type}/${item.id}`}>
+      <Link to={`/${itemType}/${item.id}`}>
         <img
           className='w-full h-72 object-cover rounded-lg'
           src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
@@ -31,7 +31,7 @@ const ItemCard = ({ item, type }: { item: IMovie; type: string }) => {
                 width='w-12'
                 height='h-12'
               />
-              {/* TODO pill or chip and show conditionally */}
+              {/* TODO pill or chip and show genres conditionally */}
               {/* <p className='ml-12'>{movieGenres[0]}</p> */}
             </div>
             <h2 className='whitespace-pre max-w-[192px] overflow-hidden text-sm/6 font-bold -ml-2 mt-1'>
@@ -39,7 +39,7 @@ const ItemCard = ({ item, type }: { item: IMovie; type: string }) => {
             </h2>
             <p className='text-xs font-light -ml-2 '>
               {formattedDate} &#x2022;{' '}
-              {type.substring(0, 1).toUpperCase() + type.substring(1)}
+              {itemType.substring(0, 1).toUpperCase() + itemType.substring(1)}
             </p>
           </div>
         </div>

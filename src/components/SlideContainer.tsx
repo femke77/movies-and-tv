@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-
 import ItemCard from './ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IMovie } from '../interfaces/IMovie';
@@ -7,23 +6,23 @@ import { IMovie } from '../interfaces/IMovie';
 const SlideContainer = ({
   items,
   headerTxt,
-  type,
+  itemType,
 }: {
   items: IMovie[];
   headerTxt: string;
-  type: string;
+  itemType: string;
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -600, behavior: 'smooth' });
+      scrollRef.current.scrollBy({ left: -900, behavior: 'smooth' });
     }
   };
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 600, behavior: 'smooth' });
+      scrollRef.current.scrollBy({ left: 900, behavior: 'smooth' });
     }
   };
 
@@ -38,15 +37,15 @@ const SlideContainer = ({
         <ChevronLeftIcon className='w-8 h-8 pr-[4px]' />
       </button>
 
-      {/* Scrollable Container */}
+      {/* Scrollable Container renders ItemCard */}
       <div
         ref={scrollRef}
         className='flex space-x-4 px-4 py-2 w-full overflow-x-auto scroll-smooth scrollbar-hide snap-x snap-mandatory'
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {items.map((movie) => (
-          <div key={movie.id} className='snap-start'>
-            <ItemCard item={movie} type={type} />
+        {items.map((item) => (
+          <div key={item.id} className='snap-start'>
+            <ItemCard item={item} itemType={itemType} />
           </div>
         ))}
       </div>

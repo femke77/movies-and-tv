@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
-import UserRating from './UserRating';
-import WatchButton from './WatchButton';
-import type { IMovie } from '../interfaces/IMovie';
-import { useMovieLogo } from '../hooks/useNowPlayingMovies';
-import genresData from '../utils/data/genres.json';
-import { useWindowSize } from '../hooks/useWindowSize';
+import UserRating from '../UserRating';
+import WatchButton from '../WatchButton';
+import type { IMovie } from '../../interfaces/IMovie';
+import { useMovieLogo } from '../../hooks/useNowPlayingMovies';
+import genresData from '../../utils/data/genres.json';
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 const Slide = ({
   slide,
