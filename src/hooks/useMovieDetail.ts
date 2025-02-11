@@ -6,14 +6,31 @@ const fetchMovieDetail = async (movie_id: string) => {
   return data;
 };
 
+const fetchMovieRating = async (movie_id: string) => {
+  const { data } = await TMDBClient.get(`/movie/${movie_id}/release_dates?language=en`);
+  const usRegion = data.results.find((region: any) => region.iso_3166_1 === "US");
+  const certification = usRegion?.release_dates[0]?.certification || 'N/A';  
+  return certification;
+};
+
 export const useMovieDetail = (movie_id: string) => {
   return useQuery({
     queryKey: ['movie-detail', movie_id],
-    queryFn: () => {
+    queryFn: async () => {
       if (!movie_id) {
         throw new Error('Movie ID is required');
       }
-      return fetchMovieDetail(movie_id);
+      
+      // concurrent
+      const [movie, rating] = await Promise.all([
+        fetchMovieDetail(movie_id),
+        fetchMovieRating(movie_id),
+      ]);
+
+      return {
+        ...movie,
+        rating, 
+      };
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
     gcTime: 1000 * 60 * 60 * 25, // 25 hours

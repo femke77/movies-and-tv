@@ -8,8 +8,8 @@ const MovieDetail = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useMovieDetail(movie_id || '');
 
-  if (!movie) return  <p>No Movie Found 😔</p>
-
+  if (!movie) return <p>No Movie Found 😔</p>
+  
   const releaseYear = movie?.release_date?.split('-')[0];
 
   const getStrokeColor = (rating: number) => {
@@ -41,12 +41,12 @@ const MovieDetail = () => {
             <p className='italic text-gray-100/50 text-light text-xl leading-12'>
               {movie.tagline}
             </p>
-            <p className='flex leading-10 mb-4'>
+            <div className='flex leading-10 mb-4'>
               {movie.genres.map((genre: { id: string; name: string }) => (
                 <Chip key={genre.id} label={genre.name} />
               ))}
-            </p>
-
+            </div>
+            <p className="text-lg text-light">Rating: <span className="text-xl text-gray-200/70 my-3 font-bold">{movie.rating}</span></p>
             <div className='flex items-center'>
               <UserRating
                 rating={movie.vote_average}
