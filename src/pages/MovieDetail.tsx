@@ -8,7 +8,7 @@ const MovieDetail = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useMovieDetail(movie_id || '');
 
-  if (!movie) return null;
+  if (!movie) return  <p>No Movie Found 😔</p>
 
   const releaseYear = movie?.release_date?.split('-')[0];
 
@@ -62,19 +62,12 @@ const MovieDetail = () => {
             <h3 className='text-3xl font-bold mt-4'>Overview</h3>
             {/* put min width 400 if you want the y-axis too */}
             <p className='text-xl text-gray-100/50 my-3 font-bold'>
-              {movie.overview} Lorem ipsum, dolor sit amet consectetur
-              adipisicing elit. Aliquid laudantium animi nisi iure pariatur,
-              soluta nam quas quidem dolorum obcaecati atque libero alias dolor
-              nostrum doloremque perspiciatis sit, accusamus autem! Lorem ipsum
-              dolor sit amet consectetur adipisicing elit. Sed quo magni
-              voluptatum dolores! Eveniet reiciendis, natus voluptate cumque
-              possimus minima debitis esse quia hic omnis quis, blanditiis
-              necessitatibus. Nisi, animi.{' '}
+              {movie.overview}
             </p>
           </section>
         </section>
       ) : (
-        <p>No movie found</p>
+        null
       )}
     </>
   );
