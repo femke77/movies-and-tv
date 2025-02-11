@@ -19,9 +19,10 @@ export const useTrendingMovies = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: '-50px 0px' },
+      { threshold: 0.1, rootMargin: '-10px 0px' },
     );
 
+    // TODO see about creating ref here and forwarding it down to avoid direct dom interaction
     const target = document.getElementById('trending-section');
     if (target) {
       observer.observe(target);
@@ -43,6 +44,3 @@ export const useTrendingMovies = () => {
     placeholderData: (previousData) => previousData,
   });
 };
-
-
-//test

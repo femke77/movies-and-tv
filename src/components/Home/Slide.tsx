@@ -5,6 +5,7 @@ import type { IMovie } from '../../interfaces/IMovie';
 import { useMovieLogo } from '../../hooks/useNowPlayingMovies';
 import genresData from '../../utils/data/genres.json';
 import { useWindowSize } from '../../hooks/useWindowSize';
+import { Link } from 'react-router-dom';
 
 const Slide = ({
   slide,
@@ -81,19 +82,21 @@ const Slide = ({
           </div>
 
           {/* left mid - title or title logo, overview */}
-          <div className='flex flex-col items-center'>
-            {displayLogo ? (
-              <img
-                className='mb-6 w-64 h-auto'
-                src={`https://image.tmdb.org/t/p/w185/${displayLogo}`}
-              />
-            ) : (
-              <h2 className='text-4xl font-bold text-white mb-6'>
-                {slide.title}
-              </h2>
-            )}
-            <p className='text-white text-center'>{movieOverview}</p>
-          </div>
+          <Link to={`/movie/${slide.id}`}>
+            <div className='flex flex-col items-center'>
+              {displayLogo ? (
+                <img
+                  className='mb-6 w-64 h-auto'
+                  src={`https://image.tmdb.org/t/p/w185/${displayLogo}`}
+                />
+              ) : (
+                <h2 className='text-4xl font-bold text-white mb-6'>
+                  {slide.title}
+                </h2>
+              )}
+              <p className='text-white text-center'>{movieOverview}</p>
+            </div>
+          </Link>
 
           {/* left, bottom rating and watch componentns */}
           <div className='flex flex-col sm:flex-row items-center justify-around mt-4 '>

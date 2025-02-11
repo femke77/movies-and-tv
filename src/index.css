@@ -18,9 +18,22 @@ body,
 #root {
   height: 100%;
   margin: 0;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  
+ 
 
 
 }
+html::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+body::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+#root::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
 
 body {
   background-color: black;
