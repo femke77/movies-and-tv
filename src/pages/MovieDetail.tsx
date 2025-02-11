@@ -34,13 +34,7 @@ const MovieDetail = () => {
           </section>
 
           {/* Right Section */}
-          <section
-            className='flex-grow md:max-h-[525px] basis-full md:basis-1/2 ml-2 pl-6 pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2
-  [&::-webkit-scrollbar-track]:bg-gray-100
-  [&::-webkit-scrollbar-thumb]:bg-gray-300
-  dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'
-          >
+          <section className='flex-grow md:max-h-[525px] basis-full md:basis-1/2 ml-2 pl-6 pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'>
             <h2 className='text-4xl font-bold md:pr-16 text-center md:text-left'>
               {movie.title} ({releaseYear})
             </h2>
