@@ -8,7 +8,7 @@ const MovieDetail = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useMovieDetail(movie_id || '');
 
-  if (!movie) return null;
+  if (!movie) return  <p>No Movie Found 😔</p>
 
   const releaseYear = movie?.release_date?.split('-')[0];
 
@@ -34,13 +34,7 @@ const MovieDetail = () => {
           </section>
 
           {/* Right Section */}
-          <section
-            className='flex-grow md:max-h-[525px] basis-full md:basis-1/2 ml-2 pl-6 pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2
-  [&::-webkit-scrollbar-track]:bg-gray-100
-  [&::-webkit-scrollbar-thumb]:bg-gray-300
-  dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'
-          >
+          <section className='flex-grow md:max-h-[525px] basis-full md:basis-1/2 ml-2 pl-6 pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'>
             <h2 className='text-4xl font-bold md:pr-16 text-center md:text-left'>
               {movie.title} ({releaseYear})
             </h2>
@@ -68,19 +62,12 @@ const MovieDetail = () => {
             <h3 className='text-3xl font-bold mt-4'>Overview</h3>
             {/* put min width 400 if you want the y-axis too */}
             <p className='text-xl text-gray-100/50 my-3 font-bold'>
-              {movie.overview} Lorem ipsum, dolor sit amet consectetur
-              adipisicing elit. Aliquid laudantium animi nisi iure pariatur,
-              soluta nam quas quidem dolorum obcaecati atque libero alias dolor
-              nostrum doloremque perspiciatis sit, accusamus autem! Lorem ipsum
-              dolor sit amet consectetur adipisicing elit. Sed quo magni
-              voluptatum dolores! Eveniet reiciendis, natus voluptate cumque
-              possimus minima debitis esse quia hic omnis quis, blanditiis
-              necessitatibus. Nisi, animi.{' '}
+              {movie.overview}
             </p>
           </section>
         </section>
       ) : (
-        <p>No movie found</p>
+        null
       )}
     </>
   );
