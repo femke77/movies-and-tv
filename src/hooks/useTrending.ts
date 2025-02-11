@@ -19,7 +19,7 @@ export const useTrendingMovies = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: '-50px 0px' },
+      { threshold: 0.1, rootMargin: '-10px 0px' },
     );
 
     // TODO see about creating ref here and forwarding it down to avoid direct dom interaction
@@ -44,5 +44,3 @@ export const useTrendingMovies = () => {
     placeholderData: (previousData) => previousData,
   });
 };
-
-
