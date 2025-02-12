@@ -3,21 +3,16 @@ import { useMovieDetail } from '../hooks/useMovieDetail';
 import { useParams } from 'react-router-dom';
 import UserRating from '../components/UserRating';
 import WatchButton from '../components/WatchButton';
+import { getStrokeColor } from '../utils/helpers'
 
 const MovieDetail = () => {
+
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useMovieDetail(movie_id || '');
 
   if (!movie) return <p>No Movie Found 😔</p>
-  
-  const releaseYear = movie?.release_date?.split('-')[0];
 
-  const getStrokeColor = (rating: number) => {
-    if (rating >= 7.0 && rating <= 10) return 'green';
-    else if (rating >= 6 && rating < 7.0) return 'orange';
-    else if (rating === 0) return 'transparent';
-    return 'red';
-  };
+  const releaseYear = movie?.release_date?.split('-')[0];
   const strokeColor = getStrokeColor(movie.vote_average);
 
   return (
