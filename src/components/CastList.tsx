@@ -10,7 +10,7 @@ export const CastList = ({ cast }: { cast: ICast[] }) => {
 
   const startDragging = (e: React.MouseEvent) => {
     if (!sliderRef.current) return;
-    e.preventDefault(); // Prevents image drag effect
+    e.preventDefault(); 
     isDragging.current = true;
     startX.current = e.pageX - sliderRef.current.offsetLeft;
     scrollLeft.current = sliderRef.current.scrollLeft;
