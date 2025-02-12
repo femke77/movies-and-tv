@@ -10,16 +10,16 @@ const fetchTrendingMovies = async () => {
 
 export const useTrendingMovies = () => {
   const [shouldFetch, setShouldFetch] = useState(false);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+       
           setShouldFetch(true);
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: '-10px 0px' },
+      { threshold: 0.1, rootMargin: '-150px 0px' },
     );
 
     // TODO see about creating ref here and forwarding it down to avoid direct dom interaction

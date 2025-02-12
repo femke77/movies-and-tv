@@ -39,7 +39,7 @@ const MovieDetail = () => {
       {movie ? (
         <section id='movie-detail' className='relative flex flex-wrap my-12 p-2  '>
           <div
-    className={`absolute inset-0 bg-cover bg-center blur-[15px] z-0 bg-no-repeat  transition-opacity 
+    className={`absolute inset-0 bg-cover bg-center blur-[15px] z-0 bg-no-repeat transition-opacity 
         duration-1000 
         ease-in-out 
         ${isVisible ? 'opacity-30' : 'opacity-0'}`}
