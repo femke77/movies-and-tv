@@ -64,13 +64,11 @@ const MovieDetail = () => {
           </section>
 
           {/* Cast Section */}
-          <section className='w-full mt-8'>
-            <h3 className='text-2xl/14 text-white/70  text-center'>Top Cast</h3>
-            
+          <section className='w-full mt-44'>
+            <h3 className='text-2xl/14 text-white/70  text-center'>Top Cast</h3>          
             <div className='flex flex-wrap gap-4'>
               <CastList cast={movie.cast} />
-            </div>
-            
+            </div>         
           </section>
         </section>
       ) : (
