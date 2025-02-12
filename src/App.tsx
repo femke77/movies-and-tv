@@ -11,7 +11,7 @@ function App() {
       <Header>
         <Nav />
       </Header>
-      <main>
+      <main className='min-h-screen'>
         <Outlet />
       </main>
       <Footer />
