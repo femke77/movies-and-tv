@@ -3,20 +3,30 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import UserRating from './UserRating';
 import { getStrokeColor } from '../utils/helpers'
-
+import { useEffect, useState } from 'react';
 const ItemCard = ({ item, itemType }: { item: IMovie; itemType: string }) => {
-  
+
   const formattedDate = dayjs(item.release_date).format('MMM D, YYYY');
-
+  const [isVisible, setIsVisible] = useState(false);
   const strokeColor = getStrokeColor(item.vote_average);
-
+  useEffect(() => {
+    setIsVisible(true);
+    return () => {
+      setIsVisible(false);
+    };
+  }, []);
   return (
-    <div className='relative flex flex-col items-center justify-between w-48 h-[375px] bg-black rounded-xl shadow-lg overflow-hidden hover:scale-105'>
+    <div className={`relative flex flex-col items-center justify-between w-48 h-[375px] bg-black rounded-xl shadow-lg overflow-hidden 
+  transition-opacity 
+        duration-500 
+        ease-linear
+        ${isVisible ? 'opacity-100' : 'opacity-0'}
+  `}>
       <Link to={`/${itemType}/${item.id}`}>
         <img
           className='w-full h-72 object-cover rounded-lg'
           src={`https://image.tmdb.org/t/p/w154/${item.poster_path}`}
-          alt={item.title}
+
         />
         <div className='flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black'>
           <div className='relative -top-13 left-3 w-full'>
