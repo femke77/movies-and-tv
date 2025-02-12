@@ -10,7 +10,7 @@ const ItemCard = ({ item, itemType }: { item: IMovie; itemType: string }) => {
   const strokeColor = getStrokeColor(item.vote_average);
 
   return (
-    <div className='relative flex flex-col items-center justify-between w-48 h-[375px] bg-black rounded-xl shadow-lg overflow-hidden'>
+    <div className='transform transition-all duration-300 hover:scale-105 relative flex flex-col items-center justify-between w-48 h-[375px] bg-black rounded-xl shadow-lg overflow-hidden'>
       <Link to={`/${itemType}/${item.id}`}>
         <img
           className='w-full h-72 object-cover rounded-lg'

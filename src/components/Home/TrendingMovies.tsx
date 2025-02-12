@@ -3,7 +3,7 @@ import { useTrendingMovies } from '../../hooks/useTrending';
 import { useRef } from 'react';
 
 const TrendingMovies = () => {
-  const { data: movies = [] } = useTrendingMovies();
+  const { data: movies = [], } = useTrendingMovies();
 
   const ref = useRef<HTMLDivElement | null>(null);
 
