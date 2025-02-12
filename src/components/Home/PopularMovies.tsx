@@ -11,7 +11,7 @@ const PopularMovies = () => {
         id='pop-section'
         ref={ref}
         items={movies}
-        itemType='movies'
+        itemType='movie'
         headerTxt='Popular 📈'
       />
     </div>

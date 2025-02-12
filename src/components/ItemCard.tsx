@@ -7,15 +7,15 @@ import { getStrokeColor } from '../utils/helpers'
 const ItemCard = ({ item, itemType }: { item: IMovie; itemType: string }) => {
   
   const formattedDate = dayjs(item.release_date).format('MMM D, YYYY');
+
   const strokeColor = getStrokeColor(item.vote_average);
 
   return (
-    <div className='relative flex flex-col items-center justify-between w-48 h-[375px] bg-black rounded-xl shadow-lg overflow-hidden'>
+    <div className='relative flex flex-col items-center justify-between w-48 h-[375px] bg-black rounded-xl shadow-lg overflow-hidden hover:scale-105'>
       <Link to={`/${itemType}/${item.id}`}>
         <img
           className='w-full h-72 object-cover rounded-lg'
-      
-          src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+          src={`https://image.tmdb.org/t/p/w154/${item.poster_path}`}
           alt={item.title}
         />
         <div className='flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black'>

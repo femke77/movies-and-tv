@@ -39,7 +39,7 @@ const SlideContainer = forwardRef<
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {items.map((item) => (
-          <div key={item.id} className='snap-start'>
+          <div key={item.id} >
             <ItemCard item={item} itemType={itemType} />
           </div>
         ))}

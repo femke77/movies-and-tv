@@ -14,7 +14,6 @@ const MovieDetail = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useMovieDetail(movie_id || '');
 
-  
   useEffect(() => {
     setIsVisible(true);
     return () => {
@@ -40,7 +39,7 @@ const MovieDetail = () => {
       {movie ? (
         <section id='movie-detail' className='relative flex flex-wrap my-12 p-2  '>
           <div
-    className={`absolute inset-0 bg-cover bg-center blur-[15px] z-0 bg-no-repeat  transition-opacity 
+    className={`absolute inset-0 bg-cover bg-center blur-[15px] z-0 bg-no-repeat transition-opacity 
         duration-1000 
         ease-in-out 
         ${isVisible ? 'opacity-30' : 'opacity-0'}`}
@@ -48,17 +47,17 @@ const MovieDetail = () => {
   ></div>
    <div className="relative z-10 w-full flex flex-wrap ">
           {/* Left Section */}
-          <section className='w-[370px] flex-shrink-0 mx-auto pl-8'>
+          <section className='w-[360px] flex-shrink-0 mx-auto pl-8'>
             <img
               src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
               alt='movie poster'
-              className='w-[370px] h-auto rounded-lg'
+              className='w-[360px] h-auto rounded-lg'
             />
           </section>
 
           {/* Right Section */}
           <section className='flex-grow md:max-h-[525px] basis-full md:basis-1/2 ml-2 pl-6 pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'>
-            <h2 className='text-4xl font-bold md:pr-16 '>
+            <h2 className='text-4xl mb-4 font-bold md:pr-16 '>
               {movie.title} ({releaseYear})
             </h2>
             <p className='italic text-gray-100/50 text-light text-xl leading-12'>
