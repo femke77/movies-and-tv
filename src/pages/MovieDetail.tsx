@@ -3,21 +3,18 @@ import { useMovieDetail } from '../hooks/useMovieDetail';
 import { useParams } from 'react-router-dom';
 import UserRating from '../components/UserRating';
 import WatchButton from '../components/WatchButton';
+import { getStrokeColor } from '../utils/helpers'
+import { CastList } from '../components/CastList';
 
 const MovieDetail = () => {
+
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useMovieDetail(movie_id || '');
 
-  if (!movie) return  <p>No Movie Found 😔</p>
+  if (!movie) return <p>No Movie Found 😔</p>
+  console.log(movie);
 
   const releaseYear = movie?.release_date?.split('-')[0];
-
-  const getStrokeColor = (rating: number) => {
-    if (rating >= 7.0 && rating <= 10) return 'green';
-    else if (rating >= 6 && rating < 7.0) return 'orange';
-    else if (rating === 0) return 'transparent';
-    return 'red';
-  };
   const strokeColor = getStrokeColor(movie.vote_average);
 
   return (
@@ -25,11 +22,11 @@ const MovieDetail = () => {
       {movie ? (
         <section id='movie-detail' className='flex flex-wrap my-12 p-2  '>
           {/* Left Section */}
-          <section className='w-[350px] flex-shrink-0 mx-auto pl-8'>
+          <section className='w-[390px] flex-shrink-0 mx-auto pl-8'>
             <img
-              src={`https://image.tmdb.org/t/p/w185/${movie.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
               alt='movie poster'
-              className='w-[350px] h-auto rounded-lg'
+              className='w-[390px] h-auto rounded-lg'
             />
           </section>
 
@@ -41,12 +38,12 @@ const MovieDetail = () => {
             <p className='italic text-gray-100/50 text-light text-xl leading-12'>
               {movie.tagline}
             </p>
-            <p className='flex leading-10 mb-4'>
+            <div className='flex leading-10 mb-4'>
               {movie.genres.map((genre: { id: string; name: string }) => (
                 <Chip key={genre.id} label={genre.name} />
               ))}
-            </p>
-
+            </div>
+            <p className="text-lg text-light">Rating: <span className="text-xl text-gray-200/70 my-3 font-bold">{movie.rating}</span></p>
             <div className='flex items-center'>
               <UserRating
                 rating={movie.vote_average}
@@ -64,6 +61,16 @@ const MovieDetail = () => {
             <p className='text-xl text-gray-100/50 my-3 font-bold'>
               {movie.overview}
             </p>
+          </section>
+
+          {/* Cast Section */}
+          <section className='w-full mt-8'>
+            <h3 className='text-2xl/14 text-white/70  text-center'>Top Cast</h3>
+            
+            <div className='flex flex-wrap gap-4'>
+              <CastList cast={movie.cast} />
+            </div>
+            
           </section>
         </section>
       ) : (

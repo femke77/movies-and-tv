@@ -16,6 +16,14 @@ export const TMDBClient = axios.create({
   },
 });
 
+export const CommonSenseClient = axios.create({
+  baseURL: 'https://api.commonsense.org/v2',
+  headers: {
+    Authorization: `Bearer ${TMDBBearerToken}`,
+    'Content-Type': 'application/json',
+  },
+});
+
 export const vidSrcClient = axios.create({
   baseURL: 'https://',
   headers: {

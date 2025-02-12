@@ -2,16 +2,11 @@ import { IMovie } from '../interfaces/IMovie';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import UserRating from './UserRating';
+import { getStrokeColor } from '../utils/helpers'
 
 const ItemCard = ({ item, itemType }: { item: IMovie; itemType: string }) => {
+  
   const formattedDate = dayjs(item.release_date).format('MMM D, YYYY');
-
-  const getStrokeColor = (rating: number) => {
-    if (rating >= 7.0 && rating <= 10) return 'green';
-    else if (rating >= 6 && rating < 7.0) return 'orange';
-    else if (rating === 0) return 'transparent';
-    return 'red';
-  };
   const strokeColor = getStrokeColor(item.vote_average);
 
   return (
