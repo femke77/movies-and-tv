@@ -12,7 +12,7 @@ const MovieDetail = () => {
   const { data: movie } = useMovieDetail(movie_id || '');
 
   if (!movie) return <p>No Movie Found 😔</p>
-  console.log(movie);
+
 
   const releaseYear = movie?.release_date?.split('-')[0];
   const strokeColor = getStrokeColor(movie.vote_average);
