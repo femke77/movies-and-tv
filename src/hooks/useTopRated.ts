@@ -21,7 +21,7 @@ export const useTopRatedMovies = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: '-150px 0px' },
+      { threshold: 0.1, rootMargin: '-150px 150px' },
     );
 
     const target = document.getElementById('top-section');
