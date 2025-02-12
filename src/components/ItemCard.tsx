@@ -14,6 +14,7 @@ const ItemCard = ({ item, itemType }: { item: IMovie; itemType: string }) => {
       <Link to={`/${itemType}/${item.id}`}>
         <img
           className='w-full h-72 object-cover rounded-lg'
+      
           src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
           alt={item.title}
         />

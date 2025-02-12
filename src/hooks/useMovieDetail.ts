@@ -34,12 +34,12 @@ export const useMovieDetail = (movie_id: string) => {
         fetchMovieCredits(movie_id),
       ]);
 
-      const {cast} = credits;
+    
       
       return {
         ...movie,
         rating, 
-        cast
+        ...credits
       };
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours

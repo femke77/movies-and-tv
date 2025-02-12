@@ -101,11 +101,10 @@ const Slide = ({
           {/* left, bottom rating and watch componentns */}
           <div className='flex flex-col sm:flex-row items-center justify-around mt-4 '>
             <div className='mb-2'>
-              <UserRating rating={slide.vote_average} />
+              <WatchButton />
             </div>
-            <div className='mb-6'>
-              {' '}
-              <WatchButton />{' '}
+            <div className='mb-2'>
+              <UserRating rating={slide.vote_average} />
             </div>
           </div>
         </div>
