@@ -14,7 +14,6 @@ export const useTrendingMovies = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-       
           setShouldFetch(true);
           observer.disconnect();
         }
