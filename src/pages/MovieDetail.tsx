@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Chip from '../components/Chip';
 import { useMovieDetail } from '../hooks/useMovieDetail';
 import { useParams } from 'react-router-dom';
@@ -5,34 +6,59 @@ import UserRating from '../components/UserRating';
 import WatchButton from '../components/WatchButton';
 import { getStrokeColor } from '../utils/helpers'
 import { CastList } from '../components/CastList';
+import dayjs from 'dayjs';
 
 const MovieDetail = () => {
 
+  const [isVisible, setIsVisible] = useState(false);
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useMovieDetail(movie_id || '');
 
-  if (!movie) return <p>No Movie Found 😔</p>
-
-
+  
+  useEffect(() => {
+    setIsVisible(true);
+    return () => {
+      setIsVisible(false);
+    };
+  }, []);
+  
+  if (!movie) return null
   const releaseYear = movie?.release_date?.split('-')[0];
   const strokeColor = getStrokeColor(movie.vote_average);
+  const directorData = movie?.crew?.find((member: { job: string }) => member.job === 'Director');
+  const directorName = directorData?.name || 'Unknown';
+  const writerData = movie?.crew?.find((member: { job: string }) => member.job === 'Screenplay' );
+  const writerName = writerData?.name || 'Unknown';
+  const calculateROI = movie.revenue && movie.budget 
+    ? (((movie.revenue - movie.budget) / movie.budget) * 100).toFixed(1) 
+    : '0';
+  const ROI = calculateROI === 'Infinity' || calculateROI === '-Infinity' ? '0' : calculateROI;
+
 
   return (
     <>
       {movie ? (
-        <section id='movie-detail' className='flex flex-wrap my-12 p-2  '>
+        <section id='movie-detail' className='relative flex flex-wrap my-12 p-2  '>
+          <div
+    className={`absolute inset-0 bg-cover bg-center blur-[15px] z-0 bg-no-repeat  transition-opacity 
+        duration-1000 
+        ease-in-out 
+        ${isVisible ? 'opacity-30' : 'opacity-0'}`}
+    style={{ backgroundImage: `url('https://image.tmdb.org/t/p/original${movie?.backdrop_path}')`}}
+  ></div>
+   <div className="relative z-10 w-full flex flex-wrap ">
           {/* Left Section */}
-          <section className='w-[390px] flex-shrink-0 mx-auto pl-8'>
+          <section className='w-[370px] flex-shrink-0 mx-auto pl-8'>
             <img
               src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
               alt='movie poster'
-              className='w-[390px] h-auto rounded-lg'
+              className='w-[370px] h-auto rounded-lg'
             />
           </section>
 
           {/* Right Section */}
           <section className='flex-grow md:max-h-[525px] basis-full md:basis-1/2 ml-2 pl-6 pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'>
-            <h2 className='text-4xl font-bold md:pr-16 text-center md:text-left'>
+            <h2 className='text-4xl font-bold md:pr-16 '>
               {movie.title} ({releaseYear})
             </h2>
             <p className='italic text-gray-100/50 text-light text-xl leading-12'>
@@ -56,24 +82,38 @@ const MovieDetail = () => {
               </div>
             </div>
 
-            <h3 className='text-3xl font-bold mt-4'>Overview</h3>
+            <h3 className='text-3xl font-bold mt-4 '>Overview</h3>
             {/* put min width 400 if you want the y-axis too */}
-            <p className='text-xl text-gray-100/50 my-3 font-bold'>
+            <p className='text-xl text-gray-100/50 my-3 mb-6 font-bold'>
               {movie.overview}
             </p>
+            <div className='flex space-x-10 mb-4'>
+              <p className='text-xl font-bold'>Status: <span className="text-lg text-gray-100/50 my-3 font-bold">{movie.status}</span></p>
+              <p className='text-xl font-bold'>Release Date: <span className="text-lg text-gray-100/50 my-3 font-bold">{dayjs(movie.releaseData).format('MMM DD, YYYY')}</span></p>
+              <p className='text-xl font-bold'>Runtime: <span className="text-lg text-gray-100/50 my-3 font-bold">{movie.runtime} min</span></p>
+            </div>
+            <div className='flex space-x-10 mb-4'>
+              <p className='text-xl font-bold'>Budget: <span className="text-lg text-gray-100/50 my-3 font-bold">{(movie.budget).toLocaleString("en-US", { style: "currency", currency: "USD" })}</span></p>
+              <p className='text-xl font-bold'>Revenue: <span className="text-lg text-gray-100/50 my-3 font-bold">{(movie.revenue).toLocaleString("en-US", { style: "currency", currency: "USD" })}</span></p>
+              <p className='text-xl font-bold'>ROI: <span className="text-lg text-gray-100/50 my-3 font-bold">{ROI }%</span></p>
+            </div>
+            <p className='text-xl font-bold mb-4'>Director: <span className="text-lg text-gray-100/50 my-3 font-bold">{directorName}</span></p>
+            <p className='text-xl font-bold'>Writer: <span className="text-lg text-gray-100/50 my-3 font-bold">{writerName}</span></p>
           </section>
 
           {/* Cast Section */}
           <section className='w-full mt-44'>
-            <h3 className='text-2xl/14 text-white/70  text-center'>Top Cast</h3>          
+            <h3 className='text-2xl/14 text-white/70  text-center'>Top Cast</h3>
             <div className='flex flex-wrap gap-4'>
               <CastList cast={movie.cast} />
-            </div>         
+            </div>
           </section>
+          </div>
         </section>
       ) : (
-        null
+        <p>No Movie Found 😔</p>
       )}
+      
     </>
   );
 };
