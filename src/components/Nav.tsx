@@ -12,6 +12,17 @@ import NavDiscover from './NavComponents/NavDiscover';
 
 export default function Navigation() {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const openSearch = () => {
+    setIsVisible(true);
+    setTimeout(() => setSearchOpen(true), 10); 
+  };
+
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setTimeout(() => setIsVisible(false), 0); 
+  };
 
   return (
     <nav className='bg-gray-900 h-16 relative z-50'>
@@ -43,7 +54,7 @@ export default function Navigation() {
                       <button
                         role='search'
                         aria-label='search'
-                        onClick={() => setSearchOpen(true)}
+                        onClick={() => openSearch()}
                       >
                         <img
                           src='/mag.svg'
@@ -65,24 +76,26 @@ export default function Navigation() {
       </Disclosure>
 
       {/* Search Bar */}
-      <div
-        className={`fixed top-0 left-0 w-full h-32 bg-transparent bg-opacity-90 transition-all duration-700 flex items-end pb-4 justify-center ${
-          searchOpen ? 'opacity-100' : 'opacity-0 -translate-y-full pointer-events-none'
-        }`}
-      >
-        <input
-          type='text'
-          className='w-full h-10 px-4  text-xl bg-gray-900 text-white border-2 rounded-md border-gray-700 focus:outline-none focus:rounded-lg focus:ring-1 focus:ring-white'
-          placeholder='Search...'
-          autoFocus
-        />
-        <button
-          className='absolute right-4 pb-2 text-white text-2xl'
-          onClick={() => setSearchOpen(false)}
+      {isVisible && (
+        <div
+          className={`fixed top-0 left-0 w-full h-32 bg-transparent bg-opacity-90 transition-all duration-700 flex items-end pb-4 justify-center ${
+            searchOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
+          }`}
         >
-          ✕
-        </button>
-      </div>
+          <input
+            type='text'
+            className='w-full h-10 px-4 mx-1 text-xl bg-gray-900 text-white border-2 rounded-md border-gray-700 focus:outline-none focus:rounded-lg focus:ring-1 focus:ring-white'
+            placeholder='Search...'
+         
+          />
+          <button
+            className='absolute right-4 pb-2 text-white text-2xl'
+            onClick={closeSearch}
+          >
+            ✕
+          </button>
+        </div>
+      )}
     </nav>
   );
 }
