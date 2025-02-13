@@ -50,10 +50,10 @@ const MovieDetail = () => {
           className='relative flex flex-wrap pt-12  '
         >
           <div
-            className={`absolute inset-0 bg-cover bg-center blur-[15px] z-0 bg-no-repeat transition-opacity 
+            className={`fixed inset-0 bg-cover bg-center blur-[5px] z-0 bg-no-repeat transition-opacity 
         duration-1000 
         ease-in-out 
-        ${isVisible ? 'opacity-30' : 'opacity-0'}`}
+        ${isVisible ? 'opacity-40' : 'opacity-0'}`}
             style={{
               backgroundImage: `url('https://image.tmdb.org/t/p/w342${movie?.backdrop_path}')`,
             }}

@@ -73,7 +73,7 @@ export default function Navigation() {
             </div>
 
             {/* TODO Mobile view */}
-            <DisclosurePanel className='md:hidden absolute z-40 bg-gray-800 w-full'>
+            <DisclosurePanel className='md:hidden absolute z-40 bg-gray-800 w-screen h-screen'>
             </DisclosurePanel>
           </>
         )}
@@ -97,7 +97,7 @@ export default function Navigation() {
             className='absolute right-4 pb-2 text-white text-2xl'
             onClick={closeSearch}
           >
-            ✕
+           <XMarkIcon className='block h-6 w-6' aria-hidden='true' />
           </button>
         </div>
       )}
