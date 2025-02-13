@@ -1,7 +1,3 @@
-
-
-const Search = () => {
-
-}
+const Search = () => {};
 
 export default Search;

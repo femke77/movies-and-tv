@@ -4,7 +4,6 @@ import Nav from './components/Nav';
 import Footer from './components/Footer';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-
 function App() {
   return (
     <>
@@ -13,9 +12,7 @@ function App() {
           <Nav />
         </Header>
         <main className='min-h-screen'>
-       
-            <Outlet />
- 
+          <Outlet />
         </main>
         <Footer />
       </div>

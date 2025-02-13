@@ -22,7 +22,7 @@ const MovieDetail = () => {
 
   if (!movie) return null;
   console.log(movie);
-  
+
   const releaseYear = movie?.release_date?.split('-')[0];
   const strokeColor = getStrokeColor(movie.vote_average);
   const directorData = movie?.crew?.find(
@@ -30,7 +30,8 @@ const MovieDetail = () => {
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = movie?.crew?.find(
-    (member: { job: string }) => member.job === 'Screenplay' || member.job === 'Writer',
+    (member: { job: string }) =>
+      member.job === 'Screenplay' || member.job === 'Writer',
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -45,10 +46,7 @@ const MovieDetail = () => {
   return (
     <>
       {movie ? (
-        <section
-          id='movie-detail'
-          className='relative flex flex-wrap pt-12  '
-        >
+        <section id='movie-detail' className='relative flex flex-wrap pt-12  '>
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[5px] z-0 bg-no-repeat transition-opacity 
         duration-1000 
@@ -127,16 +125,16 @@ const MovieDetail = () => {
 
               <div className='flex space-x-10 mb-4'>
                 {movie.budget > 0 && (
-               <p className='text-xl font-bold'>
-                  Budget:{' '}
-                  <span className='text-lg text-gray-100/50 my-3 font-bold'>
-                    {movie.budget.toLocaleString('en-US', {
-                      style: 'currency',
-                      currency: 'USD',
-                    })}
-                  </span>
-                </p>)}
-                
+                  <p className='text-xl font-bold'>
+                    Budget:{' '}
+                    <span className='text-lg text-gray-100/50 my-3 font-bold'>
+                      {movie.budget.toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                      })}
+                    </span>
+                  </p>
+                )}
                 <p className='text-xl font-bold'>
                   Revenue:{' '}
                   <span className='text-lg text-gray-100/50 my-3 font-bold'>
@@ -146,13 +144,14 @@ const MovieDetail = () => {
                     })}
                   </span>
                 </p>
-                {(ROI !== '0') &&<p className='text-xl font-bold'>
-                  ROI:{' '}
-                  <span className='text-lg text-gray-100/50 my-3 font-bold'>
-                    {ROI}%
-                  </span>
-                </p>}
-                
+                {ROI !== '0' && (
+                  <p className='text-xl font-bold'>
+                    ROI:{' '}
+                    <span className='text-lg text-gray-100/50 my-3 font-bold'>
+                      {ROI}%
+                    </span>
+                  </p>
+                )}
               </div>
               <p className='text-xl font-bold mb-4'>
                 Director:{' '}

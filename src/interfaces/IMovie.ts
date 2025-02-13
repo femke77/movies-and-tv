@@ -2,7 +2,7 @@ export interface IMovie {
   id: number;
   title: string;
   poster_path: string;
-  vote_average: number |  null;
+  vote_average: number | null;
   backdrop_path: string;
   overview: string;
   release_date: string;

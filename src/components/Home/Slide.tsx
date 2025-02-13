@@ -114,7 +114,11 @@ const Slide = ({
           {slide.poster_path && (
             <img
               className='w-78 h-auto rounded-lg shadow-lg '
-              src={slide.poster_path ? `https://image.tmdb.org/t/p/w500${slide.poster_path}` : '/noimage.jpg'}
+              src={
+                slide.poster_path
+                  ? `https://image.tmdb.org/t/p/w500${slide.poster_path}`
+                  : '/noimage.jpg'
+              }
               alt={slide.title}
             />
           )}

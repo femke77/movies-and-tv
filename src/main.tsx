@@ -21,7 +21,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'movie/:movie_id',
-        element: <ScrollToTop><MovieDetail /></ScrollToTop>
+        element: (
+          <ScrollToTop>
+            <MovieDetail />
+          </ScrollToTop>
+        ),
       },
       {
         path: 'explore',
