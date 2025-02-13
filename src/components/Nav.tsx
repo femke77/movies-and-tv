@@ -99,7 +99,7 @@ export default function Navigation() {
                   : "opacity-0 h-0 pointer-events-none"
               }`}
             ></div>
-            {/* TODO Mobile view needs buttons here*/}
+            {/* TODO Mobile view needs links here*/}
           </>
         )}
       </Disclosure>
