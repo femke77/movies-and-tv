@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Disclosure,
   DisclosureButton,
-  DisclosurePanel,
 } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
@@ -14,7 +13,8 @@ export default function Navigation() {
 
   const [searchOpen, setSearchOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [_searchQuery, setSearchQuery] = useState(''); 
+  const searchRef = useRef<HTMLDivElement | null>(null); // Ref for detecting outside clicks
 
   const openSearch = () => {
     setIsVisible(true);
@@ -26,6 +26,27 @@ export default function Navigation() {
     setTimeout(() => setIsVisible(false), 0);
   };
 
+  useEffect(() => {
+    if (!searchOpen) return;
+
+    const handleScroll = () => {
+
+      closeSearch()
+    };
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        closeSearch();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [searchOpen]);
 
   return (
     <nav className='bg-gray-900 h-16 relative z-50'>
@@ -56,25 +77,45 @@ export default function Navigation() {
                       <NavDiscover />
                     </div>
                   </div>
-                      <button
-                        role='search'
-                        aria-label='search'
-                        onClick={() => openSearch()}
-                        className=''
-                      >
-                        <img
-                          src='/mag.svg'
-                          alt='search'
-                          className='w-8 h-8'
-                        />
-                      </button>
+                  <button
+                    role='search'
+                    aria-label='search'
+                    onClick={() => openSearch()}
+                    className=''
+                  >
+                    <img
+                      src='/mag.svg'
+                      alt='search'
+                      className='w-8 h-8'
+                    />
+                  </button>
                 </div>
               </div>
             </div>
 
             {/* TODO Mobile view */}
-            <DisclosurePanel className='md:hidden absolute z-40 bg-gray-800 w-screen h-screen'>
-            </DisclosurePanel>
+            {/* <DisclosurePanel className='md:hidden absolute z-40 bg-gray-800 w-screen h-screen'>
+            </DisclosurePanel> */}
+            {/* Fullscreen Search Input */}
+            <div
+              ref={searchRef}
+              className={`fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center transition-all duration-300 ${open ? 'opacity-100 h-screen' : 'opacity-0 h-0 pointer-events-none'
+                }`}
+            >
+
+              <DisclosureButton
+                className='absolute top-5 right-5 text-white text-2xl'
+
+              >
+                ✕
+              </DisclosureButton>
+            </div>
+
+
+
+
+
+
           </>
         )}
       </Disclosure>
@@ -82,7 +123,7 @@ export default function Navigation() {
       {/* Search Bar */}
       {isVisible && (
         <div
-          className={`fixed top-0 left-0 w-full h-32 bg-transparent transition-all duration-700 flex items-end pb-4 justify-center ${searchOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
+          className={`fixed top-0 left-0 w-full h-30 bg-transparent transition-all duration-700 flex items-end pb-4 justify-center ${searchOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
             }`}
         >
           <input
@@ -91,13 +132,15 @@ export default function Navigation() {
             placeholder='Search...'
             onChange={(e) => setSearchQuery(e.target.value)}
 
+
+
           />
           <button
             aria-label='close search'
             className='absolute right-4 pb-2 text-white text-2xl'
             onClick={closeSearch}
           >
-           <XMarkIcon className='block h-6 w-6' aria-hidden='true' />
+            <XMarkIcon className='block h-6 w-6' aria-hidden='true' />
           </button>
         </div>
       )}
