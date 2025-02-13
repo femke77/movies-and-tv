@@ -8,7 +8,7 @@ const Results = () => {
   //   console.log(data, isLoading, error);
 
   return (
-    <div>
+    <div className='mt-30'>
       {data &&
         data?.map((movie: IMovie) => (
           <div key={movie.id}>
