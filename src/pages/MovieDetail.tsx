@@ -21,7 +21,6 @@ const MovieDetail = () => {
   }, []);
 
   if (!movie) return null;
-  console.log(movie);
 
   const releaseYear = movie?.release_date?.split('-')[0];
   const strokeColor = getStrokeColor(movie.vote_average);
@@ -46,7 +45,7 @@ const MovieDetail = () => {
   return (
     <>
       {movie ? (
-        <section id='movie-detail' className='relative flex flex-wrap pt-12  '>
+        <section id='movie-detail' className='relative flex flex-wrap pt-14  '>
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[5px] z-0 bg-no-repeat transition-opacity 
         duration-1000 

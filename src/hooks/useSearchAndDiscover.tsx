@@ -23,11 +23,12 @@ export const useSearchTitleQuery = (query: string, page: string) => {
       }
       return searchTitleResults(query, page);
     },
+    enabled: !!query,
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
     gcTime: 1000 * 60 * 60 * 25, // 25 hours
     refetchOnWindowFocus: false,
     retry: 2,
-    enabled: !!query,
+
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
 };

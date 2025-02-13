@@ -5,13 +5,11 @@ import { NavLink } from 'react-router-dom';
 import NavMovies from './NavComponents/NavMovies';
 import NavTVShow from './NavComponents/NavTVShow';
 import NavDiscover from './NavComponents/NavDiscover';
+import Search from './Search';
 
 export default function Navigation() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-
-  console.log(searchQuery);
 
   const searchRef = useRef<HTMLDivElement | null>(null);
 
@@ -31,6 +29,7 @@ export default function Navigation() {
     const handleScroll = () => {
       closeSearch();
     };
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         searchRef.current &&
@@ -92,7 +91,6 @@ export default function Navigation() {
 
             {/* Fullscreen Mobile Nav */}
             <div
-              ref={searchRef}
               className={`fixed inset-0 mt-16 bg-black bg-opacity-80 flex items-center justify-center transition-all duration-700 ${
                 open
                   ? 'opacity-90 h-screen'
@@ -106,26 +104,8 @@ export default function Navigation() {
 
       {/* Search Bar */}
       {isVisible && (
-        <div
-          className={`fixed top-0 left-0 w-full h-30 bg-transparent transition-all duration-700 flex items-end pb-4 justify-center ${
-            searchOpen
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 -translate-y-full'
-          }`}
-        >
-          <input
-            type='text'
-            className='w-full h-10 px-4 mx-1 text-xl bg-gray-900 text-white border-2 rounded-md border-gray-700 focus:outline-none focus:rounded-lg focus:ring-1 focus:ring-white'
-            placeholder='Search...'
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button
-            aria-label='close search'
-            className='absolute right-4 pb-2 text-white text-2xl hover:text-gray-300 focus:outline-none'
-            onClick={closeSearch}
-          >
-            <XMarkIcon className='block h-6 w-6' aria-hidden='true' />
-          </button>
+        <div ref={searchRef}>
+          <Search searchOpen={searchOpen} closeSearch={closeSearch} />
         </div>
       )}
     </nav>
