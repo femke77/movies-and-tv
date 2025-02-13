@@ -6,6 +6,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import MovieDetail from './pages/MovieDetail.tsx';
+import ScrollToTop from './components/ScrollToTop.tsx';
+import Results from './pages/Results.tsx';
 
 const queryClient = new QueryClient();
 
@@ -19,8 +21,16 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: 'search/:query',
+        element: <Results />,
+      },
+      {
         path: 'movie/:movie_id',
-        element: <MovieDetail />,
+        element: (
+          <ScrollToTop>
+            <MovieDetail />
+          </ScrollToTop>
+        ),
       },
       {
         path: 'explore',

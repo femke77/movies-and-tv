@@ -33,4 +33,4 @@ jobs:
 
       # Run lint
       - name: Run Lint
-        run: npm run lint -- --max-warnings=2
+        run: npm run lint -- --max-warnings=0 --fix

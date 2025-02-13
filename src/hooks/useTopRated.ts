@@ -11,8 +11,6 @@ const fetchTopRatedMovies = async () => {
 export const useTopRatedMovies = () => {
   const [shouldFetch, setShouldFetch] = useState(false);
 
-  
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
