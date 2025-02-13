@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import ScrollToTop from './components/ScrollToTop';
+
 
 function App() {
   return (
@@ -13,9 +13,9 @@ function App() {
           <Nav />
         </Header>
         <main className='min-h-screen'>
-          <ScrollToTop>
+       
             <Outlet />
-          </ScrollToTop>
+ 
         </main>
         <Footer />
       </div>

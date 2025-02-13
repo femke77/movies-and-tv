@@ -46,7 +46,7 @@ const Slide = ({
       <div
         className='relative w-full h-full bg-cover bg-center md:bg-top'
         style={{
-          backgroundImage: `url('https://image.tmdb.org/t/p/original${slide.backdrop_path}')`,
+          backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
         }}
       >
         {/* gradient overlay */}
@@ -104,7 +104,7 @@ const Slide = ({
               <WatchButton />
             </div>
             <div className='mb-2'>
-              <UserRating rating={slide.vote_average} />
+              <UserRating rating={slide.vote_average ?? 0} />
             </div>
           </div>
         </div>
@@ -114,7 +114,7 @@ const Slide = ({
           {slide.poster_path && (
             <img
               className='w-78 h-auto rounded-lg shadow-lg '
-              src={`https://image.tmdb.org/t/p/w185${slide.poster_path}`}
+              src={slide.poster_path ? `https://image.tmdb.org/t/p/w500${slide.poster_path}` : '/noimage.jpg'}
               alt={slide.title}
             />
           )}

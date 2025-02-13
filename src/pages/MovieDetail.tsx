@@ -21,6 +21,8 @@ const MovieDetail = () => {
   }, []);
 
   if (!movie) return null;
+  console.log(movie);
+  
   const releaseYear = movie?.release_date?.split('-')[0];
   const strokeColor = getStrokeColor(movie.vote_average);
   const directorData = movie?.crew?.find(
@@ -28,7 +30,7 @@ const MovieDetail = () => {
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = movie?.crew?.find(
-    (member: { job: string }) => member.job === 'Screenplay',
+    (member: { job: string }) => member.job === 'Screenplay' || member.job === 'Writer',
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -45,7 +47,7 @@ const MovieDetail = () => {
       {movie ? (
         <section
           id='movie-detail'
-          className='relative flex flex-wrap my-12 p-2  '
+          className='relative flex flex-wrap pt-12  '
         >
           <div
             className={`absolute inset-0 bg-cover bg-center blur-[15px] z-0 bg-no-repeat transition-opacity 
@@ -53,7 +55,7 @@ const MovieDetail = () => {
         ease-in-out 
         ${isVisible ? 'opacity-30' : 'opacity-0'}`}
             style={{
-              backgroundImage: `url('https://image.tmdb.org/t/p/original${movie?.backdrop_path}')`,
+              backgroundImage: `url('https://image.tmdb.org/t/p/w342${movie?.backdrop_path}')`,
             }}
           ></div>
           <div className='relative z-10 w-full flex flex-wrap '>
@@ -122,8 +124,10 @@ const MovieDetail = () => {
                   </span>
                 </p>
               </div>
+
               <div className='flex space-x-10 mb-4'>
-                <p className='text-xl font-bold'>
+                {movie.budget > 0 && (
+               <p className='text-xl font-bold'>
                   Budget:{' '}
                   <span className='text-lg text-gray-100/50 my-3 font-bold'>
                     {movie.budget.toLocaleString('en-US', {
@@ -131,7 +135,8 @@ const MovieDetail = () => {
                       currency: 'USD',
                     })}
                   </span>
-                </p>
+                </p>)}
+                
                 <p className='text-xl font-bold'>
                   Revenue:{' '}
                   <span className='text-lg text-gray-100/50 my-3 font-bold'>
@@ -141,12 +146,13 @@ const MovieDetail = () => {
                     })}
                   </span>
                 </p>
-                <p className='text-xl font-bold'>
+                {(ROI !== '0') &&<p className='text-xl font-bold'>
                   ROI:{' '}
                   <span className='text-lg text-gray-100/50 my-3 font-bold'>
                     {ROI}%
                   </span>
-                </p>
+                </p>}
+                
               </div>
               <p className='text-xl font-bold mb-4'>
                 Director:{' '}

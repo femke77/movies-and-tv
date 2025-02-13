@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 const ItemCard = ({ item, itemType }: { item: IMovie; itemType: string }) => {
   const formattedDate = dayjs(item.release_date).format("MMM D, YYYY");
   const [isVisible, setIsVisible] = useState(false);
-  const strokeColor = getStrokeColor(item.vote_average);
+  const strokeColor = getStrokeColor(item.vote_average ?? 0);
   useEffect(() => {
     setIsVisible(true);
     return () => {
@@ -24,20 +24,21 @@ const ItemCard = ({ item, itemType }: { item: IMovie; itemType: string }) => {
     >
       <Link to={`/${itemType}/${item.id}`}>
         <img
-          className="w-full h-72 object-cover rounded-lg"
-          src={`https://image.tmdb.org/t/p/w154/${item.poster_path}`}
+          className="w-full min-w-full h-72 object-cover rounded-lg"
+          src={item.poster_path ?`https://image.tmdb.org/t/p/w342/${item.poster_path}` : '/noimage.jpg'}
         />
         <div className="flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black">
           <div className="relative -top-13 left-3 w-full">
             <div className="flex items-end">
+            {/* TODO vote average N/A when not avaliable */}
               <UserRating
-                rating={item.vote_average}
+                rating={item.vote_average ?? 0}
                 color={strokeColor}
                 width="w-12"
                 height="h-12"
               />
               {/* TODO pill or chip and show genres conditionally */}
-              {/* <p className='ml-12'>{movieGenres[0]}</p> */}
+                  {/* <p className='ml-12'>{movieGenres[0]}</p> */}
             </div>
             <h2 className="whitespace-pre max-w-[192px] overflow-hidden text-sm/6 font-bold -ml-2 mt-1">
               {item.title}
