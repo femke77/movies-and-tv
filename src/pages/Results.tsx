@@ -5,14 +5,15 @@ import ItemCard from "../components/ItemCard";
 import { useRef, useEffect } from "react";
 
 const Results = () => {
-  const { query } = useParams<{ query: string }>();
-  const { data = [] } = useSearchTitleQuery(query ?? "", "1");
-
+  const { query,} = useParams<{ query: string }>();
+  const { data = [], isLoading} = useSearchTitleQuery(query ?? "", "1");
   const lastResultsRef = useRef<IMovie[]>([]);
   const lastLetterRef = useRef<string | null>(null);
-
+  
+  if (isLoading) return null;
+  
   useEffect(() => {
-    if (query) {
+    if (query?.length===1) {
       lastResultsRef.current = data;
       lastLetterRef.current = query[query.length - 1];
     }
