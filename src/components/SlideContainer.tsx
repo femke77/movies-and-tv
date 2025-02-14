@@ -1,7 +1,7 @@
-import { useRef, forwardRef } from 'react';
-import ItemCard from './ItemCard';
-import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
-import { IMovie } from '../interfaces/IMovie';
+import { useRef, forwardRef } from "react";
+import ItemCard from "./ItemCard";
+import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
+import { IMovie } from "../interfaces/IMovie";
 
 const SlideContainer = forwardRef<
   HTMLDivElement,
@@ -11,13 +11,13 @@ const SlideContainer = forwardRef<
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -900, behavior: 'smooth' });
+      scrollRef.current.scrollBy({ left: -900, behavior: "smooth" });
     }
   };
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 900, behavior: 'smooth' });
+      scrollRef.current.scrollBy({ left: 900, behavior: "smooth" });
     }
   };
 
@@ -37,14 +37,17 @@ const SlideContainer = forwardRef<
       <div
         ref={scrollRef}
         className="flex gap-3 px-4 py-2 w-full overflow-x-auto scroll-smooth scrollbar-hide snap-x snap-mandatory"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {items.map((item) => (
-          <div 
-            key={`item-${item.id}`}
-            className="w-[180px] flex-shrink-0"
-          >
-            <ItemCard item={item} itemType={itemType} showRating={true} showGenres={false}/>
+          <div key={`item-${item.id}`} className="w-[180px] flex-shrink-0">
+            <ItemCard
+              textSize={"md"}
+              item={item}
+              itemType={itemType}
+              showRating={true}
+              showGenres={false}
+            />
           </div>
         ))}
       </div>

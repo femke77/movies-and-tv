@@ -34,7 +34,13 @@ const Results = () => {
                 key={`movie-${movie.id}`}
                 className="w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]"
               >
-                <ItemCard item={movie} itemType="movie" showRating={false} showGenres={false} />
+                <ItemCard
+                  textSize="xl"
+                  item={movie}
+                  itemType="movie"
+                  showRating={false}
+                  showGenres={false}
+                />
               </div>
             ))
           ) : (

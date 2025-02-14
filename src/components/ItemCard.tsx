@@ -11,11 +11,13 @@ const ItemCard = ({
   itemType,
   showRating,
   showGenres,
+  textSize,
 }: {
   item: IMovie;
   itemType: string;
   showRating: boolean;
   showGenres: boolean;
+  textSize: string;
 }) => {
   const formattedDate = dayjs(item.release_date).format("MMM D, YYYY");
   const [isVisible, setIsVisible] = useState(false);
@@ -48,7 +50,7 @@ const ItemCard = ({
         </div>
         <div className="flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black">
           <div className="relative -top-13 left-3 w-full">
-            <div className="flex min-h-9 items-end">
+            <div className="flex min-h-11 items-end">
               {showRating && (
                 <UserRating
                   rating={item.vote_average ?? 0}
@@ -58,9 +60,10 @@ const ItemCard = ({
                 />
               )}
             </div>
+            {/* TODO chips go here when ready */}
             {showGenres && null}
-
-            <h2 className="whitespace-pre max-w-full overflow-hidden text-md/6 -ml-2 mt-1">
+{/* TODO text size change depending on use of component */}
+            <h2 className={`whitespace-pre max-w-full overflow-hidden text-${textSize}/6 -ml-2 mt-1`}>
               {item.title}
             </h2>
             <p className="text-sm font-light -ml-2">
