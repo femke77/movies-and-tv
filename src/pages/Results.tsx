@@ -4,7 +4,6 @@ import { IMovie } from "../interfaces/IMovie";
 import ItemCard from "../components/ItemCard";
 import { useRef, useEffect } from "react";
 
-// TODO past 1990px wide need extra media queries
 const Results = () => {
   const { query } = useParams<{ query: string }>();
   const { data = [], isLoading } = useSearchTitleQuery(query ?? "", "1");
@@ -33,7 +32,7 @@ const Results = () => {
             results.map((movie: IMovie) => (
               <div
                 key={`movie-${movie.id}`}
-                className="w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-18.5px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]"
+                className="w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]"
               >
                 <ItemCard item={movie} itemType="movie" />
               </div>
