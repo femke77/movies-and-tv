@@ -55,12 +55,12 @@ const Slide = ({
 
         {/* card content */}
         <div className='absolute md:w-1/2 h-full flex flex-col justify-center p-16 md:p-18 lg:p-26 xl:ml-10'>
-          {/* left, top- genre, release date, title logo */}
+          {/* left, top - genre, release date, title logo */}
           <div className='flex flex-col items-start'>
             <div className='flex items-center mb-12 '>
               {width > 390 ? (
                 <>
-                  {movieGenres &&
+                  {movieGenres.length >=1 &&
                     movieGenres.slice(0, 2).map((genre) => (
                       <span key={genre} className='text-white  ml-4'>
                         {genre}
@@ -69,7 +69,7 @@ const Slide = ({
                 </>
               ) : (
                 <>
-                  {movieGenres &&
+                  {movieGenres.length >=1 &&
                     movieGenres.slice(0, 1).map((genre) => (
                       <span key={genre} className='text-white  ml-0'>
                         {genre}
@@ -77,11 +77,11 @@ const Slide = ({
                     ))}
                 </>
               )}
-              <p className='text-white font-light ml-8'>{formattedDate}</p>
+              <p className='text-white font-light ml-8'>{formattedDate !== "Invalid Date" && formattedDate}</p>
             </div>
           </div>
 
-          {/* left mid - title or title logo, overview */}
+          {/* left, mid - title or title logo, overview */}
           <Link to={`/movie/${slide.id}`}>
             <div className='flex flex-col items-center'>
               {displayLogo ? (
@@ -98,7 +98,7 @@ const Slide = ({
             </div>
           </Link>
 
-          {/* left, bottom rating and watch componentns */}
+          {/* left, bottom - rating and watch componentns */}
           <div className='flex flex-col sm:flex-row items-center justify-around mt-4 '>
             <div className='mb-2'>
               <WatchButton />
