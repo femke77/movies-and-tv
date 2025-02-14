@@ -59,7 +59,7 @@ const MovieDetail = () => {
             {/* Left Section */}
             <section className='w-[360px] flex-shrink-0 mx-auto pl-8'>
               <img
-                src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
+                src={movie.poster_path ? `https://image.tmdb.org/t/p/w780/${movie.poster_path}`: '/no_poster_available.svg'}
                 alt='movie poster'
                 className='w-[360px] h-auto rounded-lg'
               />

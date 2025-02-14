@@ -17,10 +17,10 @@ const ItemCard = ({ item, itemType }: { item: IMovie; itemType: string }) => {
   }, []);
   return (
     <div
-      className={`relative flex flex-col items-center justify-between w-48 h-[375px] bg-black rounded-xl shadow-lg overflow-hidden 
-  transition-opacity duration-500 ease-linear${
-    isVisible ? 'opacity-100' : 'opacity-0'
-  } `}
+    className={`relative flex flex-col items-center justify-between flex-grow min-w-[180px] max-w-[250px] h-[375px] bg-black rounded-xl shadow-lg overflow-hidden 
+      transition-opacity duration-500 ease-linear ${
+        isVisible ? 'opacity-100' : 'opacity-0'
+      } `}
     >
       <Link to={`/${itemType}/${item.id}`}>
         <img
@@ -28,7 +28,7 @@ const ItemCard = ({ item, itemType }: { item: IMovie; itemType: string }) => {
           src={
             item.poster_path
               ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
-              : '/noimage.jpg'
+              : '/no_poster_available.svg'
           }
         />
         <div className='flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black'>
