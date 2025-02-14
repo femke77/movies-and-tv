@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}  # Checkout the PR branch properly
 
       - name: Use Node.js 21.x
         uses: actions/setup-node@v4
@@ -37,9 +39,10 @@ jobs:
 
       - name: Commit changes if needed
         run: |
-         git config --global user.name "github-actions[bot]"
-         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-         git checkout $GITHUB_HEAD_REF  # Switch to the PR's branch
-         git add .
-         git diff --staged --quiet || git commit -m "chore: Auto-fix linting issues"
-         git push origin $GITHUB_HEAD_REF  
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git checkout ${{ github.head_ref }}  # Ensure we are on the correct branch
+          
+          git add .
+          git diff --staged --quiet || (git commit -m "chore: Auto-fix linting issues" && git push origin ${{ github.head_ref }})
