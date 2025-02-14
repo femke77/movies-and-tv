@@ -117,7 +117,7 @@ const Slide = ({
               src={
                 slide.poster_path
                   ? `https://image.tmdb.org/t/p/w500${slide.poster_path}`
-                  : '/noimage.jpg'
+                  : '/no_poster_available.svg'
               }
               alt={slide.title}
             />
