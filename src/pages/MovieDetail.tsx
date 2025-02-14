@@ -55,13 +55,18 @@ const MovieDetail = () => {
               backgroundImage: `url('https://image.tmdb.org/t/p/w342${movie?.backdrop_path}')`,
             }}
           ></div>
+          {/* content */}
           <div className='relative z-10 w-full flex flex-wrap '>
             {/* Left Section */}
             <section className='w-[360px] flex-shrink-0 mx-auto pl-8'>
               <img
-                src={movie.poster_path ? `https://image.tmdb.org/t/p/w780/${movie.poster_path}`: '/no_poster_available.svg'}
+                src={
+                  movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w780/${movie.poster_path}`
+                    : '/no_poster_available.svg'
+                }
                 alt='movie poster'
-                className='w-[360px] h-auto rounded-lg'
+                className='w-[360px] h-auto rounded-lg mb-12'
               />
             </section>
 

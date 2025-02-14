@@ -104,7 +104,7 @@ export default function Navigation() {
 
       {/* Search Bar */}
       {isVisible && (
-        <div ref={searchRef}>
+        <div ref={searchRef} className='pointer-events-none'>
           <Search searchOpen={searchOpen} closeSearch={closeSearch} />
         </div>
       )}

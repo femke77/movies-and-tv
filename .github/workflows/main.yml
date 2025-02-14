@@ -6,6 +6,9 @@ on:
       - main
       - develop
 
+permissions:
+  contents: write 
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -13,13 +16,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }} 
 
       - name: Use Node.js 21.x
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
 
-      # Cache node_modules for faster builds
       - name: Cache node modules
         uses: actions/cache@v4
         with:
@@ -31,15 +36,15 @@ jobs:
       - name: 🧰 Install Deps
         run: npm install
 
-      # Run lint
       - name: Run Lint
         run: npm run lint -- --fix --max-warnings=0
 
-      - name: Commit changes if needed
-         run: |
+      - name: Commit and Push Changes
+        run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout $GITHUB_HEAD_REF  # Switch to the PR's branch
+          
+          git checkout ${{ github.head_ref }}
+
           git add .
-          git diff --staged --quiet || git commit -m "chore: Auto-fix linting issues"
-          git push origin $GITHUB_HEAD_REF  
+          git diff --staged --quiet || (git commit -m "chore: Auto-fix linting issues" && git push origin ${{ github.head_ref }})
