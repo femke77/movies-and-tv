@@ -10,16 +10,16 @@ const Results = () => {
   const lastResultsRef = useRef<IMovie[]>([]);
   const lastLetterRef = useRef<string | null>(null);
   
-  if (isLoading) return null;
-  
   useEffect(() => {
-    if (query?.length===1) {
-      lastResultsRef.current = data;
-      lastLetterRef.current = query[query.length - 1];
-    }
-  }, [query, data]);
-
-  const results = query ? data : lastResultsRef.current;
+      if (query?.length===1) {
+          lastResultsRef.current = data;
+          lastLetterRef.current = query[query.length - 1];
+        }
+    }, [query, data]);
+    
+    const results = query ? data : lastResultsRef.current;
+    
+    if (isLoading) return null;
 
   return (
     <div className="mt-20 mx-4">

@@ -26,9 +26,9 @@ const ItemCard = ({ item, itemType }: { item: IMovie; itemType: string }) => {
         }`}
     >
       <Link to={`/${itemType}/${item.id}`} className="w-full">
-        <div className="aspect-[2/3] w-full">
+        <div className="aspect-[2/3] w-full ">
           <img
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain rounded-b-lg"
             src={
               item.poster_path
                 ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
