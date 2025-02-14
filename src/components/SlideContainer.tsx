@@ -36,7 +36,7 @@ const SlideContainer = forwardRef<
       {/* Scrollable Container renders ItemCard */}
       <div
         ref={scrollRef}
-        className="flex gap-2 px-4 py-2 w-full overflow-x-auto scroll-smooth scrollbar-hide snap-x snap-mandatory"
+        className="flex gap-3 px-4 py-2 w-full overflow-x-auto scroll-smooth scrollbar-hide snap-x snap-mandatory"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {items.map((item) => (
@@ -44,7 +44,7 @@ const SlideContainer = forwardRef<
             key={`item-${item.id}`}
             className="w-[180px] flex-shrink-0"
           >
-            <ItemCard item={item} itemType={itemType} />
+            <ItemCard item={item} itemType={itemType} showRating={true} showGenres={false}/>
           </div>
         ))}
       </div>
