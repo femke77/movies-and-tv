@@ -24,7 +24,7 @@ export const useSearchTitleQuery = (query: string, page: string) => {
       return searchTitleResults(query, page);
     },
     enabled: !!query,
-    staleTime: 0, 
+    staleTime: 0,
     retry: 2,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
@@ -51,8 +51,8 @@ export const useDiscoverQuery = (sort: string, page: string, genre: string) => {
       return discoverResults(sort, page, genre);
     },
     enabled: true,
-    staleTime: 0, 
-    retry:2,
+    staleTime: 0,
+    retry: 2,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
 };

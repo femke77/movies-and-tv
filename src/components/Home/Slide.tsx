@@ -60,7 +60,7 @@ const Slide = ({
             <div className='flex items-center mb-12 '>
               {width > 390 ? (
                 <>
-                  {movieGenres.length >=1 &&
+                  {movieGenres.length >= 1 &&
                     movieGenres.slice(0, 2).map((genre) => (
                       <span key={genre} className='text-white  ml-4'>
                         {genre}
@@ -69,7 +69,7 @@ const Slide = ({
                 </>
               ) : (
                 <>
-                  {movieGenres.length >=1 &&
+                  {movieGenres.length >= 1 &&
                     movieGenres.slice(0, 1).map((genre) => (
                       <span key={genre} className='text-white  ml-0'>
                         {genre}
@@ -77,7 +77,9 @@ const Slide = ({
                     ))}
                 </>
               )}
-              <p className='text-white font-light ml-8'>{formattedDate !== "Invalid Date" && formattedDate}</p>
+              <p className='text-white font-light ml-8'>
+                {formattedDate !== 'Invalid Date' && formattedDate}
+              </p>
             </div>
           </div>
 
