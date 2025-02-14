@@ -22,14 +22,14 @@ const Search = ({
     >
       <input
         type='text'
-        className='w-full h-13 px-4 mx-1 text-xl bg-gray-900 text-white border-2 rounded-md border-gray-700 focus:outline-none focus:rounded-lg focus:ring-1 focus:ring-white'
+        className='pointer-events-auto w-full h-13 px-4 mx-1 text-xl bg-gray-900 text-white border-2 rounded-md border-gray-700 focus:outline-none focus:rounded-lg focus:ring-1 focus:ring-white'
         placeholder='Search...'
         onChange={handleNavigate}
         autoFocus
       />
       <button
         aria-label='close search'
-        className='absolute right-4 pb-3.5 text-white text-2xl hover:text-gray-300 focus:outline-none'
+        className='absolute right-4 pb-3.5 text-white text-2xl hover:text-gray-300 focus:outline-none hover:cursor-pointer'
         onClick={closeSearch}
         type='submit'
       >
