@@ -24,7 +24,7 @@ const SlideContainer = forwardRef<
   return (
     <div ref={ref} id={id} className="pl-6 relative w-full">
       <h2 className="text-2xl font-bold mb-8">{headerTxt}</h2>
-      
+
       {/* Left Arrow */}
       <button
         onClick={scrollLeft}
@@ -41,7 +41,7 @@ const SlideContainer = forwardRef<
       >
         {items.map((item) => (
           <div 
-            key={item.id} 
+            key={`item-${item.id}`}
             className="w-[180px] flex-shrink-0"
           >
             <ItemCard item={item} itemType={itemType} />

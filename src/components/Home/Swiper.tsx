@@ -43,7 +43,7 @@ export default function SwiperElement() {
       >
         {movies &&
           movies.map((movie, index) => (
-            <SwiperSlide key={movie.id}>
+            <SwiperSlide key={`item-${movie.id}`}>
               <Slide
                 slide={movie}
                 isVisible={index === currentIndex}

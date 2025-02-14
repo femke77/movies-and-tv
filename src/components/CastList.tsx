@@ -6,7 +6,7 @@ export const CastList = ({ cast }: { cast: ICast[] }) => {
   return (
     <SimpleSlider>
       {cast.map((actor) => (
-        <div key={actor.id} onMouseDown={(e) => e.preventDefault()}>
+        <div key={`actor-${actor.id}`} onMouseDown={(e) => e.preventDefault()}>
           <CastCard cast={actor} />
         </div>
       ))}
