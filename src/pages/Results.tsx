@@ -16,11 +16,11 @@ const Results = () => {
         Search results for '{query}'
       </h2>
       
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-4 items-start">
+      <div className="grid   grid-cols-[repeat(auto-fit,minmax(min(50%-10px,350px),1fr))] sm:grid-cols-[repeat(auto-fit,minmax(min(180px,350px),1fr))] gap-4 items-start">
         {data?.map((movie: IMovie) => (
           <div 
             key={movie.id} 
-            className="min-w-[180px] max-w-[350px] w-full"
+            className="min-w-[100px] sm:min-w-[180px] max-w-[350px] w-full"
           >
             <ItemCard item={movie} itemType="movie" />
           </div>
