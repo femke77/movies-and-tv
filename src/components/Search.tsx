@@ -29,7 +29,7 @@ const Search = ({
       />
       <button
         aria-label='close search'
-        className='absolute right-4 pb-3.5 text-white text-2xl hover:text-gray-300 focus:outline-none hover:cursor-pointer'
+        className='pointer-events-auto absolute right-4 pb-3.5 text-white text-2xl hover:text-gray-300 focus:outline-none hover:cursor-pointer'
         onClick={closeSearch}
         type='submit'
       >

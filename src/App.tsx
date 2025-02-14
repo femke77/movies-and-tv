@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
+import { ScrollRestoration } from 'react-router-dom';
 function App() {
   return (
     <>
@@ -12,6 +12,7 @@ function App() {
           <Nav />
         </Header>
         <main className='min-h-screen'>
+          <ScrollRestoration />
           <Outlet />
         </main>
         <Footer />
