@@ -32,53 +32,51 @@ const ItemCard = ({
 
   return (
     <>
-    
-    <div
-      className={`relative flex flex-col items-center justify-between w-full bg-black rounded-xl shadow-lg overflow-hidden 
+      <div
+        className={`relative flex flex-col items-center justify-between w-full bg-black rounded-xl shadow-lg overflow-hidden 
         transition-opacity duration-500 ease-linear ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
-    >
-      <Link to={`/${itemType}/${item.id}`} className='w-full'>
-        <div className='aspect-[2/3] w-full overflow-hidden rounded-lg bg-black'>
-          <img
-            className='w-full object-contain rounded-b-lg hover:opacity-70 hover:scale-115 hover:bg-opacity-50 transition-all duration-500 ease-in-out '
-            src={
-              item.poster_path
-                ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
-                : '/no_poster_available.svg'
-            }
-          />
-        </div>
-        <div className='flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black'>
-          <div className='relative -top-13 left-3 w-full'>
-            <div className='flex min-h-11 items-end'>
-              {showRating && (
-                <UserRating
-                  rating={item.vote_average ?? 0}
-                  color={strokeColor}
-                  width='w-12'
-                  height='h-12'
-                />
-              )}
-            </div>
-            {/* TODO chips go here when ready */}
-            {showGenres && null}
-
-            <h2
-              className={`whitespace-pre max-w-full overflow-hidden text-${textSize}/6 -ml-2 mt-1`}
-            >
-              {itemType === 'tv' ? item.name : item.title}
-            </h2>
-            <p className='text-sm font-light -ml-2'>
-              {formattedDate !== 'Invalid Date' ? formattedDate : 'Unknown'}{' '}
-              &#x2022;{' '}
-              {itemType === 'tv' ? 'TV' : 'Movie'}
-            </p>
+      >
+        <Link to={`/${itemType}/${item.id}`} className='w-full'>
+          <div className='aspect-[2/3] w-full overflow-hidden rounded-lg bg-black'>
+            <img
+              className='w-full object-contain rounded-b-lg hover:opacity-70 hover:scale-115 hover:bg-opacity-50 transition-all duration-500 ease-in-out '
+              src={
+                item.poster_path
+                  ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
+                  : '/no_poster_available.svg'
+              }
+            />
           </div>
-        </div>
-      </Link>
-    </div>
+          <div className='flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black'>
+            <div className='relative -top-13 left-3 w-full'>
+              <div className='flex min-h-11 items-end'>
+                {showRating && (
+                  <UserRating
+                    rating={item.vote_average ?? 0}
+                    color={strokeColor}
+                    width='w-12'
+                    height='h-12'
+                  />
+                )}
+              </div>
+              {/* TODO chips go here when ready */}
+              {showGenres && null}
+
+              <h2
+                className={`whitespace-pre max-w-full overflow-hidden text-${textSize}/6 -ml-2 mt-1`}
+              >
+                {itemType === 'tv' ? item.name : item.title}
+              </h2>
+              <p className='text-sm font-light -ml-2'>
+                {formattedDate !== 'Invalid Date' ? formattedDate : 'Unknown'}{' '}
+                &#x2022; {itemType === 'tv' ? 'TV' : 'Movie'}
+              </p>
+            </div>
+          </div>
+        </Link>
+      </div>
     </>
   );
 };

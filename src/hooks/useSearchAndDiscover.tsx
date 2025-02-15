@@ -9,8 +9,7 @@ const searchResults = async (
   language: string = 'en',
 ) => {
   const { data } = await TMDBClient.get(
-    `/search/multi?query=${query}&include_adult=false&language=${language}&page=${page}`
-
+    `/search/multi?query=${query}&include_adult=false&language=${language}&page=${page}`,
   );
   return data.results;
 };
@@ -57,6 +56,5 @@ export const useDiscoverQuery = (sort: string, page: string, genre: string) => {
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
 };
-
 
 //     `/search/movie?include_adult=false&language=${language}&query=${query}&page=${page}`,
