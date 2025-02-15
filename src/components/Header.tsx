@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
+import { ReactNode } from "react";
 
 // TODO refactor back to this, just don't put the classes on header, put on div and surround with header
-interface HeaderProps {
-  children: React.ReactNode;
-}
 
-const Header = ({ children }: HeaderProps) => {
+const Header = ({ children }: { children: ReactNode }) => {
   return (
     <header className="bg-gray-900 flex flex-1 justify-between items-center px-3 z-50 relative pt-1">
       <h1>

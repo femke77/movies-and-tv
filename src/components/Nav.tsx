@@ -47,7 +47,7 @@ export default function Navigation({
   }, []);
 
   return (
-    <header>
+    <header className="pb-16">
       <div
         ref={headerRef}
         className={`fixed top-0 left-0 right-0 bg-gray-900 flex-1  items-center px-3  pt-1 w-full  flex  justify-between z-50 transition-transform duration-300 ${
