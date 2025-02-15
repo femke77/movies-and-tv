@@ -9,4 +9,5 @@ export interface IMovie {
   genre_ids: number[];
   title_logo?: string;
   media_type?: string;
+  name?: string;
 }

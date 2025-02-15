@@ -47,6 +47,7 @@ export default function Navigation({
   }, []);
 
   return (
+    // TODO has to back to having header with children or nav mobile is broken. 
     <header className="pb-16">
       <div
         ref={headerRef}
@@ -80,10 +81,7 @@ export default function Navigation({
                       </DisclosureButton>
                     </div>
                     <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
-                      <NavLink
-                        to="/"
-                        className="flex flex-shrink-0 items-center"
-                      ></NavLink>
+                     
                       <div className="hidden md:flex flex-1 items-center py-6 pl-2">
                         <div className="flex space-x-4 items-center pr-4">
                           <NavMovies />
@@ -103,12 +101,18 @@ export default function Navigation({
                   </div>
                 </div>
 
-                {/* Fullscreen Mobile Nav */}
-                <div
+                {/* Fullscreen Mobile Nav */} <div
                   className={` inset-0 mt-16 bg-black bg-opacity-80 flex items-center justify-center transition-all duration-700 ${
                     open
                       ? "opacity-90 h-screen"
-                      : "opacity-0 h-0 pointer-events-none"
+                      : "opacity-0 h-0 "
+                  } }`}
+                ></div>
+                <div
+                  className={`mt-16 bg-black bg-opacity-80 flex items-center justify-center transition-all duration-700 ${
+                    open
+                      ? "opacity-90 h-screen"
+                      : "opacity-0 h-0 "
                   } }`}
                 ></div>
                 {/* TODO Mobile view needs links here */}

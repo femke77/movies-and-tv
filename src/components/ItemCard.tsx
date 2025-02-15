@@ -31,6 +31,8 @@ const ItemCard = ({
   }, []);
 
   return (
+    <>
+    
     <div
       className={`relative flex flex-col items-center justify-between w-full bg-black rounded-xl shadow-lg overflow-hidden 
         transition-opacity duration-500 ease-linear ${
@@ -66,7 +68,7 @@ const ItemCard = ({
             <h2
               className={`whitespace-pre max-w-full overflow-hidden text-${textSize}/6 -ml-2 mt-1`}
             >
-              {item.title}
+              {itemType === 'tv' ? item.name : item.title}
             </h2>
             <p className='text-sm font-light -ml-2'>
               {formattedDate !== 'Invalid Date' ? formattedDate : 'Unknown'}{' '}
@@ -77,6 +79,7 @@ const ItemCard = ({
         </div>
       </Link>
     </div>
+    </>
   );
 };
 

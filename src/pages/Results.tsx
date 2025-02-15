@@ -38,7 +38,7 @@ const Results = () => {
     }
   }, [query, data]);
 
-  const results = query ? data : lastResultsRef.current;
+  const results = query ? data: lastResultsRef.current;
 
   if (isLoading) return null;
 
