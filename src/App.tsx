@@ -15,9 +15,9 @@ function App() {
     <>
       <ScrollRestoration />
       <div className="bg-black text-white h-full">
-        {/* <Header> */}
+        <Header>
           <Nav setSearchQuery={setSearchQuery}/>
-        {/* </Header> */}
+        </Header>
         <main className="min-h-screen">
           <Outlet context={searchQuery } />
         </main>

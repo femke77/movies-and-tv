@@ -1,24 +1,17 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Disclosure, DisclosureButton } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import NavMovies from "./NavComponents/NavMovies";
 import NavTVShow from "./NavComponents/NavTVShow";
 import NavDiscover from "./NavComponents/NavDiscover";
 import Search from "./Search";
 
-export default function Navigation({
-  setSearchQuery,
-}: {
-  setSearchQuery: (query: string) => void;
-}) {
+export default function Navigation({setSearchQuery}: {setSearchQuery: (query: string) => void}) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [hideHeader, setHideHeader] = useState(false);
-
-  const searchRef = useRef<HTMLDivElement | null>(null);
-  const headerRef = useRef<HTMLDivElement | null>(null);
-  const lastScrollY = useRef(0);
+  
+  const searchRef = useRef<HTMLDivElement | null>(null); 
 
   const openSearch = () => {
     setIsVisible(true);
@@ -27,113 +20,90 @@ export default function Navigation({
 
   const closeSearch = () => {
     setSearchOpen(false);
-    setTimeout(() => setIsVisible(false), 0);
+    setTimeout(() => setIsVisible(false), 0); // Restored your original timing
   };
 
-  // Scroll behavior to hide header when scrolling down
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
-        setHideHeader(true);
-      } else {
-        setHideHeader(false);
+    if (!searchOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        closeSearch();
       }
-      lastScrollY.current = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    // Removed scroll event handler to allow search to remain open while scrolling
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [searchOpen]);
 
   return (
-    // TODO has to back to having header with children or nav mobile is broken. 
-    <header className="pb-16">
-      <div
-        ref={headerRef}
-        className={`fixed top-0 left-0 right-0 bg-gray-900 flex-1  items-center px-3  pt-1 w-full  flex  justify-between z-50 transition-transform duration-300 ${
-          hideHeader ? "-translate-y-full" : "translate-y-0"
-        }`}
-      >
-        <Link to="/" className="font-kyrilla text-2xl sm:text-3xl py-2 mr-8">
-          Movies Unlimited
-        </Link>
-        <nav className="bg-gray-900 h-16 relative">
-          <Disclosure>
-            {({ open }) => (
-              <>
-                <div className="mx-auto px-4 sm:px-2 lg:px-4">
-                  <div className="relative flex h-16 items-center justify-between">
-                    <div className="absolute inset-y-0 -left-10 flex items-center md:hidden">
-                      <DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                        <span className="sr-only">Open main menu</span>
-                        {open ? (
-                          <XMarkIcon
-                            className="block h-6 w-6"
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <Bars3Icon
-                            className="block h-6 w-6"
-                            aria-hidden="true"
-                          />
-                        )}
-                      </DisclosureButton>
-                    </div>
-                    <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
-                     
-                      <div className="hidden md:flex flex-1 items-center py-6 pl-2">
-                        <div className="flex space-x-4 items-center pr-4">
-                          <NavMovies />
-                          <NavTVShow />
-                          <NavDiscover />
-                        </div>
+    <div>
+      <nav className="bg-gray-900 h-16 relative z-40">
+        <Disclosure>
+          {({ open }) => (
+            <>
+              <div className="mx-auto px-4 sm:px-2 lg:px-4">
+                <div className="relative flex h-16 items-center justify-between">
+                  <div className="absolute inset-y-0 -left-10 flex items-center md:hidden">
+                    <DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                      <span className="sr-only">Open main menu</span>
+                      {open ? (
+                        <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                      ) : (
+                        <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                      )}
+                    </DisclosureButton>
+                  </div>
+                  <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
+                    <NavLink
+                      to="/"
+                      className="flex flex-shrink-0 items-center"
+                    ></NavLink>
+                    <div className="hidden md:flex flex-1 items-center py-6 pl-2">
+                      <div className="flex space-x-4 items-center pr-4">
+                        <NavMovies />
+                        <NavTVShow />
+                        <NavDiscover />
                       </div>
-                      <button
-                        role="search"
-                        aria-label="search"
-                        onClick={() => openSearch()}
-                        className="relative -right-2 top-0 z-50 hover:cursor-pointer"
-                      >
-                        <img src="/mag.svg" alt="search" className="w-8 h-8" />
-                      </button>
                     </div>
+                    <button
+                      role="search"
+                      aria-label="search"
+                      onClick={() => openSearch()}
+                      className="relative -right-2 top-0 z-50"
+                    >
+                      <img src="/mag.svg" alt="search" className="w-8 h-8" />
+                    </button>
                   </div>
                 </div>
+              </div>
 
-                {/* Fullscreen Mobile Nav */} <div
-                  className={` inset-0 mt-16 bg-black bg-opacity-80 flex items-center justify-center transition-all duration-700 ${
-                    open
-                      ? "opacity-90 h-screen"
-                      : "opacity-0 h-0 "
-                  } }`}
-                ></div>
-                <div
-                  className={`mt-16 bg-black bg-opacity-80 flex items-center justify-center transition-all duration-700 ${
-                    open
-                      ? "opacity-90 h-screen"
-                      : "opacity-0 h-0 "
-                  } }`}
-                ></div>
-                {/* TODO Mobile view needs links here */}
-              </>
-            )}
-          </Disclosure>
-        </nav>
-        {/* Search Bar */}
-        {isVisible && (
-          <div
-            ref={searchRef}
-            className="fixed top-0 left-0 w-full bg-gray-800 shadow-lg z-50 transition-all duration-300"
-          >
-            <Search
-              searchOpen={searchOpen}
-              closeSearch={closeSearch}
-              setSearchQuery={setSearchQuery}
-            />
-          </div>
-        )}
-      </div>
-    </header>
+              {/* Fullscreen Mobile Nav */}
+              <div
+                ref={searchRef}
+                className={`fixed inset-0 mt-16 bg-black bg-opacity-80 flex items-center justify-center transition-all duration-700 ${
+                  open
+                    ? "opacity-90 h-screen"
+                    : "opacity-0 h-0 pointer-events-none"
+                }`}
+              ></div>
+              {/* TODO Mobile view needs buttons here*/}
+            </>
+          )}
+        </Disclosure>
+      </nav>
+      
+      {/* Search Bar */}
+      {isVisible && (
+        <Search searchOpen={searchOpen} closeSearch={closeSearch} setSearchQuery={setSearchQuery} />
+      )}
+    </div>
   );
 }
