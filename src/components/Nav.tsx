@@ -20,7 +20,7 @@ export default function Navigation({setSearchQuery}: {setSearchQuery: (query: st
 
   const closeSearch = () => {
     setSearchOpen(false);
-    setTimeout(() => setIsVisible(false), 0); // Restored your original timing
+    setTimeout(() => setIsVisible(false), 0); 
   };
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function Navigation({setSearchQuery}: {setSearchQuery: (query: st
       }
     };
 
-    // Removed scroll event handler to allow search to remain open while scrolling
+
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -87,7 +87,7 @@ export default function Navigation({setSearchQuery}: {setSearchQuery: (query: st
 
               {/* Fullscreen Mobile Nav */}
               <div
-                ref={searchRef}
+           
                 className={`fixed inset-0 mt-16 bg-black bg-opacity-80 flex items-center justify-center transition-all duration-700 ${
                   open
                     ? "opacity-90 h-screen"
@@ -102,7 +102,9 @@ export default function Navigation({setSearchQuery}: {setSearchQuery: (query: st
       
       {/* Search Bar */}
       {isVisible && (
+        <div ref={searchRef}>
         <Search searchOpen={searchOpen} closeSearch={closeSearch} setSearchQuery={setSearchQuery} />
+    </div>
       )}
     </div>
   );
