@@ -1,4 +1,4 @@
-import { useSearchTitleQuery } from "../hooks/useSearchAndDiscover";
+import { useSearchQuery} from "../hooks/useSearchAndDiscover";
 import { useParams } from "react-router-dom";
 import { IMovie } from "../interfaces/IMovie";
 import ItemCard from "../components/ItemCard";
@@ -29,7 +29,7 @@ const SearchContainer = () => {
 
 const Results = () => {
   const { query } = useParams<{ query: string }>();
-  const { data = [], isLoading } = useSearchTitleQuery(query ?? "", "1");
+  const { data = [], isLoading } = useSearchQuery(query ?? "", "1");
   const lastResultsRef = useRef<IMovie[]>([]);
 
   useEffect(() => {
@@ -55,9 +55,9 @@ const Results = () => {
                 <ItemCard
                   textSize="xl"
                   item={movie}
-                  itemType="movie"
                   showRating={false}
                   showGenres={false}
+                  itemType={movie.media_type || ''}
                 />
               </div>
             ))

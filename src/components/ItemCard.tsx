@@ -71,7 +71,7 @@ const ItemCard = ({
             <p className='text-sm font-light -ml-2'>
               {formattedDate !== 'Invalid Date' ? formattedDate : 'Unknown'}{' '}
               &#x2022;{' '}
-              {itemType.substring(0, 1).toUpperCase() + itemType.substring(1)}
+              {itemType === 'tv' ? 'TV' : 'Movie'}
             </p>
           </div>
         </div>

@@ -3,25 +3,26 @@ import { useQuery } from '@tanstack/react-query';
 
 // Search movie by title
 
-const searchTitleResults = async (
+const searchResults = async (
   query: string = '',
   page: string = '1',
-  language: string = 'en-US',
+  language: string = 'en',
 ) => {
   const { data } = await TMDBClient.get(
-    `/search/movie?include_adult=false&language=${language}&query=${query}&page=${page}`,
+    `/search/multi?query=${query}&include_adult=false&language=${language}&page=${page}`
+
   );
   return data.results;
 };
 
-export const useSearchTitleQuery = (query: string, page: string) => {
+export const useSearchQuery = (query: string, page: string) => {
   return useQuery({
     queryKey: ['search', query, page],
     queryFn: async () => {
       if (!query) {
         throw new Error('Search query is required');
       }
-      return searchTitleResults(query, page);
+      return searchResults(query, page);
     },
     enabled: !!query,
     staleTime: 0,
@@ -56,3 +57,6 @@ export const useDiscoverQuery = (sort: string, page: string, genre: string) => {
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
 };
+
+
+//     `/search/movie?include_adult=false&language=${language}&query=${query}&page=${page}`,

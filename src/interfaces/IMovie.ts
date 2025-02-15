@@ -8,4 +8,5 @@ export interface IMovie {
   release_date: string;
   genre_ids: number[];
   title_logo?: string;
+  media_type?: string;
 }
