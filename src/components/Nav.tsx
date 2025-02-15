@@ -7,7 +7,7 @@ import NavTVShow from './NavComponents/NavTVShow';
 import NavDiscover from './NavComponents/NavDiscover';
 import Search from './Search';
 
-export default function Navigation() {
+export default function Navigation({  setSearchQuery }: { setSearchQuery: (query: string) => void}) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -105,7 +105,7 @@ export default function Navigation() {
       {/* Search Bar */}
       {isVisible && (
         <div ref={searchRef} className='pointer-events-none'>
-          <Search searchOpen={searchOpen} closeSearch={closeSearch} />
+          <Search searchOpen={searchOpen} closeSearch={closeSearch} setSearchQuery={setSearchQuery}/>
         </div>
       )}
     </nav>

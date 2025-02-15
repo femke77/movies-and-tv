@@ -1,16 +1,20 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 
+
 const Search = ({
   searchOpen,
   closeSearch,
+  setSearchQuery
 }: {
   searchOpen: boolean;
   closeSearch: () => void;
+  setSearchQuery: (query: string) => void;
 }) => {
   const navigate = useNavigate();
-
+  
   const handleNavigate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
     navigate(`/search/${e.target.value}`);
   };
   return (
