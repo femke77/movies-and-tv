@@ -38,9 +38,9 @@ const ItemCard = ({
         }`}
     >
       <Link to={`/${itemType}/${item.id}`} className='w-full'>
-        <div className='aspect-[2/3] w-full '>
+        <div className='aspect-[2/3] w-full overflow-hidden rounded-lg bg-black'>
           <img
-            className='w-full h-full object-contain rounded-b-lg'
+            className='w-full object-contain rounded-b-lg hover:opacity-70 hover:scale-115 hover:bg-opacity-50 transition-all duration-500 ease-in-out '
             src={
               item.poster_path
                 ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
@@ -62,7 +62,7 @@ const ItemCard = ({
             </div>
             {/* TODO chips go here when ready */}
             {showGenres && null}
-            {/* TODO text size change depending on use of component */}
+
             <h2
               className={`whitespace-pre max-w-full overflow-hidden text-${textSize}/6 -ml-2 mt-1`}
             >
