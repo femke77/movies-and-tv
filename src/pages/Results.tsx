@@ -1,19 +1,40 @@
-import { useSearchTitleQuery } from '../hooks/useSearchAndDiscover';
+import { useSearchQuery } from '../hooks/useSearchAndDiscover';
 import { useParams } from 'react-router-dom';
 import { IMovie } from '../interfaces/IMovie';
 import ItemCard from '../components/ItemCard';
 import { useRef, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
+
+const SearchContainer = () => {
+  const searchQuery = useOutletContext<string>();
+  const lastLetterRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (searchQuery.length === 1) {
+      lastLetterRef.current = searchQuery;
+    }
+  }, [searchQuery]);
+
+  return (
+    <div className='mt-20 mx-4'>
+      <h2 className='text-3xl font-bold mt-4 mb-8 relative'>
+        <span>Search results for {searchQuery || lastLetterRef.current}</span>
+        <div className='inline' style={{ display: 'inline' }}>
+          <Results />
+        </div>
+      </h2>
+    </div>
+  );
+};
 
 const Results = () => {
   const { query } = useParams<{ query: string }>();
-  const { data = [], isLoading } = useSearchTitleQuery(query ?? '', '1');
+  const { data = [], isLoading } = useSearchQuery(query ?? '', '1');
   const lastResultsRef = useRef<IMovie[]>([]);
-  const lastLetterRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (query?.length === 1) {
       lastResultsRef.current = data;
-      lastLetterRef.current = query[query.length - 1];
     }
   }, [query, data]);
 
@@ -22,12 +43,9 @@ const Results = () => {
   if (isLoading) return null;
 
   return (
-    <div className='mt-20 mx-4'>
-      <h2 className='text-3xl font-bold mt-4 mb-8'>
-        Search results for '{query?.trim() || lastLetterRef.current}'
-      </h2>
-      <div className='ml-2'>
-        <div className='flex flex-wrap flex-1 gap-4 items-start '>
+    <>
+      <div className='ml-2 mt-8'>
+        <div className='flex flex-wrap flex-1 gap-4 items-start'>
           {results.length > 0 ? (
             results.map((movie: IMovie) => (
               <div
@@ -37,9 +55,9 @@ const Results = () => {
                 <ItemCard
                   textSize='xl'
                   item={movie}
-                  itemType='movie'
                   showRating={false}
                   showGenres={false}
+                  itemType={movie.media_type || ''}
                 />
               </div>
             ))
@@ -48,8 +66,8 @@ const Results = () => {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default Results;
+export default SearchContainer; // Export the container instead
