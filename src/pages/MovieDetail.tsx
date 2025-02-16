@@ -158,7 +158,7 @@ const MovieDetail = () => {
                   </p>
                 )}
               </div>
-              <div className='flex flex-wrap  space-x-10 mb-4'>
+              <div className='flex md:flex-col flex-wrap  space-x-10 mb-4'>
               <p className='text-xl font-bold mb-4'>
                 Director:{' '}
                 <span className='text-lg text-gray-100/50 my-3 font-bold'>
