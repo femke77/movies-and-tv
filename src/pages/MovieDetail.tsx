@@ -71,14 +71,14 @@ const MovieDetail = () => {
             </section>
 
             {/* Right Section */}
-            <section className='flex-grow md:max-h-[525px] basis-full md:basis-1/2 ml-2 pl-6 pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'>
-              <h2 className='text-4xl mb-4 font-bold md:pr-16 '>
+            <section className='mr-4 flex-grow md:max-h-[525px] basis-full md:basis-1/2 ml-2 pl-6 pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-700 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'>
+              <h2 className='text-4xl  font-bold md:pr-16 '>
                 {movie.title} ({releaseYear})
               </h2>
               <p className='italic text-gray-100/50 text-light text-xl leading-12'>
                 {movie.tagline}
               </p>
-              <div className='flex leading-10 mb-4'>
+              <div className='flex leading-12 mb-4'>
                 {movie.genres.map((genre: { id: string; name: string }) => (
                   <Chip key={genre.id} label={genre.name} />
                 ))}
