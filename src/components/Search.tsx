@@ -9,7 +9,8 @@ const Search = ({
 }: {
   searchOpen: boolean;
   closeSearch: () => void;
-  setSearchQuery: (query: string) => void;
+
+  setSearchQuery: (_query: string) => void;
 }) => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);

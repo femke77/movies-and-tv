@@ -38,7 +38,9 @@ const Results = () => {
     }
   }, [query, data]);
 
-  const results = query ? data : lastResultsRef.current;
+  const results = query
+    ? data.filter((data: IMovie) => data.title || data.name)
+    : lastResultsRef.current;
 
   if (isLoading) return null;
 
@@ -70,4 +72,4 @@ const Results = () => {
   );
 };
 
-export default SearchContainer; // Export the container instead
+export default SearchContainer; 

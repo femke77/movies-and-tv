@@ -7,7 +7,6 @@ const Header = ({ children }: { children: ReactNode }) => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const lastScrollY = useRef(0);
 
-  // Scroll behavior to hide header when scrolling down
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;

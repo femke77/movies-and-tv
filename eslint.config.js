@@ -21,10 +21,10 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      "no-console": "warn", // Warn on console statements
-      "no-unused-vars": "warn", // Warn on unused variables
-      eqeqeq: ["error", "smart"], // Enforce strict equality (===) in JavaScript
-      "no-trailing-spaces": "error", // Disallow trailing spaces at the end of lines
+      "no-console": "warn", 
+      "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+      eqeqeq: ["error", "smart"],
+      "no-trailing-spaces": "error",
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },

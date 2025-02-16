@@ -5,7 +5,6 @@ import UserRating from './UserRating';
 import { getStrokeColor } from '../utils/helpers';
 import { useEffect, useState } from 'react';
 
-// ItemCard.tsx
 const ItemCard = ({
   item,
   itemType,
