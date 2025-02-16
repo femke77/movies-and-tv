@@ -7,7 +7,7 @@ export const CastCard = ({ cast }: { cast: ICast }) => {
         src={
           cast.profile_path
             ? `https://image.tmdb.org/t/p/w500${cast.profile_path}`
-            : 'https://images.pexels.com/photos/2071882/pexels-photo-2071882.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+            : '/no_cast_photo.jpeg'
         }
         alt={cast.name}
         className='w-42 h-auto rounded-lg'
