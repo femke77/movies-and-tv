@@ -86,7 +86,7 @@ export default function Navigation({
                       role='search'
                       aria-label='search'
                       onClick={() => openSearch()}
-                      className='relative -right-2 top-0 z-50'
+                      className='relative -right-2 top-0 hover:cursor-pointer'
                     >
                       <img src='/mag.svg' alt='search' className='w-8 h-8' />
                     </button>

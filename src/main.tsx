@@ -5,7 +5,7 @@ import App from './App.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import MovieDetail from './pages/MovieDetail.tsx';
+import ItemDetail from './pages/ItemDetail.tsx';
 import ScrollToTop from './components/ScrollToTop.tsx';
 import Results from './pages/Results.tsx';
 
@@ -25,10 +25,10 @@ const router = createBrowserRouter([
         element: <Results />,
       },
       {
-        path: 'movie/:movie_id',
+        path: ':type/:id',
         element: (
           <ScrollToTop>
-            <MovieDetail />
+            <ItemDetail />
           </ScrollToTop>
         ),
       },

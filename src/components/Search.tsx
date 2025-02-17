@@ -9,7 +9,8 @@ const Search = ({
 }: {
   searchOpen: boolean;
   closeSearch: () => void;
-  setSearchQuery: (query: string) => void;
+
+  setSearchQuery: (_query: string) => void;
 }) => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -42,7 +43,7 @@ const Search = ({
         aria-label='close search'
         className='pointer-events-auto absolute right-4 pb-3.5 text-white text-2xl hover:text-gray-300 focus:outline-none hover:cursor-pointer'
         onClick={closeSearch}
-        type='button'
+        type='submit'
       >
         <XMarkIcon className='block h-6 w-6' aria-hidden='true' />
       </button>

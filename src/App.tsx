@@ -4,10 +4,20 @@ import Nav from './components/Nav';
 import Footer from './components/Footer';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ScrollRestoration } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // maintain search query on reload
+  useEffect(() => {
+    if (searchQuery) {
+      localStorage.setItem('searchQuery', searchQuery);
+    } else {
+      const query = localStorage.getItem('searchQuery');
+      if (query) setSearchQuery(query);
+    }
+  }, [searchQuery]);
 
   return (
     <>
