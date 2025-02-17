@@ -38,7 +38,7 @@ export const useItemDetail = (type: string, id: string) => {
     queryKey: ["item-detail", id],
     queryFn: async () => {
       if (!id) {
-        throw new Error("Movie ID is required");
+        throw new Error("ID is required");
       }
 
       if (type === "movie") {

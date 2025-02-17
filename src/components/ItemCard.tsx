@@ -41,7 +41,7 @@ const ItemCard = ({
         <Link to={`/${itemType}/${item.id}`} className="w-full">
           <div className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-black">
             <img
-              className="w-full object-contain rounded-b-lg hover:opacity-70 hover:scale-115 hover:bg-opacity-50 transition-all duration-500 ease-in-out "
+              className="w-full h-full object-cover rounded-b-lg hover:opacity-70 hover:scale-115 hover:bg-opacity-50 transition-all duration-500 ease-in-out "
               src={
                 item.poster_path
                   ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
@@ -67,7 +67,7 @@ const ItemCard = ({
               <h2
                 className={`whitespace-pre max-w-full overflow-hidden text-${textSize}/6 -ml-2 mt-1`}
               >
-                {itemType === "tv" ? item.name : item.title}
+                {item.name || item.title}
               </h2>
               <p className="text-sm font-light -ml-2">
                 {itemType === "tv"

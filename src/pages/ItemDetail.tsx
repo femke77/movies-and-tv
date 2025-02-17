@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Chip from "../components/Chip";
-import { useItemDetail } from "../hooks/useMovieDetail";
+import { useItemDetail } from "../hooks/useItemDetail";
 import { useParams } from "react-router-dom";
 import UserRating from "../components/UserRating";
 import WatchButton from "../components/WatchButton";
@@ -8,8 +8,7 @@ import { getStrokeColor } from "../utils/helpers";
 import { CastList } from "../components/CastList";
 import dayjs from "dayjs";
 
-// TODO refactor to add tv detail or write different hooks or ???
-const MovieDetail = () => {
+const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { type, id } = useParams<{ type: string; id: string }>();
   const { data: item } = useItemDetail(type!, id!);
@@ -22,7 +21,6 @@ const MovieDetail = () => {
   }, []);
 
   if (!item) return null;
-  console.log(item);
 
   const releaseYearMovie = item?.release_date?.split("-")[0];
   const releaseYearTV = item?.first_air_date?.split("-")[0];
@@ -45,10 +43,6 @@ const MovieDetail = () => {
     calculateROI === "Infinity" || calculateROI === "-Infinity"
       ? "0"
       : calculateROI;
-
-  if (item.first_air_date) {
-    console.log(item.first_air_date);
-  }
 
   return (
     <>
@@ -136,7 +130,11 @@ const MovieDetail = () => {
                 <p className="text-xl font-bold">
                   Runtime:{" "}
                   <span className="text-lg text-gray-100/50 my-3 font-bold">
-                    {item.runtime || item.episode_run_time} min
+                    {item.runtime
+                      ? `${item.runtime} min`
+                      : item.episode_run_time?.[0]
+                      ? `${item.episode_run_time[0]} min`
+                      : "Unknown"}
                   </span>
                 </p>
               </div>
@@ -153,16 +151,17 @@ const MovieDetail = () => {
                     </span>
                   </p>
                 )}
-                <p className="text-xl font-bold">
-                  Revenue:{" "}
-                  <span className="text-lg text-gray-100/50 my-3 font-bold">
-                    {item.revenue &&
-                      item.revenue.toLocaleString("en-US", {
+                {item.revenue > 0 && (
+                  <p className="text-xl font-bold">
+                    Revenue:{" "}
+                    <span className="text-lg text-gray-100/50 my-3 font-bold">
+                      {item.revenue.toLocaleString("en-US", {
                         style: "currency",
                         currency: "USD",
                       })}
-                  </span>
-                </p>
+                    </span>
+                  </p>
+                )}
                 {ROI !== "0" && (
                   <p className="text-xl font-bold">
                     ROI:{" "}
@@ -205,4 +204,4 @@ const MovieDetail = () => {
     </>
   );
 };
-export default MovieDetail;
+export default ItemDetail;
