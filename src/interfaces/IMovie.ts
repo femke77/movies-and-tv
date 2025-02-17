@@ -10,5 +10,5 @@ export interface IMovie {
   title_logo?: string;
   media_type?: string;
   name?: string;
- first_air_date?: string;
+  first_air_date?: string;
 }

@@ -1,5 +1,5 @@
-import { TMDBClient } from "../utils/axiosConfig";
-import { useQuery } from "@tanstack/react-query";
+import { TMDBClient } from '../utils/axiosConfig';
+import { useQuery } from '@tanstack/react-query';
 
 const fetchItemDetail = async (type: string, id: string) => {
   const { data } = await TMDBClient.get(`/${type}/${id}`);
@@ -8,23 +8,23 @@ const fetchItemDetail = async (type: string, id: string) => {
 
 const fetchTVContentRating = async (tv_id: string) => {
   const { data } = await TMDBClient.get(
-    `/tv/${tv_id}/content_ratings?language=en`
+    `/tv/${tv_id}/content_ratings?language=en`,
   );
   const usRegion = data.results.find(
-    (region: { iso_3166_1: string }) => region.iso_3166_1 === "US"
+    (region: { iso_3166_1: string }) => region.iso_3166_1 === 'US',
   );
-  const certification = usRegion?.rating || "N/A";
+  const certification = usRegion?.rating || 'N/A';
   return certification;
 };
 
 const fetchMovieRating = async (movie_id: string) => {
   const { data } = await TMDBClient.get(
-    `/movie/${movie_id}/release_dates?language=en`
+    `/movie/${movie_id}/release_dates?language=en`,
   );
   const usRegion = data.results.find(
-    (region: { iso_3166_1: string }) => region.iso_3166_1 === "US"
+    (region: { iso_3166_1: string }) => region.iso_3166_1 === 'US',
   );
-  const certification = usRegion?.release_dates[0]?.certification || "N/A";
+  const certification = usRegion?.release_dates[0]?.certification || 'N/A';
   return certification;
 };
 
@@ -35,13 +35,13 @@ const fetchItemCredits = async (type: string, id: string) => {
 
 export const useItemDetail = (type: string, id: string) => {
   return useQuery({
-    queryKey: ["item-detail", id],
+    queryKey: ['item-detail', id],
     queryFn: async () => {
       if (!id) {
-        throw new Error("ID is required");
+        throw new Error('ID is required');
       }
 
-      if (type === "movie") {
+      if (type === 'movie') {
         const [movie, rating, credits] = await Promise.all([
           fetchItemDetail(type, id),
           fetchMovieRating(id),
@@ -53,7 +53,7 @@ export const useItemDetail = (type: string, id: string) => {
           rating,
           ...credits,
         };
-      } else if (type === "tv") {
+      } else if (type === 'tv') {
         const [tv, rating, credits] = await Promise.all([
           fetchItemDetail(type, id),
           fetchTVContentRating(id),

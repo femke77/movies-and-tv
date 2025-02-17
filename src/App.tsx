@@ -8,13 +8,13 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
-  
+
   // maintain search query on reload
   useEffect(() => {
     if (searchQuery) {
       localStorage.setItem('searchQuery', searchQuery);
     } else {
-      const query =localStorage.getItem('searchQuery');
+      const query = localStorage.getItem('searchQuery');
       if (query) setSearchQuery(query);
     }
   }, [searchQuery]);
