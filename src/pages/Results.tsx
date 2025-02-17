@@ -39,7 +39,7 @@ const Results = () => {
   }, [query, data]);
 
   const results = query
-    ? data.filter((data: IMovie) => data.title || data.name)
+    ? data.filter((data: IMovie) => (data.title || data.poster_path) || (data.name || data.poster_path))
     : lastResultsRef.current;
 
   if (isLoading) return null;

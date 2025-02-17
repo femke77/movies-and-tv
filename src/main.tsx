@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         element: <Results />,
       },
       {
-        path: 'movie/:movie_id',
+        path: ':type/:id',
         element: (
           <ScrollToTop>
             <MovieDetail />

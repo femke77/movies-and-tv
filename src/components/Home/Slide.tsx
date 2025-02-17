@@ -101,11 +101,11 @@ const Slide = ({
           </Link>
 
           {/* left, bottom - rating and watch componentns */}
-          <div className='flex flex-col sm:flex-row items-center justify-around mt-4 '>
+          <div className='flex flex-row items-center justify-around mt-4 '>
             <div className='mb-2'>
               <WatchButton />
             </div>
-            <div className='mb-2'>
+            <div className='pl-4 mb-2'>
               <UserRating rating={slide.vote_average ?? 0} />
             </div>
           </div>
