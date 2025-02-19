@@ -77,7 +77,7 @@ const ItemDetail = () => {
               <h2 className='text-4xl mb-4 font-bold md:pr-16 text-center md:text-left'>
                 {item.title || item.name} ({releaseYearMovie || releaseYearTV})
               </h2>
-              <p className='text-center md:text-left italic text-gray-100/50 text-light text-xl mb-3'>
+              <p className='text-center md:text-left italic text-gray-200/50 text-light text-xl mb-3'>
                 {item.tagline}
               </p>
               <div className='flex flex-wrap justify-center md:justify-start space-y-2 mb-4'>
@@ -107,7 +107,7 @@ const ItemDetail = () => {
                 Overview
               </h3>
               {/* put min width 400 if you want the y-axis too */}
-              <p className='text-xl text-center md:text-left text-gray-100/50 my-3 mb-6 font-bold'>
+              <p className='text-xl text-center md:text-left text-white/60  my-3 mb-6 font-bold'>
                 {item.overview}
               </p>
 
@@ -137,7 +137,9 @@ const ItemDetail = () => {
                         : 'Unknown'}
                   </span>
                 </p>
+              
               </div>
+           
 
               <div className='flex flex-wrap md:flex-nowrap md:justify-center space-x-10 mb-4'>
                 {item.budget > 0 && (

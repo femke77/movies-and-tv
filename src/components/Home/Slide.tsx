@@ -36,7 +36,7 @@ const Slide = ({
   });
 
   return (
-    <div className='swiper-slide bg-black h-full flex items-center '>
+    <div className='swiper-slide bg-black h-full flex items-center py-10'>
       {/* background image */}
       <div
         className='relative w-full h-full bg-cover bg-center md:bg-top'
@@ -92,7 +92,7 @@ const Slide = ({
                   {slide.title}
                 </h2>
               )}
-              <p className="text-white  line-clamp-2 md:line-clamp-3 text-center md:text-left mb-8">
+              <p className="text-white line-clamp-2 md:line-clamp-3 text-center md:text-left mb-8">
                 {slide.overview}
               </p>
             </div>
@@ -112,7 +112,7 @@ const Slide = ({
         <div className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-24 lg:mr-48 hidden md:block'>
           {slide.poster_path && (
             <img
-              className='w-78 h-auto rounded-lg shadow-lg '
+              className='w-78 h-auto rounded-lg shadow-lg pt-10 '
               src={
                 slide.poster_path
                   ? `https://image.tmdb.org/t/p/w500${slide.poster_path}`

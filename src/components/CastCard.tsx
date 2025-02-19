@@ -13,7 +13,7 @@ export const CastCard = ({ cast }: { cast: ICast }) => {
         className='w-42 h-auto rounded-lg'
       />
       <h3 className='text-lg font-semibold mt-4 w-[150px]'>{cast.name}</h3>
-      <p className='text-sm w-[150px] text-gray-500'>{cast.character}</p>
+      <p className='text-md w-[150px] text-gray-400'>{cast.character}</p>
     </div>
   );
 };
