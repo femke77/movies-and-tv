@@ -1,10 +1,10 @@
-import { TMDBClient } from "../utils/axiosConfig";
-import { useQuery } from "@tanstack/react-query";
-import type { IItem } from "../interfaces/IItem";
-import { useEffect, useState } from "react";
+import { TMDBClient } from '../utils/axiosConfig';
+import { useQuery } from '@tanstack/react-query';
+import type { IItem } from '../interfaces/IItem';
+import { useEffect, useState } from 'react';
 
 const fetchPopularMovies = async () => {
-  const { data } = await TMDBClient.get("/movie/popular");
+  const { data } = await TMDBClient.get('/movie/popular');
   return data.results;
 };
 
@@ -19,10 +19,10 @@ export const usePopularMovies = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: "50px 150px" }
+      { threshold: 0.1, rootMargin: '50px 150px' },
     );
 
-    const target = document.getElementById("pop-section");
+    const target = document.getElementById('pop-section');
     if (target) {
       observer.observe(target);
     }
@@ -30,7 +30,7 @@ export const usePopularMovies = () => {
     return () => observer.disconnect();
   }, []);
   return useQuery<IItem[], Error>({
-    queryKey: ["popular-movies"],
+    queryKey: ['popular-movies'],
     queryFn: fetchPopularMovies,
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
     gcTime: 1000 * 60 * 60 * 25, // 25 hours
