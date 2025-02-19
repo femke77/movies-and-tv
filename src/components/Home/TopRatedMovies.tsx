@@ -13,7 +13,7 @@ const TopRatedMovies = () => {
         ref={ref}
         items={movies}
         itemType='movie'
-        headerTxt='Top Rated 🔝'
+        headerTxt='Top Rated Movies🔝'
       />
     </div>
   );

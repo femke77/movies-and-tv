@@ -1,6 +1,6 @@
 import { TMDBClient } from '../utils/axiosConfig';
 import { useQuery } from '@tanstack/react-query';
-import type { IMovie } from '../interfaces/IMovie';
+import type { IItem } from '../interfaces/IItem';
 import { useEffect, useState } from 'react';
 
 const fetchTopRatedMovies = async () => {
@@ -19,7 +19,7 @@ export const useTopRatedMovies = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: '-150px 150px' },
+      { threshold: 0.1, rootMargin: '50px 150px' },
     );
 
     const target = document.getElementById('top-section');
@@ -29,7 +29,7 @@ export const useTopRatedMovies = () => {
 
     return () => observer.disconnect();
   }, []);
-  return useQuery<IMovie[], Error>({
+  return useQuery<IItem[], Error>({
     queryKey: ['toprated-movies'],
     queryFn: fetchTopRatedMovies,
     staleTime: 1000 * 60 * 60 * 24, // 24 hours

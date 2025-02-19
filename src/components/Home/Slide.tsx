@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import UserRating from '../UserRating';
 import WatchButton from '../WatchButton';
-import type { IMovie } from '../../interfaces/IMovie';
+import type { IItem } from '../../interfaces/IItem';
 import { useMovieLogo } from '../../hooks/useNowPlayingMovies';
 import genresData from '../../utils/data/genres.json';
 import { useWindowSize } from '../../hooks/useWindowSize';
@@ -13,10 +13,10 @@ const Slide = ({
   currentIndex,
   movieList,
 }: {
-  slide: IMovie;
+  slide: IItem;
   isVisible: boolean;
   currentIndex: number;
-  movieList: IMovie[];
+  movieList: IItem[];
 }) => {
   const formattedDate = dayjs(slide.release_date).format('MMM D, YYYY');
   const { genres } = genresData;

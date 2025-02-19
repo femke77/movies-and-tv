@@ -1,9 +1,11 @@
-import { IMovie } from '../interfaces/IMovie';
+import { IItem } from '../interfaces/IItem';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import UserRating from './UserRating';
 import { getStrokeColor } from '../utils/helpers';
 import { useEffect, useState } from 'react';
+import genreData from '../utils/data/genres.json';
+import Chip from './Chip';
 
 const ItemCard = ({
   item,
@@ -12,15 +14,16 @@ const ItemCard = ({
   showGenres,
   textSize,
 }: {
-  item: IMovie;
+  item: IItem;
   itemType: string;
   showRating: boolean;
   showGenres: boolean;
   textSize: string;
 }) => {
+  const [isVisible, setIsVisible] = useState(false);
   const formattedReleaseDate = dayjs(item.release_date).format('MMM D, YYYY');
   const formattedAirDate = dayjs(item.first_air_date).format('MMM D, YYYY');
-  const [isVisible, setIsVisible] = useState(false);
+  const { genres } = genreData;
   const strokeColor = getStrokeColor(item.vote_average ?? 0);
 
   useEffect(() => {
@@ -29,6 +32,11 @@ const ItemCard = ({
       setIsVisible(false);
     };
   }, []);
+
+  const movieGenres = item?.genre_ids?.map((genreId) => {
+    const genre = genres.find((g) => g.id === genreId);
+    return genre?.name;
+  });
 
   return (
     <>
@@ -51,7 +59,7 @@ const ItemCard = ({
           </div>
           <div className='flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black'>
             <div className='relative -top-13 left-3 w-full'>
-              <div className='flex min-h-11 items-end'>
+              <div className='flex min-h-11 items-end justify-between'>
                 {showRating && (
                   <UserRating
                     rating={item.vote_average ?? 0}
@@ -60,15 +68,23 @@ const ItemCard = ({
                     height='h-12'
                   />
                 )}
+                {/* Genres*/}
+                {showGenres && movieGenres?.length >= 1 && (
+                  <div className='flex flex-col items-end relative -top-7 -left-2'>
+                    {movieGenres
+                      ?.slice(0, 2)
+                      .map((genre) => <Chip label={genre!} key={genre} />)}
+                  </div>
+                )}
               </div>
-              {/* TODO chips go here when ready */}
-              {showGenres && null}
 
               <h2
-                className={`whitespace-pre max-w-full overflow-hidden text-${textSize}/6 -ml-2 mt-1`}
+                className={`w-full truncate text-${textSize}/6 -ml-2 mt-1`}
+                title={item.name || item.title} // Tooltip for full text on hover
               >
                 {item.name || item.title}
               </h2>
+
               <p className='text-sm font-light -ml-2'>
                 {itemType === 'tv'
                   ? formattedAirDate !== 'Invalid Date'

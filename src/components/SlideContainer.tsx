@@ -1,11 +1,11 @@
 import { useRef, forwardRef } from 'react';
 import ItemCard from './ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
-import { IMovie } from '../interfaces/IMovie';
+import { IItem } from '../interfaces/IItem';
 
 const SlideContainer = forwardRef<
   HTMLDivElement,
-  { items: IMovie[]; itemType: string; headerTxt: string; id: string }
+  { items: IItem[]; itemType: string; headerTxt: string; id: string }
 >(({ items, itemType, headerTxt, id }, ref) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 

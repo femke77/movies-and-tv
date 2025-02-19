@@ -47,7 +47,7 @@ const ItemDetail = () => {
   return (
     <>
       {item ? (
-        <section id='item-detail' className='relative flex flex-wrap pt-14  '>
+        <section id='item-detail' className='relative flex flex-wrap pt-28  '>
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[5px] z-0 bg-no-repeat transition-opacity 
         duration-1000 
@@ -188,14 +188,16 @@ const ItemDetail = () => {
             </section>
 
             {/* Cast Section */}
-            <section className='w-full mt-44'>
-              <h3 className='text-2xl/14 text-white/70  text-center'>
-                Top Cast
-              </h3>
-              <div className='flex flex-wrap gap-4'>
-                <CastList cast={item.cast} />
-              </div>
-            </section>
+            {item.cast?.length > 0 && (
+              <section className='w-full mt-44'>
+                <h3 className='text-2xl/14 text-white/70  text-center'>
+                  Top Cast
+                </h3>
+                <div className='flex flex-wrap gap-4'>
+                  <CastList cast={item.cast} />
+                </div>
+              </section>
+            )}
           </div>
         </section>
       ) : (

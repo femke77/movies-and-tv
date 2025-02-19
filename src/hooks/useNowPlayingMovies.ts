@@ -1,7 +1,7 @@
 import { TMDBClient } from '../utils/axiosConfig';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import type { IMovie } from '../interfaces/IMovie';
+import type { IItem } from '../interfaces/IItem';
 
 interface ILogo {
   iso_639_1: string;
@@ -23,7 +23,7 @@ interface ILogo {
  * - Preserves all original movie properties while adding the title_logo field
  */
 
-const fetchFirstTwoLogos = async (movies: IMovie[]): Promise<IMovie[]> => {
+const fetchFirstTwoLogos = async (movies: IItem[]): Promise<IItem[]> => {
   if (movies.length === 0) return [];
 
   const [firstMovie, secondMovie] = movies;
@@ -57,7 +57,7 @@ const fetchFirstTwoLogos = async (movies: IMovie[]): Promise<IMovie[]> => {
 };
 
 export const useNowPlayingMovies = () => {
-  return useQuery<IMovie[], Error>({
+  return useQuery<IItem[], Error>({
     queryKey: ['now_playing_movies'],
     queryFn: async () => {
       const response = await TMDBClient.get('/movie/now_playing');
@@ -98,7 +98,7 @@ export const useMovieLogo = (
   movieId: number,
   isVisible: boolean,
   currentIndex: number,
-  movieList: IMovie[],
+  movieList: IItem[],
 ) => {
   const queryClient = useQueryClient();
 
