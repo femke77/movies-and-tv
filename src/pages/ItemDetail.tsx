@@ -47,7 +47,7 @@ const ItemDetail = () => {
   return (
     <>
       {item ? (
-        <section id='item-detail' className='relative flex flex-wrap pt-28  '>
+        <section id='item-detail' className='relative flex flex-wrap pt-30  '>
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[5px] z-0 bg-no-repeat transition-opacity 
         duration-1000 
@@ -77,7 +77,7 @@ const ItemDetail = () => {
               <h2 className='text-4xl mb-4 font-bold md:pr-16 text-center md:text-left'>
                 {item.title || item.name} ({releaseYearMovie || releaseYearTV})
               </h2>
-              <p className='text-center md:text-left italic text-gray-100/50 text-light text-xl mb-3'>
+              <p className='text-center md:text-left italic text-gray-200/50 text-light text-xl mb-3'>
                 {item.tagline}
               </p>
               <div className='flex flex-wrap justify-center md:justify-start space-y-2 mb-4'>
@@ -107,20 +107,20 @@ const ItemDetail = () => {
                 Overview
               </h3>
               {/* put min width 400 if you want the y-axis too */}
-              <p className='text-xl text-center md:text-left text-gray-100/50 my-3 mb-6 font-bold'>
+              <p className='text-xl text-center md:text-left text-white/60  my-3 mb-6 font-bold'>
                 {item.overview}
               </p>
 
               <div className='flex flex-wrap md:flex-nowrap space-x-10 mb-4'>
                 <p className='text-xl font-bold'>
                   Status:{' '}
-                  <span className='text-lg text-gray-100/50 my-3 font-bold'>
+                  <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
                     {item.status}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
                   Release Date:{' '}
-                  <span className='text-lg text-gray-100/50 my-3 font-bold'>
+                  <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
                     {(item.release_date &&
                       dayjs(item.release_date).format('MMM DD, YYYY')) ||
                       (item.first_air_date &&
@@ -129,7 +129,7 @@ const ItemDetail = () => {
                 </p>
                 <p className='text-xl font-bold'>
                   Runtime:{' '}
-                  <span className='text-lg text-gray-100/50 my-3 font-bold'>
+                  <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
                     {item.runtime
                       ? `${item.runtime} min`
                       : item.episode_run_time?.[0]
@@ -143,7 +143,7 @@ const ItemDetail = () => {
                 {item.budget > 0 && (
                   <p className='text-xl font-bold'>
                     Budget:{' '}
-                    <span className='text-lg text-gray-100/50 my-3 font-bold'>
+                    <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
                       {item.budget.toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'USD',
@@ -154,7 +154,7 @@ const ItemDetail = () => {
                 {item.revenue > 0 && (
                   <p className='text-xl font-bold'>
                     Revenue:{' '}
-                    <span className='text-lg text-gray-100/50 my-3 font-bold'>
+                    <span className='text-lg text-gray-100/50 my-3 ml-1 font-bold'>
                       {item.revenue.toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'USD',
@@ -165,7 +165,7 @@ const ItemDetail = () => {
                 {ROI !== '0' && (
                   <p className='text-xl font-bold'>
                     ROI:{' '}
-                    <span className='text-lg text-gray-100/50 my-3 font-bold'>
+                    <span className='text-lg text-gray-100/50 my-3 ml-1 font-bold'>
                       {ROI}%
                     </span>
                   </p>
@@ -174,13 +174,13 @@ const ItemDetail = () => {
               <div className='flex md:flex-col flex-wrap  space-x-10 mb-4'>
                 <p className='text-xl font-bold mb-4'>
                   Director:{' '}
-                  <span className='text-lg text-gray-100/50 my-3 font-bold'>
+                  <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
                     {directorName}
                   </span>
                 </p>
                 <p className='text-xl mb-8 font-bold'>
                   Writer:{' '}
-                  <span className='text-lg text-gray-100/50 my-3 font-bold'>
+                  <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
                     {writerName}
                   </span>
                 </p>

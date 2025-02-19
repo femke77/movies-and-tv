@@ -18,7 +18,7 @@ const Search = ({
   const handleNavigate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
     if (e.target.value.trim()) {
-      navigate(`/search/${e.target.value}`);
+      navigate(`/search/${e.target.value}`, { replace: true });
     }
   };
 
