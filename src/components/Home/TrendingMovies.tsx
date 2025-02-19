@@ -12,7 +12,7 @@ const TrendingMovies = () => {
       ref={ref}
       items={movies}
       itemType='movie'
-      headerTxt='Trending 🔥'
+      headerTxt='Trending Movies🔥'
       id='trending-section'
     />
   );

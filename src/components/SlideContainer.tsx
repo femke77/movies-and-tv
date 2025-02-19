@@ -46,7 +46,7 @@ const SlideContainer = forwardRef<
               item={item}
               itemType={itemType}
               showRating={true}
-              showGenres={true}
+              showGenres={false}
             />
           </div>
         ))}

@@ -12,7 +12,7 @@ const PopularMovies = () => {
         ref={ref}
         items={movies}
         itemType='movie'
-        headerTxt='Popular 📈'
+        headerTxt='Popular Movies📈'
       />
     </div>
   );
