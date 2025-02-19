@@ -18,7 +18,7 @@ export const useTrendingMovies = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: "-150px 150px" }
+      { threshold: 0.1, rootMargin: "50px 150px" }
     );
 
     // TODO see about creating ref here and forwarding it down to avoid direct dom interaction
