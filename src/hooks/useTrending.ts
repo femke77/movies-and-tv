@@ -1,10 +1,10 @@
-import { TMDBClient } from "../utils/axiosConfig";
-import { useQuery } from "@tanstack/react-query";
-import type { IItem } from "../interfaces/IItem";
-import { useEffect, useState } from "react";
+import { TMDBClient } from '../utils/axiosConfig';
+import { useQuery } from '@tanstack/react-query';
+import type { IItem } from '../interfaces/IItem';
+import { useEffect, useState } from 'react';
 
 const fetchTrendingMovies = async () => {
-  const { data } = await TMDBClient.get("/trending/movie/day?language=en-US");
+  const { data } = await TMDBClient.get('/trending/movie/day?language=en-US');
   return data.results;
 };
 
@@ -18,11 +18,11 @@ export const useTrendingMovies = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: "50px 150px" }
+      { threshold: 0.1, rootMargin: '50px 150px' },
     );
 
     // TODO see about creating ref here and forwarding it down to avoid direct dom interaction
-    const target = document.getElementById("trending-section");
+    const target = document.getElementById('trending-section');
     if (target) {
       observer.observe(target);
     }
@@ -31,7 +31,7 @@ export const useTrendingMovies = () => {
   }, []);
 
   return useQuery<IItem[], Error>({
-    queryKey: ["trending-movies"],
+    queryKey: ['trending-movies'],
     queryFn: fetchTrendingMovies,
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
     gcTime: 1000 * 60 * 60 * 25, // 25 hours
