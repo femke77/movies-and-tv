@@ -73,7 +73,9 @@ const ItemCard = ({
                   <div className='flex flex-col items-end relative -top-7 -left-2'>
                     {movieGenres
                       ?.slice(0, 2)
-                      .map((genre) => <Chip label={genre!} key={genre} bg='bg-black/60'/>)}
+                      .map((genre) => (
+                        <Chip label={genre!} key={genre} bg='bg-black/60' />
+                      ))}
                   </div>
                 )}
               </div>

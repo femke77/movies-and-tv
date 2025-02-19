@@ -28,7 +28,6 @@ export const useSearchQuery = (query: string, page: string) => {
     gcTime: 1000 * 60 * 60 * 25, // 25 hours
     refetchOnWindowFocus: false,
     placeholderData: (previousData) => previousData,
-    
   });
 };
 

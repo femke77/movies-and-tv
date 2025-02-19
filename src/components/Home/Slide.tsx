@@ -52,13 +52,13 @@ const Slide = ({
         <div className='absolute md:w-1/2 h-full flex flex-col justify-center px-16 md:px-18 lg:px-26 xl:ml-10'>
           {/* left, top - genre, release date, title logo */}
 
-          <div className="flex flex-col items-center md:items-start">
-            <div className="flex items-start mb-12 ">
+          <div className='flex flex-col items-center md:items-start'>
+            <div className='flex items-start mb-12 '>
               {width > 390 ? (
                 <>
                   {movieGenres.length >= 1 &&
                     movieGenres.slice(0, 2).map((genre) => (
-                      <span key={genre} className="text-white mr-5 mb-2">
+                      <span key={genre} className='text-white mr-5 mb-2'>
                         {genre}
                       </span>
                     ))}
@@ -81,18 +81,18 @@ const Slide = ({
 
           {/* left, mid - title or title logo, overview */}
           <Link to={`/movie/${slide.id}`}>
-            <div className="flex flex-col items-center md:items-start">
+            <div className='flex flex-col items-center md:items-start'>
               {displayLogo ? (
                 <img
-                  className="mb-8 w-64 h-auto"
+                  className='mb-8 w-64 h-auto'
                   src={`https://image.tmdb.org/t/p/w185/${displayLogo}`}
                 />
               ) : (
-                <h2 className="text-4xl font-bold text-white mb-12">
+                <h2 className='text-4xl font-bold text-white mb-12'>
                   {slide.title}
                 </h2>
               )}
-              <p className="text-white line-clamp-2 md:line-clamp-3 text-center md:text-left mb-8">
+              <p className='text-white line-clamp-2 md:line-clamp-3 text-center md:text-left mb-8'>
                 {slide.overview}
               </p>
             </div>
