@@ -49,10 +49,10 @@ const Slide = ({
         <div className='absolute inset-0 bg-gradient-to-r from-black via-black/80 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
 
         {/* card content */}
-        <div className='absolute md:w-1/2 h-full flex flex-col justify-center p-16 md:p-18 lg:p-26 xl:ml-10'>
+        <div className='absolute md:w-1/2 h-full flex flex-col justify-center px-16 md:px-18 lg:px-26 xl:ml-10'>
           {/* left, top - genre, release date, title logo */}
 
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-center md:items-start">
             <div className="flex items-start mb-12 ">
               {width > 390 ? (
                 <>
@@ -81,7 +81,7 @@ const Slide = ({
 
           {/* left, mid - title or title logo, overview */}
           <Link to={`/movie/${slide.id}`}>
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-center md:items-start">
               {displayLogo ? (
                 <img
                   className="mb-8 w-64 h-auto"
@@ -92,7 +92,7 @@ const Slide = ({
                   {slide.title}
                 </h2>
               )}
-              <p className="text-white  line-clamp-3 text-left mb-8">
+              <p className="text-white  line-clamp-2 md:line-clamp-3 text-center md:text-left mb-8">
                 {slide.overview}
               </p>
             </div>
