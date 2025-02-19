@@ -29,6 +29,7 @@ body,
   scrollbar-width: none;
   display: flex;
   flex-direction: column;
+  background-color: black;
 
 }
 
@@ -134,7 +135,7 @@ header {
 
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 960px) {
 
 
 

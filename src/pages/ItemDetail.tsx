@@ -47,7 +47,7 @@ const ItemDetail = () => {
   return (
     <>
       {item ? (
-        <section id="item-detail" className="relative flex flex-wrap pt-14  ">
+        <section id="item-detail" className="relative flex flex-wrap pt-28  ">
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[5px] z-0 bg-no-repeat transition-opacity 
         duration-1000 
