@@ -35,11 +35,6 @@ const Slide = ({
     return genre?.name;
   });
 
-  const movieOverview =
-    slide.overview.length > 200
-      ? `${slide.overview.slice(0, 200)}...`
-      : slide.overview;
-
   return (
     <div className="swiper-slide bg-black h-full flex items-center ">
       {/* background image */}
@@ -56,13 +51,14 @@ const Slide = ({
         {/* card content */}
         <div className="absolute md:w-1/2 h-full flex flex-col justify-center p-16 md:p-18 lg:p-26 xl:ml-10">
           {/* left, top - genre, release date, title logo */}
+
           <div className="flex flex-col items-start">
-            <div className="flex items-center mb-12 ">
+            <div className="flex items-start mb-12 ">
               {width > 390 ? (
                 <>
                   {movieGenres.length >= 1 &&
                     movieGenres.slice(0, 2).map((genre) => (
-                      <span key={genre} className="text-white  ml-4">
+                      <span key={genre} className="text-white mr-5 mb-2">
                         {genre}
                       </span>
                     ))}
@@ -85,18 +81,20 @@ const Slide = ({
 
           {/* left, mid - title or title logo, overview */}
           <Link to={`/movie/${slide.id}`}>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-start">
               {displayLogo ? (
                 <img
-                  className="mb-6 w-64 h-auto"
+                  className="mb-8 w-64 h-auto"
                   src={`https://image.tmdb.org/t/p/w185/${displayLogo}`}
                 />
               ) : (
-                <h2 className="text-4xl font-bold text-white mb-6">
+                <h2 className="text-4xl font-bold text-white mb-12">
                   {slide.title}
                 </h2>
               )}
-              <p className="text-white text-center">{movieOverview}</p>
+              <p className="text-white  line-clamp-3 text-left mb-8">
+                {slide.overview}
+              </p>
             </div>
           </Link>
 
@@ -110,7 +108,6 @@ const Slide = ({
             </div>
           </div>
         </div>
-
         {/* right, only - poster image */}
         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-24 lg:mr-48 hidden md:block">
           {slide.poster_path && (
