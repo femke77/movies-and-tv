@@ -33,7 +33,7 @@ const Results = memo(() => {
     }
   }, [query, data]);
 
-  // Memoize the filtered results
+  // Memoize filtered results
   const results = useMemo(() => {
     const filteredData = query
       ? data.filter(
@@ -81,8 +81,8 @@ const SearchContainer = memo(() => {
   );
 
   return (
-    <div className="mt-20 mx-4">
-      <h2 className="text-3xl font-bold mt-4 mb-8 relative">
+    <div className="mt-36 mx-4">
+      <h2 className="text-3xl font-bold mt-10 mb-8 relative">
         <span>{headingText}</span>
         <div className="inline">
           <Results />
