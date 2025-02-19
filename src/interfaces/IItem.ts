@@ -1,4 +1,4 @@
-export interface IMovie {
+export interface IItem {
   id: number;
   title: string;
   poster_path: string;
