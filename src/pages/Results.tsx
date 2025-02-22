@@ -63,7 +63,7 @@ const Results = memo(() => {
         )}
       </div>
       <div ref={ref} className="h-10 mt-4">
-        {isFetchingNextPage && <div>Fetching...</div>}
+        {isFetchingNextPage && <div>Getting more results...</div>}
       </div>
     </div>
   );
