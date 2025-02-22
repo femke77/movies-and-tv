@@ -38,16 +38,18 @@ export const useInfiniteSearchQuery = (query: string) => {
   });
 };
 
-// Discover movies
+// Discover new stuff
 
-const discoverMovieResults = async (
-  sort: string = "popularity.desc",
-  lang: string = "en",
-  pageParam: number = 1,
-  genre: string = ""
+const discoverResults = async (
+  type= "movie",
+  sort= "popularity.desc",
+  pageParam = 1,
+  lang = "en",
+  genre = "",
+  vote_average = 1
 ) => {
   const { data } = await TMDBClient.get(
-    `/discover/movie?include_adult=false&language=${lang}&sort_by=${sort}&page=${pageParam}&genre=${genre}`
+    `/discover/${type}?vote_average.gte=${vote_average}&include_adult=false&vote_count.gte=1000&language=${lang}&sort_by=${sort}&page=${pageParam}&genre=${genre}`
   );
   return {
     results: data.results,
@@ -56,11 +58,11 @@ const discoverMovieResults = async (
   };
 };
 
-export const useInfiniteDiscoverMovieQuery = ( sort: string, lang: string, genre: string) => {
+export const useInfiniteDiscoverQuery = (type: string, sort: string, lang: string, vote_average?: number, genre?: string) => {
   return useInfiniteQuery({
-    queryKey: ["movie-discover", sort, genre],
+    queryKey: ["infinite-discover", type, sort, genre],
     queryFn: ({ pageParam }) =>
-      discoverMovieResults(sort, lang, pageParam, genre),
+      discoverResults(type, sort, pageParam, lang, genre, vote_average),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: true,
@@ -72,7 +74,7 @@ export const useInfiniteDiscoverMovieQuery = ( sort: string, lang: string, genre
       pages: data.pages.map((page) => ({
         ...page,
         results: page.results.filter(
-          (item: IItem) => (item.title || item.name) || item.poster_path
+          (item: IItem) => ( item.title || item.name) || item.poster_path
         ),
       })),
       pageParams: data.pageParams,

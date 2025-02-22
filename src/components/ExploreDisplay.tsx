@@ -11,6 +11,7 @@ interface IExploreProps {
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
   isLoading: boolean;
+  itemType?: string;
 }
 
 const Explore = memo(
@@ -20,6 +21,7 @@ const Explore = memo(
     hasNextPage,
     isFetchingNextPage,
     isLoading,
+    itemType="movie",
   }: IExploreProps) => {
     const { ref, inView } = useInView();
 
@@ -36,7 +38,7 @@ const Explore = memo(
         <div className="flex flex-wrap flex-1 gap-4 items-start">
           {allItems.length > 0 ? (
             allItems.map((movie: IItem) => (
-              <MemoizedItemCard key={`movie-${movie.id}`} movie={movie} />
+              <MemoizedItemCard itemType={itemType} key={`movie-${movie.id}`} movie={movie} showGenres={true} showRating={true }/>
             ))
           ) : (
             <p className="text-lg text-gray-400">No results found.</p>
@@ -51,3 +53,4 @@ const Explore = memo(
 );
 
 Explore.displayName = "Explore";
+export default Explore;
