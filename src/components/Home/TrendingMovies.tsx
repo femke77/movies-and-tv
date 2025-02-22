@@ -9,13 +9,14 @@ const TrendingMovies = () => {
 
   return (
     <div>
-  <h2 className='text-2xl font-bold mb-8'>Trending Movies 🔥</h2>
-    <SlideContainer
-      ref={ref}
-      items={movies}
-      itemType="movie"
-      id="trending-section"
-    />    </div>
+      <h2 className="text-2xl font-bold mb-8 ml-5">Trending Movies Today 🔥</h2>
+      <SlideContainer
+        ref={ref}
+        items={movies}
+        itemType="movie"
+        id="trending-section"
+      />
+    </div>
   );
 };
 

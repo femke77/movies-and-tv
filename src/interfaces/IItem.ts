@@ -11,4 +11,5 @@ export interface IItem {
   media_type?: string;
   name?: string;
   first_air_date?: string;
+ 
 }

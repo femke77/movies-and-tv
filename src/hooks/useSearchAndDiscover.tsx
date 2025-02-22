@@ -1,12 +1,12 @@
-import { IItem } from '../interfaces/IItem';
-import { TMDBClient } from '../utils/axiosConfig';
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { IItem } from "../interfaces/IItem";
+import { TMDBClient } from "../utils/axiosConfig";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 // Search movie by title
 
-const searchResults = async ({ query = '', pageParam = 1 }) => {
+const searchResults = async ({ query = "", pageParam = 1 }) => {
   const { data } = await TMDBClient.get(
-    `/search/multi?query=${query}&include_adult=false&language=en&page=${pageParam}`,
+    `/search/multi?query=${query}&include_adult=false&language=en&page=${pageParam}`
   );
   return {
     results: data.results,
@@ -17,7 +17,7 @@ const searchResults = async ({ query = '', pageParam = 1 }) => {
 
 export const useInfiniteSearchQuery = (query: string) => {
   return useInfiniteQuery({
-    queryKey: ['infiniteSearch', query],
+    queryKey: ["infinite-search", query],
     queryFn: ({ pageParam }) => searchResults({ query, pageParam }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
@@ -30,7 +30,7 @@ export const useInfiniteSearchQuery = (query: string) => {
       pages: data.pages.map((page) => ({
         ...page,
         results: page.results.filter(
-          (item: IItem) => item.title || item.name || item.poster_path,
+          (item: IItem) => item.title || item.name || item.poster_path
         ),
       })),
       pageParams: data.pageParams,
@@ -40,29 +40,44 @@ export const useInfiniteSearchQuery = (query: string) => {
 
 // Discover movies
 
-const discoverResults = async (
-  sort: string = 'popularity.desc',
-  page: string = '1',
-  language: string = 'en-US',
-  genre: string = '',
+const discoverMovieResults = async (
+  sort: string = "popularity.desc",
+  lang: string = "en",
+  pageParam: number = 1,
+  genre: string = ""
 ) => {
   const { data } = await TMDBClient.get(
-    `/movie/discover?include_adult=false&language=${language}&sort_by=${sort}&page=${page}&genre=${genre}`,
+    `/discover/movie?include_adult=false&language=${lang}&sort_by=${sort}&page=${pageParam}&genre=${genre}`
   );
-  return data.results;
+  return {
+    results: data.results,
+    nextPage: pageParam < data.total_pages ? pageParam + 1 : undefined,
+    totalPages: data.total_pages,
+  };
 };
 
-export const useDiscoverQuery = (sort: string, page: string, genre: string) => {
-  return useQuery({
-    queryKey: ['discover', sort, page, genre],
-    queryFn: async () => {
-      return discoverResults(sort, page, genre);
-    },
+export const useInfiniteDiscoverMovieQuery = ( sort: string, lang: string, genre: string) => {
+  return useInfiniteQuery({
+    queryKey: ["movie-discover", sort, genre],
+    queryFn: ({ pageParam }) =>
+      discoverMovieResults(sort, lang, pageParam, genre),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: true,
     staleTime: 0,
     retry: 2,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
+    placeholderData: (previousData) => previousData,
+    select: (data) => ({
+      pages: data.pages.map((page) => ({
+        ...page,
+        results: page.results.filter(
+          (item: IItem) => (item.title || item.name) || item.poster_path
+        ),
+      })),
+      pageParams: data.pageParams,
+    }),
   });
 };
 
-//     `/search/movie?include_adult=false&language=${language}&query=${query}&page=${page}`,
+

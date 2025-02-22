@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import UserRating from './UserRating';
 import { getStrokeColor } from '../utils/helpers';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import genreData from '../utils/data/genres.json';
 import Chip from './Chip';
 
@@ -105,4 +105,19 @@ const ItemCard = ({
   );
 };
 
-export default ItemCard;
+
+const MemoizedItemCard = memo(({ movie }: { movie: IItem }) => (
+  <div className='w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]'>
+    <ItemCard
+      textSize='xl'
+      item={movie}
+      showRating={false}
+      showGenres={false}
+      itemType={movie.media_type || ''}
+    />
+  </div>
+));
+
+MemoizedItemCard.displayName = 'MemoizedItemCard';
+
+export { ItemCard, MemoizedItemCard };
