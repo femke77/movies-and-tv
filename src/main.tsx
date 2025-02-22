@@ -10,6 +10,7 @@ import ScrollToTop from './components/ScrollToTop.tsx';
 import Results from './pages/Results.tsx';
 import MovieTopRated from './pages/MovieTopRated.tsx';
 import MoviePopular from './pages/MoviePopular.tsx';
+import MovieTrending from './pages/MovieTrending.tsx';
 
 const queryClient = new QueryClient();
 
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'movies',
-            element: <h1>Explore Movies</h1>,
+            element: <MovieTrending />, 
           },
           {
             path: 'toprated',

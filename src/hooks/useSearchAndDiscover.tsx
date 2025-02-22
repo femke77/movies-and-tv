@@ -1,8 +1,9 @@
+
 import { IItem } from '../interfaces/IItem';
 import { TMDBClient } from '../utils/axiosConfig';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-// Search movie by title
+// Search movie or tv show by any keyword or title
 
 const searchResults = async ({ query = '', pageParam = 1 }) => {
   const { data } = await TMDBClient.get(
@@ -81,6 +82,44 @@ export const useInfiniteDiscoverQuery = (
         ...page,
         results: page.results.filter(
           (item: IItem) => (item.title || item.name) || (item.poster_path),
+        ),
+      })),
+      pageParams: data.pageParams,
+    }),
+  });
+};
+
+
+// trending movies 
+// type can be 'all', 'movie', 'tv'
+// time_window can be 'day', 'week'
+const getTrending = async ({ type = 'all', time_window = "day", pageParam = 1 }) => {
+  const { data } = await TMDBClient.get(
+    `/trending/${type}/${time_window}?language=en-US&page=${pageParam}`,
+  );
+  return {
+    results: data.results,
+    nextPage: pageParam < data.total_pages ? pageParam + 1 : undefined,
+    totalPages: data.total_pages,
+  };
+};
+
+export const useInfiniteTrendingQuery = (type?: string, time_window?: string) => {
+  return useInfiniteQuery({
+    queryKey: ['infinite-trending', type, time_window],
+    queryFn: ({ pageParam }) => getTrending({ type, time_window, pageParam }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+    enabled: true,
+    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    gcTime: 1000 * 60 * 60 * 25, // 25 hours
+    refetchOnWindowFocus: false,
+    placeholderData: (previousData) => previousData,
+    select: (data) => ({
+      pages: data.pages.map((page) => ({
+        ...page,
+        results: page.results.filter(
+          (item: IItem) => item.title || item.name || item.poster_path,
         ),
       })),
       pageParams: data.pageParams,
