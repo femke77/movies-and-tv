@@ -1,4 +1,4 @@
-import  { useRef, useEffect, useMemo, memo } from 'react';
+import { useRef, useEffect, useMemo, memo } from 'react';
 import { useParams, useOutletContext } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteSearchQuery } from '../hooks/useSearchAndDiscover';
@@ -7,11 +7,9 @@ import ItemCard from '../components/ItemCard';
 
 // Memoized ItemCard wrapper
 const MemoizedItemCard = memo(({ movie }: { movie: IItem }) => (
-  <div
-    className="w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]"
-  >
+  <div className='w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]'>
     <ItemCard
-      textSize="xl"
+      textSize='xl'
       item={movie}
       showRating={false}
       showGenres={false}
@@ -61,7 +59,7 @@ const Results = memo(() => {
             <MemoizedItemCard key={`movie-${movie.id}`} movie={movie} />
           ))
         ) : (
-          <p className="text-lg text-gray-400">No results found.</p>
+          <p className='text-lg text-gray-400'>No results found.</p>
         )}
       </div>
       <div ref={ref} className="h-10 mt-4">
@@ -85,16 +83,16 @@ const SearchContainer = memo(() => {
   }, [searchQuery]);
 
   // Memoize the heading text
-  const headingText = useMemo(() => 
-    `Search results for '${searchQuery || lastLetterRef.current}'`,
-    [searchQuery]
+  const headingText = useMemo(
+    () => `Search results for '${searchQuery || lastLetterRef.current}'`,
+    [searchQuery],
   );
 
   return (
-    <div className="mt-36 mx-4">
-      <h2 className="text-3xl font-bold mt-10 mb-8 relative">
+    <div className='mt-36 mx-4'>
+      <h2 className='text-3xl font-bold mt-10 mb-8 relative'>
         <span>{headingText}</span>
-        <div className="inline">
+        <div className='inline'>
           <Results />
         </div>
       </h2>

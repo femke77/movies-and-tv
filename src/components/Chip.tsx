@@ -1,6 +1,14 @@
-const Chip = ({ label, bg='bg-white/15' }: { label: string, bg?:string }) => {
+const Chip = ({
+  label,
+  bg = 'bg-white/15',
+}: {
+  label: string;
+  bg?: string;
+}) => {
   return (
-    <div className={`leading-6 mr-2 text-center rounded-md ${bg}  px-2  text-sm text-white shadow-sm w-max h-min`}>
+    <div
+      className={`leading-6 mr-2 text-center rounded-md ${bg}  px-2  text-sm text-white shadow-sm w-max h-min`}
+    >
       {label}
     </div>
   );
