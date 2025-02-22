@@ -14,14 +14,22 @@ const Search = ({
 }) => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleNavigate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    if (e.target.value.trim()) {
-      navigate(`/search/${e.target.value}`, { replace: true });
+    const value = e.target.value.trim();
+
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current); 
+    }
+
+    if (value) {
+      setSearchQuery(value);
+      debounceRef.current = setTimeout(() => {
+        navigate(`/search/${value}`, { replace: true });
+      }, 150); 
     }
   };
-
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
@@ -35,7 +43,7 @@ const Search = ({
         ref={inputRef}
         type='text'
         className='pointer-events-auto w-full h-13 px-4 mx-1 text-xl bg-gray-900 text-white border-2 rounded-md border-gray-700 focus:outline-none focus:rounded-lg focus:ring-1 focus:ring-white'
-        placeholder='Search...'
+        placeholder='Search for movies or tv...'
         onChange={handleNavigate}
         autoFocus
       />
