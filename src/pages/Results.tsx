@@ -44,7 +44,7 @@ const Results = memo(() => {
 
   useEffect(() => {
     if (query?.length === 1) {
-      lastResultsRef.current = data?.pages.flatMap(page => page.results) ?? [];
+      lastResultsRef.current = data?.pages[0].results ?? [];
     }
   }, [query, data]);
 

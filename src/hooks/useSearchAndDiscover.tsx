@@ -37,6 +37,8 @@ export const useInfiniteSearchQuery = (query: string) => {
     })
   });
 };
+
+
 // Discover movies
 
 const discoverResults = async (
