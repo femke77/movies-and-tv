@@ -9,6 +9,8 @@ import ItemDetail from './pages/ItemDetail.tsx';
 import ScrollToTop from './components/ScrollToTop.tsx';
 import Results from './pages/Results.tsx';
 import MovieTopRated from './pages/MovieTopRated.tsx';
+import MoviePopular from './pages/MoviePopular.tsx';
+
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -45,7 +47,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'popular',
-            element: <h1>Popular</h1>,
+            element: <MoviePopular  />,
           },
         ],
       },

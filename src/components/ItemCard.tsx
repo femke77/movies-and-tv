@@ -70,7 +70,7 @@ const ItemCard = ({
                 )}
                 {/* Genres*/}
                 {showGenres && movieGenres?.length >= 1 && (
-                  <div className='flex flex-col items-end relative -top-7 -left-2'>
+                  <div className='flex justify-end flex-wrap relative -top-7 -left-2 w-50'>
                     {movieGenres
                       ?.slice(0, 2)
                       .map((genre) => (
