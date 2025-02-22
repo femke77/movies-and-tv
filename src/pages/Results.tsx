@@ -3,22 +3,7 @@ import { useParams, useOutletContext } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteSearchQuery } from '../hooks/useSearchAndDiscover';
 import { IItem } from '../interfaces/IItem';
-import ItemCard from '../components/ItemCard';
-
-// Memoized ItemCard wrapper
-const MemoizedItemCard = memo(({ movie }: { movie: IItem }) => (
-  <div className='w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]'>
-    <ItemCard
-      textSize='xl'
-      item={movie}
-      showRating={false}
-      showGenres={false}
-      itemType={movie.media_type || ''}
-    />
-  </div>
-));
-
-MemoizedItemCard.displayName = 'MemoizedItemCard';
+import { MemoizedItemCard } from '../components/ItemCard';
 
 // Memoized Results component
 const Results = memo(() => {
@@ -55,7 +40,7 @@ const Results = memo(() => {
         )}
       </div>
       <div ref={ref} className='h-10 mt-4'>
-        {isFetchingNextPage && <div>Fetching...</div>}
+        {isFetchingNextPage && <div>Getting more results...</div>}
       </div>
     </div>
   );

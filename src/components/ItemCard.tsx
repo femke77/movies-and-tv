@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import UserRating from './UserRating';
 import { getStrokeColor } from '../utils/helpers';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import genreData from '../utils/data/genres.json';
 import Chip from './Chip';
 
@@ -16,9 +16,9 @@ const ItemCard = ({
 }: {
   item: IItem;
   itemType: string;
-  showRating: boolean;
-  showGenres: boolean;
-  textSize: string;
+  showRating?: boolean;
+  showGenres?: boolean;
+  textSize?: string;
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const formattedReleaseDate = dayjs(item.release_date).format('MMM D, YYYY');
@@ -105,4 +105,31 @@ const ItemCard = ({
   );
 };
 
-export default ItemCard;
+// memoized wrapper for places where the same item is rendered multiple times such as infinite scrolling
+const MemoizedItemCard = memo(
+  ({
+    movie,
+    itemType,
+    showRating = false,
+    showGenres = false,
+  }: {
+    movie: IItem;
+    itemType?: string;
+    showRating?: boolean;
+    showGenres?: boolean;
+  }) => (
+    <div className='w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]'>
+      <ItemCard
+        textSize='xl'
+        item={movie}
+        showRating={showRating}
+        showGenres={showGenres}
+        itemType={movie.media_type || itemType || ''}
+      />
+    </div>
+  ),
+);
+
+MemoizedItemCard.displayName = 'MemoizedItemCard';
+
+export { ItemCard, MemoizedItemCard };

@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import NavMovies from './NavComponents/NavMovies';
 import NavTVShow from './NavComponents/NavTVShow';
 import NavDiscover from './NavComponents/NavDiscover';
-import Search from './Search';
+import Search from './HeaderSearch';
 
 export default function Navigation({
   setSearchQuery,

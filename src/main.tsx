@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ItemDetail from './pages/ItemDetail.tsx';
 import ScrollToTop from './components/ScrollToTop.tsx';
 import Results from './pages/Results.tsx';
-
+import MovieTopRated from './pages/MovieTopRated.tsx';
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'toprated',
-            element: <h1>Top Rated</h1>,
+            element: <MovieTopRated />,
           },
           {
             path: 'popular',

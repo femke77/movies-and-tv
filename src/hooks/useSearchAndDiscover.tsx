@@ -1,6 +1,6 @@
 import { IItem } from '../interfaces/IItem';
 import { TMDBClient } from '../utils/axiosConfig';
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Search movie by title
 
@@ -17,7 +17,7 @@ const searchResults = async ({ query = '', pageParam = 1 }) => {
 
 export const useInfiniteSearchQuery = (query: string) => {
   return useInfiniteQuery({
-    queryKey: ['infiniteSearch', query],
+    queryKey: ['infinite-search', query],
     queryFn: ({ pageParam }) => searchResults({ query, pageParam }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
@@ -38,31 +38,52 @@ export const useInfiniteSearchQuery = (query: string) => {
   });
 };
 
-// Discover movies
+// Discover new stuff
 
 const discoverResults = async (
-  sort: string = 'popularity.desc',
-  page: string = '1',
-  language: string = 'en-US',
-  genre: string = '',
+  type = 'movie',
+  sort = 'popularity.desc',
+  pageParam = 1,
+  lang = 'en',
+  genre = '',
+  vote_average = 1,
 ) => {
   const { data } = await TMDBClient.get(
-    `/movie/discover?include_adult=false&language=${language}&sort_by=${sort}&page=${page}&genre=${genre}`,
+    `/discover/${type}?vote_average.gte=${vote_average}&include_adult=false&vote_count.gte=1000&language=${lang}&sort_by=${sort}&page=${pageParam}&genre=${genre}`,
   );
-  return data.results;
+  return {
+    results: data.results,
+    nextPage: pageParam < data.total_pages ? pageParam + 1 : undefined,
+    totalPages: data.total_pages,
+  };
 };
 
-export const useDiscoverQuery = (sort: string, page: string, genre: string) => {
-  return useQuery({
-    queryKey: ['discover', sort, page, genre],
-    queryFn: async () => {
-      return discoverResults(sort, page, genre);
-    },
+export const useInfiniteDiscoverQuery = (
+  type: string,
+  sort: string,
+  lang: string,
+  vote_average?: number,
+  genre?: string,
+) => {
+  return useInfiniteQuery({
+    queryKey: ['infinite-discover', type, sort, genre],
+    queryFn: ({ pageParam }) =>
+      discoverResults(type, sort, pageParam, lang, genre, vote_average),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: true,
     staleTime: 0,
     retry: 2,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
+    placeholderData: (previousData) => previousData,
+    select: (data) => ({
+      pages: data.pages.map((page) => ({
+        ...page,
+        results: page.results.filter(
+          (item: IItem) => item.title || item.name || item.poster_path,
+        ),
+      })),
+      pageParams: data.pageParams,
+    }),
   });
 };
-
-//     `/search/movie?include_adult=false&language=${language}&query=${query}&page=${page}`,
