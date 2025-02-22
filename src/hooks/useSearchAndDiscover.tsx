@@ -1,33 +1,40 @@
+import { IItem } from '../interfaces/IItem';
 import { TMDBClient } from '../utils/axiosConfig';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 
 // Search movie by title
 
-const searchResults = async (
-  query: string = '',
-  page: string = '1',
-  language: string = 'en',
-) => {
+const searchResults = async ({ query = '', pageParam = 1 }) => {
   const { data } = await TMDBClient.get(
-    `/search/multi?query=${query}&include_adult=false&language=${language}&page=${page}`,
+    `/search/multi?query=${query}&include_adult=false&language=en&page=${pageParam}`,
   );
-  return data.results;
+  return {
+    results: data.results,
+    nextPage: pageParam < data.total_pages ? pageParam + 1 : undefined,
+    totalPages: data.total_pages,
+  };
 };
 
-export const useSearchQuery = (query: string, page: string) => {
-  return useQuery({
-    queryKey: ['search', query, page],
-    queryFn: async () => {
-      if (!query) {
-        throw new Error('Search query is required');
-      }
-      return searchResults(query, page);
-    },
+export const useInfiniteSearchQuery = (query: string) => {
+  return useInfiniteQuery({
+    queryKey: ['infiniteSearch', query],
+    queryFn: ({ pageParam }) => searchResults({ query, pageParam }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: !!query,
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
     gcTime: 1000 * 60 * 60 * 25, // 25 hours
     refetchOnWindowFocus: false,
     placeholderData: (previousData) => previousData,
+    select: (data) => ({
+      pages: data.pages.map((page) => ({
+        ...page,
+        results: page.results.filter(
+          (item: IItem) => item.title || item.name || item.poster_path,
+        ),
+      })),
+      pageParams: data.pageParams,
+    }),
   });
 };
 

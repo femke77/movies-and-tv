@@ -1,6 +1,7 @@
 import { useRef, useEffect, useMemo, memo } from 'react';
 import { useParams, useOutletContext } from 'react-router-dom';
-import { useSearchQuery } from '../hooks/useSearchAndDiscover';
+import { useInView } from 'react-intersection-observer';
+import { useInfiniteSearchQuery } from '../hooks/useSearchAndDiscover';
 import { IItem } from '../interfaces/IItem';
 import ItemCard from '../components/ItemCard';
 
@@ -22,38 +23,39 @@ MemoizedItemCard.displayName = 'MemoizedItemCard';
 // Memoized Results component
 const Results = memo(() => {
   const { query } = useParams<{ query: string }>();
-  const { data = [], isLoading } = useSearchQuery(query ?? '', '1');
   const lastResultsRef = useRef<IItem[]>([]);
+  const { ref, inView } = useInView();
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteSearchQuery(query ?? '');
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
 
   useEffect(() => {
     if (query?.length === 1) {
-      lastResultsRef.current = data;
+      lastResultsRef.current = data?.pages[0].results ?? [];
     }
   }, [query, data]);
 
-  // Memoize filtered results
-  const results = useMemo(() => {
-    const filteredData = query
-      ? data.filter(
-          (item: IItem) =>
-            item.title || item.poster_path || item.name || item.poster_path,
-        )
-      : lastResultsRef.current;
-    return filteredData;
-  }, [query, data]);
-
   if (isLoading) return null;
-
+  const allMovies = data?.pages.flatMap((page) => page.results) ?? [];
   return (
     <div className='ml-2 mt-8'>
       <div className='flex flex-wrap flex-1 gap-4 items-start'>
-        {results.length > 0 ? (
-          results.map((movie: IItem) => (
+        {allMovies.length > 0 ? (
+          allMovies.map((movie: IItem) => (
             <MemoizedItemCard key={`movie-${movie.id}`} movie={movie} />
           ))
         ) : (
           <p className='text-lg text-gray-400'>No results found.</p>
         )}
+      </div>
+      <div ref={ref} className='h-10 mt-4'>
+        {isFetchingNextPage && <div>Fetching...</div>}
       </div>
     </div>
   );
