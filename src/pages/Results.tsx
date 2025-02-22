@@ -26,21 +26,14 @@ const Results = memo(() => {
   const lastResultsRef = useRef<IItem[]>([]);
   const { ref, inView } = useInView();
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteSearchQuery(query ?? '');
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteSearchQuery(query ?? '');
 
-  
- useEffect(() => {
+  useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView, hasNextPage, fetchNextPage]);
-  
 
   useEffect(() => {
     if (query?.length === 1) {
@@ -48,12 +41,11 @@ const Results = memo(() => {
     }
   }, [query, data]);
 
-
   if (isLoading) return null;
-  const allMovies = data?.pages.flatMap(page => page.results) ?? [];
+  const allMovies = data?.pages.flatMap((page) => page.results) ?? [];
   return (
-    <div className="ml-2 mt-8">
-      <div className="flex flex-wrap flex-1 gap-4 items-start">
+    <div className='ml-2 mt-8'>
+      <div className='flex flex-wrap flex-1 gap-4 items-start'>
         {allMovies.length > 0 ? (
           allMovies.map((movie: IItem) => (
             <MemoizedItemCard key={`movie-${movie.id}`} movie={movie} />
@@ -62,7 +54,7 @@ const Results = memo(() => {
           <p className='text-lg text-gray-400'>No results found.</p>
         )}
       </div>
-      <div ref={ref} className="h-10 mt-4">
+      <div ref={ref} className='h-10 mt-4'>
         {isFetchingNextPage && <div>Fetching...</div>}
       </div>
     </div>

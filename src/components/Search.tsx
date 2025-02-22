@@ -20,14 +20,14 @@ const Search = ({
     const value = e.target.value.trim();
 
     if (debounceRef.current) {
-      clearTimeout(debounceRef.current); 
+      clearTimeout(debounceRef.current);
     }
 
     if (value) {
       setSearchQuery(value);
       debounceRef.current = setTimeout(() => {
         navigate(`/search/${value}`, { replace: true });
-      }, 150); 
+      }, 150);
     }
   };
   return (

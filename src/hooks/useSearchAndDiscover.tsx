@@ -27,17 +27,16 @@ export const useInfiniteSearchQuery = (query: string) => {
     refetchOnWindowFocus: false,
     placeholderData: (previousData) => previousData,
     select: (data) => ({
-      pages: data.pages.map(page => ({
+      pages: data.pages.map((page) => ({
         ...page,
-        results: page.results.filter((item: IItem) => 
-         ( item.title || item.name) || item.poster_path
-        )
+        results: page.results.filter(
+          (item: IItem) => item.title || item.name || item.poster_path,
+        ),
       })),
       pageParams: data.pageParams,
-    })
+    }),
   });
 };
-
 
 // Discover movies
 
