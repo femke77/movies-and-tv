@@ -3,8 +3,7 @@ import { useParams, useOutletContext } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteSearchQuery } from '../hooks/useSearchAndDiscover';
 import { IItem } from '../interfaces/IItem';
-import {MemoizedItemCard} from '../components/ItemCard';
-
+import { MemoizedItemCard } from '../components/ItemCard';
 
 // Memoized Results component
 const Results = memo(() => {
@@ -40,7 +39,7 @@ const Results = memo(() => {
           <p className='text-lg text-gray-400'>No results found.</p>
         )}
       </div>
-      <div ref={ref} className="h-10 mt-4">
+      <div ref={ref} className='h-10 mt-4'>
         {isFetchingNextPage && <div>Getting more results...</div>}
       </div>
     </div>

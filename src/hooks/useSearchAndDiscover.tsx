@@ -1,12 +1,12 @@
-import { IItem } from "../interfaces/IItem";
-import { TMDBClient } from "../utils/axiosConfig";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { IItem } from '../interfaces/IItem';
+import { TMDBClient } from '../utils/axiosConfig';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Search movie by title
 
-const searchResults = async ({ query = "", pageParam = 1 }) => {
+const searchResults = async ({ query = '', pageParam = 1 }) => {
   const { data } = await TMDBClient.get(
-    `/search/multi?query=${query}&include_adult=false&language=en&page=${pageParam}`
+    `/search/multi?query=${query}&include_adult=false&language=en&page=${pageParam}`,
   );
   return {
     results: data.results,
@@ -17,7 +17,7 @@ const searchResults = async ({ query = "", pageParam = 1 }) => {
 
 export const useInfiniteSearchQuery = (query: string) => {
   return useInfiniteQuery({
-    queryKey: ["infinite-search", query],
+    queryKey: ['infinite-search', query],
     queryFn: ({ pageParam }) => searchResults({ query, pageParam }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
@@ -30,7 +30,7 @@ export const useInfiniteSearchQuery = (query: string) => {
       pages: data.pages.map((page) => ({
         ...page,
         results: page.results.filter(
-          (item: IItem) => item.title || item.name || item.poster_path
+          (item: IItem) => item.title || item.name || item.poster_path,
         ),
       })),
       pageParams: data.pageParams,
@@ -41,15 +41,15 @@ export const useInfiniteSearchQuery = (query: string) => {
 // Discover new stuff
 
 const discoverResults = async (
-  type= "movie",
-  sort= "popularity.desc",
+  type = 'movie',
+  sort = 'popularity.desc',
   pageParam = 1,
-  lang = "en",
-  genre = "",
-  vote_average = 1
+  lang = 'en',
+  genre = '',
+  vote_average = 1,
 ) => {
   const { data } = await TMDBClient.get(
-    `/discover/${type}?vote_average.gte=${vote_average}&include_adult=false&vote_count.gte=1000&language=${lang}&sort_by=${sort}&page=${pageParam}&genre=${genre}`
+    `/discover/${type}?vote_average.gte=${vote_average}&include_adult=false&vote_count.gte=1000&language=${lang}&sort_by=${sort}&page=${pageParam}&genre=${genre}`,
   );
   return {
     results: data.results,
@@ -58,9 +58,15 @@ const discoverResults = async (
   };
 };
 
-export const useInfiniteDiscoverQuery = (type: string, sort: string, lang: string, vote_average?: number, genre?: string) => {
+export const useInfiniteDiscoverQuery = (
+  type: string,
+  sort: string,
+  lang: string,
+  vote_average?: number,
+  genre?: string,
+) => {
   return useInfiniteQuery({
-    queryKey: ["infinite-discover", type, sort, genre],
+    queryKey: ['infinite-discover', type, sort, genre],
     queryFn: ({ pageParam }) =>
       discoverResults(type, sort, pageParam, lang, genre, vote_average),
     initialPageParam: 1,
@@ -74,12 +80,10 @@ export const useInfiniteDiscoverQuery = (type: string, sort: string, lang: strin
       pages: data.pages.map((page) => ({
         ...page,
         results: page.results.filter(
-          (item: IItem) => ( item.title || item.name) || item.poster_path
+          (item: IItem) => item.title || item.name || item.poster_path,
         ),
       })),
       pageParams: data.pageParams,
     }),
   });
 };
-
-

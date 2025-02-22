@@ -1,7 +1,7 @@
-import { useEffect, memo } from "react";
-import { useInView } from "react-intersection-observer";
-import { IItem } from "../interfaces/IItem";
-import { MemoizedItemCard } from "./ItemCard";
+import { useEffect, memo } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { IItem } from '../interfaces/IItem';
+import { MemoizedItemCard } from './ItemCard';
 
 interface IExploreProps {
   data: {
@@ -21,7 +21,7 @@ const Explore = memo(
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-    itemType="movie",
+    itemType = 'movie',
   }: IExploreProps) => {
     const { ref, inView } = useInView();
 
@@ -34,23 +34,29 @@ const Explore = memo(
     if (isLoading) return null;
     const allItems = data?.pages.flatMap((page) => page.results) ?? [];
     return (
-      <div className="ml-2 mt-8">
-        <div className="flex flex-wrap flex-1 gap-4 items-start">
+      <div className='ml-2 mt-8'>
+        <div className='flex flex-wrap flex-1 gap-4 items-start'>
           {allItems.length > 0 ? (
             allItems.map((movie: IItem) => (
-              <MemoizedItemCard itemType={itemType} key={`movie-${movie.id}`} movie={movie} showGenres={true} showRating={true }/>
+              <MemoizedItemCard
+                itemType={itemType}
+                key={`movie-${movie.id}`}
+                movie={movie}
+                showGenres={true}
+                showRating={true}
+              />
             ))
           ) : (
-            <p className="text-lg text-gray-400">No results found.</p>
+            <p className='text-lg text-gray-400'>No results found.</p>
           )}
         </div>
-        <div ref={ref} className="h-10 mt-4">
+        <div ref={ref} className='h-10 mt-4'>
           {isFetchingNextPage && <div>Getting more results...</div>}
         </div>
       </div>
     );
-  }
+  },
 );
 
-Explore.displayName = "Explore";
+Explore.displayName = 'Explore';
 export default Explore;
