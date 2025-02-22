@@ -1,4 +1,4 @@
-import  { useRef, useEffect, useMemo, memo } from 'react';
+import  { useRef, useEffect, useMemo, memo, useTransition } from 'react';
 import { useParams, useOutletContext } from 'react-router-dom';
 import { useSearchQuery } from '../hooks/useSearchAndDiscover';
 import { IItem } from '../interfaces/IItem';
@@ -26,6 +26,7 @@ const Results = memo(() => {
   const { query } = useParams<{ query: string }>();
   const { data = [], isLoading } = useSearchQuery(query ?? '', '1');
   const lastResultsRef = useRef<IItem[]>([]);
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     if (query?.length === 1) {
@@ -33,18 +34,23 @@ const Results = memo(() => {
     }
   }, [query, data]);
 
-  // Memoize filtered results
+  // Memoize and startTransition for filtering
   const results = useMemo(() => {
-    const filteredData = query
-      ? data.filter(
-          (item: IItem) =>
-            (item.title || item.poster_path) || (item.name || item.poster_path)
-        )
-      : lastResultsRef.current;
+    let filteredData: IItem[] = [];
+    
+    startTransition(() => {
+      filteredData = query
+        ? data.filter(
+            (item: IItem) =>
+             ( item.title || item.poster_path) || (item.name || item.poster_path)
+          )
+        : lastResultsRef.current;
+    });
+
     return filteredData;
   }, [query, data]);
 
-  if (isLoading) return null;
+  if (isLoading || isPending) return null;
 
   return (
     <div className="ml-2 mt-8">
