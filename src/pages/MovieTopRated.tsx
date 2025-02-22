@@ -6,7 +6,7 @@ const MovieTopRated = () => {
 
     return (
         <div className="mt-24">
-            <h2 className="text-xl sm:text-2xl md:text-3xl">Top Rated Movies</h2>
+            <h2 className="text-xl sm:text-2xl md:text-3xl ml-3">Top Rated Movies</h2>
             {data && ( <Explore
                 data={data}
                 fetchNextPage={fetchNextPage}

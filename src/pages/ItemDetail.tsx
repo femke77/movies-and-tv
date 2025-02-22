@@ -189,7 +189,7 @@ const ItemDetail = () => {
 
             {/* Cast Section */}
             {item.cast?.length > 0 && (
-              <section className='w-full mt-44'>
+              <section className='w-full mt-30'>
                 <h3 className='text-2xl/14 text-white/70  text-center'>
                   Top Cast
                 </h3>

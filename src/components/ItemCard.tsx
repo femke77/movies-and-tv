@@ -16,9 +16,9 @@ const ItemCard = ({
 }: {
   item: IItem;
   itemType: string;
-  showRating: boolean;
-  showGenres: boolean;
-  textSize: string;
+  showRating?: boolean;
+  showGenres?: boolean;
+  textSize?: string;
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const formattedReleaseDate = dayjs(item.release_date).format("MMM D, YYYY");
@@ -103,6 +103,7 @@ const ItemCard = ({
   );
 };
 
+// memoized wrapper for places where the same item is rendered multiple times such as infinite scrolling
 const MemoizedItemCard = memo(
   ({
     movie,
@@ -119,7 +120,7 @@ const MemoizedItemCard = memo(
       <ItemCard
         textSize="xl"
         item={movie}
-        showRating={showRating}
+        showRating={showRating} 
         showGenres={showGenres}
         itemType={movie.media_type || itemType || ""}
       />
