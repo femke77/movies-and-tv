@@ -1,13 +1,14 @@
-import { TMDBClient } from '../utils/axiosConfig';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import type { IItem } from '../interfaces/IItem';
+import { TMDBClient } from "../utils/axiosConfig";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import type { IItem } from "../interfaces/IItem";
 
 // TODO refactor to use trending/all instead of now_playing to include tv
 
 interface ILogo {
   iso_639_1: string;
   file_path: string;
+  vote_average: number;
 }
 
 /**
@@ -28,19 +29,19 @@ interface ILogo {
 const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
   if (items.length === 0) return [];
 
-  const [firstMovie, secondMovie] = items;
+  const [firstItem, secondItem] = items;
 
-  const logoPromises = [firstMovie, secondMovie].map(async (item) => {
+  const logoPromises = [firstItem, secondItem].map(async (item) => {
     if (!item) return null;
     try {
       const { data: images } = await TMDBClient.get(
-        `/${item.media_type}/${item.id}/images`,
+        `/${item.media_type}/${item.id}/images`
       );
       return {
         id: item.id,
         type: item.media_type,
         logo:
-          images?.logos?.find((logo: ILogo) => logo.iso_639_1 === 'en')
+          images?.logos?.find((logo: ILogo) => logo.iso_639_1 === "en" && logo.vote_average > 0)
             ?.file_path || null,
       };
     } catch {
@@ -50,7 +51,7 @@ const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
 
   const logos = await Promise.all(logoPromises);
   const logoMap = new Map(
-    logos.filter(Boolean).map((item) => [item!.id, item!.logo]),
+    logos.filter(Boolean).map((item) => [item!.id, item!.logo])
   );
 
   return items.map((item) => ({
@@ -59,11 +60,11 @@ const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
   }));
 };
 
-export const useNowPlayingMovies = () => {
+export const useTrendingTodayAll = () => {
   return useQuery<IItem[], Error>({
-    queryKey: ['now_playing_movies'],
+    queryKey: ["all_trending_items"],
     queryFn: async () => {
-      const response = await TMDBClient.get('/trending/all/day?language=en-US');
+      const response = await TMDBClient.get("/trending/all/day?language=en-US");
       const movies = response.data.results;
       return fetchFirstTwoLogos(movies);
     },
@@ -97,21 +98,23 @@ export const useNowPlayingMovies = () => {
  * ```
  */
 
-export const useMovieLogo = (
+export const useItemLogos = (
   itemId: number,
   type: string,
   isVisible: boolean,
   currentIndex: number,
-  itemList: IItem[],
+  itemList: IItem[]
 ) => {
   const queryClient = useQueryClient();
 
   const { data: logo } = useQuery({
-    queryKey: ['logo', itemId],
+    queryKey: ["logo", itemId],
     queryFn: async () => {
-      const { data: images } = await TMDBClient.get(`/${type}/${itemId}/images`);
+      const { data: images } = await TMDBClient.get(
+        `/${type}/${itemId}/images?language=en`
+      );
       return (
-        images?.logos?.find((logo: ILogo) => logo.iso_639_1 === 'en')
+        images?.logos?.find((logo: ILogo) => logo.iso_639_1 === "en")
           ?.file_path || null
       );
     },
@@ -128,19 +131,18 @@ export const useMovieLogo = (
       if (nextIndex < itemList.length) {
         const nextMovie = itemList[nextIndex];
 
-        const cachedData = queryClient.getQueryData([
-          'logo',
-          nextMovie.id,
-        ]);
+        const cachedData = queryClient.getQueryData(["logo", nextMovie.id]);
+       
+        
         if (!cachedData) {
           queryClient.prefetchQuery({
-            queryKey: ['logo', nextMovie.id],
+            queryKey: ["logo", nextMovie.id],
             queryFn: async () => {
               const { data: images } = await TMDBClient.get(
-                `/${type}/${nextMovie.id}/images`,
+                `/${nextMovie.media_type}/${nextMovie.id}/images?language=en`
               );
               return (
-                images?.logos?.find((logo: ILogo) => logo.iso_639_1 === 'en')
+                images?.logos?.find((logo: ILogo) => logo.iso_639_1 === "en")
                   ?.file_path || null
               );
             },
