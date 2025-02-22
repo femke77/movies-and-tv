@@ -12,6 +12,7 @@ const Slide = ({
   isVisible,
   currentIndex,
   movieList,
+
 }: {
   slide: IItem;
   isVisible: boolean;
@@ -24,12 +25,14 @@ const Slide = ({
 
   const logoFromQuery = useMovieLogo(
     slide.id,
+    slide.media_type ?? 'movie',
     isVisible,
     currentIndex,
     movieList,
   );
   const displayLogo = logoFromQuery || null;
-
+  console.log(slide.title);
+  
   const movieGenres = slide.genre_ids.map((genreId) => {
     const genre = genres.find((g) => g.id === genreId);
     return genre?.name;
@@ -89,7 +92,7 @@ const Slide = ({
                 />
               ) : (
                 <h2 className='text-4xl font-bold text-white mb-12'>
-                  {slide.title}
+                  {slide.title || slide.name}
                 </h2>
               )}
               <p className='text-white line-clamp-2 md:line-clamp-3 text-center md:text-left mb-8'>

@@ -14,7 +14,7 @@ interface ILogo {
  * Fetches and attaches English logo paths for the first two movies in the provided array.
  * Makes parallel API requests to TMDB for movie images and extracts English logos.
  *
- * @param movies - Array of movie objects to process
+ * @param items - Array of movie objects to process
  * @returns Promise resolving to the same array of movies with attached logo paths
  *          in the 'title_logo' property. If no English logo is found, null is used.
  *
@@ -25,25 +25,26 @@ interface ILogo {
  * - Preserves all original movie properties while adding the title_logo field
  */
 
-const fetchFirstTwoLogos = async (movies: IItem[]): Promise<IItem[]> => {
-  if (movies.length === 0) return [];
+const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
+  if (items.length === 0) return [];
 
-  const [firstMovie, secondMovie] = movies;
+  const [firstMovie, secondMovie] = items;
 
-  const logoPromises = [firstMovie, secondMovie].map(async (movie) => {
-    if (!movie) return null;
+  const logoPromises = [firstMovie, secondMovie].map(async (item) => {
+    if (!item) return null;
     try {
       const { data: images } = await TMDBClient.get(
-        `/movies/${movie.id}/images`,
+        `/${item.media_type}/${item.id}/images`,
       );
       return {
-        id: movie.id,
+        id: item.id,
+        type: item.media_type,
         logo:
           images?.logos?.find((logo: ILogo) => logo.iso_639_1 === 'en')
             ?.file_path || null,
       };
     } catch {
-      return { id: movie.id, logo: null };
+      return { id: item.id, logo: null };
     }
   });
 
@@ -52,9 +53,9 @@ const fetchFirstTwoLogos = async (movies: IItem[]): Promise<IItem[]> => {
     logos.filter(Boolean).map((item) => [item!.id, item!.logo]),
   );
 
-  return movies.map((movie) => ({
-    ...movie,
-    title_logo: logoMap.get(movie.id) || null,
+  return items.map((item) => ({
+    ...item,
+    title_logo: logoMap.get(item.id) || null,
   }));
 };
 
@@ -62,7 +63,7 @@ export const useNowPlayingMovies = () => {
   return useQuery<IItem[], Error>({
     queryKey: ['now_playing_movies'],
     queryFn: async () => {
-      const response = await TMDBClient.get('/movie/now_playing');
+      const response = await TMDBClient.get('/trending/all/day?language=en-US');
       const movies = response.data.results;
       return fetchFirstTwoLogos(movies);
     },
@@ -75,10 +76,10 @@ export const useNowPlayingMovies = () => {
 /**
  * Custom hook to fetch and manage movie logo images with prefetching capabilities.
  *
- * @param movieId - The ID of the movie to fetch the logo for
+ * @param itemId - The ID of the movie to fetch the logo for
  * @param isVisible - Boolean flag indicating if the movie component is currently visible
  * @param currentIndex - Current index in the movie list
- * @param movieList - Array of movie objects
+ * @param itemList - Array of movie objects
  *
  * @returns The URL path of the English language logo for the specified movie, or null if not found
  *
@@ -97,17 +98,18 @@ export const useNowPlayingMovies = () => {
  */
 
 export const useMovieLogo = (
-  movieId: number,
+  itemId: number,
+  type: string,
   isVisible: boolean,
   currentIndex: number,
-  movieList: IItem[],
+  itemList: IItem[],
 ) => {
   const queryClient = useQueryClient();
 
   const { data: logo } = useQuery({
-    queryKey: ['movie-logo', movieId],
+    queryKey: ['logo', itemId],
     queryFn: async () => {
-      const { data: images } = await TMDBClient.get(`/movie/${movieId}/images`);
+      const { data: images } = await TMDBClient.get(`/${type}/${itemId}/images`);
       return (
         images?.logos?.find((logo: ILogo) => logo.iso_639_1 === 'en')
           ?.file_path || null
@@ -121,21 +123,21 @@ export const useMovieLogo = (
 
   // prefetching for the next logo
   useEffect(() => {
-    if (isVisible && movieList.length > 0) {
+    if (isVisible && itemList.length > 0) {
       const nextIndex = currentIndex + 1;
-      if (nextIndex < movieList.length) {
-        const nextMovie = movieList[nextIndex];
+      if (nextIndex < itemList.length) {
+        const nextMovie = itemList[nextIndex];
 
         const cachedData = queryClient.getQueryData([
-          'movie-logo',
+          'logo',
           nextMovie.id,
         ]);
         if (!cachedData) {
           queryClient.prefetchQuery({
-            queryKey: ['movie-logo', nextMovie.id],
+            queryKey: ['logo', nextMovie.id],
             queryFn: async () => {
               const { data: images } = await TMDBClient.get(
-                `/movie/${nextMovie.id}/images`,
+                `/${type}/${nextMovie.id}/images`,
               );
               return (
                 images?.logos?.find((logo: ILogo) => logo.iso_639_1 === 'en')
@@ -146,7 +148,7 @@ export const useMovieLogo = (
         }
       }
     }
-  }, [isVisible, currentIndex, movieList, queryClient]);
+  }, [isVisible, currentIndex, itemList, queryClient]);
 
   return logo;
 };
