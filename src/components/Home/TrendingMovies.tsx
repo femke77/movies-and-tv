@@ -1,6 +1,6 @@
-import SlideContainer from '../SlideContainer';
-import { useTrendingMovies } from '../../hooks/useTrending';
-import { useRef } from 'react';
+import SlideContainer from "../CarouselContainer";
+import { useTrendingMovies } from "../../hooks/useTrending";
+import { useRef } from "react";
 
 const TrendingMovies = () => {
   const { data: movies = [] } = useTrendingMovies();
@@ -8,13 +8,14 @@ const TrendingMovies = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   return (
+    <div>
+  <h2 className='text-2xl font-bold mb-8'>Trending Movies 🔥</h2>
     <SlideContainer
       ref={ref}
       items={movies}
-      itemType='movie'
-      headerTxt='Trending Movies🔥'
-      id='trending-section'
-    />
+      itemType="movie"
+      id="trending-section"
+    />    </div>
   );
 };
 

@@ -1,19 +1,19 @@
-import { useTopRatedMovies } from '../../hooks/useTopRated';
-import SlideContainer from '../SlideContainer';
-import { useRef } from 'react';
+import { useTopRatedMovies } from "../../hooks/useTopRated";
+import SlideContainer from "../CarouselContainer";
+import { useRef } from "react";
 
 const TopRatedMovies = () => {
   const { data: movies = [] } = useTopRatedMovies();
   const ref = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div className='mt-24'>
+    <div className="mt-24">
+      <h2 className="text-2xl font-bold mb-8">Top Rated Movies🔝</h2>
       <SlideContainer
-        id='top-section'
+        id="top-section"
         ref={ref}
         items={movies}
-        itemType='movie'
-        headerTxt='Top Rated Movies🔝'
+        itemType="movie"
       />
     </div>
   );

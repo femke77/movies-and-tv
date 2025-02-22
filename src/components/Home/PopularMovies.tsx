@@ -1,18 +1,18 @@
-import { usePopularMovies } from '../../hooks/usePopularMovies';
-import { useRef } from 'react';
-import SlideContainer from '../SlideContainer';
+import { usePopularMovies } from "../../hooks/usePopularMovies";
+import { useRef } from "react";
+import SlideContainer from "../CarouselContainer";
 
 const PopularMovies = () => {
   const { data: movies = [] } = usePopularMovies();
   const ref = useRef<HTMLDivElement | null>(null);
   return (
-    <div className='mt-24'>
+    <div className="mt-24">
+      <h2 className="text-2xl font-bold mb-8">Popular Movies📈</h2>
       <SlideContainer
-        id='pop-section'
+        id="pop-section"
         ref={ref}
         items={movies}
-        itemType='movie'
-        headerTxt='Popular Movies📈'
+        itemType="movie"
       />
     </div>
   );

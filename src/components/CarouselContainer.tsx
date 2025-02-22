@@ -5,25 +5,25 @@ import { IItem } from '../interfaces/IItem';
 
 const SlideContainer = forwardRef<
   HTMLDivElement,
-  { items: IItem[]; itemType: string; headerTxt: string; id: string }
->(({ items, itemType, headerTxt, id }, ref) => {
+  { items: IItem[]; itemType: string;  id: string }
+>(({ items, itemType,  id }, ref) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -900, behavior: 'smooth' });
+      scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
     }
   };
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 900, behavior: 'smooth' });
+      scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
     }
   };
 
   return (
     <div ref={ref} id={id} className='pl-6 relative w-full'>
-      <h2 className='text-2xl font-bold mb-8'>{headerTxt}</h2>
+    
 
       {/* Left Arrow */}
       <button
