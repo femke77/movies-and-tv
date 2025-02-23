@@ -40,9 +40,7 @@ const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
       return {
         id: item.id,
         type: item.media_type,
-        logo:
-          images?.logos?.find((logo: ILogo) => logo.iso_639_1 === "en" && logo.vote_average > 0)
-            ?.file_path || null,
+        logo: images?.logos?.[0].file_path || null,
       };
     } catch {
       return { id: item.id, logo: null };
@@ -60,11 +58,13 @@ const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
   }));
 };
 
-export const useTrendingTodayAll = () => {
+export const useTrendingAll = () => {
   return useQuery<IItem[], Error>({
     queryKey: ["all_trending_items"],
     queryFn: async () => {
-      const response = await TMDBClient.get("/trending/all/day?language=en-US");
+      const response = await TMDBClient.get(
+        "/trending/all/week?language=en-US"
+      );
       const movies = response.data.results;
       return fetchFirstTwoLogos(movies);
     },
@@ -113,10 +113,7 @@ export const useItemLogos = (
       const { data: images } = await TMDBClient.get(
         `/${type}/${itemId}/images?language=en`
       );
-      return (
-        images?.logos?.find((logo: ILogo) => logo.iso_639_1 === "en")
-          ?.file_path || null
-      );
+      return images?.logos?.[0].file_path || null;
     },
     enabled: isVisible,
     staleTime: 1000 * 60 * 360,
@@ -132,8 +129,7 @@ export const useItemLogos = (
         const nextMovie = itemList[nextIndex];
 
         const cachedData = queryClient.getQueryData(["logo", nextMovie.id]);
-       
-        
+
         if (!cachedData) {
           queryClient.prefetchQuery({
             queryKey: ["logo", nextMovie.id],
@@ -141,10 +137,7 @@ export const useItemLogos = (
               const { data: images } = await TMDBClient.get(
                 `/${nextMovie.media_type}/${nextMovie.id}/images?language=en`
               );
-              return (
-                images?.logos?.find((logo: ILogo) => logo.iso_639_1 === "en")
-                  ?.file_path || null
-              );
+              return images?.logos?.[0].file_path || null;
             },
           });
         }

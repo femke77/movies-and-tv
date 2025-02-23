@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { useTrendingTodayAll } from "../../hooks/useAllTrending";
+import { useTrendingAll } from "../../hooks/useAllTrending";
 import Slide from "./Slide";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 export default function SwiperElement() {
-  const { data: items = [] } = useTrendingTodayAll();
+  const { data: items = [] } = useTrendingAll();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const progressCircle = useRef<SVGSVGElement>(null);
