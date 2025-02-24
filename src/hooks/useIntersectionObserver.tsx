@@ -38,5 +38,5 @@ export const useQueryConfig = (queryKey: string, queryFn: () => Promise<IItem[]>
   enabled,
   retry: 2,
   retryDelay: (attempt: number) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
-  placeholderData: (previousData: any) => previousData,
+  placeholderData: (previousData: IItem[] | undefined) => previousData ?? [],
 });

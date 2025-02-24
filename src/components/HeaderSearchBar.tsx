@@ -58,7 +58,8 @@ const Search = ({
           >
             Clear
           </button>
-        )}{" "}
+        )}
+
         <button
           aria-label="close search"
           className="pointer-events-auto text-white text-2xl  hover:text-gray-300 focus:outline-none hover:cursor-pointer"
