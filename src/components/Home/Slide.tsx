@@ -4,9 +4,9 @@ import WatchButton from '../WatchButton';
 import type { IItem } from '../../interfaces/IItem';
 import { useItemLogos } from '../../hooks/useAllTrendingWithLogoFetch';
 import genresData from '../../utils/data/genres.json';
-
 import { Link } from 'react-router-dom';
 
+// TODO refactor this css layout
 const Slide = ({
   slide,
   isVisible,

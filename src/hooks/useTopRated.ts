@@ -4,7 +4,7 @@ import type { IItem } from '../interfaces/IItem';
 import { useEffect, useState } from 'react';
 
 const fetchTopRatedMovies = async () => {
-  const { data } = await TMDBClient.get('/movie/top_rated');
+  const { data } = await TMDBClient.get('/movie/top_rated?language=en-US&page=1');
   return data.results;
 };
 
@@ -32,6 +32,47 @@ export const useTopRatedMovies = () => {
   return useQuery<IItem[], Error>({
     queryKey: ['toprated-movies'],
     queryFn: fetchTopRatedMovies,
+    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    gcTime: 1000 * 60 * 60 * 25, // 25 hours
+    refetchOnWindowFocus: false,
+    refetchInterval: 1000 * 60 * 30, // 30 minutes
+    retry: 2,
+    enabled: shouldFetch,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
+    placeholderData: (previousData) => previousData,
+  });
+};
+
+
+const fetchTopRatedTv = async () => {
+  const { data } = await TMDBClient.get('/tv/top_rated?language=en-US&page=1');
+  return data.results;
+};
+
+export const useTopRatedTv = () => {
+  const [shouldFetch, setShouldFetch] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldFetch(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.0, rootMargin: '50px 0px' },
+    );
+
+    const target = document.getElementById('top-tv-section');
+    if (target) {
+      observer.observe(target);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+  return useQuery<IItem[], Error>({
+    queryKey: ['toprated-tv'],
+    queryFn: fetchTopRatedTv,
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
     gcTime: 1000 * 60 * 60 * 25, // 25 hours
     refetchOnWindowFocus: false,

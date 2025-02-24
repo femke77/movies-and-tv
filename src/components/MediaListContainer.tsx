@@ -4,6 +4,7 @@ import GenreSelector from './GenreSelector';
 import Explore from './ExploreDisplay';
 import { IGenre } from '../interfaces/IGenre';
 
+// TODO make sure explore and item card really need to be memoized
 interface MediaListContainerProps {
   mediaType: 'movie' | 'tv';
   // listType: "popular" | "top_rated";

@@ -2,7 +2,9 @@ import { TMDBClient } from '../utils/axiosConfig';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { filterTMDBResults } from '../utils/helpers';
 
-// Search movie or tv show
+// All queries are paginated and return a nextPage and totalPages for infinite scroll
+
+// Search items by query
 const searchResults = async ({ query = '', pageParam = 1 }) => {
   const { data } = await TMDBClient.get(
     `/search/multi?query=${query}&include_adult=false&language=en&page=${pageParam}`,
@@ -35,11 +37,11 @@ export const useInfiniteSearchQuery = (query: string) => {
   });
 };
 
-// Discover new stuff
+// Discover new items
 
 const discoverResults = async (
   type = 'movie',
-  genres?: string,
+  genres = '',
   sort = 'popularity.desc',
   pageParam = 1,
   lang = 'en',
@@ -83,7 +85,7 @@ export const useInfiniteDiscoverQuery = (
   });
 };
 
-// trending movies
+// Trending items
 // type can be 'all', 'movie', 'tv'
 // time_window can be 'day', 'week'
 const getTrending = async ({
