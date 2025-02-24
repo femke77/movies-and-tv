@@ -35,7 +35,7 @@ const GenreSelector = ({
           m-2
           min-w-[120px]
           hover:border-blue-700
-          ${selectedGenres.includes(String(genre.id)) ? 'bg-red-900' : 'bg-white/[0.05]'}
+          ${selectedGenres.includes(String(genre.id)) ? 'bg-blue-700  border-blue-900 shadow-[0_0_12px_rgba(0,150,255,0.75)]' : 'bg-white/[0.05]'}
         `}
         >
           {genre.name}
