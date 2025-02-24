@@ -34,7 +34,7 @@ const ItemCard = ({
   }, []);
 
   const movieGenres = item?.genre_ids?.map((genreId) => {
-    const genre = genres.find((g) => g.id === genreId);
+    const genre = genres.find((genre) => genre.id === genreId);
     return genre?.name;
   });
 
@@ -74,7 +74,12 @@ const ItemCard = ({
                     {movieGenres
                       ?.slice(0, 2)
                       .map((genre) => (
-                        <Chip label={genre!} key={genre} bg='bg-black/60' />
+                        <Chip
+                          label={genre!}
+                          key={genre}
+                          bg='bg-black/60'
+                          fontSize='text-md'
+                        />
                       ))}
                   </div>
                 )}

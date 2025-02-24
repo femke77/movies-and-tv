@@ -1,11 +1,27 @@
 import { useState, useEffect, useRef } from 'react';
-import { Disclosure, DisclosureButton } from '@headlessui/react';
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 import NavMovies from './NavComponents/NavMovies';
 import NavTVShow from './NavComponents/NavTVShow';
 // import NavDiscover from './NavComponents/NavDiscover';
 import Search from './HeaderSearchBar';
+
+const moviesNav = [
+  { title: 'Trending', url: '/explore/movies' },
+  { title: 'Top Rated', url: '/explore/toprated' },
+  { title: 'Popular', url: '/explore/popular' },
+];
+
+const tvNav = [
+  { title: 'Trending', url: '/explore/tv' },
+  { title: 'Popular', url: '/explore/top-series' },
+  { title: 'Top Rated', url: '/explore/popular-tv' },
+];
 
 export default function Navigation({
   setSearchQuery,
@@ -82,27 +98,75 @@ export default function Navigation({
                         {/* <NavDiscover /> */}
                       </div>
                     </div>
-                    <button
+                    <DisclosureButton
                       role='search'
                       aria-label='search'
                       onClick={() => openSearch()}
                       className='relative -right-2 top-0 hover:cursor-pointer'
                     >
                       <img src='/mag.svg' alt='search' className='w-8 h-8' />
-                    </button>
+                    </DisclosureButton>
                   </div>
                 </div>
               </div>
 
               {/* Fullscreen Mobile Nav */}
-              <div
-                className={`fixed inset-0 mt-16 bg-black bg-opacity-80 flex items-center justify-center transition-all duration-700 ${
-                  open
-                    ? 'opacity-90 h-screen'
-                    : 'opacity-0 h-0 pointer-events-none'
-                }`}
-              ></div>
-              {/* TODO Mobile view needs buttons here*/}
+              <DisclosurePanel>
+                <div
+                  className={`block md:hidden fixed inset-0 mt-16  bg-black  transition-all duration-700 ${
+                    open
+                      ? 'opacity-90 h-screen'
+                      : 'opacity-0 h-0 pointer-events-none'
+                  }`}
+                >
+                  <div className='flex justify-center flex-wrap mt-6 sm:mt-12 '>
+                    <div className='text-white'>
+                      <div className='flex justify-start items-center p-4 '>
+                        <img
+                          src='/movie-2.svg'
+                          alt='Movies'
+                          className='mr-3 w-6 h-5  bg-white'
+                        />
+                        <h3 className='text-lg font-bold'>Movies</h3>
+                      </div>
+                      <div className='flex flex-col'>
+                        {moviesNav.map((item, index) => (
+                          <DisclosureButton
+                            className='transition-all duration-200 ease-in-out bg-white/15 w-50 p-2  rounded-lg text-sm text-white/90 text-center cursor-pointer m-2 hover:transform hover:translate-0.5 hover:text-white hover:bg-[#1B1B1B]'
+                            as={NavLink}
+                            key={index}
+                            to={item.url}
+                          >
+                            {item.title}
+                          </DisclosureButton>
+                        ))}
+                      </div>
+                    </div>
+                    <div className='text-white'>
+                      <div className='flex justify-start items-center p-4 '>
+                        <img
+                          src='/tv.svg'
+                          alt='Movies'
+                          className='mr-3 w-6 h-5  bg-white'
+                        />
+                        <h3 className='text-lg font-bold'>TV Shows</h3>
+                      </div>
+                      <div className='flex flex-col'>
+                        {tvNav.map((item, index) => (
+                          <DisclosureButton
+                            className='transition-all duration-200 ease-in-out bg-white/15 w-50 p-2  rounded-lg text-sm text-white/90 text-center cursor-pointer m-2 hover:transform hover:translate-0.5 hover:text-white hover:bg-[#1B1B1B]'
+                            as={NavLink}
+                            key={index}
+                            to={item.url}
+                          >
+                            {item.title}
+                          </DisclosureButton>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </DisclosurePanel>
             </>
           )}
         </Disclosure>
