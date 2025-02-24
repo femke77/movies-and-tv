@@ -10,7 +10,7 @@ const GenreSelector = ({
   onGenreToggle: (_genre: string) => void;
 }) => {
   return (
-    <div>
+    <div className=''>
       {genres.map((genre) => (
         <button
           onClick={() => onGenreToggle(String(genre.id))}
@@ -30,7 +30,7 @@ const GenreSelector = ({
           text-sm
           whitespace-nowrap
           m-2
-          min-w-[120px]
+          min-w-[150px]
           hover:border-blue-700
           ${selectedGenres.includes(String(genre.id)) ? 'bg-blue-800  border-blue-900 shadow-[0_0_12px_rgba(0,150,255,0.75)]' : 'bg-white/[0.05]'}
         `}

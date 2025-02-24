@@ -4,9 +4,9 @@ import WatchButton from '../WatchButton';
 import type { IItem } from '../../interfaces/IItem';
 import { useItemLogos } from '../../hooks/useAllTrendingWithLogoFetch';
 import genresData from '../../utils/data/genres.json';
-
 import { Link } from 'react-router-dom';
 
+// TODO refactor this css layout
 const Slide = ({
   slide,
   isVisible,
@@ -18,9 +18,9 @@ const Slide = ({
   currentIndex: number;
   movieList: IItem[];
 }) => {
-  const formattedDate = dayjs(slide.release_date).format('MMM D, YYYY');
+  const formattedMovieDate = dayjs(slide.release_date).format('MMM D, YYYY');
+  const formattedTvDate = dayjs(slide.first_air_date).format('MMM D, YYYY');
   const { genres } = genresData;
-  const width = window.innerWidth;
 
   const logoFromQuery = useItemLogos(
     slide.id,
@@ -56,33 +56,24 @@ const Slide = ({
 
             <div className='flex flex-col items-center md:items-start'>
               <div className='flex items-start mb-12 '>
-                {width > 390 ? (
-                  <>
-                    {movieGenres.length >= 1 &&
-                      movieGenres.slice(0, 2).map((genre) => (
-                        <span
-                          key={`${genre}-${slide.id}`}
-                          className='text-white mr-5 mb-2'
-                        >
-                          {genre}
-                        </span>
-                      ))}
-                  </>
-                ) : (
-                  <>
-                    {movieGenres.length >= 1 &&
-                      movieGenres.slice(0, 1).map((genre) => (
-                        <span
-                          key={`${genre}-${slide.id}`}
-                          className='text-white  ml-0'
-                        >
-                          {genre}
-                        </span>
-                      ))}
-                  </>
-                )}
+                {movieGenres.length >= 1 &&
+                  movieGenres.slice(0, 1).map((genre) => (
+                    <span
+                      key={`${genre}-${slide.id}`}
+                      className='text-white  ml-0'
+                    >
+                      {genre}
+                    </span>
+                  ))}
+
                 <p className='text-white font-light ml-8'>
-                  {formattedDate !== 'Invalid Date' && formattedDate}
+                  {slide.media_type === 'movie'
+                    ? slide.release_date !== 'Invalid Date'
+                      ? formattedMovieDate
+                      : null
+                    : slide.first_air_date !== 'Invalid Date'
+                      ? formattedTvDate
+                      : null}
                 </p>
               </div>
             </div>

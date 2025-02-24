@@ -8,7 +8,7 @@ const TopRatedMovies = () => {
 
   return (
     <div className='mt-24'>
-      <h2 className='text-2xl font-bold mb-8  ml-5'>Top Rated Movies🔝</h2>
+      <h2 className='text-2xl font-bold mb-8  ml-5'>Top Rated Movies 🔝</h2>
       <SlideContainer
         id='top-section'
         ref={ref}

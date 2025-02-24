@@ -1,5 +1,5 @@
-import genreData from '../utils/data/genres.json';
-import MediaListContainer from '../components/MediaListContainer';
+import genreData from '../../utils/data/movieGenres.json';
+import MediaListContainer from '../../components/MediaListContainer';
 
 const MovieTopRated = () => {
   const { genres } = genreData;

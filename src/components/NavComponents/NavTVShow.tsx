@@ -1,6 +1,7 @@
 // import { NavLink } from 'react-router-dom';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
+import { NavLink } from 'react-router-dom';
 
 const NavTVShow = () => {
   return (
@@ -25,19 +26,28 @@ const NavTVShow = () => {
         '
       >
         <MenuItem>
-          <button className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'>
-            Popular Shows
-          </button>
+          <NavLink
+            to='/explore/tv'
+            className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'
+          >
+            Trending TV
+          </NavLink>
         </MenuItem>
         <MenuItem>
-          <button className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'>
+          <NavLink
+            to='/explore/top-series'
+            className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'
+          >
             Top Series
-          </button>
+          </NavLink>
         </MenuItem>
         <MenuItem>
-          <button className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'>
-            Airing Today
-          </button>
+          <NavLink
+            to='/explore/popular-tv'
+            className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'
+          >
+            Popular Shows
+          </NavLink>
         </MenuItem>
       </MenuItems>
     </Menu>

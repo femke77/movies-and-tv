@@ -16,6 +16,9 @@ const Search = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
+  const handleClear = () => {
+    if (inputRef?.current) inputRef.current.value = '';
+  };
   const handleNavigate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
 
@@ -47,14 +50,25 @@ const Search = ({
         onChange={handleNavigate}
         autoFocus
       />
-      <button
-        aria-label='close search'
-        className='pointer-events-auto absolute right-4 pb-3.5 text-white text-2xl hover:text-gray-300 focus:outline-none hover:cursor-pointer'
-        onClick={closeSearch}
-        type='submit'
-      >
-        <XMarkIcon className='block h-6 w-6' aria-hidden='true' />
-      </button>
+      <div className='pointer-events-auto absolute flex justify-end items-end pb-3.5 right-6'>
+        {inputRef?.current?.value && (
+          <button
+            onClick={handleClear}
+            className='pr-6 hover:text-gray-300 focus:outline-none hover:cursor-pointer'
+          >
+            Clear
+          </button>
+        )}
+
+        <button
+          aria-label='close search'
+          className='pointer-events-auto text-white text-2xl  hover:text-gray-300 focus:outline-none hover:cursor-pointer'
+          onClick={closeSearch}
+          type='submit'
+        >
+          <XMarkIcon className='block h-6 w-6' aria-hidden='true' />
+        </button>
+      </div>
     </form>
   );
 };
