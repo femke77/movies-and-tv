@@ -89,7 +89,7 @@ export const useInfiniteDiscoverQuery = (
 // time_window can be 'day', 'week'
 const getTrending = async ({
   type = "all",
-  time_window = "day",
+  time_window = "week",
   pageParam = 1,
 }) => {
   const { data } = await TMDBClient.get(

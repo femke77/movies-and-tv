@@ -42,7 +42,7 @@ const MediaListContainer = ({
     <div className="mt-24">
       <div className="mx-3">
         <h2 className="text-xl sm:text-2xl md:text-3xl mb-6">{heading}</h2>
-        <GenreSelector genres={genres} onGenreToggle={toggleGenre} />
+        <GenreSelector genres={genres} onGenreToggle={toggleGenre} selectedGenres={selectedGenres}/>
       </div>
 
       {data && (
