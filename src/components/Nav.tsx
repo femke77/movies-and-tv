@@ -98,14 +98,14 @@ export default function Navigation({
                         {/* <NavDiscover /> */}
                       </div>
                     </div>
-                    <button
+                    <DisclosureButton
                       role="search"
                       aria-label="search"
                       onClick={() => openSearch()}
                       className="relative -right-2 top-0 hover:cursor-pointer"
                     >
                       <img src="/mag.svg" alt="search" className="w-8 h-8" />
-                    </button>
+                    </DisclosureButton>
                   </div>
                 </div>
               </div>
@@ -113,7 +113,7 @@ export default function Navigation({
               {/* Fullscreen Mobile Nav */}
               <DisclosurePanel>
                 <div
-                  className={`block md:hidden fixed inset-0 mt-16  bg-black bg-opacity-80 transition-all duration-700 ${
+                  className={`block md:hidden fixed inset-0 mt-16  bg-black  transition-all duration-700 ${
                     open
                       ? "opacity-90 h-screen"
                       : "opacity-0 h-0 pointer-events-none"

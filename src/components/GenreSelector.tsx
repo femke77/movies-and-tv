@@ -10,7 +10,7 @@ const GenreSelector = ({
   onGenreToggle: (_genre: string) => void;
 }) => {
   return (
-    <div className=''>
+    <div className='w-full mx-auto'>
       {genres.map((genre) => (
         <button
           onClick={() => onGenreToggle(String(genre.id))}
