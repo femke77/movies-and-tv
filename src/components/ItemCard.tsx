@@ -74,7 +74,12 @@ const ItemCard = ({
                     {movieGenres
                       ?.slice(0, 2)
                       .map((genre) => (
-                        <Chip label={genre!} key={genre} bg='bg-black/60' fontSize='text-md'/>
+                        <Chip
+                          label={genre!}
+                          key={genre}
+                          bg='bg-black/60'
+                          fontSize='text-md'
+                        />
                       ))}
                   </div>
                 )}
