@@ -24,7 +24,7 @@ const fetchMovieRating = async (movie_id: string) => {
   const usRegion = data.results.find(
     (region: { iso_3166_1: string }) => region.iso_3166_1 === 'US',
   );
-  const certification = usRegion?.release_dates[0]?.certification || 'N/A';
+  const certification = usRegion?.release_dates?.[0].certification || 'N/A';
   return certification;
 };
 

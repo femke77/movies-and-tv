@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'movies',
-            element: <MovieTrending />, 
+            element: <MovieTrending />,
           },
           {
             path: 'toprated',
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'popular',
-            element: <MoviePopular  />,
+            element: <MoviePopular />,
           },
         ],
       },

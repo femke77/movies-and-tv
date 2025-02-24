@@ -1,15 +1,15 @@
-import { TMDBClient } from "../utils/axiosConfig";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
-import type { IItem } from "../interfaces/IItem";
+import { TMDBClient } from '../utils/axiosConfig';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import type { IItem } from '../interfaces/IItem';
 
 // TODO refactor to use trending/all instead of now_playing to include tv
 
-interface ILogo {
-  iso_639_1: string;
-  file_path: string;
-  vote_average: number;
-}
+// interface ILogo {
+//   iso_639_1: string;
+//   file_path: string;
+//   vote_average: number;
+// }
 
 /**
  * Fetches and attaches English logo paths for the first two movies in the provided array.
@@ -35,14 +35,12 @@ const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
     if (!item) return null;
     try {
       const { data: images } = await TMDBClient.get(
-        `/${item.media_type}/${item.id}/images`
+        `/${item.media_type}/${item.id}/images`,
       );
       return {
         id: item.id,
         type: item.media_type,
-        logo:
-          images?.logos?.find((logo: ILogo) => logo.iso_639_1 === "en" && logo.vote_average > 0)
-            ?.file_path || null,
+        logo: images?.logos?.[0].file_path || null,
       };
     } catch {
       return { id: item.id, logo: null };
@@ -51,7 +49,7 @@ const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
 
   const logos = await Promise.all(logoPromises);
   const logoMap = new Map(
-    logos.filter(Boolean).map((item) => [item!.id, item!.logo])
+    logos.filter(Boolean).map((item) => [item!.id, item!.logo]),
   );
 
   return items.map((item) => ({
@@ -60,11 +58,13 @@ const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
   }));
 };
 
-export const useTrendingTodayAll = () => {
+export const useTrendingAll = () => {
   return useQuery<IItem[], Error>({
-    queryKey: ["all_trending_items"],
+    queryKey: ['all_trending_items'],
     queryFn: async () => {
-      const response = await TMDBClient.get("/trending/all/day?language=en-US");
+      const response = await TMDBClient.get(
+        '/trending/all/week?language=en-US',
+      );
       const movies = response.data.results;
       return fetchFirstTwoLogos(movies);
     },
@@ -103,20 +103,17 @@ export const useItemLogos = (
   type: string,
   isVisible: boolean,
   currentIndex: number,
-  itemList: IItem[]
+  itemList: IItem[],
 ) => {
   const queryClient = useQueryClient();
 
   const { data: logo } = useQuery({
-    queryKey: ["logo", itemId],
+    queryKey: ['logo', itemId],
     queryFn: async () => {
       const { data: images } = await TMDBClient.get(
-        `/${type}/${itemId}/images?language=en`
+        `/${type}/${itemId}/images?language=en`,
       );
-      return (
-        images?.logos?.find((logo: ILogo) => logo.iso_639_1 === "en")
-          ?.file_path || null
-      );
+      return images?.logos?.[0].file_path || null;
     },
     enabled: isVisible,
     staleTime: 1000 * 60 * 360,
@@ -131,20 +128,16 @@ export const useItemLogos = (
       if (nextIndex < itemList.length) {
         const nextMovie = itemList[nextIndex];
 
-        const cachedData = queryClient.getQueryData(["logo", nextMovie.id]);
-       
-        
+        const cachedData = queryClient.getQueryData(['logo', nextMovie.id]);
+
         if (!cachedData) {
           queryClient.prefetchQuery({
-            queryKey: ["logo", nextMovie.id],
+            queryKey: ['logo', nextMovie.id],
             queryFn: async () => {
               const { data: images } = await TMDBClient.get(
-                `/${nextMovie.media_type}/${nextMovie.id}/images?language=en`
+                `/${nextMovie.media_type}/${nextMovie.id}/images?language=en`,
               );
-              return (
-                images?.logos?.find((logo: ILogo) => logo.iso_639_1 === "en")
-                  ?.file_path || null
-              );
+              return images?.logos?.[0].file_path || null;
             },
           });
         }

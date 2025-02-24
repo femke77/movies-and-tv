@@ -1,23 +1,19 @@
-import { useInfiniteDiscoverQuery } from '../hooks/useSearchAndDiscover';
-import Explore from '../components/ExploreDisplay';
+import genreData from '../utils/data/genres.json';
+import MediaListContainer from '../components/MediaListContainer';
 
 const MoviePopular = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteDiscoverQuery('movie', 'popularity.desc', 'en');
+  const { genres } = genreData;
+
+  if (!genres) return null;
 
   return (
-    <div className='mt-24'>
-      <h2 className='text-xl sm:text-2xl md:text-3xl ml-3'>Popular Movies</h2>
-      {data && (
-        <Explore
-          data={data}
-          fetchNextPage={fetchNextPage}
-          hasNextPage={hasNextPage}
-          isFetchingNextPage={isFetchingNextPage}
-          isLoading={isLoading}
-        />
-      )}
-    </div>
+    <MediaListContainer
+      mediaType='movie'
+      //   listType="popular"
+      heading='Popular Movies'
+      genres={genres}
+      sortBy='popularity.desc'
+    />
   );
 };
 
