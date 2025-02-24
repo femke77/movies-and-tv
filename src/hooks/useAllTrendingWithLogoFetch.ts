@@ -5,11 +5,11 @@ import type { IItem } from "../interfaces/IItem";
 
 // TODO refactor to use trending/all instead of now_playing to include tv
 
-interface ILogo {
-  iso_639_1: string;
-  file_path: string;
-  vote_average: number;
-}
+// interface ILogo {
+//   iso_639_1: string;
+//   file_path: string;
+//   vote_average: number;
+// }
 
 /**
  * Fetches and attaches English logo paths for the first two movies in the provided array.

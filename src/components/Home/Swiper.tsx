@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { useTrendingAll } from "../../hooks/useAllTrending";
+import { useTrendingAll } from "../../hooks/useAllTrendingWithLogoFetch";
 import Slide from "./Slide";
 import "swiper/css";
 import "swiper/css/pagination";

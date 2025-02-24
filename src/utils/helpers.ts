@@ -8,6 +8,7 @@ export const getStrokeColor = (rating: number) => {
   return "red";
 };
 
+// filter weird/bad data from the API
 export const filterTMDBResults = (results: IItem[]) => {
   return results.filter((item: IItem) => {
     // Ensure the item has either a title, name, or a poster

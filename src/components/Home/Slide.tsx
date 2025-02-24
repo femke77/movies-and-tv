@@ -2,9 +2,9 @@ import dayjs from "dayjs";
 import UserRating from "../UserRating";
 import WatchButton from "../WatchButton";
 import type { IItem } from "../../interfaces/IItem";
-import { useItemLogos } from "../../hooks/useAllTrending";
+import { useItemLogos } from "../../hooks/useAllTrendingWithLogoFetch";
 import genresData from "../../utils/data/genres.json";
-import { useWindowSize } from "../../hooks/useWindowSize";
+
 import { Link } from "react-router-dom";
 
 const Slide = ({
@@ -20,7 +20,7 @@ const Slide = ({
 }) => {
   const formattedDate = dayjs(slide.release_date).format("MMM D, YYYY");
   const { genres } = genresData;
-  const { width } = useWindowSize();
+  const width = window.innerWidth;
 
   const logoFromQuery = useItemLogos(
     slide.id,

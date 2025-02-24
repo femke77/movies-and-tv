@@ -1,10 +1,9 @@
-import { IItem } from "../interfaces/IItem";
 import { TMDBClient } from "../utils/axiosConfig";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
 import { filterTMDBResults } from "../utils/helpers";
-// Search movie or tv show by any keyword or title
 
+
+// Search movie or tv show
 const searchResults = async ({ query = "", pageParam = 1 }) => {
   const { data } = await TMDBClient.get(
     `/search/multi?query=${query}&include_adult=false&language=en&page=${pageParam}`
