@@ -132,7 +132,7 @@ export default function Navigation({
                       <div className="flex flex-col">
                         {moviesNav.map((item, index) => (
                           <DisclosureButton
-                            className="transition-all  duration-200  ease-in-out bg-white/15 w-50 p-2  rounded-lg  text-sm text-white/90 text-center cursor-pointer m-2"
+                          className="transition-all duration-200 ease-in-out bg-white/15 w-50 p-2  rounded-lg text-sm text-white/90 text-center cursor-pointer m-2 hover:transform hover:translate-0.5 hover:text-white hover:bg-[#1B1B1B]" 
                             as={NavLink}
                             key={index}
                             to={item.url}
@@ -154,7 +154,7 @@ export default function Navigation({
                       <div className="flex flex-col">
                         {tvNav.map((item, index) => (
                           <DisclosureButton
-                            className="transition-all  duration-200  ease-in-out bg-white/15 w-50 p-2  rounded-lg  text-sm text-white/90 text-center cursor-pointer m-2"
+                            className="transition-all duration-200 ease-in-out bg-white/15 w-50 p-2  rounded-lg text-sm text-white/90 text-center cursor-pointer m-2 hover:transform hover:translate-0.5 hover:text-white hover:bg-[#1B1B1B]" 
                             as={NavLink}
                             key={index}
                             to={item.url}
