@@ -6,10 +6,12 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ScrollRestoration } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+// TODO finish footer
+
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // maintain search query on reload
+  // maintains search query on reload
   useEffect(() => {
     if (searchQuery) {
       localStorage.setItem('searchQuery', searchQuery);

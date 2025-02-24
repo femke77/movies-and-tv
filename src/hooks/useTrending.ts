@@ -3,15 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import type { IItem } from '../interfaces/IItem';
 import { useIntersectionObserver, useQueryConfig } from './useIntersectionObserver';
 
-// TODO finish this refactor in other two Home hook files
-
-
 const createTrendingFetcher = (type: 'movie' | 'tv') => async () => {
   const { data } = await TMDBClient.get(`/trending/${type}/day?language=en-US`);
   return data.results;
 };
-
-
 
 export const useTrendingMovies = () => {
   const shouldFetch = useIntersectionObserver('trending-section');
