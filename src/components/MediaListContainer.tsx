@@ -28,7 +28,7 @@ const MediaListContainer = ({
       prev.includes(genreId) ? prev.filter((genre) => genre !== genreId) : [...prev, genreId]
     );
   };
-  console.log(selectedGenres);
+
 
   const {
     data,

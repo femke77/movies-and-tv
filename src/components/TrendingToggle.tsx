@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const TrendingToggle = ({
   onTimeChange,
 }: {
-  onTimeChange: (value: string) => void;
+  onTimeChange: (_value: string) => void;
 }) => {
   const [selected, setSelected] = useState("week");
   const [translateX, setTranslateX] = useState(100);

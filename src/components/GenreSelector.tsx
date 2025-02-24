@@ -7,7 +7,7 @@ const GenreSelector = ({
 }: {
   genres: IGenre[];
   selectedGenres: string[];
-  onGenreToggle: (genre: string) => void;
+  onGenreToggle: (_genre: string) => void;
 }) => {
 
 
