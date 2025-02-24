@@ -7,6 +7,8 @@ import genresData from '../../utils/data/genres.json';
 import { Link } from 'react-router-dom';
 
 // TODO refactor this css layout
+// TODO Background trasition and image box shadow
+
 const Slide = ({
   slide,
   isVisible,
