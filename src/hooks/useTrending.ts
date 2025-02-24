@@ -3,13 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import type { IItem } from '../interfaces/IItem';
 import { useEffect, useState } from 'react';
 
-const fetchTrendingMovies = async () => {
-  const { data } = await TMDBClient.get('/trending/movie/day?language=en-US');
-  return data.results;
-};
-
-export const useTrendingMovies = () => {
+// TODO finish this refactor in other two Home hook files
+const useIntersectionObserver = (targetId: string) => {
   const [shouldFetch, setShouldFetch] = useState(false);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -21,67 +18,41 @@ export const useTrendingMovies = () => {
       { threshold: 0.0, rootMargin: '50px 0px' },
     );
 
-    // TODO see about creating ref here and forwarding it down to avoid direct dom interaction
-    const target = document.getElementById('trending-section');
+    const target = document.getElementById(targetId);
     if (target) {
       observer.observe(target);
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [targetId]);
 
-  return useQuery<IItem[], Error>({
-    queryKey: ['trending-movies'],
-    queryFn: fetchTrendingMovies,
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours
-    gcTime: 1000 * 60 * 60 * 25, // 25 hours
-    refetchOnWindowFocus: false,
-    refetchInterval: 1000 * 60 * 30, // 30 minutes
-    enabled: shouldFetch,
-    retry: 2,
-    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
-    placeholderData: (previousData) => previousData,
-  });
+  return shouldFetch;
 };
 
-
-const fetchTrendingTv = async () => {
-  const { data } = await TMDBClient.get('/trending/tv/day?language=en-US');
+const createTrendingFetcher = (type: 'movie' | 'tv') => async () => {
+  const { data } = await TMDBClient.get(`/trending/${type}/day?language=en-US`);
   return data.results;
+};
+
+const useQueryConfig = (queryKey: string, queryFn: () => Promise<IItem[]>, enabled: boolean) => ({
+  queryKey: [queryKey],
+  queryFn,
+  staleTime: 1000 * 60 * 60 * 24, // 24 hours
+  gcTime: 1000 * 60 * 60 * 25, // 25 hours
+  refetchOnWindowFocus: false,
+  refetchInterval: 1000 * 60 * 30, // 30 minutes
+  enabled,
+  retry: 2,
+  retryDelay: (attempt: number) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
+  placeholderData: (previousData: any) => previousData,
+});
+
+export const useTrendingMovies = () => {
+  const shouldFetch = useIntersectionObserver('trending-section');
+  return useQuery<IItem[], Error>(useQueryConfig('trending-movies', createTrendingFetcher('movie'), shouldFetch));
 };
 
 export const useTrendingTv = () => {
-  const [shouldFetch, setShouldFetch] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShouldFetch(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.0, rootMargin: '50px 0px' },
-    );
-
-    // TODO see about creating ref here and forwarding it down to avoid direct dom interaction
-    const target = document.getElementById('trending-tv-section');
-    if (target) {
-      observer.observe(target);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  return useQuery<IItem[], Error>({
-    queryKey: ['trending-tv'],
-    queryFn: fetchTrendingTv,
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours
-    gcTime: 1000 * 60 * 60 * 25, // 25 hours
-    refetchOnWindowFocus: false,
-    refetchInterval: 1000 * 60 * 30, // 30 minutes
-    enabled: shouldFetch,
-    retry: 2,
-    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
-    placeholderData: (previousData) => previousData,
-  });
+  const shouldFetch = useIntersectionObserver('trending-tv-section');
+  return useQuery<IItem[], Error>(useQueryConfig('trending-tv', createTrendingFetcher('tv'), shouldFetch));
 };
