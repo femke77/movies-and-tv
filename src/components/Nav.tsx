@@ -4,8 +4,8 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 import NavMovies from './NavComponents/NavMovies';
 import NavTVShow from './NavComponents/NavTVShow';
-import NavDiscover from './NavComponents/NavDiscover';
-import Search from './HeaderSearch';
+// import NavDiscover from './NavComponents/NavDiscover';
+import Search from './HeaderSearchBar';
 
 export default function Navigation({
   setSearchQuery,
@@ -79,7 +79,7 @@ export default function Navigation({
                       <div className='flex space-x-4 items-center pr-4'>
                         <NavMovies />
                         <NavTVShow />
-                        <NavDiscover />
+                        {/* <NavDiscover /> */}
                       </div>
                     </div>
                     <button
