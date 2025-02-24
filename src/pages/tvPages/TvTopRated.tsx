@@ -1,5 +1,5 @@
-import genreData from "../../utils/data/tvGenres.json";
-import MediaListContainer from "../../components/MediaListContainer";
+import genreData from '../../utils/data/tvGenres.json';
+import MediaListContainer from '../../components/MediaListContainer';
 
 const TvTopRated = () => {
   const { genres } = genreData;
@@ -8,11 +8,11 @@ const TvTopRated = () => {
 
   return (
     <MediaListContainer
-      mediaType="tv"
+      mediaType='tv'
       //   listType="top_rated"
-      heading="Top Series"
+      heading='Top Series'
       genres={genres}
-      sortBy="vote_average.desc"
+      sortBy='vote_average.desc'
       voteAverage={7}
     />
   );

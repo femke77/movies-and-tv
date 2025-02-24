@@ -1,6 +1,6 @@
-import SlideContainer from "../CarouselContainer";
-import { useTrendingTv } from "../../hooks/useTrending";
-import { useRef } from "react";
+import SlideContainer from '../CarouselContainer';
+import { useTrendingTv } from '../../hooks/useTrending';
+import { useRef } from 'react';
 
 const TrendingTV = () => {
   const { data: shows = [] } = useTrendingTv();
@@ -9,12 +9,12 @@ const TrendingTV = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-8 ml-5">Trending TV Today 🔥</h2>
+      <h2 className='text-2xl font-bold mb-8 ml-5'>Trending TV Today 🔥</h2>
       <SlideContainer
         ref={ref}
         items={shows}
-        itemType="tv"
-        id="trending-tv-section"
+        itemType='tv'
+        id='trending-tv-section'
       />
     </div>
   );

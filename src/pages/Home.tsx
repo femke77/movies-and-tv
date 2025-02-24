@@ -19,7 +19,7 @@ const Home = () => {
         <TopRatedMovies />
         <TrendingTV />
         <TopRatedTv />
-        <PopularTv/>
+        <PopularTv />
       </div>
     </>
   );

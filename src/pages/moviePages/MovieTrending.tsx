@@ -1,7 +1,7 @@
-import TrendingContainer from "../../components/TrendingContainer";
+import TrendingContainer from '../../components/TrendingContainer';
 
 const MovieTrending = () => {
-  return <TrendingContainer mediaType="movie" heading="Trending Movies" />;
+  return <TrendingContainer mediaType='movie' heading='Trending Movies' />;
 };
 
 export default MovieTrending;

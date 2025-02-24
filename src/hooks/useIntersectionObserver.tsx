@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IItem } from '../interfaces/IItem';
 
-
 export const useIntersectionObserver = (targetId: string) => {
   const [shouldFetch, setShouldFetch] = useState(false);
 
@@ -27,8 +26,11 @@ export const useIntersectionObserver = (targetId: string) => {
   return shouldFetch;
 };
 
-
-export const useQueryConfig = (queryKey: string, queryFn: () => Promise<IItem[]>, enabled: boolean) => ({
+export const useQueryConfig = (
+  queryKey: string,
+  queryFn: () => Promise<IItem[]>,
+  enabled: boolean,
+) => ({
   queryKey: [queryKey],
   queryFn,
   staleTime: 1000 * 60 * 60 * 24, // 24 hours

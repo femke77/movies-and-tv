@@ -26,17 +26,26 @@ const NavTVShow = () => {
         '
       >
         <MenuItem>
-          <NavLink to='/explore/tv' className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'>
+          <NavLink
+            to='/explore/tv'
+            className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'
+          >
             Trending TV
           </NavLink>
         </MenuItem>
         <MenuItem>
-          <NavLink to='/explore/top-series' className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'>
+          <NavLink
+            to='/explore/top-series'
+            className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'
+          >
             Top Series
           </NavLink>
         </MenuItem>
         <MenuItem>
-          <NavLink to='/explore/popular-tv' className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'>
+          <NavLink
+            to='/explore/popular-tv'
+            className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'
+          >
             Popular Shows
           </NavLink>
         </MenuItem>
