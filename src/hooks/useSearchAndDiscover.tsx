@@ -1,12 +1,11 @@
-import { TMDBClient } from "../utils/axiosConfig";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { filterTMDBResults } from "../utils/helpers";
-
+import { TMDBClient } from '../utils/axiosConfig';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { filterTMDBResults } from '../utils/helpers';
 
 // Search movie or tv show
-const searchResults = async ({ query = "", pageParam = 1 }) => {
+const searchResults = async ({ query = '', pageParam = 1 }) => {
   const { data } = await TMDBClient.get(
-    `/search/multi?query=${query}&include_adult=false&language=en&page=${pageParam}`
+    `/search/multi?query=${query}&include_adult=false&language=en&page=${pageParam}`,
   );
   return {
     results: data.results,
@@ -17,7 +16,7 @@ const searchResults = async ({ query = "", pageParam = 1 }) => {
 
 export const useInfiniteSearchQuery = (query: string) => {
   return useInfiniteQuery({
-    queryKey: ["infinite-search", query],
+    queryKey: ['infinite-search', query],
     queryFn: ({ pageParam }) => searchResults({ query, pageParam }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
@@ -39,15 +38,15 @@ export const useInfiniteSearchQuery = (query: string) => {
 // Discover new stuff
 
 const discoverResults = async (
-  type = "movie",
+  type = 'movie',
   genres?: string,
-  sort = "popularity.desc",
+  sort = 'popularity.desc',
   pageParam = 1,
-  lang = "en",
-  vote_average = 1 
+  lang = 'en',
+  vote_average = 1,
 ) => {
   const { data } = await TMDBClient.get(
-    `/discover/${type}?vote_average.gte=${vote_average}&include_adult=false&vote_count.gte=1000&language=${lang}&sort_by=${sort}&page=${pageParam}&with_genres=${genres}`
+    `/discover/${type}?vote_average.gte=${vote_average}&include_adult=false&vote_count.gte=1000&language=${lang}&sort_by=${sort}&page=${pageParam}&with_genres=${genres}`,
   );
   return {
     results: data.results,
@@ -64,7 +63,7 @@ export const useInfiniteDiscoverQuery = (
   vote_average?: number,
 ) => {
   return useInfiniteQuery({
-    queryKey: ["infinite-discover", type, sort, genres],
+    queryKey: ['infinite-discover', type, sort, genres],
     queryFn: ({ pageParam }) =>
       discoverResults(type, genres, sort, pageParam, lang, vote_average),
     initialPageParam: 1,
@@ -88,12 +87,12 @@ export const useInfiniteDiscoverQuery = (
 // type can be 'all', 'movie', 'tv'
 // time_window can be 'day', 'week'
 const getTrending = async ({
-  type = "all",
-  time_window = "week",
+  type = 'all',
+  time_window = 'week',
   pageParam = 1,
 }) => {
   const { data } = await TMDBClient.get(
-    `/trending/${type}/${time_window}?language=en-US&page=${pageParam}`
+    `/trending/${type}/${time_window}?language=en-US&page=${pageParam}`,
   );
   return {
     results: data.results,
@@ -104,10 +103,10 @@ const getTrending = async ({
 
 export const useInfiniteTrendingQuery = (
   type?: string,
-  time_window?: string
+  time_window?: string,
 ) => {
   return useInfiniteQuery({
-    queryKey: ["infinite-trending", type, time_window],
+    queryKey: ['infinite-trending', type, time_window],
     queryFn: ({ pageParam }) => getTrending({ type, time_window, pageParam }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,

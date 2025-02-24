@@ -1,4 +1,4 @@
-import { IGenre } from "../interfaces/IGenre";
+import { IGenre } from '../interfaces/IGenre';
 
 const GenreSelector = ({
   genres,
@@ -9,9 +9,6 @@ const GenreSelector = ({
   selectedGenres: string[];
   onGenreToggle: (_genre: string) => void;
 }) => {
-
-
-    
   return (
     <div>
       {genres.map((genre) => (

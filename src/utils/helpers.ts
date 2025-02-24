@@ -1,11 +1,11 @@
-import { IItem } from "../interfaces/IItem";
-import dayjs from "dayjs";
+import { IItem } from '../interfaces/IItem';
+import dayjs from 'dayjs';
 
 export const getStrokeColor = (rating: number) => {
-  if (rating >= 7.0 && rating <= 10) return "green";
-  else if (rating >= 5 && rating < 7.0) return "orange";
-  else if (rating === 0) return "transparent";
-  return "red";
+  if (rating >= 7.0 && rating <= 10) return 'green';
+  else if (rating >= 5 && rating < 7.0) return 'orange';
+  else if (rating === 0) return 'transparent';
+  return 'red';
 };
 
 // filter weird/bad data from the API
@@ -16,7 +16,7 @@ export const filterTMDBResults = (results: IItem[]) => {
 
     // Exclude items that have no poster and were released today
     const isInvalidDueToDate =
-      !item.poster_path && dayjs(item.release_date).isSame(dayjs(), "day");
+      !item.poster_path && dayjs(item.release_date).isSame(dayjs(), 'day');
 
     return hasValidData && !isInvalidDueToDate;
   });
