@@ -1,23 +1,47 @@
+import { useState, useEffect } from 'react';
 
+const TrendingToggle = ({ onTimeChange }:{onTimeChange: (value:string)=>void}) => {
+  const [selected, setSelected] = useState('week');
+  const [translateX, setTranslateX] = useState(100); 
 
-const TrendingToggle =({onTimeChange}: {onTimeChange: (value: string) => void}) => {
+  useEffect(() => {
+    setTranslateX(selected === 'day' ? 0 : 100);
+  }, [selected]);
 
-const onChangeTimePeriod = (e: React.MouseEvent<HTMLButtonElement>) => {
-  onTimeChange(e.currentTarget.value)
-}
+  const handleChange = (value: string) => {
+    setSelected(value);
+    onTimeChange(value);
+  };
 
   return (
-    <div className="inline-flex rounded-md shadow-xs " role="group">
-  <button value="day" onClick={onChangeTimePeriod} type="button" className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-    Today
-  </button>
-  <button value="week" onClick={onChangeTimePeriod} type="button" className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-    This Week
-  </button>
- 
-</div>
+    <div className="relative h-[30px] rounded-[15px] bg-[#1c4b91]/20">
+      <div className="relative flex h-full">
+        <div 
+          className={`
+            absolute h-[30px] w-[100px] rounded-[15px]
+            bg-gradient-to-r from-[#5c676b] to-[#3d3737]
+            transition-transform duration-400 ease-[cubic-bezier(0.88,-0.35,0.565,1.35)]
+          `}
+          style={{
+            transform: `translateX(${translateX}px)`,
+          }}
+        />
 
-  )
-}
+        <button
+          onClick={() => handleChange('day')}
+          className="relative z-10 flex h-full w-[100px] cursor-pointer items-center justify-center text-sm text-white transition-colors duration-300"
+        >
+          Today
+        </button>
+        <button
+          onClick={() => handleChange('week')}
+          className="relative z-10 flex h-full w-[100px] cursor-pointer items-center justify-center text-sm text-white transition-colors duration-300"
+        >
+          This Week
+        </button>
+      </div>
+    </div>
+  );
+};
 
-export default TrendingToggle
+export default TrendingToggle;
