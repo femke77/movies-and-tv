@@ -6,7 +6,7 @@ import { IGenre } from "../interfaces/IGenre";
 
 interface MediaListContainerProps {
   mediaType: "movie" | "tv";
-  listType: "popular" | "top_rated";
+  // listType: "popular" | "top_rated";
   heading: string;
   genres: IGenre[];
   sortBy?: string;
@@ -15,7 +15,7 @@ interface MediaListContainerProps {
 
 const MediaListContainer = ({
   mediaType,
-  listType,
+  // listType,
   sortBy,
   heading,
   genres,
@@ -23,9 +23,9 @@ const MediaListContainer = ({
 }: MediaListContainerProps) => {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 
-  const toggleGenre = (genre: string) => {
+  const toggleGenre = (genreId: string) => {
     setSelectedGenres((prev) =>
-      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
+      prev.includes(genreId) ? prev.filter((genre) => genre !== genreId) : [...prev, genreId]
     );
   };
   console.log(selectedGenres);
@@ -36,7 +36,7 @@ const MediaListContainer = ({
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useInfiniteDiscoverQuery(mediaType, selectedGenres?.join(","), sortBy);
+  } = useInfiniteDiscoverQuery(mediaType, selectedGenres?.join(","), sortBy, '', voteAverage);
 
   return (
     <div className="mt-24">

@@ -10,7 +10,7 @@ const MoviePopular = () => {
   return (
     <MediaListContainer
       mediaType="movie"
-      listType="popular"
+    //   listType="popular"
       heading="Popular Movies"
       genres={genres}
       sortBy="popularity.desc"
