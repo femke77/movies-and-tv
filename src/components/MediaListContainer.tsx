@@ -14,6 +14,7 @@ interface MediaListContainerProps {
   sortBy?: string;
   voteAverage?: number;
   sortOptions: {id: number, name: string, value:string}[];
+  voteCount?: number;
 }
 
 const MediaListContainer = ({
@@ -23,7 +24,8 @@ const MediaListContainer = ({
   heading,
   genres,
   voteAverage,
-  sortOptions
+  sortOptions,
+  voteCount,
 }: MediaListContainerProps) => {
 
   
@@ -47,6 +49,7 @@ const MediaListContainer = ({
       sortByOption,
       '',
       voteAverage,
+      voteCount,
     );
 
   return (

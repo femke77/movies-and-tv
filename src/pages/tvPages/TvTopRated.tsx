@@ -3,6 +3,7 @@ import MediaListContainer from '../../components/MediaListContainer';
 import sortOptionsData from '../../utils/data/sortOptions.json';
 
 const TvTopRated = () => {
+  
   const { genres } = genreData;
   const { sortOptions } = sortOptionsData;
 

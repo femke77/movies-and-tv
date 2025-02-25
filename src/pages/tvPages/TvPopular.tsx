@@ -4,7 +4,6 @@ import sortOptionsData from '../../utils/data/sortOptions.json';
 
 
 const TvPopular = () => {
-
   
   const { genres } = genreData;
   const { sortOptions } = sortOptionsData;
