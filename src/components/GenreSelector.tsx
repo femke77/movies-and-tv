@@ -16,8 +16,7 @@ const GenreSelector = ({
   onUnwantedGenreToggle: (_genre: string) => void;
 }) => {
   const { width } = useWindowSize();
-  console.log("selected", selectedGenres);
-  console.log("deseclected", deselectedGenres);
+
 
   return (
     <>

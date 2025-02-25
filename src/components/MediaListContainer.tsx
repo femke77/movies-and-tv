@@ -33,8 +33,6 @@ const MediaListContainer = ({
   const [deSelectedGenres, setDeSelectedGenres] = useState<string[]>([]);
   const [sortByOption, setSortByOption] = useState<string>(sortBy!);
 
-console.log('deselected genres in media container ', deSelectedGenres.join(','));
-
   
   const toggleGenre = (genreId: string) => {
     setSelectedGenres((prev) => {

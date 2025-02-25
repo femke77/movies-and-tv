@@ -2,7 +2,7 @@
 
 interface ISortOption {
   sortByOption: string;
-  setSortByOption: (option: string) => void;
+  setSortByOption: (_option: string) => void;
   sortOptions: { id: number; name: string; value: string }[];
 } 
 
