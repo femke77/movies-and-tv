@@ -1,11 +1,12 @@
-import { IItem } from '../interfaces/IItem';
-import dayjs from 'dayjs';
-import { Link } from 'react-router-dom';
-import UserRating from './UserRating';
-import { getStrokeColor } from '../utils/helpers';
-import { useEffect, useState, memo } from 'react';
-import genreData from '../utils/data/genres.json';
-import Chip from './Chip';
+import { IItem } from "../interfaces/IItem";
+import dayjs from "dayjs";
+import { Link } from "react-router-dom";
+import UserRating from "./UserRating";
+import { getStrokeColor } from "../utils/helpers";
+import { useEffect, useState, memo } from "react";
+import genreData from "../utils/data/genres.json";
+import Chip from "./Chip";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 const ItemCard = ({
   item,
@@ -21,10 +22,11 @@ const ItemCard = ({
   textSize?: string;
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const formattedReleaseDate = dayjs(item.release_date).format('MMM D, YYYY');
-  const formattedAirDate = dayjs(item.first_air_date).format('MMM D, YYYY');
+  const formattedReleaseDate = dayjs(item.release_date).format("MMM D, YYYY");
+  const formattedAirDate = dayjs(item.first_air_date).format("MMM D, YYYY");
   const { genres } = genreData;
   const strokeColor = getStrokeColor(item.vote_average ?? 0);
+  const { width } = useWindowSize();
 
   useEffect(() => {
     setIsVisible(true);
@@ -43,44 +45,49 @@ const ItemCard = ({
       <div
         className={`relative flex flex-col items-center justify-between w-full bg-black rounded-xl shadow-lg overflow-hidden 
         transition-opacity duration-500 ease-linear ${
-          isVisible ? 'opacity-100' : 'opacity-0'
+          isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        <Link to={`/${itemType}/${item.id}`} className='w-full'>
-          <div className='aspect-[2/3] w-full overflow-hidden rounded-lg bg-black'>
+        <Link to={`/${itemType}/${item.id}`} className="w-full">
+          <div className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-black">
             <img
-              className='w-full h-full object-cover rounded-b-lg hover:opacity-70 hover:scale-115 hover:bg-opacity-50 transition-all duration-500 ease-in-out '
+              className="w-full h-full object-cover rounded-b-lg hover:opacity-70 hover:scale-115 hover:bg-opacity-50 transition-all duration-500 ease-in-out "
               src={
                 item.poster_path
                   ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
-                  : '/no_poster_available.svg'
+                  : "/no_poster_available.svg"
               }
             />
           </div>
-          <div className='flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black'>
-            <div className='relative -top-13 left-3 w-full'>
-              <div className='flex min-h-11 items-end justify-between'>
+          <div className="flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black">
+            <div className="relative -top-13 left-3 w-full">
+              <div className="flex min-h-11 items-end justify-between">
                 {showRating && (
                   <UserRating
                     rating={item.vote_average ?? 0}
                     color={strokeColor}
-                    width='w-12'
-                    height='h-12'
+                    width="w-12"
+                    height="h-12"
                   />
                 )}
                 {/* Genres*/}
                 {showGenres && movieGenres?.length >= 1 && (
-                  <div className='flex justify-end flex-wrap relative -top-7 -left-2 w-50'>
-                    {movieGenres
-                      ?.slice(0, 2)
-                      .map((genre) => (
-                        <Chip
-                          label={genre!}
-                          key={genre}
-                          bg='bg-black/60'
-                          fontSize='text-md'
-                        />
-                      ))}
+                  <div className="flex justify-end flex-wrap gap-1 relative -top-8 right-3.5 sm:right-2 w-full">
+                    {width > 400 ? (
+                      <>
+                        {" "}
+                        {movieGenres?.slice(0, 2).map((genre) => (
+                          <Chip
+                            label={genre!}
+                            key={genre}
+                            bg="bg-black/60"
+                            fontSize={`text-xs sm:text-sm md:text-md `}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      null
+                    )}
                   </div>
                 )}
               </div>
@@ -92,15 +99,15 @@ const ItemCard = ({
                 {item.name || item.title}
               </h2>
 
-              <p className='text-sm font-light -ml-2'>
-                {itemType === 'tv'
-                  ? formattedAirDate !== 'Invalid Date'
+              <p className="text-sm font-light -ml-2">
+                {itemType === "tv"
+                  ? formattedAirDate !== "Invalid Date"
                     ? formattedAirDate
-                    : 'Unknown'
-                  : formattedReleaseDate !== 'Invalid Date'
-                    ? formattedReleaseDate
-                    : 'Unknown'}{' '}
-                &#x2022; {itemType === 'tv' ? 'TV' : 'Movie'}
+                    : "Unknown"
+                  : formattedReleaseDate !== "Invalid Date"
+                  ? formattedReleaseDate
+                  : "Unknown"}{" "}
+                &#x2022; {itemType === "tv" ? "TV" : "Movie"}
               </p>
             </div>
           </div>
@@ -123,18 +130,18 @@ const MemoizedItemCard = memo(
     showRating?: boolean;
     showGenres?: boolean;
   }) => (
-    <div className='w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]'>
+    <div className="w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]">
       <ItemCard
-        textSize='xl'
+        textSize="xl"
         item={movie}
         showRating={showRating}
         showGenres={showGenres}
-        itemType={movie.media_type || itemType || ''}
+        itemType={movie.media_type || itemType || ""}
       />
     </div>
-  ),
+  )
 );
 
-MemoizedItemCard.displayName = 'MemoizedItemCard';
+MemoizedItemCard.displayName = "MemoizedItemCard";
 
 export { ItemCard, MemoizedItemCard };

@@ -12,15 +12,15 @@ import NavTVShow from "./NavComponents/NavTVShow";
 import Search from "./HeaderSearchBar";
 
 const moviesNav = [
-  { title: "Trending", url: "/explore/movies" },
-  { title: "Top Rated", url: "/explore/toprated" },
-  { title: "Popular", url: "/explore/popular" },
+  { title: "Trending Movies", url: "/explore/movies" },
+  { title: "Top Rated Movies", url: "/explore/toprated" },
+  { title: "Popular Movies", url: "/explore/popular" },
 ];
 
 const tvNav = [
-  { title: "Trending", url: "/explore/tv" },
-  { title: "Popular", url: "/explore/top-series" },
-  { title: "Top Rated", url: "/explore/popular-tv" },
+  { title: "Trending TV", url: "/explore/tv" },
+  { title: "Popular TV", url: "/explore/popular-tv" },
+  { title: "Top Rated Series", url: "/explore/top-series" },
 ];
 
 export default function Navigation({

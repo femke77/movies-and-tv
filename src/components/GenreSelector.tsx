@@ -32,6 +32,7 @@ const GenreSelector = ({
           m-2
           min-w-[150px]
           hover:border-blue-700
+          hover:translate-[2px]
           ${selectedGenres.includes(String(genre.id)) ? 'bg-blue-800  border-blue-900 shadow-[0_0_12px_rgba(0,150,255,0.75)]' : 'bg-white/[0.05]'}
         `}
         >
