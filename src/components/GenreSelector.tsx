@@ -1,4 +1,5 @@
 import { IGenre } from '../interfaces/IGenre';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 const GenreSelector = ({
   genres,
@@ -9,8 +10,10 @@ const GenreSelector = ({
   selectedGenres: string[];
   onGenreToggle: (_genre: string) => void;
 }) => {
+
+  const { width } = useWindowSize();
   return (
-    <div className='w-full mx-auto'>
+    <div className={`grid gap-2 ${width < 400 ? `grid-cols-1 `: `grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2`}  `}>
       {genres.map((genre) => (
         <button
           onClick={() => onGenreToggle(String(genre.id))}
