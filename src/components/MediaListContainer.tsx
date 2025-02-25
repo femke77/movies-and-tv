@@ -30,17 +30,40 @@ const MediaListContainer = ({
 
   
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [deSelectedGenres, setDeSelectedGenres] = useState<string[]>([]);
   const [sortByOption, setSortByOption] = useState<string>(sortBy!);
 
+console.log('deselected genres in media container ', deSelectedGenres.join(','));
 
   
   const toggleGenre = (genreId: string) => {
-    setSelectedGenres((prev) =>
-      prev.includes(genreId)
-        ? prev.filter((genre) => genre !== genreId)
-        : [...prev, genreId],
-    );
+    setSelectedGenres((prev) => {
+      if (prev.includes(genreId)) {
+        return prev.filter((genre) => genre !== genreId);
+      } 
+      else {
+        setDeSelectedGenres((deselected) => 
+          deselected.filter((genre) => genre !== genreId)
+        );
+        return [...prev, genreId];
+      }
+    });
   };
+  
+  const toggleUnwantedGenre = (genreId: string) => {
+    setDeSelectedGenres((prev) => {
+      if (prev.includes(genreId)) {
+        return prev.filter((genre) => genre !== genreId);
+      } 
+      else {
+        setSelectedGenres((selected) => 
+          selected.filter((genre) => genre !== genreId)
+        );
+        return [...prev, genreId];
+      }
+    });
+  };
+
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteDiscoverQuery(
@@ -50,6 +73,7 @@ const MediaListContainer = ({
       '',
       voteAverage,
       voteCount,
+      deSelectedGenres.join(',')
     );
 
   return (
@@ -66,6 +90,8 @@ const MediaListContainer = ({
           genres={genres}
           onGenreToggle={toggleGenre}
           selectedGenres={selectedGenres}
+          deselectedGenres={deSelectedGenres}
+          onUnwantedGenreToggle={toggleUnwantedGenre}
         />
 
       {data && (

@@ -21,6 +21,7 @@ const TvPopular = () => {
       sortBy='popularity.desc'
       voteAverage={0}
       sortOptions={sortOptions}
+
     />
   );
 };

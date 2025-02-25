@@ -14,11 +14,13 @@ const TvTopRated = () => {
     <MediaListContainer
       mediaType='tv'
       //   listType="top_rated"
-      heading='Disover Top TV Series'
+      heading='Discover Top TV Series'
       genres={genres}
       sortBy='vote_average.desc'
       voteAverage={7}
-      sortOptions={sortOptions}/>
+      sortOptions={sortOptions}
+      voteCount={1000}
+      />
   );
 };
 
