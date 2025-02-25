@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 // TODO refactor this css layout
 // TODO Background trasition and image box shadow
+// TODO md -date is wrapping
 
 const Slide = ({
   slide,
@@ -21,7 +22,6 @@ const Slide = ({
   movieList: IItem[];
 }) => {
   const formattedMovieDate = dayjs(slide.release_date).format('MMM D, YYYY');
-  const formattedTvDate = dayjs(slide.first_air_date).format('MMM D, YYYY');
   const { genres } = genresData;
 
   const logoFromQuery = useItemLogos(
@@ -42,7 +42,10 @@ const Slide = ({
     <div className=' swiper-slide bg-black h-full flex items-center py-10'>
       {/* background image */}
       <div
-        className='relative w-full h-full bg-cover bg-center md:bg-top'
+      className={`relative w-full h-full bg-cover bg-center md:bg-top transition-opacity 
+        duration-1500 
+        ease-in-out 
+        ${isVisible ? 'opacity-100' : 'opacity-0'}`}
         style={{
           backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
         }}
@@ -59,10 +62,10 @@ const Slide = ({
             <div className='flex flex-col items-center md:items-start'>
               <div className='flex items-start mb-12 '>
                 {movieGenres.length >= 1 &&
-                  movieGenres.slice(0, 1).map((genre) => (
+                  movieGenres.slice(0, 2).map((genre) => (
                     <span
                       key={`${genre}-${slide.id}`}
-                      className='text-white  ml-0'
+                      className='text-white  ml-0 mr-6'
                     >
                       {genre}
                     </span>
@@ -73,9 +76,7 @@ const Slide = ({
                     ? slide.release_date !== 'Invalid Date'
                       ? formattedMovieDate
                       : null
-                    : slide.first_air_date !== 'Invalid Date'
-                      ? formattedTvDate
-                      : null}
+                    : null}
                 </p>
               </div>
             </div>
