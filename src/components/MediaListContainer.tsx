@@ -3,6 +3,7 @@ import { useInfiniteDiscoverQuery } from '../hooks/useSearchAndDiscover';
 import GenreSelector from './GenreSelector';
 import Explore from './ExploreDisplay';
 import { IGenre } from '../interfaces/IGenre';
+import SortByListbox from './SortByListbox';
 
 // TODO make sure explore and item card really need to be memoized
 interface MediaListContainerProps {
@@ -12,6 +13,7 @@ interface MediaListContainerProps {
   genres: IGenre[];
   sortBy?: string;
   voteAverage?: number;
+  sortOptions: {id: number, name: string, value:string}[];
 }
 
 const MediaListContainer = ({
@@ -21,9 +23,15 @@ const MediaListContainer = ({
   heading,
   genres,
   voteAverage,
+  sortOptions
 }: MediaListContainerProps) => {
-  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 
+  
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [sortByOption, setSortByOption] = useState<string>(sortBy!);
+
+
+  
   const toggleGenre = (genreId: string) => {
     setSelectedGenres((prev) =>
       prev.includes(genreId)
@@ -36,21 +44,26 @@ const MediaListContainer = ({
     useInfiniteDiscoverQuery(
       mediaType,
       selectedGenres?.join(','),
-      sortBy,
+      sortByOption,
       '',
       voteAverage,
     );
 
   return (
     <div className='mt-24'>
-      <div className='mx-3'>
-        <h2 className='text-xl sm:text-2xl md:text-3xl mb-6'>{heading}</h2>
+      <div className='mx-3 flex flex-wrap justify-between w-full'>
+        <h2 className='text-xl sm:text-2xl md:text-3xl mb-6 mr-4'>{heading}</h2>
+       <SortByListbox
+          sortByOption={sortByOption}
+          setSortByOption={setSortByOption}
+          sortOptions={sortOptions}
+        />
+      </div>
         <GenreSelector
           genres={genres}
           onGenreToggle={toggleGenre}
           selectedGenres={selectedGenres}
         />
-      </div>
 
       {data && (
         <Explore
