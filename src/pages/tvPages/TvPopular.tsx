@@ -16,7 +16,7 @@ const TvPopular = () => {
     <MediaListContainer
       mediaType='tv'
       //   listType="top_rated"
-      heading='Popular TV Shows'
+      heading='Discover Popular TV Shows'
       genres={genres}
       sortBy='popularity.desc'
       voteAverage={0}

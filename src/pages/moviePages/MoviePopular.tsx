@@ -9,12 +9,12 @@ const MoviePopular = () => {
 
   if (!genres) return null;
   if (!sortOptions) return null;
-  
+
   return (
     <MediaListContainer
       mediaType='movie'
       //   listType="popular"
-      heading='Popular Movies'
+      heading='Discover Popular Movies'
       genres={genres}
       sortBy='popularity.desc'
       sortOptions={sortOptions}/>

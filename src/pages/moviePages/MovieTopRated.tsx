@@ -9,12 +9,12 @@ const MovieTopRated = () => {
 
   if (!genres) return null;
   if (!sortOptions) return null;
-  
+
   return (
     <MediaListContainer
       mediaType='movie'
       //   listType="top_rated"
-      heading='Top Rated Movies'
+      heading='Discover Top Rated Movies'
       genres={genres}
       sortBy='vote_average.desc'
       voteAverage={7}

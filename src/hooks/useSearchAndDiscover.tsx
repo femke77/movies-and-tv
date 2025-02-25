@@ -46,7 +46,7 @@ const discoverResults = async (
   pageParam = 1,
   lang = 'en',
   voteAverage = 1,
-  voteCount = 1
+  voteCount = 100
 ) => {
   const { data } = await TMDBClient.get(
     `/discover/${type}?vote_average.gte=${voteAverage}&include_adult=false&vote_count.gte=${voteCount}&language=${lang}&sort_by=${sort}&page=${pageParam}&with_genres=${genres}`,

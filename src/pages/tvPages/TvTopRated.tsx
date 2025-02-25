@@ -3,7 +3,7 @@ import MediaListContainer from '../../components/MediaListContainer';
 import sortOptionsData from '../../utils/data/sortOptions.json';
 
 const TvTopRated = () => {
-  
+
   const { genres } = genreData;
   const { sortOptions } = sortOptionsData;
 
@@ -14,7 +14,7 @@ const TvTopRated = () => {
     <MediaListContainer
       mediaType='tv'
       //   listType="top_rated"
-      heading='Top Series'
+      heading='Disover Top TV Series'
       genres={genres}
       sortBy='vote_average.desc'
       voteAverage={7}

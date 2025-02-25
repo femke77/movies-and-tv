@@ -55,7 +55,7 @@ const MediaListContainer = ({
   return (
     <div className='mt-24'>
       <div className='mx-3 flex flex-wrap justify-between w-full'>
-        <h2 className='text-xl sm:text-2xl md:text-3xl mb-6 mr-4'>{heading}</h2>
+        <h2 className='text-[1.75rem] font-semibold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text   mb-6 mr-4'>{heading}</h2>
        <SortByListbox
           sortByOption={sortByOption}
           setSortByOption={setSortByOption}
