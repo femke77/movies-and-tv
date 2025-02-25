@@ -1,0 +1,56 @@
+{
+    "sortOptions": [
+        {
+            "id": 1,
+            "name": "Popularity Descending",
+            "value": "popularity.desc"
+        },
+        {
+            "id": 2,
+            "name": "Popularity Ascending",
+            "value": "popularity.asc"
+        },
+
+        {
+            "id": 5,
+            "name": "Rating Descending",
+            "value": "vote_average.desc"
+        },
+        {
+            "id": 6,
+            "name": "Rating Ascending",
+            "value": "vote_average.asc"
+        },
+        {
+            "id": 7,
+            "name": "Revenue Descending",
+            "value": "revenue.desc"
+        },
+        {
+            "id": 8,
+            "name": "Revenue Ascending",
+            "value": "revenue.asc"
+        },
+        {
+            "id": 9,
+            "name": "Primary Release Date Descending",
+            "value": "primary_release_date.desc"
+        },
+        {
+            "id": 10,
+            "name": "Primary Release Date Ascending",
+            "value": "primary_release_date.asc"
+        },
+        {
+            "id": 11,
+            "name": "Vote Count Descending",
+            "value": "vote_count.desc"
+        },
+        {
+            "id": 12,
+            "name": "Vote Count Ascending",
+            "value": "vote_count.asc"
+        }
+
+    ]
+}

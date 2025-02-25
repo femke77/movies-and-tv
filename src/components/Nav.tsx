@@ -12,15 +12,15 @@ import NavTVShow from './NavComponents/NavTVShow';
 import Search from './HeaderSearchBar';
 
 const moviesNav = [
-  { title: 'Trending', url: '/explore/movies' },
-  { title: 'Top Rated', url: '/explore/toprated' },
-  { title: 'Popular', url: '/explore/popular' },
+  { title: 'Trending Movies', url: '/explore/movies' },
+  { title: 'Top Rated Movies', url: '/explore/toprated' },
+  { title: 'Popular Movies', url: '/explore/popular' },
 ];
 
 const tvNav = [
-  { title: 'Trending', url: '/explore/tv' },
-  { title: 'Popular', url: '/explore/top-series' },
-  { title: 'Top Rated', url: '/explore/popular-tv' },
+  { title: 'Trending TV', url: '/explore/tv' },
+  { title: 'Popular TV', url: '/explore/popular-tv' },
+  { title: 'Top Rated Series', url: '/explore/top-series' },
 ];
 
 export default function Navigation({
@@ -98,14 +98,25 @@ export default function Navigation({
                         {/* <NavDiscover /> */}
                       </div>
                     </div>
-                    <DisclosureButton
-                      role='search'
-                      aria-label='search'
-                      onClick={() => openSearch()}
-                      className='relative -right-2 top-0 hover:cursor-pointer'
-                    >
-                      <img src='/mag.svg' alt='search' className='w-8 h-8' />
-                    </DisclosureButton>
+                    {open ? (
+                      <DisclosureButton
+                        role='search'
+                        aria-label='search'
+                        onClick={() => openSearch()}
+                        className='relative -right-2 top-0 hover:cursor-pointer'
+                      >
+                        <img src='/mag.svg' alt='search' className='w-8 h-8' />
+                      </DisclosureButton>
+                    ) : (
+                      <button
+                        role='search'
+                        aria-label='search'
+                        onClick={() => openSearch()}
+                        className='relative -right-2 top-0 hover:cursor-pointer'
+                      >
+                        <img src='/mag.svg' alt='search' className='w-8 h-8' />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -122,12 +133,28 @@ export default function Navigation({
                   <div className='flex justify-center flex-wrap mt-6 sm:mt-12 '>
                     <div className='text-white'>
                       <div className='flex justify-start items-center p-4 '>
-                        <img
-                          src='/movie-2.svg'
-                          alt='Movies'
-                          className='mr-3 w-6 h-5  bg-white'
-                        />
-                        <h3 className='text-lg font-bold'>Movies</h3>
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          width='24'
+                          height='24'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          stroke='#f8f7f7'
+                          stroke-width='2'
+                          stroke-linecap='round'
+                          stroke-linejoin='round'
+                          className='lucide lucide-film'
+                        >
+                          <rect width='18' height='18' x='3' y='3' rx='2' />
+                          <path d='M7 3v18' />
+                          <path d='M3 7.5h4' />
+                          <path d='M3 12h18' />
+                          <path d='M3 16.5h4' />
+                          <path d='M17 3v18' />
+                          <path d='M17 7.5h4' />
+                          <path d='M17 16.5h4' />
+                        </svg>
+                        <h3 className='text-lg font-bold ml-3'>Movies</h3>
                       </div>
                       <div className='flex flex-col'>
                         {moviesNav.map((item, index) => (
@@ -144,12 +171,29 @@ export default function Navigation({
                     </div>
                     <div className='text-white'>
                       <div className='flex justify-start items-center p-4 '>
-                        <img
-                          src='/tv.svg'
-                          alt='Movies'
-                          className='mr-3 w-6 h-5  bg-white'
-                        />
-                        <h3 className='text-lg font-bold'>TV Shows</h3>
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          width='24'
+                          height='24'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          stroke='#ffffff'
+                          stroke-width='2'
+                          stroke-linecap='round'
+                          stroke-linejoin='round'
+                          className='lucide lucide-tv'
+                        >
+                          <rect
+                            width='20'
+                            height='15'
+                            x='2'
+                            y='7'
+                            rx='2'
+                            ry='2'
+                          />
+                          <polyline points='17 2 12 7 7 2' />
+                        </svg>
+                        <h3 className='text-lg font-bold ml-3'>TV Shows</h3>
                       </div>
                       <div className='flex flex-col'>
                         {tvNav.map((item, index) => (

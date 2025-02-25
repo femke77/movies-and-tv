@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 // TODO refactor this css layout
 // TODO Background trasition and image box shadow
+// TODO md -date is wrapping
 
 const Slide = ({
   slide,
@@ -21,7 +22,6 @@ const Slide = ({
   movieList: IItem[];
 }) => {
   const formattedMovieDate = dayjs(slide.release_date).format('MMM D, YYYY');
-  const formattedTvDate = dayjs(slide.first_air_date).format('MMM D, YYYY');
   const { genres } = genresData;
 
   const logoFromQuery = useItemLogos(
@@ -34,7 +34,7 @@ const Slide = ({
   const displayLogo = logoFromQuery || null;
 
   const movieGenres = slide.genre_ids.map((genreId) => {
-    const genre = genres.find((g) => g.id === genreId);
+    const genre = genres.find((genre) => genre.id === genreId);
     return genre?.name;
   });
 
@@ -42,7 +42,8 @@ const Slide = ({
     <div className=' swiper-slide bg-black h-full flex items-center py-10'>
       {/* background image */}
       <div
-        className='relative w-full h-full bg-cover bg-center md:bg-top'
+        className={`relative w-full h-full bg-cover bg-center md:bg-top transition-opacity 
+        duration-1500 ease-in-out ${isVisible ? 'opacity-100' : 'opacity-0'}`}
         style={{
           backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
         }}
@@ -53,29 +54,29 @@ const Slide = ({
 
         {/* card content */}
         <div className='max-w-[1800px] mx-auto'>
+          {/* left, top - genre, release date, title logo */}
           <div className='absolute md:w-1/2 h-full flex flex-col justify-center px-16 md:px-18 lg:px-26 xl:ml-10'>
-            {/* left, top - genre, release date, title logo */}
-
             <div className='flex flex-col items-center md:items-start'>
-              <div className='flex items-start mb-12 '>
+              <div className='flex justify-start items-start mb-12 '>
                 {movieGenres.length >= 1 &&
-                  movieGenres.slice(0, 1).map((genre) => (
+                  movieGenres.slice(0, 2).map((genre) => (
                     <span
                       key={`${genre}-${slide.id}`}
-                      className='text-white  ml-0'
+                      className='text-white  ml-0 mr-4'
                     >
                       {genre}
                     </span>
                   ))}
+                {slide.media_type === 'movie' && (
+                  <p className='text-white'>&#x2022;</p>
+                )}
 
-                <p className='text-white font-light ml-8'>
+                <p className='text-white font-light ml-4'>
                   {slide.media_type === 'movie'
                     ? slide.release_date !== 'Invalid Date'
                       ? formattedMovieDate
                       : null
-                    : slide.first_air_date !== 'Invalid Date'
-                      ? formattedTvDate
-                      : null}
+                    : null}
                 </p>
               </div>
             </div>

@@ -45,10 +45,12 @@ const discoverResults = async (
   sort = 'popularity.desc',
   pageParam = 1,
   lang = 'en',
-  vote_average = 1,
+  voteAverage = 1,
+  voteCount = 150,
+  deselectedGenres = '',
 ) => {
   const { data } = await TMDBClient.get(
-    `/discover/${type}?vote_average.gte=${vote_average}&include_adult=false&vote_count.gte=1000&language=${lang}&sort_by=${sort}&page=${pageParam}&with_genres=${genres}`,
+    `/discover/${type}?vote_average.gte=${voteAverage}&include_adult=false&vote_count.gte=${voteCount}&language=${lang}&sort_by=${sort}&page=${pageParam}&with_genres=${genres}&without_genres=${deselectedGenres}`,
   );
   return {
     results: data.results,
@@ -62,12 +64,23 @@ export const useInfiniteDiscoverQuery = (
   genres?: string,
   sort?: string,
   lang?: string,
-  vote_average?: number,
+  voteAverage?: number,
+  voteCount?: number,
+  deselectedGenres?: string,
 ) => {
   return useInfiniteQuery({
-    queryKey: ['infinite-discover', type, sort, genres],
+    queryKey: ['infinite-discover', type, sort, genres, deselectedGenres],
     queryFn: ({ pageParam }) =>
-      discoverResults(type, genres, sort, pageParam, lang, vote_average),
+      discoverResults(
+        type,
+        genres,
+        sort,
+        pageParam,
+        lang,
+        voteAverage,
+        voteCount,
+        deselectedGenres,
+      ),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: true,

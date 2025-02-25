@@ -6,6 +6,7 @@ import { getStrokeColor } from '../utils/helpers';
 import { useEffect, useState, memo } from 'react';
 import genreData from '../utils/data/genres.json';
 import Chip from './Chip';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 const ItemCard = ({
   item,
@@ -25,6 +26,7 @@ const ItemCard = ({
   const formattedAirDate = dayjs(item.first_air_date).format('MMM D, YYYY');
   const { genres } = genreData;
   const strokeColor = getStrokeColor(item.vote_average ?? 0);
+  const { width } = useWindowSize();
 
   useEffect(() => {
     setIsVisible(true);
@@ -70,17 +72,22 @@ const ItemCard = ({
                 )}
                 {/* Genres*/}
                 {showGenres && movieGenres?.length >= 1 && (
-                  <div className='flex justify-end flex-wrap relative -top-7 -left-2 w-50'>
-                    {movieGenres
-                      ?.slice(0, 2)
-                      .map((genre) => (
-                        <Chip
-                          label={genre!}
-                          key={genre}
-                          bg='bg-black/60'
-                          fontSize='text-md'
-                        />
-                      ))}
+                  <div className='flex justify-end flex-wrap gap-1 relative -top-8 right-3.5 sm:right-2 w-full'>
+                    {width > 400 ? (
+                      <>
+                        {' '}
+                        {movieGenres
+                          ?.slice(0, 2)
+                          .map((genre) => (
+                            <Chip
+                              label={genre!}
+                              key={genre}
+                              bg='bg-black/60'
+                              fontSize={`text-xs sm:text-sm md:text-md `}
+                            />
+                          ))}
+                      </>
+                    ) : null}
                   </div>
                 )}
               </div>

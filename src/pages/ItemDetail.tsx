@@ -49,10 +49,7 @@ const ItemDetail = () => {
       {item ? (
         <section id='item-detail' className='relative flex flex-wrap pt-30  '>
           <div
-            className={`fixed inset-0 bg-cover bg-center blur-[5px] z-0 bg-no-repeat transition-opacity 
-        duration-1000 
-        ease-in-out 
-        ${isVisible ? 'opacity-40' : 'opacity-0'}`}
+            className={`fixed inset-0 bg-cover bg-center blur-[5px] z-0 bg-no-repeat transition-opacity duration-1500 ease-in-out ${isVisible ? 'opacity-40' : 'opacity-0'}`}
             style={{
               backgroundImage: `url('https://image.tmdb.org/t/p/w342${item?.backdrop_path}')`,
             }}
@@ -107,7 +104,7 @@ const ItemDetail = () => {
                 Overview
               </h3>
               {/* put min width 400 if you want the y-axis too */}
-              <p className='text-xl text-center md:text-left text-white/60  my-3 mb-6 font-bold'>
+              <p className='text-lg text-center md:text-left text-white/60  my-3 mb-6 font-bold'>
                 {item.overview}
               </p>
 
