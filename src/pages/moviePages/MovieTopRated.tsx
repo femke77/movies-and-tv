@@ -3,7 +3,6 @@ import MediaListContainer from '../../components/MediaListContainer';
 import sortOptionsData from '../../utils/data/sortOptions.json';
 
 const MovieTopRated = () => {
-
   const { genres } = genreData;
   const { sortOptions } = sortOptionsData;
 
@@ -20,7 +19,7 @@ const MovieTopRated = () => {
       voteAverage={7}
       sortOptions={sortOptions}
       voteCount={1000}
-      />
+    />
   );
 };
 

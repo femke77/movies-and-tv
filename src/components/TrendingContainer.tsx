@@ -18,7 +18,9 @@ const TrendingContainer = ({
   return (
     <div className='mt-24'>
       <div className='flex items-center justify-between mx-3 mb-6'>
-        <h2 className='text-[1.75rem] font-semibold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text'>{heading}</h2>
+        <h2 className='text-[1.75rem] font-semibold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text'>
+          {heading}
+        </h2>
         <TrendingToggle onTimeChange={setTimePeriod} />
       </div>
 

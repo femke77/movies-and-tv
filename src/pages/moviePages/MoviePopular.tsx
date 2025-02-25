@@ -3,7 +3,6 @@ import MediaListContainer from '../../components/MediaListContainer';
 import sortOptionsData from '../../utils/data/sortOptions.json';
 
 const MoviePopular = () => {
-
   const { genres } = genreData;
   const { sortOptions } = sortOptionsData;
 
@@ -18,8 +17,7 @@ const MoviePopular = () => {
       genres={genres}
       sortBy='popularity.desc'
       sortOptions={sortOptions}
-
-      />
+    />
   );
 };
 
