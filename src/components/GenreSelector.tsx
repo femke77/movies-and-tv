@@ -1,6 +1,6 @@
 import { IGenre } from "../interfaces/IGenre";
 import { useWindowSize } from "../hooks/useWindowSize";
-import { on } from "events";
+
 
 const GenreSelector = ({
   genres,
