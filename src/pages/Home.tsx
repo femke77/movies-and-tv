@@ -6,7 +6,6 @@ import TrendingMovies from '../components/Home/TrendingMovies';
 import TrendingTV from '../components/Home/TrendingTv';
 import PopularTv from '../components/Home/PopularTv';
 
-
 // TODO skeletons with suspense
 
 const Home = () => {
@@ -21,7 +20,6 @@ const Home = () => {
         <TrendingTV />
         <TopRatedTv />
         <PopularTv />
-
       </div>
     </>
   );

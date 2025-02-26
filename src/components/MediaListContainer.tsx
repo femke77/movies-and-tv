@@ -75,11 +75,11 @@ const MediaListContainer = ({
           {heading}
         </h2>
         <div className='mr-4'>
-        <SortByListbox
-          sortByOption={sortByOption}
-          setSortByOption={setSortByOption}
-          sortOptions={sortOptions}
-        />
+          <SortByListbox
+            sortByOption={sortByOption}
+            setSortByOption={setSortByOption}
+            sortOptions={sortOptions}
+          />
         </div>
       </div>
       <GenreSelector

@@ -29,13 +29,13 @@ const GenreSelector = ({
     const timer = window.setTimeout(() => {
       onUnwantedGenreToggle(genreId);
     }, touchDurationThreshold);
-    
+
     setLongPressTimer(timer);
   };
 
   const handleTouchEnd = (genreId: string, e: React.TouchEvent) => {
     e.preventDefault();
-    
+
     // Clear long press timer
     if (longPressTimer !== null) {
       clearTimeout(longPressTimer);
@@ -70,15 +70,20 @@ const GenreSelector = ({
 
   return (
     <>
-      <p className="mx-4 text-white/65 text-md">
-        Genres <span className='text-sm italic'>(click or press to include, right click or long press to exclude)</span> 
+      <p className='mx-4 text-white/65 text-md'>
+        Genres{' '}
+        <span className='text-sm italic'>
+          (click or press to include, right click or long press to exclude)
+        </span>
       </p>
       <div
-        className={clsx(`grid gap-2 mt-4 ${
-          width < 400
-            ? `grid-cols-1`
-            : `grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-1`
-        }`)}
+        className={clsx(
+          `grid gap-2 mt-4 ${
+            width < 400
+              ? `grid-cols-1`
+              : `grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-1`
+          }`,
+        )}
       >
         {genres.map((genre) => (
           <button
