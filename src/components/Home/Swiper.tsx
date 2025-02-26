@@ -10,9 +10,8 @@ import "swiper/css/navigation";
 const Slide = lazy(() => import('./Slide'));
 
 export default function SwiperElement() {
-  const { data: items = [], isLoading } = useTrendingAll();
-  console.log(isLoading);
-  
+  const { data: items = []} = useTrendingAll();
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const progressCircle = useRef<SVGSVGElement>(null);

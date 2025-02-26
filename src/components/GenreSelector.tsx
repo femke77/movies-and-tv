@@ -57,7 +57,7 @@ const GenreSelector = ({
     }
   };
 
-  const handleClick = (genreId: string, _e: React.MouseEvent) => {
+  const handleClick = (genreId: string) => {
     // Only process click events on non-touch devices
     if (!isTouchDeviceRef.current) {
       onGenreToggle(genreId);
@@ -82,11 +82,10 @@ const GenreSelector = ({
       >
         {genres.map((genre) => (
           <button
-            onClick={(e) => handleClick(String(genre.id), e)}
+            onClick={() => handleClick(String(genre.id))}
             onContextMenu={(e) => {
               e.preventDefault();
               onUnwantedGenreToggle(String(genre.id));
-              console.log('Right Click ' + genre.id);
             }}
             onTouchStart={() => handleTouchStart(String(genre.id))}
             onTouchEnd={(e) => handleTouchEnd(String(genre.id), e)}
