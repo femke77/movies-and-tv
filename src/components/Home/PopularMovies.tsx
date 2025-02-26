@@ -1,6 +1,6 @@
 import { usePopularMovies } from '../../hooks/usePopular';
 import { useRef } from 'react';
-import SlideContainer from '../CarouselContainer';
+import CarouselContainer from '../CarouselContainer';
 
 const PopularMovies = () => {
   const { data: movies = [] } = usePopularMovies();
@@ -8,7 +8,7 @@ const PopularMovies = () => {
   return (
     <div className='mt-24'>
       <h2 className='text-2xl font-bold mb-8  ml-5'>Popular Movies 📈</h2>
-      <SlideContainer
+      <CarouselContainer
         id='pop-section'
         ref={ref}
         items={movies}

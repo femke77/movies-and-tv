@@ -1,4 +1,4 @@
-import SlideContainer from '../CarouselContainer';
+import CarouselContainer from '../CarouselContainer';
 import { useTrendingMovies } from '../../hooks/useTrending';
 import { useRef } from 'react';
 
@@ -10,7 +10,7 @@ const TrendingMovies = () => {
   return (
     <div>
       <h2 className='text-2xl font-bold mb-8 ml-5'>Trending Movies Today 🔥</h2>
-      <SlideContainer
+      <CarouselContainer
         ref={ref}
         items={movies}
         itemType='movie'

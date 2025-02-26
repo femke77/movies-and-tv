@@ -74,11 +74,13 @@ const MediaListContainer = ({
         <h2 className='text-[1.75rem] font-semibold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text   mb-6 mr-4'>
           {heading}
         </h2>
+        <div className='mr-4'>
         <SortByListbox
           sortByOption={sortByOption}
           setSortByOption={setSortByOption}
           sortOptions={sortOptions}
         />
+        </div>
       </div>
       <GenreSelector
         genres={genres}
