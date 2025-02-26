@@ -42,20 +42,20 @@ const Slide = ({
     <div className='swiper-slide bg-black h-full flex items-center py-10 z-0'>
       {/* background image */}
       <div
-        className={clsx(`relative w-full h-full bg-cover bg-center md:bg-top transition-opacity 
-        duration-1500 ease-in-out ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        } z-0`)}
-        style={{
-          backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
-        }}
-      >
+    className={clsx(`absolute inset-0 w-full h-full bg-cover bg-center md:bg-top transition-opacity 
+    duration-1500 ease-in-out ${
+      isVisible ? 'opacity-100' : 'opacity-0'
+    } z-0`)}
+    style={{
+      backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
+    }}
+  />
         {/* gradient overlays */}
         <div className='absolute bottom-0 left-0 w-full h-1/8 sm:h-1/2 bg-gradient-to-t from-black to-transparent z-0' />
         <div className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent z-0' />
 
         {/* card content */}
-        <div className='max-w-[1800px] mx-auto relative h-full z-0'>
+        <div className='max-w-[1800px] mx-auto relative h-full z-50'>
           {/* left, top - genre, release date, title logo */}
           <div
             className={clsx(`absolute flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10 z-0
@@ -163,7 +163,7 @@ const Slide = ({
           </div>
         </div>
       </div>
-    </div>
+
   );
 };
 
