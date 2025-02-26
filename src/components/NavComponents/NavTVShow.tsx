@@ -1,4 +1,4 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { Menu, MenuButton, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
 import MenuItemLink from "./MenuItemLink";
 
@@ -42,15 +42,14 @@ const NavTVShows = () => {
           </svg>
           <h3 className="text-md font-bold ml-3">TV Shows</h3>
         </div>
-        <MenuItem>
+
           <MenuItemLink to="/explore/tv" name="Trending Series" />
-        </MenuItem>
-        <MenuItem>
-          <MenuItemLink to="/explore/top-rated" name="Top Rated Series" />
-        </MenuItem>
-        <MenuItem>
+ 
+          <MenuItemLink to="/explore/top-series" name="Top Rated Series" />
+  
+  
           <MenuItemLink to="/explore/popular-tv" name="Popular TV" />
-        </MenuItem>
+     
       </MenuItems>
     </Menu>
   );
