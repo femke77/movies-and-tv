@@ -126,7 +126,7 @@ export default function Navigation({
                 <div
                   className={`block md:hidden fixed inset-0 mt-16  bg-black  transition-all duration-700 ${
                     open
-                      ? 'opacity-90 h-screen'
+                      ? 'opacity-96 h-screen'
                       : 'opacity-0 h-0 pointer-events-none'
                   }`}
                 >
