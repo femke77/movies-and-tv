@@ -125,7 +125,13 @@ header {
   background-color: white;
 }
 
-
+.bg-image-fix {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: translateZ(0); /* Force GPU rendering */
+  image-rendering: crisp-edges; /* Forces a single-pass render */
+}
 
 @media screen and (max-width: 880px) and (max-height: 600px) {
 

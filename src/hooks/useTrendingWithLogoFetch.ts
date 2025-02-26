@@ -1,5 +1,5 @@
 import { TMDBClient } from '../utils/axiosConfig';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient} from '@tanstack/react-query';
 import { useEffect } from 'react';
 import type { IItem } from '../interfaces/IItem';
 

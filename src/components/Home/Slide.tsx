@@ -7,6 +7,7 @@ import genresData from "../../utils/data/genres.json";
 import { Link } from "react-router-dom";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import clsx from "clsx";
+import { useState } from "react";
 
 const Slide = ({
   slide,
@@ -19,6 +20,7 @@ const Slide = ({
   currentIndex: number;
   movieList: IItem[];
 }) => {
+  const [loaded, setLoaded] = useState(false);
   const formattedMovieDate = dayjs(slide.release_date).format("MMM D, YYYY");
   const { genres } = genresData;
   const { width } = useWindowSize();
@@ -56,12 +58,12 @@ const Slide = ({
         <div className="max-w-[1800px] mx-auto relative h-full z-0">
           {/* left, top - genre, release date, title logo */}
           <div
-            className={clsx(`absolute flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10 z-0
+            className={clsx(`w-full md:w-1/2 absolute flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10 z-0
               ${
                 width < 950
                   ? "w-full h-full justify-center mt-5"
                   : "w-1/2 top-1/2 transform -translate-y-1/2 mt-5"
-              }`)}
+              }  z-0`)}
           >
             {/* Genre and date section - always at top */}
             <div
@@ -107,6 +109,9 @@ const Slide = ({
                       className="mb-6 w-64 h-auto"
                       src={`https://image.tmdb.org/t/p/w185${displayLogo}`}
                       alt={slide.title || slide.name}
+                      loading="eager"
+                      height={250}
+                      width={250}
                     />
                   ) : (
                     <h2 className="text-4xl font-bold text-white mb-6">
@@ -143,13 +148,17 @@ const Slide = ({
           >
             {slide.poster_path && (
               <img
-                className="w-78 h-auto rounded-lg"
+                className={`w-78 h-auto rounded-lg will-change-transform object-cover transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
                 src={
                   slide.poster_path
                     ? `https://image.tmdb.org/t/p/w500${slide.poster_path}`
                     : "/no_poster_available.svg"
                 }
                 alt={slide.title || slide.name}
+                loading="eager"
+                width={320}
+                height={450}
+                onLoad={() => setLoaded(true)}
               />
             )}
           </div>
