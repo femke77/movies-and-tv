@@ -50,7 +50,7 @@ const Slide = ({
       >
         {/* gradient overlay */}
         <div className='absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent' />
-        <div className='absolute inset-0 bg-gradient-to-r from-black via-black/80 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
+        <div className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
 
         {/* card content */}
         <div className='max-w-[1800px] mx-auto'>
