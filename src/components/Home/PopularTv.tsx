@@ -1,4 +1,4 @@
-import SlideContainer from '../CarouselContainer';
+import CarouselContainer from '../CarouselContainer';
 import { usePopularTv } from '../../hooks/usePopular';
 import { useRef } from 'react';
 
@@ -10,7 +10,7 @@ const PopularTv = () => {
   return (
     <div>
       <h2 className='text-2xl font-bold mb-8 ml-5'>Popular TV 📈</h2>
-      <SlideContainer
+      <CarouselContainer
         ref={ref}
         items={shows}
         itemType='tv'

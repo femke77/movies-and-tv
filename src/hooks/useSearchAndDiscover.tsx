@@ -69,7 +69,16 @@ export const useInfiniteDiscoverQuery = (
   deselectedGenres?: string,
 ) => {
   return useInfiniteQuery({
-    queryKey: ['infinite-discover', type, sort, genres, deselectedGenres],
+    queryKey: [
+      'infinite-discover',
+      type,
+      sort,
+      genres,
+      deselectedGenres,
+      voteAverage,
+      voteCount,
+      lang,
+    ],
     queryFn: ({ pageParam }) =>
       discoverResults(
         type,

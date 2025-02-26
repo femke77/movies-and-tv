@@ -1,14 +1,17 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, lazy } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import { useTrendingAll } from '../../hooks/useAllTrendingWithLogoFetch';
-import Slide from './Slide';
+import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
+import SlideSkeleton from './SlideSkeleton';
+import { Suspense } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+const Slide = lazy(() => import('./Slide'));
 
 export default function SwiperElement() {
   const { data: items = [] } = useTrendingAll();
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const progressCircle = useRef<SVGSVGElement>(null);
@@ -44,12 +47,14 @@ export default function SwiperElement() {
         {items &&
           items.map((item, index) => (
             <SwiperSlide key={`item-${item.id}`}>
-              <Slide
-                slide={item}
-                isVisible={index === currentIndex}
-                currentIndex={index}
-                movieList={items}
-              />
+              <Suspense fallback={<SlideSkeleton />}>
+                <Slide
+                  slide={item}
+                  isVisible={index === currentIndex}
+                  currentIndex={index}
+                  movieList={items}
+                />
+              </Suspense>
             </SwiperSlide>
           ))}
 

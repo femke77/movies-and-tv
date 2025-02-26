@@ -1,5 +1,5 @@
 import { useTopRatedMovies } from '../../hooks/useTopRated';
-import SlideContainer from '../CarouselContainer';
+import CarouselContainer from '../CarouselContainer';
 import { useRef } from 'react';
 
 const TopRatedMovies = () => {
@@ -9,7 +9,7 @@ const TopRatedMovies = () => {
   return (
     <div className='mt-24'>
       <h2 className='text-2xl font-bold mb-8  ml-5'>Top Rated Movies 🔝</h2>
-      <SlideContainer
+      <CarouselContainer
         id='top-section'
         ref={ref}
         items={movies}

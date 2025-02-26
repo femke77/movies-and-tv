@@ -1,4 +1,4 @@
-import SlideContainer from '../CarouselContainer';
+import CarouselContainer from '../CarouselContainer';
 import { useTopRatedTv } from '../../hooks/useTopRated';
 import { useRef } from 'react';
 
@@ -10,7 +10,7 @@ const TopRatedTv = () => {
   return (
     <div>
       <h2 className='text-2xl font-bold mb-8 ml-5'>Top Rated TV 🔝</h2>
-      <SlideContainer
+      <CarouselContainer
         ref={ref}
         items={shows}
         itemType='tv'

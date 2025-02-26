@@ -6,10 +6,10 @@ import {
 } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
-import NavMovies from './NavComponents/NavMovies';
-import NavTVShow from './NavComponents/NavTVShow';
+import NavMovies from './NavMovies';
+import NavTVShow from './NavTVShow';
 // import NavDiscover from './NavComponents/NavDiscover';
-import Search from './HeaderSearchBar';
+import Search from '../HeaderSearchBar';
 
 const moviesNav = [
   { title: 'Trending Movies', url: '/explore/movies' },
@@ -126,7 +126,7 @@ export default function Navigation({
                 <div
                   className={`block md:hidden fixed inset-0 mt-16  bg-black  transition-all duration-700 ${
                     open
-                      ? 'opacity-90 h-screen'
+                      ? 'opacity-96 h-screen'
                       : 'opacity-0 h-0 pointer-events-none'
                   }`}
                 >

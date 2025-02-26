@@ -19,7 +19,7 @@ export default function Example({
   sortOptions,
 }: ISortOption) {
   return (
-    <div className='mb-8 w-52 mr-4 hover:translate-[1px] pt-[5px] rounded-md hover:outline-blue-700 hover:outline-1  '>
+    <div className='mb-8 w-70 mr-4 hover:translate-[1px] pt-[5px] rounded-md hover:outline-blue-700 hover:outline-1  '>
       <Listbox value={sortByOption} onChange={setSortByOption}>
         <ListboxButton
           className={clsx(

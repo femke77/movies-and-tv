@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header';
-import Nav from './components/Nav';
+import Nav from './components/NavComponents/Nav';
 import Footer from './components/Footer';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ScrollRestoration } from 'react-router-dom';
