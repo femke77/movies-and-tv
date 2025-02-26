@@ -36,31 +36,31 @@ const Slide = ({
   });
 
   return (
-    <div className="swiper-slide bg-black h-full flex items-center py-10">
+    <div className="swiper-slide bg-black h-full flex items-center py-10 z-0">
       {/* background image */}
       <div
         className={`relative w-full h-full bg-cover bg-center md:bg-top transition-opacity 
-        duration-1500 ease-in-out ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+        duration-1500 ease-in-out ${isVisible ? 'opacity-100' : 'opacity-0'} z-0`}
         style={{
           backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
         }}
       >
         {/* gradient overlays */}
-        <div className='absolute bottom-0 left-0 w-full h-1/8 sm:h-1/2 bg-gradient-to-t from-black to-transparent' />
-        <div className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
+        <div className='absolute bottom-0 left-0 w-full h-1/8 sm:h-1/2 bg-gradient-to-t from-black to-transparent z-0' />
+        <div className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent z-0' />
 
         {/* card content */}
-        <div className='max-w-[1800px] mx-auto relative h-full'>
+        <div className='max-w-[1800px] mx-auto relative h-full z-0'>
           {/* left, top - genre, release date, title logo */}
           <div 
-            className={`absolute flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10 
+            className={`absolute flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10 z-0
               ${width < 950 
-                ? 'w-full h-full justify-center' 
-                : 'w-1/2 top-1/2 transform -translate-y-1/2'}`}
+                ? 'w-full h-full justify-center mt-5' 
+                : 'w-1/2 top-1/2 transform -translate-y-1/2 mt-5'}`}
           >
             {/* Genre and date section - always at top */}
-            <div className={`flex flex-col pb-5 ${width < 950 ? 'items-center' : 'items-start'}`}>
-              <div className={`flex justify-start items-start mb-6`}>
+            <div className={`flex flex-col ${width < 950 ? 'items-center' : 'items-start'}`}>
+              <div className={`flex justify-start items-start mb-6 pb-6`}>
                 {movieGenres.length >= 1 &&
                   movieGenres.slice(0, 2).map((genre) => (
                     <span
@@ -108,7 +108,7 @@ const Slide = ({
 
               {/* Buttons section */}
               <div className={`flex flex-row items-center ${width < 950 ? 'justify-center' : 'justify-start'} mt-2`}>
-                <div className='mb-2 mr-12'>
+                <div className='mb-2 mr-10'>
                   <WatchButton />
                 </div>
                 <div className='mb-2'>
@@ -119,7 +119,7 @@ const Slide = ({
           </div>
           
           {/* right, only - poster image */}
-          <div className={`absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 ${width < 950 ? 'hidden' : 'block'}`}>
+          <div className={`absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 ${width < 950 ? 'hidden' : 'block'} z-0`}>
             {slide.poster_path && (
               <img
                 className='w-78 h-auto rounded-lg'

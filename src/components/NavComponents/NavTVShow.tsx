@@ -21,7 +21,7 @@ const NavTVShows = () => {
       <MenuItems
         transition
         anchor="bottom end"
-        className="w-64 origin-top-right rounded-xl border border-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:12px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0  bg-gray-900/95"
+        className="relative z-50 w-64 origin-top-right rounded-xl border border-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:12px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0  bg-gray-900/95"
       >
         {" "}
         <div className="flex justify-start items-center p-4 ">
