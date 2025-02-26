@@ -1,6 +1,7 @@
 import { IGenre } from '../interfaces/IGenre';
 import { useWindowSize } from '../hooks/useWindowSize';
 import { useState, useRef } from 'react';
+import clsx from 'clsx';
 
 const GenreSelector = ({
   genres,
@@ -73,11 +74,11 @@ const GenreSelector = ({
         Genres <span className='text-sm italic'>(click or press to include, right click or long press to exclude)</span> 
       </p>
       <div
-        className={`grid gap-2 mt-4 ${
+        className={clsx(`grid gap-2 mt-4 ${
           width < 400
             ? `grid-cols-1`
-            : `grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2`
-        }`}
+            : `grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-1`
+        }`)}
       >
         {genres.map((genre) => (
           <button
@@ -97,7 +98,7 @@ const GenreSelector = ({
               }
             }}
             key={genre.id}
-            className={`
+            className={clsx(`
               border
               border-white/10
               rounded-xl
@@ -122,7 +123,7 @@ const GenreSelector = ({
                     ? 'bg-red-800 border-red-900'
                     : 'bg-white/[0.05]'
               }
-            `}
+            `)}
           >
             {genre.name}
           </button>

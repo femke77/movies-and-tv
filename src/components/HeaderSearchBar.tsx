@@ -1,6 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
+import clsx from 'clsx';
 
 const Search = ({
   searchOpen,
@@ -36,11 +37,11 @@ const Search = ({
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
-      className={`fixed top-0 left-0 w-full h-34 bg-transparent transition-all duration-700 flex items-end pb-4 justify-center z-50 ${
+      className={clsx(`fixed top-0 left-0 w-full h-34 bg-transparent transition-all duration-700 flex items-end pb-4 justify-center z-50 ${
         searchOpen
           ? 'opacity-100 translate-y-0 pointer-events-none'
           : 'opacity-0 -translate-y-full '
-      }`}
+      }`)}
     >
       <input
         ref={inputRef}

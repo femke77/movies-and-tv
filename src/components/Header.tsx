@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ReactNode } from 'react';
 import { useRef, useState, useEffect } from 'react';
+import clsx from 'clsx';
 
 const Header = ({ children }: { children: ReactNode }) => {
   const [hideHeader, setHideHeader] = useState(false);
@@ -25,9 +26,9 @@ const Header = ({ children }: { children: ReactNode }) => {
     <header>
       <div
         ref={headerRef}
-        className={`fixed top-0 left-0 right-0 bg-gray-900 flex-1 items-center px-3 pt-1 w-full flex justify-between z-30 transition-transform duration-300 ${
+        className={clsx(`fixed top-0 left-0 right-0 bg-gray-900 flex-1 items-center px-3 pt-1 w-full flex justify-between z-30 transition-transform duration-300 ${
           hideHeader ? '-translate-y-full' : 'translate-y-0'
-        }`}
+        }`)}
       >
         <h1>
           <Link
