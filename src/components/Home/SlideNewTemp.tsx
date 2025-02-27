@@ -7,6 +7,8 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import clsx from "clsx";
 import { useState, useRef, lazy, useEffect, Suspense } from "react";
 
+// TODO img - ref vs src ???
+
 const UserRating = lazy(() => import("../UserRating"));
 const WatchButton = lazy(() => import("../WatchButton"));
 
@@ -38,18 +40,17 @@ const Slide = ({
   currentIndex: number;
   movieList: IItem[];
 }) => {
-
   const [highResBgLoaded, setHighResBgLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
 
   // References to avoid race conditions
-
   const highResBgRef = useRef(new Image());
   const posterRef = useRef(new Image());
+  const logoRef = useRef(new Image());
 
-  const criticalElementsLoaded =  contentLoaded;
+  const criticalElementsLoaded = contentLoaded;
 
   const formattedMovieDate = dayjs(slide.release_date).format("MMM D, YYYY");
   const { genres } = genresData;
@@ -70,14 +71,12 @@ const Slide = ({
 
   // Preload images for current and next slides
   useEffect(() => {
-    if (isVisible || currentIndex === 0 || currentIndex === 1) {
+    if (isVisible || currentIndex === 0) {
       // Set content as loaded after a brief delay
       const contentTimer = setTimeout(() => {
         setContentLoaded(true);
       }, 100);
 
-    
-      // high-res background
       if (slide.backdrop_path) {
         highResBgRef.current.onload = () => setHighResBgLoaded(true);
         highResBgRef.current.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`;
@@ -88,10 +87,9 @@ const Slide = ({
         posterRef.current.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}`;
       }
 
-      if (displayLogo) {
-        const logoImg = new Image();
-        logoImg.onload = () => setLogoLoaded(true);
-        logoImg.src = `https://image.tmdb.org/t/p/w185${displayLogo}`;
+      if (displayLogo && logoRef.current) {
+        logoRef.current.onload = () => setLogoLoaded(true);
+        logoRef.current.src = `https://image.tmdb.org/t/p/w185${displayLogo}`;
       }
 
       return () => {
@@ -101,22 +99,26 @@ const Slide = ({
   }, [isVisible, currentIndex, slide, displayLogo]);
 
   return (
-    <div className="swiper-slide bg-black h-full flex items-center py-10 z-0 slide-container">
-      {/* background image */}
-      <div className="relative w-full h-full z-0 overflow-hidden">
-               {/* Low-res background (loads first) */}
-       
-        {/* High-res background (loads second) */}
-        <div
-  className={`absolute inset-0 transition-opacity duration-1500 ${
-    highResBgLoaded ? "opacity-100" : "opacity-0"
-  } ${isVisible ? "visible" : "invisible"}`}
-  style={{
-    backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
-    backgroundSize: "cover",
-    backgroundPosition: width < 768 ? "center" : "top",
-  }}
-/>
+    <div
+      className="swiper-slide bg-black h-full flex items-center py-10 slide-container"
+      style={{ overflow: "hidden" }}
+    >
+      {/* background image with gpu optimizations*/}
+      <div className="relative w-full h-full overflow-hidden">
+        {slide.backdrop_path && (
+          <img
+            ref={highResBgRef}
+            alt={`backdrop of ${slide.title || slide.name}`}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{
+              opacity: highResBgLoaded && isVisible ? 1 : 0,
+              transition: "opacity 1500ms ease-in-out",
+              objectPosition: width < 768 ? "center" : "top",
+              WebkitTransform: "translateZ(0)",
+              transform: "translateZ(0)",
+            }}
+          />
+        )}
 
         {/* gradient overlays */}
         <div className="absolute bottom-0 left-0 w-full h-1/8 sm:h-1/2 bg-gradient-to-t from-black to-transparent z-1" />
@@ -124,20 +126,23 @@ const Slide = ({
 
         {/* card content */}
         <div
-          className={`max-w-[1800px] mx-auto relative h-full z-2 transition-opacity duration-700 ${
-            criticalElementsLoaded ? "opacity-100" : "opacity-0"
-          }`}
+          className="max-w-[1800px] mx-auto relative h-full"
+          style={{
+            zIndex: 2,
+            opacity: criticalElementsLoaded ? 1 : 0,
+            transition: "opacity 700ms ease-in-out",
+          }}
         >
           {/* left, top - genre, release date, title logo */}
           <div
-            className={clsx(`absolute flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10 z-5
+            className={clsx(`absolute flex z-5 flex-col px-16 md:px-18 lg:px-26 xl:ml-10
               ${
                 width < 950
                   ? "w-full h-full justify-center mt-5"
                   : "w-1/2 top-1/2 transform -translate-y-1/2 mt-5"
               } `)}
           >
-            {/* Genre and date section - always at top */}
+            {/* Genre and date section*/}
             <div
               className={clsx(
                 `flex flex-col h-[30px] ${
@@ -170,7 +175,7 @@ const Slide = ({
             </div>
 
             {/* Content container */}
-            <div className="flex flex-col">
+            <div className="flex flex-col mt-6 mb-6">
               {/* Title/logo section */}
               <Link to={`/${slide.media_type}/${slide.id}`} className="block">
                 <div
@@ -179,15 +184,15 @@ const Slide = ({
                   }`}
                 >
                   {/* Logo with placeholder */}
-                  <div className="h-[250] my-6">
+                  <div className="h-[250] my-6 mt-6 mb-10">
                     {displayLogo ? (
                       logoLoaded ? (
                         <img
-                          className="h-auto max-h-[250px] w-auto max-w-64"
-                          src={`https://image.tmdb.org/t/p/w185${displayLogo}`}
+                          className="h-auto max-h-[250px] w-68"
+                          src={logoRef.current.src}
                           alt={slide.title || slide.name}
                           loading="eager"
-                          height={80}
+                          height={150}
                           width={250}
                         />
                       ) : (
@@ -202,7 +207,7 @@ const Slide = ({
 
                   {/* Overview text with placeholder */}
                   {contentLoaded ? (
-                    <p className="text-white line-clamp-2 md:line-clamp-3 text-center md:text-left mb-6 h-[72px]">
+                    <p className="text-white line-clamp-2 md:line-clamp-3 text-center md:text-left mb-10 h-[72px] ">
                       {slide.overview}
                     </p>
                   ) : (
@@ -245,22 +250,24 @@ const Slide = ({
             </div>
           </div>
 
-           {/* Poster image with placeholder  */}
-           {width >= 950 && slide.poster_path && (
-            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 z-10 h-[450px] w-[320px]">
+          {/* Poster image with placeholder  */}
+          {width >= 950 && slide.poster_path && (
+            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 h-[450px] w-[320px] z-10">
               {/* Poster placeholder */}
               <div
                 className={`w-78 h-[450px] rounded-lg bg-gray-800/50 absolute ${
-                  posterLoaded ? 'opacity-0' : 'opacity-100'
-                } transition-opacity duration-500`}
+                  posterLoaded ? "opacity-0" : "opacity-100"
+                }`}
+                style={{ transition: "opacity 500ms ease-in-out" }}
               />
 
               {/* Actual poster with direct onLoad handler */}
               <img
-                className={`w-full h-auto rounded-lg object-cover transition-opacity duration-500 ${
-                  posterLoaded ? 'opacity-100' : 'opacity-0'
+                className={`w-full h-auto rounded-lg object-cover ${
+                  posterLoaded ? "opacity-100" : "opacity-0"
                 }`}
-                src={`https://image.tmdb.org/t/p/w500${slide.poster_path}`}
+                style={{ transition: "opacity 500ms ease-in-out" }}
+                src={posterRef.current.src}
                 alt={slide.title || slide.name}
                 loading="eager"
                 width={320}
@@ -269,7 +276,6 @@ const Slide = ({
               />
             </div>
           )}
-
         </div>
       </div>
     </div>
