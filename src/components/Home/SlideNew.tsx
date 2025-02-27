@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import clsx from "clsx";
 import { useState, useRef, lazy, useEffect, Suspense } from "react";
 
-// TODO skeleton is sometimes in mobile view - ???
 
 const UserRating = lazy(() => import("../UserRating"));
 const WatchButton = lazy(() => import("../WatchButton"));
@@ -76,10 +75,10 @@ const Slide = ({
         setContentLoaded(true);
       }, 100);
 
-      // if (slide.backdrop_path && highResBgRef.current) {
-      //   highResBgRef.current.onload = () => setHighResBgLoaded(true);
-      //   highResBgRef.current.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`;
-      // }
+      if (slide.backdrop_path && highResBgRef.current) {
+        highResBgRef.current.onload = () => setHighResBgLoaded(true);
+        highResBgRef.current.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`;
+      }
 
       if (slide.poster_path && posterRef.current) {
         posterRef.current.onload = () => setPosterLoaded(true);
@@ -102,7 +101,7 @@ const Slide = ({
       <div
         className={clsx(`absolute inset-0 w-full h-full bg-cover bg-center md:bg-top transition-opacity 
          duration-1000 ease-in-out ${
-           isVisible ? "opacity-100" : "opacity-0"
+           highResBgLoaded && isVisible ? "opacity-100" : "opacity-0"
          } z-0`)}
         style={{
           backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
