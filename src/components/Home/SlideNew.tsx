@@ -146,12 +146,12 @@ const Slide = ({
                 ))}
 
               {slide.media_type === "movie" && (
-                <p className="hidden [@media(min-width:400px)] text-white">
+                <p className="hidden [@media(min-width:400px)]:block text-white">
                   &#x2022;
                 </p>
               )}
 
-              <p className="hidden [@media(min-width:400px)] text-white font-light ml-4">
+              <p className="hidden [@media(min-width:400px)]:block text-white font-light ml-4">
                 {slide.media_type === "movie"
                   ? slide.release_date !== "Invalid Date"
                     ? formattedMovieDate
