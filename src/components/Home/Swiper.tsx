@@ -33,6 +33,7 @@ export default function SwiperElement() {
         onSlideChange={(swiper) => setCurrentIndex(swiper.activeIndex)}
         spaceBetween={30}
         centeredSlides={true}
+        
         autoplay={{
           delay: 10000,
           disableOnInteraction: false,
@@ -43,10 +44,11 @@ export default function SwiperElement() {
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
+        speed={50}
       >
         {items &&
           items.map((item, index) => (
-            <SwiperSlide key={`item-${item.id}`}>
+            <SwiperSlide key={`item-${item.id}`} >
               <Suspense fallback={<SlideSkeleton />}>
                 <Slide
                   slide={item}
