@@ -8,6 +8,8 @@ import clsx from "clsx";
 import { useState, useRef, lazy, useEffect, Suspense } from "react";
 
 // TODO img - ref vs src ???
+// TODO skeleton is sometimes in mobile view
+// TODO don't use windowsize hook use tailwind arbitrary variant
 
 const UserRating = lazy(() => import("../UserRating"));
 const WatchButton = lazy(() => import("../WatchButton"));
