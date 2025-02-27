@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-const Slide = lazy(() => import('./SlideNew'));
+const Slide = lazy(() => import('./Slide'));
 
 export default function SwiperElement() {
   const { data: items = [] } = useTrendingAll();
