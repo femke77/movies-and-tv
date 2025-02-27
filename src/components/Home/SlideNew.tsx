@@ -110,7 +110,7 @@ const Slide = ({
           <img
            src={`https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`}
             alt={`backdrop of ${slide.title || slide.name}`}
-            className="absolute inset-0 w-full h-full object-cover object-center [@media(min-width:768)]:object-top"
+            className="absolute inset-0 w-full h-full object-cover object-center [@media(min-width:768px)]:object-top"
             style={{
               opacity: highResBgLoaded && isVisible ? 1 : 0,
               transition: "opacity 1500ms ease-in-out",
