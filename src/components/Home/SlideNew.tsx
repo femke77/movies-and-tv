@@ -3,13 +3,12 @@ import type { IItem } from "../../interfaces/IItem";
 import { useItemLogos } from "../../hooks/useTrendingWithLogoFetch";
 import genresData from "../../utils/data/genres.json";
 import { Link } from "react-router-dom";
-import { useWindowSize } from "../../hooks/useWindowSize";
 import clsx from "clsx";
 import { useState, useRef, lazy, useEffect, Suspense } from "react";
 
-// TODO img - ref vs src ???
-// TODO skeleton is sometimes in mobile view
-// TODO don't use windowsize hook use tailwind arbitrary variant
+
+// TODO skeleton is sometimes in mobile view - ???
+
 
 const UserRating = lazy(() => import("../UserRating"));
 const WatchButton = lazy(() => import("../WatchButton"));
@@ -56,7 +55,7 @@ const Slide = ({
 
   const formattedMovieDate = dayjs(slide.release_date).format("MMM D, YYYY");
   const { genres } = genresData;
-  const { width } = useWindowSize();
+
   const logoFromQuery = useItemLogos(
     slide.id,
     slide.media_type ?? "movie",
@@ -71,7 +70,7 @@ const Slide = ({
     return genre?.name;
   });
 
-  // Preload images for current and next slides
+  // Preload images and set loaded state
   useEffect(() => {
     if (isVisible || currentIndex === 0) {
       // Set content as loaded after a brief delay
@@ -79,12 +78,12 @@ const Slide = ({
         setContentLoaded(true);
       }, 100);
 
-      if (slide.backdrop_path) {
+      if (slide.backdrop_path && highResBgRef.current) {
         highResBgRef.current.onload = () => setHighResBgLoaded(true);
         highResBgRef.current.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`;
       }
 
-      if (slide.poster_path) {
+      if (slide.poster_path && posterRef.current) {
         posterRef.current.onload = () => setPosterLoaded(true);
         posterRef.current.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}`;
       }
@@ -109,13 +108,12 @@ const Slide = ({
       <div className="relative w-full h-full overflow-hidden">
         {slide.backdrop_path && (
           <img
-            ref={highResBgRef}
+           src={`https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`}
             alt={`backdrop of ${slide.title || slide.name}`}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-center [@media(min-width:768)]:object-top"
             style={{
               opacity: highResBgLoaded && isVisible ? 1 : 0,
               transition: "opacity 1500ms ease-in-out",
-              objectPosition: width < 768 ? "center" : "top",
               WebkitTransform: "translateZ(0)",
               transform: "translateZ(0)",
             }}
@@ -128,30 +126,26 @@ const Slide = ({
 
         {/* card content */}
         <div
-          className="max-w-[1800px] mx-auto relative h-full"
+          className="max-w-[1800px] mx-auto relative h-full z-2"
           style={{
-            zIndex: 2,
             opacity: criticalElementsLoaded ? 1 : 0,
             transition: "opacity 700ms ease-in-out",
           }}
         >
           {/* left, top - genre, release date, title logo */}
-          <div
-            className={clsx(`absolute flex z-5 flex-col px-16 md:px-18 lg:px-26 xl:ml-10
-              ${
-                width < 950
-                  ? "w-full h-full justify-center mt-5"
-                  : "w-1/2 top-1/2 transform -translate-y-1/2 mt-5"
-              } `)}
-          >
+          <div className="absolute w-full h-full justify-center mt-5 flex z-5 flex-col px-16 md:px-18 lg:px-26 xl:ml-10 
+  [@media(min-width:950px)]:justify-center 
+  [@media(min-width:950px)]:w-1/2 
+  [@media(min-width:950px)]:top-1/2 
+  [@media(min-width:950px)]:transform 
+  [@media(min-width:950px)]:-translate-y-1/2">
             {/* Genre and date section*/}
             <div
               className={clsx(
-                `flex flex-col h-[30px] ${
-                  width < 950 ? "items-center" : "items-start"
-                }`
+                `flex flex-col h-[30px] items-center [@media(min-width:950px)]:items-start `
               )}
             >
+              
               <div className={`flex justify-start items-start mb-6 pb-6`}>
                 {movieGenres.length >= 1 &&
                   movieGenres.slice(0, 2).map((genre) => (
@@ -181,9 +175,7 @@ const Slide = ({
               {/* Title/logo section */}
               <Link to={`/${slide.media_type}/${slide.id}`} className="block">
                 <div
-                  className={`flex flex-col ${
-                    width < 950 ? "items-center" : "items-start"
-                  }`}
+                  className={`flex flex-col items-center [@media(min-width:950px)]:items-start`}
                 >
                   {/* Logo with placeholder */}
                   <div className="h-[250] my-6 mt-6 mb-10">
@@ -191,7 +183,7 @@ const Slide = ({
                       logoLoaded ? (
                         <img
                           className="h-auto max-h-[250px] w-68"
-                          src={logoRef.current.src}
+                          src={`https://image.tmdb.org/t/p/w185${displayLogo}`} 
                           alt={slide.title || slide.name}
                           loading="eager"
                           height={150}
@@ -221,11 +213,9 @@ const Slide = ({
               {/* Buttons section */}
               <div
                 className={clsx(
-                  `flex flex-row items-center ${
-                    width < 950 ? "justify-center" : "justify-start"
-                  } mt-2 h-[50px]`
+                  `flex flex-row items-center justify-center [@media(min-width:950px)]:justify-start  mt-2 h-[50px]`
                 )}
-              >
+              > 
                 <div className="mb-2 mr-10">
                   {contentLoaded ? (
                     <Suspense fallback={<ButtonPlaceholder />}>
@@ -253,8 +243,8 @@ const Slide = ({
           </div>
 
           {/* Poster image with placeholder  */}
-          {width >= 950 && slide.poster_path && (
-            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 h-[450px] w-[320px] z-10">
+          {slide.poster_path && (
+            <div className="hidden [@media(min-width:950px)]:block [@media(min-width:950px)]:absolute [@media(min-width:950px)]:right-0 [@media(min-width:950px)]:top-1/2 [@media(min-width:950px)]:transform [@media(min-width:950px)]:-translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 [@media(min-width:950px)]:h-[450px] [@media(min-width:950px)]:w-[320px] z-10">
               {/* Poster placeholder */}
               <div
                 className={`w-78 h-[450px] rounded-lg bg-gray-800/50 absolute ${
@@ -269,7 +259,7 @@ const Slide = ({
                   posterLoaded ? "opacity-100" : "opacity-0"
                 }`}
                 style={{ transition: "opacity 500ms ease-in-out" }}
-                src={posterRef.current.src}
+                src={`https://image.tmdb.org/t/p/w500${slide.poster_path}`}
                 alt={slide.title || slide.name}
                 loading="eager"
                 width={320}

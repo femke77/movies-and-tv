@@ -50,7 +50,7 @@ const SlideSkeleton = () => {
                   }`}
                 >
                   {/* Skeleton for logo/title */}
-                  <div className='h-12 w-64 bg-gray-700 rounded shimmer-effect mb-6'></div>
+                  <div className='h-36 w-64 bg-gray-700 rounded shimmer-effect mb-6'></div>
 
                   {/* Skeleton for overview text */}
                   <div className='w-full space-y-3 mb-6'>
