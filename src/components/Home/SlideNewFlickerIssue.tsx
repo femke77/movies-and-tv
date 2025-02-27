@@ -39,14 +39,14 @@ const Slide = ({
   movieList: IItem[];
 }) => {
 
-  const [highResBgLoaded, setHighResBgLoaded] = useState(false);
+
   const [posterLoaded, setPosterLoaded] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
 
   // References to avoid race conditions
 
-  const highResBgRef = useRef(new Image());
+
   const posterRef = useRef(new Image());
 
   const criticalElementsLoaded =  contentLoaded;
@@ -77,12 +77,7 @@ const Slide = ({
       }, 100);
 
     
-      // high-res background
-      if (slide.backdrop_path) {
-        highResBgRef.current.onload = () => setHighResBgLoaded(true);
-        highResBgRef.current.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`;
-      }
-
+    
       if (slide.poster_path) {
         posterRef.current.onload = () => setPosterLoaded(true);
         posterRef.current.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}`;
@@ -101,22 +96,20 @@ const Slide = ({
   }, [isVisible, currentIndex, slide, displayLogo]);
 
   return (
-    <div className="swiper-slide bg-black h-full flex items-center py-10 z-0 slide-container">
+    <div className="swiper-slide bg-black h-full flex items-center py-10 z-0 ">
       {/* background image */}
       <div className="relative w-full h-full z-0 overflow-hidden">
-               {/* Low-res background (loads first) */}
-       
-        {/* High-res background (loads second) */}
+ 
+      
         <div
-  className={`absolute inset-0 transition-opacity duration-1500 ${
-    highResBgLoaded ? "opacity-100" : "opacity-0"
-  } ${isVisible ? "visible" : "invisible"}`}
-  style={{
-    backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
-    backgroundSize: "cover",
-    backgroundPosition: width < 768 ? "center" : "top",
-  }}
-/>
+          className={clsx(`absolute inset-0 bg-cover bg-center md:bg-top transition-opacity duration-1500  ${
+            isVisible ? "opacity-100" : "opacity-0"
+          }`)}
+          style={{
+            backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
+    
+          }}
+        />
 
         {/* gradient overlays */}
         <div className="absolute bottom-0 left-0 w-full h-1/8 sm:h-1/2 bg-gradient-to-t from-black to-transparent z-1" />
