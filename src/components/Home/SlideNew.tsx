@@ -201,7 +201,7 @@ const Slide = ({
 
                   {/* Overview text with placeholder */}
                   {contentLoaded ? (
-                    <p className="text-white line-clamp-2 md:line-clamp-3 text-center md:text-left mb-10 h-[72px] ">
+                    <p className="text-white line-clamp-2 md:line-clamp-3 text-center [@media(min-width:950px)]:text-left mb-10 h-[72px] px-0 sm:px-6 [@media(min-width:950px)]:px-0">
                       {slide.overview}
                     </p>
                   ) : (
