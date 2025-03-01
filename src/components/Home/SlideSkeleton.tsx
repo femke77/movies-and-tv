@@ -44,9 +44,9 @@ const LogoPlaceholder = () => (
             </div>
   
             {/* Title + Overview */}
-            <div className="flex flex-col mt-8 mb-6  items-center 
+            <div className="flex flex-col mt-8 mb-6 items-center 
               [@media(min-width:950px)]:items-start">
-              <div className="h-[100px] my-8">
+              <div className="my-8">
                 <LogoPlaceholder />
               </div>
               <TextPlaceholder />

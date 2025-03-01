@@ -4,27 +4,26 @@ import { useItemLogos } from "../../hooks/useTrendingWithLogoFetch";
 import genresData from "../../utils/data/genres.json";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
-import { useState, useRef, lazy, useEffect, Suspense } from "react";
-
+import { useState, useRef, lazy, useEffect } from "react";
 
 const UserRating = lazy(() => import("../UserRating"));
 const WatchButton = lazy(() => import("../WatchButton"));
 
 // Placeholder components
 const LogoPlaceholder = () => (
-  <div className="w-64 h-16 bg-gray-700/30 animate-pulse rounded mb-6"></div>
+  <div className="w-64 h-16 bg-gray-700/30 rounded mb-6"></div>
 );
 
 const TextPlaceholder = () => (
   <div className="w-full space-y-2 mb-6">
-    <div className="h-4 bg-gray-700/30 animate-pulse rounded w-3/4"></div>
-    <div className="h-4 bg-gray-700/30 animate-pulse rounded w-full"></div>
-    <div className="h-4 bg-gray-700/30 animate-pulse rounded w-1/2"></div>
+    <div className="h-4 bg-gray-700/30 rounded w-3/4"></div>
+    <div className="h-4 bg-gray-700/30 rounded w-full"></div>
+    <div className="h-4 bg-gray-700/30 rounded w-1/2"></div>
   </div>
 );
 
 const ButtonPlaceholder = () => (
-  <div className="w-28 h-10 bg-gray-700/30 rounded-full animate-pulse"></div>
+  <div className="w-28 h-10 bg-gray-700/30 rounded-full"></div>
 );
 
 const Slide = ({
@@ -53,7 +52,6 @@ const Slide = ({
   const formattedMovieDate = dayjs(slide.release_date).format("MMM D, YYYY");
   const { genres } = genresData;
 
-  
   const logoFromQuery = useItemLogos(
     slide.id,
     slide.media_type ?? "movie",
@@ -67,8 +65,6 @@ const Slide = ({
     const genre = genres.find((genre) => genre.id === genreId);
     return genre?.name;
   });
-
-  
 
   // Preload images and set loaded state
   useEffect(() => {
@@ -138,7 +134,8 @@ const Slide = ({
             )}
           >
             <div className={`flex justify-start items-start mb-6 pb-6`}>
-              {movieGenres && movieGenres.length >= 1 &&
+              {movieGenres &&
+                movieGenres.length >= 1 &&
                 movieGenres.slice(0, 2).map((genre) => (
                   <span
                     key={`${genre}-${slide.id}`}
@@ -211,25 +208,13 @@ const Slide = ({
               )}
             >
               <div className="mb-2 mr-10">
-                {contentLoaded ? (
-                  <Suspense fallback={<ButtonPlaceholder />}>
-                    <WatchButton />
-                  </Suspense>
-                ) : (
-                  <ButtonPlaceholder />
-                )}
+                {contentLoaded ? <WatchButton /> : <ButtonPlaceholder />}
               </div>
               <div className="mb-2">
                 {contentLoaded ? (
-                  <Suspense
-                    fallback={
-                      <div className="w-12 h-12 bg-gray-700/30 rounded-full animate-pulse"></div>
-                    }
-                  >
-                    <UserRating rating={slide.vote_average ?? 0} />
-                  </Suspense>
+                  <UserRating rating={slide.vote_average ?? 0} />
                 ) : (
-                  <div className="w-12 h-12 bg-gray-700/30 rounded-full animate-pulse"></div>
+                  <div className="w-12 h-12 bg-gray-700/30 rounded-full"></div>
                 )}
               </div>
             </div>
