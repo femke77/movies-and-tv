@@ -57,7 +57,7 @@ const ItemDetail = () => {
     <>
       {item ? (
         <section
-          id="item-detail"
+          id='item-detail'
           className='max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto px-4'
         >
           <div
