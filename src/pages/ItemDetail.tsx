@@ -24,17 +24,17 @@ const ItemDetail = () => {
 
   if (!item) return null;
 
-  const hiResPosterPath = item.poster_path
+  const hiResPosterPath = item?.poster_path
     ? `https://image.tmdb.org/t/p/w780${item.poster_path}`
     : "/no_poster_available.svg";
-  const loResPosterPath = item.poster_path
+  const loResPosterPath = item?.poster_path
     ? `https://image.tmdb.org/t/p/w92${item.poster_path}`
     : "/no_poster_available.svg";
 
   const releaseYearMovie = item?.release_date?.split("-")[0];
   const releaseYearTV = item?.first_air_date?.split("-")[0];
 
-  const strokeColor = getStrokeColor(item.vote_average);
+  const strokeColor = getStrokeColor(item?.vote_average);
   const directorData = item?.crew?.find(
     (member: { job: string }) => member.job === "Director"
   );
@@ -45,8 +45,8 @@ const ItemDetail = () => {
   );
   const writerName = writerData?.name || "Unknown";
   const calculateROI =
-    item.revenue && item.budget
-      ? (((item.revenue - item.budget) / item.budget) * 100).toFixed(1)
+    item?.revenue && item?.budget
+      ? (((item?.revenue - item?.budget) / item?.budget) * 100).toFixed(1)
       : "0";
   const ROI =
     calculateROI === "Infinity" || calculateROI === "-Infinity"
@@ -61,7 +61,7 @@ const ItemDetail = () => {
           className="max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto px-4"
         >
           <div
-            className={`fixed inset-0 bg-cover bg-center blur-[5px] z-0 bg-no-repeat transition-opacity duration-1500 ease-in-out ${
+            className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-opacity duration-1500 ease-in-out ${
               isVisible ? "opacity-40" : "opacity-0"
             }`}
             style={{
@@ -72,15 +72,14 @@ const ItemDetail = () => {
           <div className="relative z-10 w-full flex flex-wrap ">
             {/* Left Section */}
             <div className="relative  md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3">
-              <section className="w-[310px] sm:w-[450px]  md:w-[300px] flex-shrink-0 ">
+              <section className=" flex-shrink-0 ">
                 <div className="relative md:w-[340px] h-auto md:mb-6 mx-auto">
-                  {" "}
-                  {/* Parent container with relative positioning */}
-                  <div className="absolute inset-0 ml-2">
+                  
+                  <div className="absolute inset-0">
                     <img
                       src={loResPosterPath}
                       alt={`official poster for ${item.title || item.name}`}
-                      className={`w-full h-auto rounded-lg transition-opacity duration-100 ease-in-out blur-[10px] ${
+                      className={`md:pr-4 md:pt-2 w-full h-auto rounded-lg transition-opacity duration-100 ease-in-out blur-[10px] ${
                         lowResPosterLoaded && !highResPosterLoaded
                           ? "opacity-100"
                           : "opacity-0"
@@ -135,12 +134,7 @@ const ItemDetail = () => {
                   color={strokeColor}
                 />
                 <div className="pl-6 h-20 sm:pl-8 pt-4">
-                  <WatchButton 
-                  itemType={item.media_type}
-                  id={item.id}
-                  season="1"
-                  episode="1"
-                  />
+                  <WatchButton itemType={type!} id={item.id} />
                 </div>
               </div>
 

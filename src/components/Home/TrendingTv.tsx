@@ -8,7 +8,7 @@ const TrendingTV = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div className='min-h-[350px]'>
+    <div className='mt-20 min-h-[350px]'>
       <h2 className='text-2xl font-bold mb-8 ml-5'>Trending TV Today 🔥</h2>
       <CarouselContainer
         ref={ref}

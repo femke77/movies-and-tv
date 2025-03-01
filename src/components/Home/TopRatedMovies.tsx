@@ -7,7 +7,7 @@ const TopRatedMovies = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div className='mt-24 min-h-[350px]'>
+    <div className=' mt-20  min-h-[350px]'>
       <h2 className='text-2xl font-bold mb-8  ml-5'>Top Rated Movies 🔝</h2>
       <CarouselContainer
         id='top-section'

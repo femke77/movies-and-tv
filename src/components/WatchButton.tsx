@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 const WatchButton = ({
   itemType,
   id,
-  season,
-  episode,
+  season="1",
+  episode="1",
 }: {
   itemType: string;
   id: string;
