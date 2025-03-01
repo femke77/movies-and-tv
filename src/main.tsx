@@ -14,6 +14,7 @@ import MovieTrending from './pages/moviePages/MovieTrending.tsx';
 import TvTrending from './pages/tvPages/TvTrending.tsx';
 import TvTopRated from './pages/tvPages/TvTopRated.tsx';
 import TvPopular from './pages/tvPages/TvPopular.tsx';
+import WatchMovie from './pages/WatchMovie.tsx';
 
 const queryClient = new QueryClient();
 
@@ -72,7 +73,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'movie/:movie_id',
-            element: <h1>Watch Movie</h1>,
+            element: <WatchMovie />,
           },
         ],
       },
