@@ -56,7 +56,10 @@ const ItemDetail = () => {
   return (
     <>
       {item ? (
-        <section id="item-detail" className="max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto px-4">
+        <section
+          id="item-detail"
+          className="max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto px-4"
+        >
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[5px] z-0 bg-no-repeat transition-opacity duration-1500 ease-in-out ${
               isVisible ? "opacity-40" : "opacity-0"
@@ -68,37 +71,45 @@ const ItemDetail = () => {
           {/* content */}
           <div className="relative z-10 w-full flex flex-wrap ">
             {/* Left Section */}
-            <div className="relative  md:w-[320px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3">
-            <section className='w-[310px] sm:w-[450px]  md:w-[320px] flex-shrink-0 '>
-  <div className="relative md:w-[340px] h-auto mb-12 mx-auto"> {/* Parent container with relative positioning */}
-    <div className="absolute inset-0 ml-2">
-      <img
-        src={loResPosterPath}
-        alt={`official poster for ${item.title || item.name}`}
-        className={`w-full h-auto rounded-lg transition-opacity duration-100 ease-in-out blur-[10px] ${lowResPosterLoaded && !highResPosterLoaded ? 'opacity-100' : 'opacity-0'}`}
-        onLoad={() => setLowResPosterLoaded(true)}
-      />
-    </div>
-    <div className="absolute inset-0">
-      <img
-        src={hiResPosterPath}
-        alt={`official poster for ${item.title || item.name}`}
-        className={`w-full h-auto rounded-lg transition-opacity duration-300 ease-in-out ${highResPosterLoaded ? 'opacity-100' : 'opacity-0'}`}
-        onLoad={() => setHighResPosterLoaded(true)}
-      />
-    </div>
-    {/* Invisible spacer to maintain correct height */}
-    <img 
-      src={hiResPosterPath} 
-      alt="" 
-      className="opacity-0 w-full h-auto pointer-events-none" 
-      aria-hidden="true"
-    />
-  </div>
-</section>
+            <div className="relative  md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3">
+              <section className="w-[310px] sm:w-[450px]  md:w-[300px] flex-shrink-0 ">
+                <div className="relative md:w-[340px] h-auto mb-12 mx-auto">
+                  {" "}
+                  {/* Parent container with relative positioning */}
+                  <div className="absolute inset-0 ml-2">
+                    <img
+                      src={loResPosterPath}
+                      alt={`official poster for ${item.title || item.name}`}
+                      className={`w-full h-auto rounded-lg transition-opacity duration-100 ease-in-out blur-[10px] ${
+                        lowResPosterLoaded && !highResPosterLoaded
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }`}
+                      onLoad={() => setLowResPosterLoaded(true)}
+                    />
+                  </div>
+                  <div className="absolute inset-0">
+                    <img
+                      src={hiResPosterPath}
+                      alt={`official poster for ${item.title || item.name}`}
+                      className={`md:pr-4 md:pt-2 w-full h-auto rounded-lg transition-opacity duration-300 ease-in-out ${
+                        highResPosterLoaded ? "opacity-100" : "opacity-0"
+                      }`}
+                      onLoad={() => setHighResPosterLoaded(true)}
+                    />
+                  </div>
+                  {/* Invisible spacer to maintain correct height */}
+                  <img
+                    src={hiResPosterPath}
+                    alt=""
+                    className="opacity-0 w-full h-auto pointer-events-none"
+                    aria-hidden="true"
+                  />
+                </div>
+              </section>
             </div>
             {/* Right Section */}
-            <section className="mr-4 flex-grow md:max-h-[525px] basis-full md:basis-1/2 ml-2 pl-10 pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-700 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 ">
+            <section className="mr-4 flex-grow md:max-h-[525px] basis-full md:basis-2/5 ml-12  pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-700 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 ">
               <h2 className="text-4xl mb-4 font-bold md:pr-16 text-center md:text-left">
                 {item.title || item.name} ({releaseYearMovie || releaseYearTV})
               </h2>
