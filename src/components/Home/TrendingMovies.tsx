@@ -9,7 +9,9 @@ const TrendingMovies = () => {
 
   return (
     <div className='min-h-[350px]'>
-      <h2 className='text-2xl font-bold mb-8 ml-5 '>Trending Movies Today 🔥</h2>
+      <h2 className='text-2xl font-bold mb-8 ml-5 '>
+        Trending Movies Today 🔥
+      </h2>
       <CarouselContainer
         ref={ref}
         items={movies}

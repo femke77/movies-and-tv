@@ -7,7 +7,6 @@ const PopularTv = lazy(() => import('../components/Home/PopularTv'));
 const TrendingTV = lazy(() => import('../components/Home/TrendingTv'));
 const TopRatedTv = lazy(() => import('../components/Home/TopRatedTv'));
 
-
 const Home = () => {
   return (
     <>
@@ -20,7 +19,6 @@ const Home = () => {
         <TrendingTV />
         <TopRatedTv />
         <PopularTv />
-
       </div>
     </>
   );
