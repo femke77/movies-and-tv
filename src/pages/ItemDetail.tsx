@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState} from 'react';
 import Chip from '../components/Chip';
 import { useItemDetail } from '../hooks/useItemDetail';
 import { useParams } from 'react-router-dom';

@@ -48,7 +48,7 @@ const Search = ({
       <input
         ref={inputRef}
         type='text'
-        className='pointer-events-auto w-full h-13 px-4 mx-1 text-xl bg-gray-900 text-white border-2 rounded-md border-gray-700 focus:outline-none focus:rounded-lg focus:ring-1 focus:ring-white'
+        className='pointer-events-auto w-full h-13 px-4 mx-1 text-xl bg-gray-900/50 text-white border-2 rounded-md border-gray-700 focus:outline-none focus:rounded-lg focus:ring-1 focus:ring-white'
         placeholder='Search for movies or tv...'
         onChange={handleNavigate}
         autoFocus
