@@ -53,6 +53,7 @@ const Slide = ({
   const formattedMovieDate = dayjs(slide.release_date).format("MMM D, YYYY");
   const { genres } = genresData;
 
+  
   const logoFromQuery = useItemLogos(
     slide.id,
     slide.media_type ?? "movie",
@@ -62,10 +63,12 @@ const Slide = ({
   );
   const displayLogo = logoFromQuery || null;
 
-  const movieGenres = slide.genre_ids.map((genreId) => {
+  const movieGenres = slide?.genre_ids?.map((genreId) => {
     const genre = genres.find((genre) => genre.id === genreId);
     return genre?.name;
   });
+
+  
 
   // Preload images and set loaded state
   useEffect(() => {
@@ -135,7 +138,7 @@ const Slide = ({
             )}
           >
             <div className={`flex justify-start items-start mb-6 pb-6`}>
-              {movieGenres.length >= 1 &&
+              {movieGenres && movieGenres.length >= 1 &&
                 movieGenres.slice(0, 2).map((genre) => (
                   <span
                     key={`${genre}-${slide.id}`}

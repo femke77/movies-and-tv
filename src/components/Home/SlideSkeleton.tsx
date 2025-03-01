@@ -16,7 +16,7 @@ const LogoPlaceholder = () => (
   
   const SlideSkeleton = () => {
     return (
-      <div className="swiper-slide bg-black h-full flex items-center py-12 slide-container overflow-hidden">
+      <div className="swiper-slide bg-black h-full flex items-center py-12 slide-container mt-20">
         {/* Background gradient */}
         <div className="absolute inset-0 w-full h-full bg-gray-900">
           <div className="absolute bottom-0 left-0 w-full h-1/8 sm:h-1/2 bg-gradient-to-t from-black to-transparent" />
@@ -44,8 +44,9 @@ const LogoPlaceholder = () => (
             </div>
   
             {/* Title + Overview */}
-            <div className="flex flex-col mt-8 mb-6">
-              <div className="h-[250px] my-8">
+            <div className="flex flex-col mt-8 mb-6  items-center 
+              [@media(min-width:950px)]:items-start">
+              <div className="h-[100px] my-8">
                 <LogoPlaceholder />
               </div>
               <TextPlaceholder />
@@ -54,7 +55,7 @@ const LogoPlaceholder = () => (
             {/* Buttons Section */}
             <div
               className="flex flex-row items-center justify-center 
-              [@media(min-width:950px)]:justify-start mt-2 h-[50px]"
+              [@media(min-width:950px)]:justify-start mt-2 h-[150px]"
             >
               <div className="mb-2 mr-10">
                 <ButtonPlaceholder />

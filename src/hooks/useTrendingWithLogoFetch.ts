@@ -65,8 +65,12 @@ export const useTrendingAll = () => {
       const response = await TMDBClient.get(
         '/trending/all/week?language=en-US',
       );
-      const movies = response.data.results;
-      return fetchFirstTwoLogos(movies);
+      // TODO put a max on the number of items from api JIC
+      const items = response.data.results;
+      const filteredItems = items.filter((item: IItem) => {
+        return item.poster_path && item.backdrop_path && item.overview;
+      })
+      return fetchFirstTwoLogos(filteredItems);
     },
     staleTime: 1000 * 60 * 360,
     gcTime: 1000 * 60 * 370,
