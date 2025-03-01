@@ -1,7 +1,7 @@
-import { TMDBClient } from '../utils/axiosConfig';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import type { IItem } from '../interfaces/IItem';
+import { TMDBClient } from "../utils/axiosConfig";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import type { IItem } from "../interfaces/IItem";
 
 // TODO refactor to use trending/all instead of now_playing to include tv
 
@@ -35,7 +35,7 @@ const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
     if (!item) return null;
     try {
       const { data: images } = await TMDBClient.get(
-        `/${item.media_type}/${item.id}/images`,
+        `/${item.media_type}/${item.id}/images`
       );
       return {
         id: item.id,
@@ -49,7 +49,7 @@ const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
 
   const logos = await Promise.all(logoPromises);
   const logoMap = new Map(
-    logos.filter(Boolean).map((item) => [item!.id, item!.logo]),
+    logos.filter(Boolean).map((item) => [item!.id, item!.logo])
   );
 
   return items.map((item) => ({
@@ -60,16 +60,21 @@ const fetchFirstTwoLogos = async (items: IItem[]): Promise<IItem[]> => {
 
 export const useTrendingAll = () => {
   return useQuery<IItem[], Error>({
-    queryKey: ['all_trending_items'],
+    queryKey: ["all_trending_items"],
     queryFn: async () => {
       const response = await TMDBClient.get(
-        '/trending/all/week?language=en-US',
+        "/trending/all/week?language=en-US"
       );
       // TODO put a max on the number of items from api JIC
       const items = response.data.results;
       const filteredItems = items.filter((item: IItem) => {
-        return item.poster_path && item.backdrop_path && item.overview;
-      })
+        return (
+          item.poster_path &&
+          item.backdrop_path &&
+          item.overview &&
+          item.media_type
+        );
+      });
       return fetchFirstTwoLogos(filteredItems);
     },
     staleTime: 1000 * 60 * 360,
@@ -107,15 +112,15 @@ export const useItemLogos = (
   type: string,
   isVisible: boolean,
   currentIndex: number,
-  itemList: IItem[],
+  itemList: IItem[]
 ) => {
   const queryClient = useQueryClient();
 
   const { data: logo } = useQuery({
-    queryKey: ['logo', itemId],
+    queryKey: ["logo", itemId],
     queryFn: async () => {
       const { data: images } = await TMDBClient.get(
-        `/${type}/${itemId}/images?language=en`,
+        `/${type}/${itemId}/images?language=en`
       );
       return images?.logos?.[0].file_path || null;
     },
@@ -132,14 +137,14 @@ export const useItemLogos = (
       if (nextIndex < itemList.length) {
         const nextMovie = itemList[nextIndex];
 
-        const cachedData = queryClient.getQueryData(['logo', nextMovie.id]);
+        const cachedData = queryClient.getQueryData(["logo", nextMovie.id]);
 
         if (!cachedData) {
           queryClient.prefetchQuery({
-            queryKey: ['logo', nextMovie.id],
+            queryKey: ["logo", nextMovie.id],
             queryFn: async () => {
               const { data: images } = await TMDBClient.get(
-                `/${nextMovie.media_type}/${nextMovie.id}/images?language=en`,
+                `/${nextMovie.media_type}/${nextMovie.id}/images?language=en`
               );
               return images?.logos?.[0].file_path || null;
             },

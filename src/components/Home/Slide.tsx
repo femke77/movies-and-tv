@@ -54,7 +54,7 @@ const Slide = ({
 
   const logoFromQuery = useItemLogos(
     slide.id,
-    slide.media_type ?? "movie",
+    slide.media_type!,
     isVisible,
     currentIndex,
     movieList
@@ -74,17 +74,17 @@ const Slide = ({
         setContentLoaded(true);
       }, 100);
 
-      if (slide.backdrop_path && highResBgRef.current) {
+      if (slide.backdrop_path ) {
         highResBgRef.current.onload = () => setHighResBgLoaded(true);
         highResBgRef.current.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`;
       }
 
-      if (slide.poster_path && posterRef.current) {
+      if (slide.poster_path) {
         posterRef.current.onload = () => setPosterLoaded(true);
         posterRef.current.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}`;
       }
 
-      if (displayLogo && logoRef.current) {
+      if (displayLogo ) {
         logoRef.current.onload = () => setLogoLoaded(true);
         logoRef.current.src = `https://image.tmdb.org/t/p/w185${displayLogo}`;
       }

@@ -2,7 +2,7 @@ import { useRef, useState, lazy } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
-import SlideSkeleton from './SlideSkeleton2';
+import SlideSkeleton from './SlideSkeleton';
 import { Suspense } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -44,7 +44,7 @@ export default function SwiperElement() {
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
-        speed={50}
+        speed={20}
       >
         {items &&
           items.map((item, index) => (
