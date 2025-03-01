@@ -8,12 +8,6 @@ import genreData from '../utils/data/genres.json';
 import Chip from './Chip';
 import { useWindowSize } from '../hooks/useWindowSize';
 
-const Placeholder = () => {
-  return (
-    <div className='w-[180px] h-[270px] bg-gray-700/30 rounded mb-6'></div>
-  );
-};
-
 
 const ItemCard = ({
   item,
@@ -69,7 +63,7 @@ const lowResPath = item.poster_path
             {/* Low-res image */}
             <div className="absolute inset-0">
               <img
-                className={`w-full h-full object-cover rounded-b-lg transition-opacity duration-500 ease-in-out blur-[10px]
+                className={`w-full h-full object-cover rounded-b-lg transition-opacity duration-100 ease-in-out blur-[10px]
                   ${lowResLoaded && !highResLoaded ? "opacity-100" : "opacity-0"}`}
                 src={lowResPath}
                 alt=""
@@ -80,7 +74,7 @@ const lowResPath = item.poster_path
             {/* High-res image */}
             <div className="absolute inset-0 bg-black">
               <img
-                className={`w-full bg-black h-full object-cover rounded-b-lg hover:opacity-70 hover:scale-115 hover:bg-opacity-50 transition-all duration-500 ease-in-out
+                className={`w-full bg-black h-full object-cover rounded-b-lg hover:opacity-70 hover:scale-110 hover:bg-opacity-50 transition-all duration-300 ease-in-out
                   ${highResLoaded ? "opacity-100" : "opacity-0"}`}
                 src={posterPath}
                 alt={item.name || item.title}
