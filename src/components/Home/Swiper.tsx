@@ -44,7 +44,7 @@ export default function SwiperElement() {
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
-        speed={30}
+        speed={20}
       >
         {items &&
           items.map((item, index) => (

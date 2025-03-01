@@ -233,7 +233,7 @@ const Slide = ({
               className={`w-78 h-[450px] rounded-lg bg-gray-800/50 absolute ${
                 posterLoaded ? "opacity-0" : "opacity-100"
               }`}
-              style={{ transition: "opacity 500ms ease-in-out" }}
+              style={{ transition: "opacity 100ms ease-in-out" }}
             />
 
             {/* Actual poster with direct onLoad handler */}

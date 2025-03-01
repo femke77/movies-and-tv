@@ -1,13 +1,12 @@
+import { lazy } from 'react';
 import PopularMovies from '../components/Home/PopularMovies';
 import SwiperElement from '../components/Home/Swiper';
 import TopRatedMovies from '../components/Home/TopRatedMovies';
-import TopRatedTv from '../components/Home/TopRatedTv';
 import TrendingMovies from '../components/Home/TrendingMovies';
-import TrendingTV from '../components/Home/TrendingTv';
-import PopularTv from '../components/Home/PopularTv';
+const PopularTv = lazy(() => import('../components/Home/PopularTv'));
+const TrendingTV = lazy(() => import('../components/Home/TrendingTv'));
+const TopRatedTv = lazy(() => import('../components/Home/TopRatedTv'));
 
-
-// TODO skeletons with suspense
 
 const Home = () => {
   return (
