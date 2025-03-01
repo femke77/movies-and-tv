@@ -161,6 +161,8 @@ header {
   );
   animation: shimmer 2s infinite;
 }
+
+
 @media screen and (max-width: 880px) and (max-height: 600px) {
 
   .swiper {
