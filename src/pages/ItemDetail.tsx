@@ -73,7 +73,7 @@ const ItemDetail = () => {
             {/* Left Section */}
             <div className="relative  md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3">
               <section className="w-[310px] sm:w-[450px]  md:w-[300px] flex-shrink-0 ">
-                <div className="relative md:w-[340px] h-auto mb-12 mx-auto">
+                <div className="relative md:w-[340px] h-auto md:mb-6 mx-auto">
                   {" "}
                   {/* Parent container with relative positioning */}
                   <div className="absolute inset-0 ml-2">
@@ -135,7 +135,12 @@ const ItemDetail = () => {
                   color={strokeColor}
                 />
                 <div className="pl-6 h-20 sm:pl-8 pt-4">
-                  <WatchButton />
+                  <WatchButton 
+                  itemType={item.media_type}
+                  id={item.id}
+                  season="1"
+                  episode="1"
+                  />
                 </div>
               </div>
 

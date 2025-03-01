@@ -53,7 +53,7 @@ const Slide = ({
   const { genres } = genresData;
 
   const logoFromQuery = useItemLogos(
-    slide.id,
+    slide.id as number,
     slide.media_type!,
     isVisible,
     currentIndex,
@@ -208,7 +208,11 @@ const Slide = ({
               )}
             >
               <div className="mb-2 mr-10">
-                {contentLoaded ? <WatchButton /> : <ButtonPlaceholder />}
+                {contentLoaded ? 
+                <WatchButton   
+                 itemType={slide.media_type!}
+                  id={slide.id! as string}/>
+           : <ButtonPlaceholder />}
               </div>
               <div className="mb-2">
                 {contentLoaded ? (
