@@ -22,6 +22,8 @@ const ItemCard = ({
   textSize?: string;
 }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [lowResLoaded, setLowResLoaded] = useState(false);
+  const [highResLoaded, setHighResLoaded] = useState(false);
   const formattedReleaseDate = dayjs(item.release_date).format('MMM D, YYYY');
   const formattedAirDate = dayjs(item.first_air_date).format('MMM D, YYYY');
   const { genres } = genreData;
@@ -35,6 +37,13 @@ const ItemCard = ({
     };
   }, []);
 
+  const posterPath = item.poster_path
+    ? `https://image.tmdb.org/t/p/w342${item.poster_path}`
+    : '/no_poster_available.svg';
+
+  const lowResPath = item.poster_path
+    ? `https://image.tmdb.org/t/p/w92${item.poster_path}`
+    : '/no_poster_available.svg';
   const movieGenres = item?.genre_ids?.map((genreId) => {
     const genre = genres.find((genre) => genre.id === genreId);
     return genre?.name;
@@ -49,16 +58,30 @@ const ItemCard = ({
         }`}
       >
         <Link to={`/${itemType}/${item.id}`} className='w-full'>
-          <div className='aspect-[2/3] w-full overflow-hidden rounded-lg bg-black'>
-            <img
-              className='w-full h-full object-cover rounded-b-lg hover:opacity-70 hover:scale-115 hover:bg-opacity-50 transition-all duration-500 ease-in-out '
-              src={
-                item.poster_path
-                  ? `https://image.tmdb.org/t/p/w342/${item.poster_path}`
-                  : '/no_poster_available.svg'
-              }
-            />
+          <div className='relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-200'>
+            {/* Low-res image */}
+            <div className='absolute inset-0'>
+              <img
+                className={`w-full h-full object-cover rounded-b-lg transition-opacity duration-100 ease-in-out blur-[10px]
+                  ${lowResLoaded && !highResLoaded ? 'opacity-100' : 'opacity-0'}`}
+                src={lowResPath}
+                alt=''
+                onLoad={() => setLowResLoaded(true)}
+              />
+            </div>
+
+            {/* High-res image */}
+            <div className='absolute inset-0 bg-black'>
+              <img
+                className={`w-full bg-black h-full object-cover rounded-b-lg hover:opacity-70 hover:scale-110 hover:bg-opacity-50 transition-all duration-300 ease-in-out
+                  ${highResLoaded ? 'opacity-100' : 'opacity-0'}`}
+                src={posterPath}
+                alt={item.name || item.title}
+                onLoad={() => setHighResLoaded(true)}
+              />
+            </div>
           </div>
+
           <div className='flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black'>
             <div className='relative -top-13 left-3 w-full'>
               <div className='flex min-h-11 items-end justify-between'>
@@ -75,7 +98,6 @@ const ItemCard = ({
                   <div className='flex justify-end flex-wrap gap-1 relative -top-8 right-3.5 sm:right-2 w-full'>
                     {width > 400 ? (
                       <>
-                        {' '}
                         {movieGenres
                           ?.slice(0, 2)
                           .map((genre) => (

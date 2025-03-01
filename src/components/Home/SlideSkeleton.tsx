@@ -1,191 +1,100 @@
 import clsx from 'clsx';
-import { useWindowSize } from '../../hooks/useWindowSize';
+
+// Placeholder components
+const LogoPlaceholder = () => (
+  <div className=' bg-gray-700/30 rounded mb-6 h-32 w-68 animate-pulse'></div>
+);
+
+const TextPlaceholder = () => (
+  <div className='w-full space-y-2 mb-6'>
+    <div className='h-4 bg-gray-700/30 rounded w-full animate-pulse'></div>
+    <div className='h-4 bg-gray-700/30 rounded w-full animate-pulse'></div>
+    <div className='h-4 bg-gray-700/30 rounded w-3/4 animate-pulse'></div>
+  </div>
+);
+
+const ButtonPlaceholder = () => (
+  <div className='w-28 h-10 bg-gray-700/30 rounded-full animate-pulse'></div>
+);
 
 const SlideSkeleton = () => {
-  const { width } = useWindowSize();
-
   return (
-    <>
-      <div className='h-full bg-black flex items-center py-10 z-0'>
-        {/* Skeleton background with gradient */}
-        <div className='relative w-full h-full bg-gray-900 z-0'>
-          {/* gradient overlays */}
-          <div className='absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent z-0' />
-          <div className='absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent z-0' />
+    <div className='swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden '>
+      <div className='absolute inset-0 w-full h-full bg-gray-900'>
+        <div className='absolute bottom-0 left-0 w-full h-1/8 sm:h-1/2 bg-gradient-to-t from-black to-transparent' />
+        <div className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 to-transparent' />
+      </div>
+      {/* card content */}
+      <div className='max-w-[1800px] mx-auto relative h-full'>
+        {/* left, top - genre, release date, title logo */}
+        <div
+          className='absolute w-full h-full justify-center mt-5 flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10
+          [@media(min-width:950px)]:justify-center
+          [@media(min-width:950px)]:w-1/2
+          [@media(min-width:950px)]:top-1/2
+          [@media(min-width:950px)]:transform
+          [@media(min-width:950px)]:-translate-y-1/2'
+        >
+          {/* Genre and date section*/}
+          <div
+            className={clsx(
+              `flex flex-col h-[30px] items-center [@media(min-width:950px)]:items-start `,
+            )}
+          >
+            <div className={`flex justify-start items-start mb-6 pb-6`}>
+              <div className='h-4 w-16 bg-gray-700/30  rounded mr-4'></div>
+              <div className='h-4 w-16 bg-gray-700/30 rounded mr-4 animate-pulse'></div>
+              <div className='h-4 w-2 bg-gray-700/30 rounded-full mr-4 animate-pulse'></div>
+              <div className='h-4 w-24 bg-gray-700/30 rounded animate-pulse'></div>
+            </div>
+          </div>
 
-          {/* card content */}
-          <div className='max-w-[1800px] mx-auto relative h-full z-0'>
-            {/* left content area */}
+          {/* Content container */}
+          <div className='flex flex-col mt-6 mb-6'>
+            {/* Title/logo section */}
+
             <div
-              className={clsx(`absolute flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10 z-10
-                ${
-                  width < 950
-                    ? 'w-full h-full justify-center'
-                    : 'w-1/2 top-1/2 transform -translate-y-1/2'
-                }`)}
+              className={`flex flex-col items-center [@media(min-width:950px)]:items-start`}
             >
-              {/* Genre and date section */}
-              <div
-                className={clsx(
-                  `flex flex-col ${
-                    width < 950 ? 'items-center' : 'items-start'
-                  }`,
-                )}
-              >
-                <div className='flex justify-start items-center mb-6'>
-                  {/* Skeleton for genres */}
-                  <div className='h-4 w-16 bg-gray-700 rounded shimmer-effect mr-4'></div>
-                  <div className='h-4 w-16 bg-gray-700 rounded shimmer-effect mr-4'></div>
-                  <div className='h-4 w-2 bg-gray-700 rounded-full shimmer-effect mr-4'></div>
-                  <div className='h-4 w-24 bg-gray-700 rounded shimmer-effect'></div>
-                </div>
+              {/* Logo with placeholder */}
+              <div className='h-[250] my-6 mt-6 mb-10'>
+                <LogoPlaceholder />
               </div>
 
-              {/* Content container */}
-              <div className='flex flex-col'>
-                {/* Title/logo skeleton */}
-                <div
-                  className={`flex flex-col ${
-                    width < 950 ? 'items-center' : 'items-start'
-                  }`}
-                >
-                  {/* Skeleton for logo/title */}
-                  <div className='h-12 w-64 bg-gray-700 rounded shimmer-effect mb-6'></div>
+              {/* Overview text with placeholder */}
 
-                  {/* Skeleton for overview text */}
-                  <div className='w-full space-y-3 mb-6'>
-                    <div className='h-4 bg-gray-700 rounded shimmer-effect'></div>
-                    <div className='h-4 bg-gray-700 rounded shimmer-effect'></div>
-                    <div className='h-4 bg-gray-700 rounded w-3/4 shimmer-effect'></div>
-                  </div>
-                </div>
-
-                {/* Buttons section skeleton */}
-                <div
-                  className={clsx(
-                    `flex flex-row items-center ${
-                      width < 950 ? 'justify-center' : 'justify-start'
-                    } mt-2`,
-                  )}
-                >
-                  <div className='mb-2 mr-10'>
-                    {/* Watch button skeleton */}
-                    <div className='h-10 w-32 bg-gray-700 rounded-full shimmer-effect'></div>
-                  </div>
-                  <div className='mb-2'>
-                    {/* Rating skeleton */}
-                    <div className='h-8 w-16 bg-gray-700 rounded-full shimmer-effect'></div>
-                  </div>
-                </div>
-              </div>
+              <TextPlaceholder />
             </div>
 
-            {/* right side - poster image skeleton */}
-            {width >= 950 && (
-              <div className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-20 lg:mr-40 z-10'>
-                {/* Poster skeleton */}
-                <div className='w-64 h-96 bg-gray-700 rounded-lg shimmer-effect'></div>
+            {/* Buttons section */}
+            <div
+              className={clsx(
+                `flex flex-row items-center justify-center [@media(min-width:950px)]:justify-start  mt-2 h-[50px]`,
+              )}
+            >
+              <div className='mb-2 mr-10'>
+                <ButtonPlaceholder />
               </div>
-            )}
+              <div className='mb-2'>
+                <div className='w-12 h-12 bg-gray-700/30 rounded-full animate-pulse'></div>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Poster image with placeholder  */}
+
+        <div className='hidden [@media(min-width:950px)]:block [@media(min-width:950px)]:absolute [@media(min-width:950px)]:right-0 [@media(min-width:950px)]:top-1/2 [@media(min-width:950px)]:transform [@media(min-width:950px)]:-translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 [@media(min-width:950px)]:h-[450px] [@media(min-width:950px)]:w-[320px] z-10'>
+          {/* Poster placeholder */}
+          <div
+            className={`w-78 h-[450px] rounded-lg bg-gray-800/50 absolute `}
+          />
+
+          {/* Actual poster with direct onLoad handler */}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
 export default SlideSkeleton;
-
-// old no shimmer effect
-
-// import clsx from "clsx";
-// import { useWindowSize } from "../../hooks/useWindowSize";
-
-// const SlideSkeleton = () => {
-//   const { width } = useWindowSize();
-
-//   return (
-//     <div className="h-full bg-black flex items-center py-10 z-0">
-//       {/* Skeleton background with gradient */}
-//       <div className="relative w-full h-full bg-gray-900 z-0">
-//         {/* gradient overlays */}
-//         <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent z-0" />
-//         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent z-0" />
-
-//         {/* card content */}
-//         <div className="max-w-[1800px] mx-auto relative h-full z-0">
-//           {/* left content area */}
-//           <div
-//             className={clsx(`absolute flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10 z-10
-//               ${
-//                 width < 950
-//                   ? "w-full h-full justify-center"
-//                   : "w-1/2 top-1/2 transform -translate-y-1/2"
-//               }`)}
-//           >
-//             {/* Genre and date section */}
-//             <div
-//               className={clsx(`flex flex-col ${
-//                 width < 950 ? "items-center" : "items-start"
-//               }`)}
-//             >
-//               <div className="flex justify-start items-center mb-6">
-//                 {/* Skeleton for genres */}
-//                 <div className="h-4 w-16 bg-gray-700 rounded animate-pulse mr-4"></div>
-//                 <div className="h-4 w-16 bg-gray-700 rounded animate-pulse mr-4"></div>
-//                 <div className="h-4 w-2 bg-gray-700 rounded-full animate-pulse mr-4"></div>
-//                 <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"></div>
-//               </div>
-//             </div>
-
-//             {/* Content container */}
-//             <div className="flex flex-col">
-//               {/* Title/logo skeleton */}
-//               <div
-//                 className={`flex flex-col ${
-//                   width < 950 ? "items-center" : "items-start"
-//                 }`}
-//               >
-//                 {/* Skeleton for logo/title */}
-//                 <div className="h-12 w-64 bg-gray-700 rounded animate-pulse mb-6"></div>
-
-//                 {/* Skeleton for overview text */}
-//                 <div className="w-full space-y-3 mb-6">
-//                   <div className="h-4 bg-gray-700 rounded animate-pulse"></div>
-//                   <div className="h-4 bg-gray-700 rounded animate-pulse"></div>
-//                   <div className="h-4 bg-gray-700 rounded animate-pulse w-3/4"></div>
-//                 </div>
-//               </div>
-
-//               {/* Buttons section skeleton */}
-//               <div
-//                 className={clsx(`flex flex-row items-center ${
-//                   width < 950 ? "justify-center" : "justify-start"
-//                 } mt-2`)}
-//               >
-//                 <div className="mb-2 mr-10">
-//                   {/* Watch button skeleton */}
-//                   <div className="h-10 w-32 bg-gray-700 rounded-full animate-pulse"></div>
-//                 </div>
-//                 <div className="mb-2">
-//                   {/* Rating skeleton */}
-//                   <div className="h-8 w-16 bg-gray-700 rounded-full animate-pulse"></div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* right side - poster image skeleton */}
-//           {width >= 950 && (
-//             <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-16 md:mr-20 lg:mr-40 z-10">
-//               {/* Poster skeleton */}
-//               <div className="w-64 h-96 bg-gray-700 rounded-lg animate-pulse"></div>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default SlideSkeleton;

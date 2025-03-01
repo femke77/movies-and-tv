@@ -120,6 +120,7 @@ const GenreSelector = ({
               min-w-[150px]
               hover:border-blue-700
               hover:translate-[2px]
+              active:translate-[3px]
               ${
                 selectedGenres.includes(String(genre.id))
                   ? 'bg-blue-800 border-blue-900'

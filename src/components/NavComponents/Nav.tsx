@@ -92,7 +92,7 @@ export default function Navigation({
                       className='flex flex-shrink-0 items-center'
                     ></NavLink>
                     <div className='hidden md:flex flex-1 items-center py-6 pl-2'>
-                      <div className='flex space-x-4 items-center pr-4'>
+                      <div className='flex space-x-4 items-center pr-4 '>
                         <NavMovies />
                         <NavTVShow />
                         {/* <NavDiscover /> */}

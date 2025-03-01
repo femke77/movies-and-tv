@@ -26,7 +26,7 @@ const SlideContainer = forwardRef<
       {/* Left Arrow */}
       <button
         onClick={scrollLeft}
-        className='absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 hover:bg-black transition'
+        className='absolute left-0 top-37 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 hover:bg-black transition'
       >
         <ChevronLeftIcon className='w-8 h-8 pr-[4px]' />
       </button>
@@ -53,7 +53,7 @@ const SlideContainer = forwardRef<
       {/* Right Arrow */}
       <button
         onClick={scrollRight}
-        className='absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 hover:bg-black transition'
+        className='absolute right-0 top-37 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 hover:bg-black transition'
       >
         <ChevronRightIcon className='w-8 h-8 pl-[3px]' />
       </button>

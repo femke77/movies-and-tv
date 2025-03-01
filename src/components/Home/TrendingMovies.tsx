@@ -8,8 +8,10 @@ const TrendingMovies = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div>
-      <h2 className='text-2xl font-bold mb-8 ml-5'>Trending Movies Today 🔥</h2>
+    <div className='min-h-[350px]'>
+      <h2 className='text-2xl font-bold mb-8 ml-5 '>
+        Trending Movies Today 🔥
+      </h2>
       <CarouselContainer
         ref={ref}
         items={movies}
