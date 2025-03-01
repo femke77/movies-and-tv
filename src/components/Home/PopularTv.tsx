@@ -8,7 +8,7 @@ const PopularTv = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div>
+    <div className='min-h-[350px]'>
       <h2 className='text-2xl font-bold mb-8 ml-5'>Popular TV 📈</h2>
       <CarouselContainer
         ref={ref}
