@@ -41,7 +41,7 @@ const SlideSkeleton = () => {
             )}
           >
             <div className={`flex justify-start items-start mb-6 pb-6`}>
-              <div className="h-4 w-16 bg-gray-700/30  rounded mr-4"></div>
+              <div className="h-4 w-16 bg-gray-700/30  rounded mr-4 animate-pulse"></div>
               <div className="h-4 w-16 bg-gray-700/30 rounded mr-4 animate-pulse"></div>
               <div className="h-4 w-2 bg-gray-700/30 rounded-full mr-4 animate-pulse"></div>
               <div className="h-4 w-24 bg-gray-700/30 rounded animate-pulse"></div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import Chip from '../components/Chip';
 import { useItemDetail } from '../hooks/useItemDetail';
 import { useParams } from 'react-router-dom';
@@ -58,7 +58,7 @@ const ItemDetail = () => {
       {item ? (
         <section
           id='item-detail'
-          className='max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto px-4'
+          className='max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto sm:px-4 mr-2 md:mr-0'
         >
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-opacity duration-1500 ease-in-out ${
@@ -69,11 +69,11 @@ const ItemDetail = () => {
             }}
           ></div>
           {/* content */}
-          <div className='relative z-10 w-full flex flex-wrap '>
+          <div className='relative z-10 w-full flex flex-wrap mx-auto'>
             {/* Left Section */}
             <div className='relative  md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3'>
-              <section className=' flex-shrink-0 '>
-                <div className='relative md:w-[340px] h-auto md:mb-6 mx-auto'>
+              <section className='w-[280px] sm:w-[450px]  md:w-[300px] flex-shrink-0 '>
+                <div className='relative md:w-[340px] h-auto md:mb-12 mx-auto'>
                   <div className='absolute inset-0'>
                     <img
                       src={loResPosterPath}

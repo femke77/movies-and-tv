@@ -2,7 +2,7 @@ import { useRef, useState, lazy } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
-import SlideSkeleton from './SlideSkeleton';
+import SlideSkeleton from '../LoadingSkels/SlideSkeleton';
 import { Suspense } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
