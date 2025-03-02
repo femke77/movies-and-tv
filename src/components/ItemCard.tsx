@@ -77,7 +77,7 @@ const ItemCard = ({
   });
 
   const PosterPlaceHolder = () => (
-    <div className="w-full h-full bg-gray-700 absolute inset-0 z-[1] animate-pulse" />
+    <div className="w-full h-full bg-gray-900 absolute inset-0 z-[1] shimmer-effect" />
   );
 
   return (
@@ -90,7 +90,9 @@ const ItemCard = ({
       >
         <Link to={`/${itemType}/${item.id}`} className='w-full'>
           <div className='relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-900'>
-            {/* Skeleton loader while images are loading */}
+
+          {item.poster_path ? (
+            <> {/* Skeleton loader while images are loading */}
             {(!lowResLoaded || !highResLoaded) && (
               <PosterPlaceHolder
               
@@ -120,6 +122,9 @@ const ItemCard = ({
                 onLoad={() => setHighResLoaded(true)}
               />
             </div>
+            </>
+          ) : (<div><img src="/no_poster_available.svg"/></div>)}
+           
           </div>
 
           <div className='flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black'>
