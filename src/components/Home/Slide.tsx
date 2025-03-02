@@ -11,19 +11,19 @@ const WatchButton = lazy(() => import('../WatchButton'));
 
 // Placeholder components
 const LogoPlaceholder = () => (
-  <div className='w-64 h-16 bg-gray-700/30 rounded mb-6'></div>
+  <div className='w-64 h-[120px] bg-gray-700/30 rounded my-4 animate-pulse'></div>
 );
 
 const TextPlaceholder = () => (
   <div className='w-full space-y-2 mb-6'>
-    <div className='h-4 bg-gray-700/30 rounded w-3/4'></div>
-    <div className='h-4 bg-gray-700/30 rounded w-full'></div>
-    <div className='h-4 bg-gray-700/30 rounded w-1/2'></div>
+    <div className='h-4 bg-gray-700/30 rounded w-3/4 animate-pulse'></div>
+    <div className='h-4 bg-gray-700/30 rounded w-full animate-pulse'></div>
+    <div className='h-4 bg-gray-700/30 rounded w-1/2 animate-pulse'></div>
   </div>
 );
 
 const ButtonPlaceholder = () => (
-  <div className='w-28 h-10 bg-gray-700/30 rounded-full'></div>
+  <div className='w-28 h-10 bg-gray-700/30 rounded-full animate-pulse'></div>
 );
 
 const Slide = ({
@@ -75,18 +75,21 @@ const Slide = ({
       }, 100);
 
       if (slide.backdrop_path) {
-        highResBgRef.current.onload = () => setHighResBgLoaded(true);
         highResBgRef.current.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`;
+        highResBgRef.current.onload = () => setHighResBgLoaded(true);
       }
 
       if (slide.poster_path) {
-        posterRef.current.onload = () => setPosterLoaded(true);
         posterRef.current.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}`;
+        posterRef.current.onload = () => setPosterLoaded(true);
       }
 
+  
       if (displayLogo) {
-        logoRef.current.onload = () => setLogoLoaded(true);
-        logoRef.current.src = `https://image.tmdb.org/t/p/w185${displayLogo}`;
+        const img = new Image();
+        img.onload = () => setLogoLoaded(true);
+        img.src = `https://image.tmdb.org/t/p/w154${displayLogo}`;
+        logoRef.current = img;
       }
 
       return () => {
@@ -169,20 +172,25 @@ const Slide = ({
                 className={`flex flex-col items-center [@media(min-width:950px)]:items-start`}
               >
                 {/* Logo with placeholder */}
-                <div className='h-[250] my-6 mt-6 mb-10'>
+                <div className='h-[150px] my-6 mt-6 mb-10'>
                   {displayLogo ? (
-                    logoLoaded ? (
+                    <div className="h-[120px] flex items-center my-4">
+                      {!logoLoaded && <LogoPlaceholder />}
                       <img
-                        className='h-auto max-h-[250px] w-68'
-                        src={`https://image.tmdb.org/t/p/w185${displayLogo}`}
+                        className={`h-auto max-h-[250px]  transition-opacity duration-700 ease-in ${
+                          logoLoaded ? 'opacity-100' : 'opacity-0'
+                        }`}
+                        src={`https://image.tmdb.org/t/p/w154${displayLogo}`}
                         alt={slide.title || slide.name}
-                        loading='eager'
-                        height={150}
+                        style={{ 
+                          position: logoLoaded ? 'relative' : 'absolute',
+                          visibility: logoLoaded ? 'visible' : 'hidden'
+                        }}
+                        onLoad={() => setLogoLoaded(true)}
                         width={250}
+                        height={120}
                       />
-                    ) : (
-                      <LogoPlaceholder />
-                    )
+                    </div>
                   ) : (
                     <h2 className='text-4xl font-bold text-white'>
                       {slide.title || slide.name}
@@ -236,7 +244,7 @@ const Slide = ({
               className={`w-78 h-[450px] rounded-lg bg-gray-800/50 absolute ${
                 posterLoaded ? 'opacity-0' : 'opacity-100'
               }`}
-              style={{ transition: 'opacity 100ms ease-in-out' }}
+              style={{ transition: 'opacity 300ms ease-in-out' }}
             />
 
             {/* Actual poster with direct onLoad handler */}
