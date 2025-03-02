@@ -3,10 +3,22 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import UserRating from './UserRating';
 import { getStrokeColor } from '../utils/helpers';
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo} from 'react';
 import genreData from '../utils/data/genres.json';
 import Chip from './Chip';
 import { useWindowSize } from '../hooks/useWindowSize';
+
+
+// const ItemCardSkeleton = () => {
+//   return (
+//     <div className="relative inset-0 bg-black/80 z-[1] w-full h-full overflow-hidden rounded-xl">
+//       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-700 to-transparent animate-pulse"></div>
+//       <div className="w-full h-full absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900"></div>
+     
+//     </div>
+//   );
+// };
+
 
 const ItemCard = ({
   item,
@@ -36,19 +48,37 @@ const ItemCard = ({
       setIsVisible(false);
     };
   }, []);
+  
+  useEffect(() => {
+    if (item.poster_path) {
+      const lowResImage = new Image();
+      const hiResImage = new Image();
 
-  const posterPath = item.poster_path
-    ? `https://image.tmdb.org/t/p/w342${item.poster_path}`
-    : '/no_poster_available.svg';
+      lowResImage.src = `https://image.tmdb.org/t/p/w92${item.poster_path}`;
+      lowResImage.onload = () => {
+        setLowResLoaded(true);
+      };
 
-  const lowResPath = item.poster_path
-    ? `https://image.tmdb.org/t/p/w92${item.poster_path}`
-    : '/no_poster_available.svg';
-    
+      hiResImage.src = `https://image.tmdb.org/t/p/w342${item.poster_path}`;
+      hiResImage.onload = () => {
+        setHighResLoaded(true);
+      };
+    }
+
+    return () => {
+      setLowResLoaded(false);
+      setHighResLoaded(false);
+    };
+  }, [item]);
+
   const movieGenres = item?.genre_ids?.map((genreId) => {
     const genre = genres.find((genre) => genre.id === genreId);
     return genre?.name;
   });
+
+  const PosterPlaceHolder = () => (
+    <div className="w-full h-full bg-gray-700 absolute inset-0 z-[1] animate-pulse" />
+  );
 
   return (
     <>
@@ -59,24 +89,33 @@ const ItemCard = ({
         }`}
       >
         <Link to={`/${itemType}/${item.id}`} className='w-full'>
-          <div className='relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-200'>
+          <div className='relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-900'>
+            {/* Skeleton loader while images are loading */}
+            {(!lowResLoaded || !highResLoaded) && (
+              <PosterPlaceHolder
+              
+              />
+            )}
+
             {/* Low-res image */}
-            <div className='absolute inset-0'>
+            <div className="absolute inset-0 z-[2]">
               <img
-                className={`w-full h-full object-cover rounded-b-lg transition-opacity duration-100 ease-in-out blur-[10px]
-                  ${lowResLoaded && !highResLoaded ? 'opacity-100' : 'opacity-0'}`}
-                src={lowResPath}
-                alt=''
+                className={`w-full h-full object-cover rounded-b-lg transition-opacity duration-400 ease-in-out ${
+                  lowResLoaded ? 'opacity-100 blur-0' : 'opacity-0 blur-[10px]'
+                }`}
+                src={`https://image.tmdb.org/t/p/w92${item.poster_path}`}
+                alt=""
                 onLoad={() => setLowResLoaded(true)}
               />
             </div>
 
             {/* High-res image */}
-            <div className='absolute inset-0 bg-black'>
+            <div className="absolute inset-0 z-[3]">
               <img
-                className={`w-full bg-black h-full object-cover rounded-b-lg hover:opacity-70 hover:scale-110 hover:bg-opacity-50 transition-all duration-300 ease-in-out
-                  ${highResLoaded ? 'opacity-100' : 'opacity-0'}`}
-                src={posterPath}
+                className={`w-full h-full object-cover rounded-b-lg transition-all duration-300 ease-in-out ${
+                  highResLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
                 alt={item.name || item.title}
                 onLoad={() => setHighResLoaded(true)}
               />
@@ -87,16 +126,18 @@ const ItemCard = ({
             <div className='relative -top-13 left-3 w-full'>
               <div className='flex min-h-11 items-end justify-between'>
                 {showRating && (
-                  <UserRating
-                    rating={item.vote_average ?? 0}
-                    color={strokeColor}
-                    width='w-12'
-                    height='h-12'
-                  />
+                  <div className="z-10 relative">
+                    <UserRating
+                      rating={item.vote_average ?? 0}
+                      color={strokeColor}
+                      width='w-12'
+                      height='h-12'
+                    />
+                  </div>
                 )}
                 {/* Genres*/}
                 {showGenres && movieGenres?.length >= 1 && (
-                  <div className='flex justify-end flex-wrap gap-1 relative -top-8 right-3.5 sm:right-2 w-full'>
+                  <div className='flex justify-end flex-wrap gap-1 relative -top-8 right-3.5 sm:right-2 w-full z-10'>
                     {width > 400 ? (
                       <>
                         {movieGenres
@@ -140,7 +181,7 @@ const ItemCard = ({
   );
 };
 
-// memoized wrapper for places where the same item is rendered multiple times such as infinite scrolling
+
 const MemoizedItemCard = memo(
   ({
     movie,

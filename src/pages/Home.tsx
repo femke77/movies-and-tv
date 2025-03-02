@@ -1,6 +1,7 @@
 import { lazy } from "react";
 
 import SwiperElement from "../components/Home/Swiper";
+import ItemCardSkeleton from "../components/LoadingSkels/ItemCardSkeleton";
 const PopularMovies = lazy(() => import("../components/Home/PopularMovies"));
 const TrendingMovies = lazy(() => import("../components/Home/TrendingMovies"));
 const TopRatedMovies = lazy(() => import("../components/Home/TopRatedMovies"));
@@ -20,6 +21,8 @@ const Home = () => {
         <TrendingTV />
         <TopRatedTv />
         <PopularTv />
+        <ItemCardSkeleton />
+       
       </div>
     </>
   );
