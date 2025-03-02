@@ -21,7 +21,9 @@ const TrendingContainer = ({
         <h2 className='text-[1.75rem] font-semibold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text'>
           {heading}
         </h2>
-        <TrendingToggle onTimeChange={setTimePeriod} />
+        <div className='pr-10'>
+          <TrendingToggle onTimeChange={setTimePeriod} />
+        </div>
       </div>
 
       {data && (

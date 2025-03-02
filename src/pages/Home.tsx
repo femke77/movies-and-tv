@@ -1,8 +1,10 @@
 import { lazy } from 'react';
-import PopularMovies from '../components/Home/PopularMovies';
+
 import SwiperElement from '../components/Home/Swiper';
-import TopRatedMovies from '../components/Home/TopRatedMovies';
-import TrendingMovies from '../components/Home/TrendingMovies';
+
+const PopularMovies = lazy(() => import('../components/Home/PopularMovies'));
+const TrendingMovies = lazy(() => import('../components/Home/TrendingMovies'));
+const TopRatedMovies = lazy(() => import('../components/Home/TopRatedMovies'));
 const PopularTv = lazy(() => import('../components/Home/PopularTv'));
 const TrendingTV = lazy(() => import('../components/Home/TrendingTv'));
 const TopRatedTv = lazy(() => import('../components/Home/TopRatedTv'));

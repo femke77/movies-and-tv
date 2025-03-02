@@ -1,21 +1,24 @@
 import CarouselContainer from '../CarouselContainer';
 import { useTopRatedTv } from '../../hooks/useTopRated';
-import { useRef } from 'react';
+import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
+import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
 
 const TopRatedTv = () => {
-  const { data: shows = [] } = useTopRatedTv();
-
-  const ref = useRef<HTMLDivElement | null>(null);
+  const { data: shows = [], isLoading, isFetching } = useTopRatedTv();
+  const shouldFetch = useIntersectionObserver('top-tv-section');
 
   return (
-    <div className=' mt-20  min-h-[350px]'>
+    <div className=' mt-20  min-h-[350px]' id='top-tv-section'>
       <h2 className='text-2xl font-bold mb-8 ml-5'>Top Rated TV 🔝</h2>
-      <CarouselContainer
-        ref={ref}
-        items={shows}
-        itemType='tv'
-        id='top-tv-section'
-      />
+      {!shouldFetch || isLoading || isFetching ? (
+        <div className='flex gap-3 overflow-hidden'>
+          {Array.from({ length: 6 }).map((_, i) => (
+            <ItemCardSkeleton key={i} />
+          ))}
+        </div>
+      ) : (
+        <CarouselContainer items={shows} itemType='tv' />
+      )}
     </div>
   );
 };

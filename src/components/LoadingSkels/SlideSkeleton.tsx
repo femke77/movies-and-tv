@@ -26,7 +26,6 @@ const SlideSkeleton = () => {
       </div>
       {/* card content */}
       <div className='max-w-[1800px] mx-auto relative h-full'>
-        {/* left, top - genre, release date, title logo */}
         <div
           className='absolute w-full h-full justify-center mt-5 flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10
           [@media(min-width:950px)]:justify-center
@@ -42,7 +41,7 @@ const SlideSkeleton = () => {
             )}
           >
             <div className={`flex justify-start items-start mb-6 pb-6`}>
-              <div className='h-4 w-16 bg-gray-700/30  rounded mr-4'></div>
+              <div className='h-4 w-16 bg-gray-700/30  rounded mr-4 animate-pulse'></div>
               <div className='h-4 w-16 bg-gray-700/30 rounded mr-4 animate-pulse'></div>
               <div className='h-4 w-2 bg-gray-700/30 rounded-full mr-4 animate-pulse'></div>
               <div className='h-4 w-24 bg-gray-700/30 rounded animate-pulse'></div>
@@ -56,12 +55,12 @@ const SlideSkeleton = () => {
             <div
               className={`flex flex-col items-center [@media(min-width:950px)]:items-start`}
             >
-              {/* Logo with placeholder */}
+              {/* Logo  */}
               <div className='h-[250] my-6 mt-6 mb-10'>
                 <LogoPlaceholder />
               </div>
 
-              {/* Overview text with placeholder */}
+              {/* Overview text */}
 
               <TextPlaceholder />
             </div>
@@ -82,15 +81,11 @@ const SlideSkeleton = () => {
           </div>
         </div>
 
-        {/* Poster image with placeholder  */}
-
         <div className='hidden [@media(min-width:950px)]:block [@media(min-width:950px)]:absolute [@media(min-width:950px)]:right-0 [@media(min-width:950px)]:top-1/2 [@media(min-width:950px)]:transform [@media(min-width:950px)]:-translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 [@media(min-width:950px)]:h-[450px] [@media(min-width:950px)]:w-[320px] z-10'>
-          {/* Poster placeholder */}
+          {/* Poster */}
           <div
-            className={`w-78 h-[450px] rounded-lg bg-gray-800/50 absolute `}
+            className={`w-78 h-[450px] rounded-lg bg-gray-800/50 absolute animate-pulse`}
           />
-
-          {/* Actual poster with direct onLoad handler */}
         </div>
       </div>
     </div>

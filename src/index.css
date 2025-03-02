@@ -132,6 +132,7 @@ header {
 }
 
 
+
 @keyframes shimmer {
   100% {
     transform: translateX(100%);
@@ -158,8 +159,10 @@ header {
     rgba(255, 255, 255, 0.2) 60%,
     rgba(255, 255, 255, 0)
   );
-  animation: shimmer 2s infinite;
+  animation: shimmer 3s infinite;
 }
+
+
 @media screen and (max-width: 880px) and (max-height: 600px) {
 
   .swiper {

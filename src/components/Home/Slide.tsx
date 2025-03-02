@@ -9,10 +9,12 @@ import { useState, useRef, lazy, useEffect } from 'react';
 const UserRating = lazy(() => import('../UserRating'));
 const WatchButton = lazy(() => import('../WatchButton'));
 
+// TODO control showing of all left side components in order top to bottom with slight translateY when page loads
+
 // Placeholder components
-const LogoPlaceholder = () => (
-  <div className='w-64 h-16 bg-gray-700/30 rounded mb-6'></div>
-);
+// const LogoPlaceholder = () => (
+//   <div className="w-64 h-[120px] bg-gray-700/30 rounded my-4"></div>
+// );
 
 const TextPlaceholder = () => (
   <div className='w-full space-y-2 mb-6'>
@@ -41,6 +43,7 @@ const Slide = ({
   const [posterLoaded, setPosterLoaded] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
+  const [showLogo, setShowLogo] = useState(false);
 
   // References to avoid race conditions
   const posterRef = useRef(new Image());
@@ -84,9 +87,14 @@ const Slide = ({
         posterRef.current.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}`;
       }
 
+      // Preload logo
       if (displayLogo) {
-        logoRef.current.onload = () => setLogoLoaded(true);
-        logoRef.current.src = `https://image.tmdb.org/t/p/w185${displayLogo}`;
+        const img = new Image();
+        img.src = `https://image.tmdb.org/t/p/w154${displayLogo}`;
+        logoRef.current = img;
+        img.onload = () => {
+          setLogoLoaded(true);
+        };
       }
 
       return () => {
@@ -94,6 +102,17 @@ const Slide = ({
       };
     }
   }, [isVisible, currentIndex, slide, displayLogo]);
+
+  // Delay showing the logo until other content is loaded
+  useEffect(() => {
+    if (criticalElementsLoaded && logoLoaded && isVisible) {
+      const logoTimer = setTimeout(() => {
+        setShowLogo(true);
+      }, 500);
+
+      return () => clearTimeout(logoTimer);
+    }
+  }, [criticalElementsLoaded, logoLoaded, isVisible]);
 
   return (
     <div className='swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden '>
@@ -121,16 +140,16 @@ const Slide = ({
         {/* left, top - genre, release date, title logo */}
         <div
           className='absolute w-full h-full justify-center mt-5 flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10
-          [@media(min-width:950px)]:justify-center
-          [@media(min-width:950px)]:w-1/2
-          [@media(min-width:950px)]:top-1/2
-          [@media(min-width:950px)]:transform
-          [@media(min-width:950px)]:-translate-y-1/2'
+          [@media(min-width:1050px)]:justify-center
+          [@media(min-width:1050px)]:w-1/2
+          [@media(min-width:1050px)]:top-1/2
+          [@media(min-width:1050px)]:transform
+          [@media(min-width:1050px)]:-translate-y-1/2'
         >
           {/* Genre and date section*/}
           <div
             className={clsx(
-              `flex flex-col h-[30px] items-center [@media(min-width:950px)]:items-start `,
+              `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start `,
             )}
           >
             <div className={`flex justify-start items-start mb-6 pb-6`}>
@@ -166,23 +185,35 @@ const Slide = ({
             {/* Title/logo section */}
             <Link to={`/${slide.media_type}/${slide.id}`} className='block'>
               <div
-                className={`flex flex-col items-center [@media(min-width:950px)]:items-start`}
+                className={`flex flex-col items-center [@media(min-width:1050px)]:items-start`}
               >
-                {/* Logo with placeholder */}
-                <div className='h-[250] my-6 mt-6 mb-10'>
+                {/* Logo with placeholder - shows placeholder until logo is ready to appear */}
+                <div className='h-[150px] my-6 mt-6 mb-10 flex items-center justify-center [@media(min-width:1050px)]:justify-start'>
                   {displayLogo ? (
-                    logoLoaded ? (
+                    <>
+                      {/* {!showLogo && <LogoPlaceholder />} */}
                       <img
-                        className='h-auto max-h-[250px] w-68'
+                        className='h-auto max-h-[250px] transform'
                         src={`https://image.tmdb.org/t/p/w185${displayLogo}`}
                         alt={slide.title || slide.name}
-                        loading='eager'
-                        height={150}
+                        style={{
+                          opacity: showLogo && isVisible ? 1 : 0,
+                          transition:
+                            'opacity 800ms ease-in-out, transform 500ms ease-out',
+                          position:
+                            showLogo && isVisible ? 'relative' : 'absolute',
+                          visibility:
+                            logoLoaded && isVisible ? 'visible' : 'hidden',
+                          transform:
+                            showLogo && isVisible
+                              ? 'translateY(0)'
+                              : 'translateY(8px)',
+                        }}
                         width={250}
+                        height={120}
+                        onLoad={() => setLogoLoaded(true)}
                       />
-                    ) : (
-                      <LogoPlaceholder />
-                    )
+                    </>
                   ) : (
                     <h2 className='text-4xl font-bold text-white'>
                       {slide.title || slide.name}
@@ -192,7 +223,7 @@ const Slide = ({
 
                 {/* Overview text with placeholder */}
                 {contentLoaded ? (
-                  <p className='text-white line-clamp-2 md:line-clamp-3 text-center [@media(min-width:950px)]:text-left mb-10 h-[72px] px-0 sm:px-6 [@media(min-width:950px)]:px-0'>
+                  <p className='text-white line-clamp-2 md:line-clamp-3 text-center [@media(min-width:1050px)]:text-left mb-10 h-[72px] px-0 sm:px-6 [@media(min-width:1050px)]:px-0'>
                     {slide.overview}
                   </p>
                 ) : (
@@ -204,7 +235,7 @@ const Slide = ({
             {/* Buttons section */}
             <div
               className={clsx(
-                `flex flex-row items-center justify-center [@media(min-width:950px)]:justify-start  mt-2 h-[50px]`,
+                `flex flex-row items-center justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
               )}
             >
               <div className='mb-2 mr-10'>
@@ -230,13 +261,13 @@ const Slide = ({
 
         {/* Poster image with placeholder  */}
         {slide.poster_path && (
-          <div className='hidden [@media(min-width:950px)]:block [@media(min-width:950px)]:absolute [@media(min-width:950px)]:right-0 [@media(min-width:950px)]:top-1/2 [@media(min-width:950px)]:transform [@media(min-width:950px)]:-translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 [@media(min-width:950px)]:h-[450px] [@media(min-width:950px)]:w-[320px] z-10'>
+          <div className='hidden [@media(min-width:1050px)]:block [@media(min-width:1050px)]:absolute [@media(min-width:1050px)]:right-0 [@media(min-width:1050px)]:top-1/2 [@media(min-width:1050px)]:transform [@media(min-width:1050px)]:-translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 [@media(min-width:1050px)]:h-[450px] [@media(min-width:1050px)]:w-[320px] z-10'>
             {/* Poster placeholder */}
             <div
               className={`w-78 h-[450px] rounded-lg bg-gray-800/50 absolute ${
                 posterLoaded ? 'opacity-0' : 'opacity-100'
               }`}
-              style={{ transition: 'opacity 100ms ease-in-out' }}
+              style={{ transition: 'opacity 300ms ease-in-out' }}
             />
 
             {/* Actual poster with direct onLoad handler */}

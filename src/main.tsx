@@ -1,11 +1,11 @@
-import { StrictMode } from 'react';
+import { StrictMode, Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ItemDetail from './pages/ItemDetail.tsx';
+// import ItemDetail from './pages/ItemDetail.tsx';
 import ScrollToTop from './components/ScrollToTop.tsx';
 import Results from './pages/SearchPage.tsx';
 import MovieTopRated from './pages/moviePages/MovieTopRated.tsx';
@@ -15,6 +15,8 @@ import TvTrending from './pages/tvPages/TvTrending.tsx';
 import TvTopRated from './pages/tvPages/TvTopRated.tsx';
 import TvPopular from './pages/tvPages/TvPopular.tsx';
 import WatchMovie from './pages/WatchMovie.tsx';
+import ItemDetailSkeleton from './components/LoadingSkels/ItemDetailSkeleton.tsx';
+const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
 
 const queryClient = new QueryClient();
 
@@ -35,7 +37,9 @@ const router = createBrowserRouter([
         path: ':type/:id',
         element: (
           <ScrollToTop>
-            <ItemDetail />
+            <Suspense fallback={<ItemDetailSkeleton />}>
+              <ItemDetail />
+            </Suspense>
           </ScrollToTop>
         ),
       },
