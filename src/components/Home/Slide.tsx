@@ -11,19 +11,19 @@ const WatchButton = lazy(() => import('../WatchButton'));
 
 // Placeholder components
 const LogoPlaceholder = () => (
-  <div className='w-64 h-[120px] bg-gray-700/30 rounded my-4 animate-pulse'></div>
+  <div className='w-64 h-[120px] bg-gray-700/30 rounded my-4'></div>
 );
 
 const TextPlaceholder = () => (
   <div className='w-full space-y-2 mb-6'>
-    <div className='h-4 bg-gray-700/30 rounded w-3/4 animate-pulse'></div>
-    <div className='h-4 bg-gray-700/30 rounded w-full animate-pulse'></div>
-    <div className='h-4 bg-gray-700/30 rounded w-1/2 animate-pulse'></div>
+    <div className='h-4 bg-gray-700/30 rounded w-3/4'></div>
+    <div className='h-4 bg-gray-700/30 rounded w-full'></div>
+    <div className='h-4 bg-gray-700/30 rounded w-1/2'></div>
   </div>
 );
 
 const ButtonPlaceholder = () => (
-  <div className='w-28 h-10 bg-gray-700/30 rounded-full animate-pulse'></div>
+  <div className='w-28 h-10 bg-gray-700/30 rounded-full'></div>
 );
 
 const Slide = ({
@@ -41,6 +41,7 @@ const Slide = ({
   const [posterLoaded, setPosterLoaded] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
+  const [showLogo, setShowLogo] = useState(false);
 
   // References to avoid race conditions
   const posterRef = useRef(new Image());
@@ -75,21 +76,23 @@ const Slide = ({
       }, 100);
 
       if (slide.backdrop_path) {
-        highResBgRef.current.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`;
         highResBgRef.current.onload = () => setHighResBgLoaded(true);
+        highResBgRef.current.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`;
       }
 
       if (slide.poster_path) {
-        posterRef.current.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}`;
         posterRef.current.onload = () => setPosterLoaded(true);
+        posterRef.current.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}`;
       }
 
-  
+      // Preload logo
       if (displayLogo) {
         const img = new Image();
-        img.onload = () => setLogoLoaded(true);
         img.src = `https://image.tmdb.org/t/p/w154${displayLogo}`;
         logoRef.current = img;
+        img.onload = () => {
+          setLogoLoaded(true);
+        };
       }
 
       return () => {
@@ -97,6 +100,19 @@ const Slide = ({
       };
     }
   }, [isVisible, currentIndex, slide, displayLogo]);
+
+  // Delay showing the logo until other content is loaded
+  useEffect(() => {
+
+    if (criticalElementsLoaded && logoLoaded && isVisible) {
+ 
+      const logoTimer = setTimeout(() => {
+        setShowLogo(true);
+      }, 500); 
+      
+      return () => clearTimeout(logoTimer);
+    }
+  }, [criticalElementsLoaded, logoLoaded, isVisible]);
 
   return (
     <div className='swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden '>
@@ -171,26 +187,26 @@ const Slide = ({
               <div
                 className={`flex flex-col items-center [@media(min-width:950px)]:items-start`}
               >
-                {/* Logo with placeholder */}
-                <div className='h-[150px] my-6 mt-6 mb-10'>
+                {/* Logo with placeholder - shows placeholder until logo is ready to appear */}
+                <div className='h-[150px] my-6 mt-6 mb-10 flex items-center justify-center [@media(min-width:950px)]:justify-start'>
                   {displayLogo ? (
-                    <div className="h-[120px] flex items-center my-4">
-                      {!logoLoaded && <LogoPlaceholder />}
+                    <>
+                      {/* {!showLogo && <LogoPlaceholder />} */}
                       <img
-                        className={`h-auto max-h-[250px]  transition-opacity duration-700 ease-in ${
-                          logoLoaded ? 'opacity-100' : 'opacity-0'
-                        }`}
+                        className='h-auto max-h-[250px] '
                         src={`https://image.tmdb.org/t/p/w154${displayLogo}`}
                         alt={slide.title || slide.name}
-                        style={{ 
-                          position: logoLoaded ? 'relative' : 'absolute',
-                          visibility: logoLoaded ? 'visible' : 'hidden'
+                        style={{
+                          opacity: showLogo && isVisible? 1 : 0,
+                          transition: 'opacity 1000ms ease-in-out',
+                          position: showLogo && isVisible ? 'relative' : 'absolute',
+                          visibility: logoLoaded && isVisible ? 'visible' : 'hidden'
                         }}
-                        onLoad={() => setLogoLoaded(true)}
                         width={250}
                         height={120}
+                        onLoad={() => setLogoLoaded(true)}
                       />
-                    </div>
+                    </>
                   ) : (
                     <h2 className='text-4xl font-bold text-white'>
                       {slide.title || slide.name}
@@ -212,7 +228,7 @@ const Slide = ({
             {/* Buttons section */}
             <div
               className={clsx(
-                `flex flex-row items-center justify-center [@media(min-width:950px)]:justify-start  mt-2 h-[50px]`,
+                `flex flex-row items-center justify-center [@media(min-width:950px)]:justify-start mt-2 h-[50px]`,
               )}
             >
               <div className='mb-2 mr-10'>
