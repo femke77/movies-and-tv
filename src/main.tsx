@@ -38,7 +38,7 @@ const router = createBrowserRouter([
         element: (
           <ScrollToTop>
             <Suspense fallback={<ItemDetailSkeleton />}>
-            <ItemDetail />
+              <ItemDetail />
             </Suspense>
           </ScrollToTop>
         ),

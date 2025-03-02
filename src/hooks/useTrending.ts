@@ -12,7 +12,7 @@ const createTrendingFetcher = (type: 'movie' | 'tv') => async () => {
 };
 
 export const useTrendingMovies = () => {
-  const shouldFetch = useIntersectionObserver('trending-section'); 
+  const shouldFetch = useIntersectionObserver('trending-section');
   return useQuery<IItem[], Error>(
     useQueryConfig(
       'trending-movies',

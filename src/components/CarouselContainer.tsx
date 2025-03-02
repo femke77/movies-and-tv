@@ -1,10 +1,15 @@
-import { useRef} from 'react';
+import { useRef } from 'react';
 import { ItemCard } from './ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../interfaces/IItem';
 
-
-const SlideContainer = ({ items, itemType}: {items: IItem[], itemType: string}) => {
+const SlideContainer = ({
+  items,
+  itemType,
+}: {
+  items: IItem[];
+  itemType: string;
+}) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -20,7 +25,7 @@ const SlideContainer = ({ items, itemType}: {items: IItem[], itemType: string}) 
   };
 
   return (
-    <div  className='pl-6 relative w-full'>
+    <div className='pl-6 relative w-full'>
       {/* Left Arrow */}
       <button
         onClick={scrollLeft}
@@ -57,6 +62,6 @@ const SlideContainer = ({ items, itemType}: {items: IItem[], itemType: string}) 
       </button>
     </div>
   );
-}
+};
 
 export default SlideContainer;

@@ -3,22 +3,20 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import UserRating from './UserRating';
 import { getStrokeColor } from '../utils/helpers';
-import { useEffect, useState, memo} from 'react';
+import { useEffect, useState, memo } from 'react';
 import genreData from '../utils/data/genres.json';
 import Chip from './Chip';
 import { useWindowSize } from '../hooks/useWindowSize';
-
 
 // const ItemCardSkeleton = () => {
 //   return (
 //     <div className="relative inset-0 bg-black/80 z-[1] w-full h-full overflow-hidden rounded-xl">
 //       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-700 to-transparent animate-pulse"></div>
 //       <div className="w-full h-full absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900"></div>
-     
+
 //     </div>
 //   );
 // };
-
 
 const ItemCard = ({
   item,
@@ -48,7 +46,7 @@ const ItemCard = ({
       setIsVisible(false);
     };
   }, []);
-  
+
   useEffect(() => {
     if (item.poster_path) {
       const lowResImage = new Image();
@@ -77,7 +75,7 @@ const ItemCard = ({
   });
 
   const PosterPlaceHolder = () => (
-    <div className="w-full h-full bg-gray-900 absolute inset-0 z-[1] shimmer-effect" />
+    <div className='w-full h-full bg-gray-900 absolute inset-0 z-[1] shimmer-effect' />
   );
 
   return (
@@ -90,48 +88,48 @@ const ItemCard = ({
       >
         <Link to={`/${itemType}/${item.id}`} className='w-full'>
           <div className='relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-900'>
-
-          {item.poster_path ? (
-            <> {/* Skeleton loader while images are loading */}
-            {(!lowResLoaded || !highResLoaded) && (
-              <PosterPlaceHolder
-              
-              />
+            {item.poster_path ? (
+              <>
+                {' '}
+                {/* Skeleton loader while images are loading */}
+                {(!lowResLoaded || !highResLoaded) && <PosterPlaceHolder />}
+                {/* Low-res image */}
+                <div className='absolute inset-0 z-[2]'>
+                  <img
+                    className={`w-full h-full object-cover rounded-b-lg transition-opacity duration-400 ease-in-out ${
+                      lowResLoaded
+                        ? 'opacity-100 blur-0'
+                        : 'opacity-0 blur-[10px]'
+                    }`}
+                    src={`https://image.tmdb.org/t/p/w92${item.poster_path}`}
+                    alt=''
+                    onLoad={() => setLowResLoaded(true)}
+                  />
+                </div>
+                {/* High-res image */}
+                <div className='absolute inset-0 z-[3]'>
+                  <img
+                    className={`w-full h-full object-cover rounded-b-lg transition-all duration-300 ease-in-out ${
+                      highResLoaded ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
+                    alt={item.name || item.title}
+                    onLoad={() => setHighResLoaded(true)}
+                  />
+                </div>
+              </>
+            ) : (
+              <div>
+                <img src='/no_poster_available.svg' />
+              </div>
             )}
-
-            {/* Low-res image */}
-            <div className="absolute inset-0 z-[2]">
-              <img
-                className={`w-full h-full object-cover rounded-b-lg transition-opacity duration-400 ease-in-out ${
-                  lowResLoaded ? 'opacity-100 blur-0' : 'opacity-0 blur-[10px]'
-                }`}
-                src={`https://image.tmdb.org/t/p/w92${item.poster_path}`}
-                alt=""
-                onLoad={() => setLowResLoaded(true)}
-              />
-            </div>
-
-            {/* High-res image */}
-            <div className="absolute inset-0 z-[3]">
-              <img
-                className={`w-full h-full object-cover rounded-b-lg transition-all duration-300 ease-in-out ${
-                  highResLoaded ? 'opacity-100' : 'opacity-0'
-                }`}
-                src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
-                alt={item.name || item.title}
-                onLoad={() => setHighResLoaded(true)}
-              />
-            </div>
-            </>
-          ) : (<div><img src="/no_poster_available.svg"/></div>)}
-           
           </div>
 
           <div className='flex flex-col flex-grow items-start justify-start w-full pt-4 bg-black'>
             <div className='relative -top-13 left-3 w-full'>
               <div className='flex min-h-11 items-end justify-between'>
                 {showRating && (
-                  <div className="z-10 relative">
+                  <div className='z-10 relative'>
                     <UserRating
                       rating={item.vote_average ?? 0}
                       color={strokeColor}
@@ -185,7 +183,6 @@ const ItemCard = ({
     </>
   );
 };
-
 
 const MemoizedItemCard = memo(
   ({
