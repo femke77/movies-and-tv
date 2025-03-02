@@ -44,6 +44,7 @@ const ItemCard = ({
   const lowResPath = item.poster_path
     ? `https://image.tmdb.org/t/p/w92${item.poster_path}`
     : '/no_poster_available.svg';
+    
   const movieGenres = item?.genre_ids?.map((genreId) => {
     const genre = genres.find((genre) => genre.id === genreId);
     return genre?.name;

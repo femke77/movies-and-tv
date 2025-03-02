@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { IItem } from '../interfaces/IItem';
 
+
 export const useIntersectionObserver = (targetId: string) => {
   const [shouldFetch, setShouldFetch] = useState(false);
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -12,17 +14,20 @@ export const useIntersectionObserver = (targetId: string) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.0, rootMargin: '50px 0px' },
+      { threshold: 0.0, rootMargin: '100px 0px' },
     );
 
     const target = document.getElementById(targetId);
     if (target) {
+  
+      
       observer.observe(target);
     }
 
     return () => observer.disconnect();
   }, [targetId]);
 
+  
   return shouldFetch;
 };
 

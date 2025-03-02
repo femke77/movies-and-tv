@@ -15,6 +15,7 @@ const createPopularFetcher = (type: 'movie' | 'tv') => async () => {
 
 export const usePopularMovies = () => {
   const shouldFetch = useIntersectionObserver('pop-section');
+  console.log(shouldFetch, 'popular');
   return useQuery<IItem[], Error>(
     useQueryConfig(
       'popular-movies',
