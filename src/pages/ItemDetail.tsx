@@ -12,8 +12,8 @@ const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [lowResPosterLoaded, setLowResPosterLoaded] = useState(false);
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
-  const { type, id } = useParams<{ type: string; id: string }>();
-  const { data: item } = useItemDetail(type!, id!);
+  const { item_type, id } = useParams<{ item_type: string; id: string }>();
+  const { data: item } = useItemDetail(item_type!, id!);
 
   useEffect(() => {
     setIsVisible(true);
@@ -133,7 +133,7 @@ const ItemDetail = () => {
                   color={strokeColor}
                 />
                 <div className='pl-6 h-20 sm:pl-8 pt-4'>
-                  <WatchButton itemType={type!} id={item.id} />
+                  <WatchButton itemType={item_type!} id={item.id} />
                 </div>
               </div>
 
@@ -145,7 +145,7 @@ const ItemDetail = () => {
                 {item.overview}
               </p>
 
-              <div className='flex flex-wrap md:flex-nowrap space-x-10 mb-4'>
+              <div className='flex flex-wrap justify-center md:justify-start space-x-5 md:space-x-10 mb-4'>
                 <p className='text-xl font-bold'>
                   Status:{' '}
                   <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
@@ -173,7 +173,7 @@ const ItemDetail = () => {
                 </p>
               </div>
 
-              <div className='flex flex-wrap md:flex-nowrap md:justify-center space-x-10 mb-4'>
+              <div className='flex flex-wrap justify-center md:justify-start space-x-5 md:space-x-10 mb-4'>
                 {item.budget > 0 && (
                   <p className='text-xl font-bold'>
                     Budget:{' '}
@@ -205,46 +205,56 @@ const ItemDetail = () => {
                   </p>
                 )}
               </div>
-              {item.type === 'movie' ? (
-                <div className='flex md:flex-col flex-wrap  space-x-10 mb-4'>
-                  <p className='text-xl font-bold mb-4'>
-                    Director:{' '}
-                    <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
-                      {directorName}
-                    </span>
-                  </p>
-                  <p className='text-xl mb-8 font-bold'>
-                    Writer:{' '}
-                    <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
-                      {writerName}
-                    </span>
-                  </p>
-                </div>
-              ) : (
-                <>
-                  {item.created_by?.length > 0 && (
-                    <div className='flex flex-wrap md:flex-nowrap space-x-10 mb-4'>
-                      <p className='text-xl font-bold'>
-                        {item.created_by.length > 1 ? 'Creators:' : 'Creator:'}{' '}
-                        {item.created_by.map(
-                          (
-                            creator: { id: string; name: string },
-                            index: number,
-                          ) => (
-                            <span
-                              key={creator.id}
-                              className='text-lg text-gray-100/50 my-3 font-bold ml-1'
-                            >
-                              {creator.name}
-                              {index < item.created_by.length - 1 ? ', ' : ''}
-                            </span>
-                          ),
-                        )}
-                      </p>
-                    </div>
-                  )}
-                </>
-              )}
+              <div className='flex md:flex-col flex-wrap justify-center md:justify-start space-x-5 md:space-x-10 mb-4'>
+                {item_type === 'movie' ? (
+                  <>
+                    <p className='text-xl font-bold mb-4'>
+                      Director:{' '}
+                      <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
+                        {directorName}
+                      </span>
+                    </p>
+                    <p className='text-xl mb-8 font-bold'>
+                      Writer:{' '}
+                      <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
+                        {writerName}
+                      </span>
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    {item.created_by?.length > 0 && (
+                      <>
+                        <p className='text-xl font-bold'>
+                          {item.created_by.length > 1
+                            ? 'Creators:'
+                            : 'Creator:'}{' '}
+                          {item.created_by.map(
+                            (
+                              creator: { id: string; name: string },
+                              index: number,
+                            ) => (
+                              <span
+                                key={creator.id}
+                                className='text-lg text-gray-100/50 my-3 font-bold ml-1'
+                              >
+                                {creator.name}
+                                {index < item.created_by.length - 1 ? ', ' : ''}
+                              </span>
+                            ),
+                          )}
+                        </p>
+                        <p className='text-xl  font-bold'>
+                          Series Type:{' '}
+                          <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
+                            {item.type}
+                          </span>
+                        </p>
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
             </section>
 
             {/* Cast Section */}

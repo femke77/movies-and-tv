@@ -23,7 +23,16 @@ const WatchTV = lazy(() => import('./pages/WatchTV.tsx'));
 const ItemDetailSkeleton = lazy(
   () => import('./components/LoadingSkels/ItemDetailSkeleton.tsx'),
 );
-const queryClient = new QueryClient();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 2,
+      retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -39,7 +48,7 @@ const router = createBrowserRouter([
         element: <Results />,
       },
       {
-        path: ':type/:id',
+        path: ':item_type/:id',
         element: (
           <ScrollToTop>
             <Suspense fallback={<ItemDetailSkeleton />}>
