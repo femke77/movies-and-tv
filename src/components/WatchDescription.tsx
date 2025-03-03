@@ -1,9 +1,11 @@
 // title, description, runtime, date
 // access this page from two places, itemdetail and slide
-const WatchDescription = () => {
+const WatchDescription = ({title}: {
+    title: string
+}) => {
   return (
     <div>
-      <h1></h1>
+      <h1>{title}</h1>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         width='24'
