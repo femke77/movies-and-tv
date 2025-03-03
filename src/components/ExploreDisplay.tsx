@@ -41,9 +41,10 @@ const Explore = memo(
               <MemoizedItemCard
                 itemType={itemType}
                 key={`movie-${movie.id}`}
-                movie={movie}
+                item={movie}
                 showGenres={true}
                 showRating={true}
+       
               />
             ))
           ) : (

@@ -12,7 +12,7 @@ const TrendingTV = () => {
       <h2 className='text-2xl font-bold mb-8 ml-5'>Trending TV Today 🔥</h2>
       {!shouldFetch || isLoading || isFetching ? (
         <div className='flex gap-3 overflow-hidden'>
-          {Array.from({ length: 6 }).map((_, i) => (
+          {Array.from({ length: 8 }).map((_, i) => (
             <ItemCardSkeleton key={i} />
           ))}
         </div>

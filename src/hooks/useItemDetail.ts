@@ -5,6 +5,10 @@ const fetchItemDetail = async (type: string, id: string) => {
   const { data } = await TMDBClient.get(`/${type}/${id}`);
   return data;
 };
+// const fetchSeasonDetail = async (type: string, id: string) => {
+//   const { data } = await TMDBClient.get(`/${type}/${id}`);
+//   return data;
+// };
 
 const fetchTVContentRating = async (tv_id: string) => {
   const { data } = await TMDBClient.get(

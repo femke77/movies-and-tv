@@ -159,9 +159,12 @@ header {
     rgba(255, 255, 255, 0.2) 60%,
     rgba(255, 255, 255, 0)
   );
-  animation: shimmer 3s infinite;
+  animation: shimmer 5s infinite;
 }
 
+.fontSize{
+  font-size: 1rem !important;
+}
 
 @media screen and (max-width: 880px) and (max-height: 600px) {
 
