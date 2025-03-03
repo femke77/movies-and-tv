@@ -7,6 +7,7 @@ const Watch = () => {
     <div className='mt-24 flex flex-wrap '>
       <div className='relative pb-[56.25%] h-[0] basis-full lg:basis-1/2'>
         <iframe
+          sandbox='allow-scripts allow-same-origin allow-forms allow-presentation'
           className='absolute top-0 left-0 w-full h-full basis-full lg:basis-1/2'
           width='100%'
           height='100%'

@@ -27,13 +27,17 @@ const Results = memo(() => {
   }, [query, data]);
 
   if (isLoading) return null;
-  const allMovies = data?.pages.flatMap((page) => page.results) ?? [];
+  const allItems = data?.pages.flatMap((page) => page.results) ?? [];
   return (
     <div className='ml-2 mt-8'>
       <div className='flex flex-wrap flex-1 gap-4 items-start'>
-        {allMovies.length > 0 ? (
-          allMovies.map((movie: IItem) => (
-            <MemoizedItemCard key={`movie-${movie.id}`} movie={movie} />
+        {allItems.length > 0 ? (
+          allItems.map((item: IItem) => (
+            <MemoizedItemCard
+              key={`${item.media_type}-${item.id}`}
+              item={item}
+              textSize='md'
+            />
           ))
         ) : (
           <p className='text-lg text-gray-400'>No results found.</p>
@@ -67,12 +71,9 @@ const SearchContainer = memo(() => {
 
   return (
     <div className='mt-36 mx-4'>
-      <h2 className='text-3xl font-bold mt-10 mb-8 relative'>
-        <span>{headingText}</span>
-        <div className='inline'>
-          <Results />
-        </div>
-      </h2>
+      <h1 className='text-3xl font-bold mt-10 mb-8 relative'>{headingText}</h1>
+
+      <Results />
     </div>
   );
 });

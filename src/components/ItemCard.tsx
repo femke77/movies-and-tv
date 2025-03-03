@@ -8,22 +8,12 @@ import genreData from '../utils/data/genres.json';
 import Chip from './Chip';
 import { useWindowSize } from '../hooks/useWindowSize';
 
-// const ItemCardSkeleton = () => {
-//   return (
-//     <div className="relative inset-0 bg-black/80 z-[1] w-full h-full overflow-hidden rounded-xl">
-//       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-700 to-transparent animate-pulse"></div>
-//       <div className="w-full h-full absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900"></div>
-
-//     </div>
-//   );
-// };
-
 const ItemCard = ({
   item,
   itemType,
   showRating,
   showGenres,
-  textSize,
+  textSize = 'md',
 }: {
   item: IItem;
   itemType: string;
@@ -78,6 +68,24 @@ const ItemCard = ({
     <div className='w-full h-full bg-gray-900 absolute inset-0 z-[1] shimmer-effect' />
   );
 
+  // Function to determine the correct text size class
+  const getTitleSizeClass = () => {
+    switch (textSize) {
+      case 'xs':
+        return 'text-xs';
+      case 'sm':
+        return 'text-sm ';
+      case 'lg':
+        return 'text-lg ';
+      case 'xl':
+        return 'text-xl ';
+      case '2xl':
+        return 'text-2xl';
+      default:
+        return 'text-md ';
+    }
+  };
+
   return (
     <>
       <div
@@ -91,7 +99,7 @@ const ItemCard = ({
             {item.poster_path ? (
               <>
                 {' '}
-                {/* Skeleton loader while images are loading */}
+                {/* Placeholder */}
                 {(!lowResLoaded || !highResLoaded) && <PosterPlaceHolder />}
                 {/* Low-res image */}
                 <div className='absolute inset-0 z-[2]'>
@@ -120,7 +128,10 @@ const ItemCard = ({
               </>
             ) : (
               <div>
-                <img src='/no_poster_available.svg' />
+                <img
+                  src='/no_poster_available.svg'
+                  alt={'no poster available'}
+                />
               </div>
             )}
           </div>
@@ -149,7 +160,7 @@ const ItemCard = ({
                             <Chip
                               label={genre!}
                               key={genre}
-                              bg='bg-black/60'
+                              bg='bg-black/70'
                               fontSize={`text-xs sm:text-sm md:text-md `}
                             />
                           ))}
@@ -160,7 +171,7 @@ const ItemCard = ({
               </div>
 
               <h2
-                className={`w-full truncate text-${textSize}/6 -ml-2 mt-1`}
+                className={`w-full truncate ${getTitleSizeClass()} leading-6  -ml-2 mt-1`}
                 title={item.name || item.title} // Tooltip for full text on hover
               >
                 {item.name || item.title}
@@ -186,23 +197,25 @@ const ItemCard = ({
 
 const MemoizedItemCard = memo(
   ({
-    movie,
+    item,
     itemType,
     showRating = false,
     showGenres = false,
+    textSize,
   }: {
-    movie: IItem;
+    item: IItem;
     itemType?: string;
     showRating?: boolean;
     showGenres?: boolean;
+    textSize?: string;
   }) => (
     <div className='w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]'>
       <ItemCard
-        textSize='xl'
-        item={movie}
+        textSize={textSize}
+        item={item}
         showRating={showRating}
         showGenres={showGenres}
-        itemType={movie.media_type || itemType || ''}
+        itemType={item.media_type || itemType || ''}
       />
     </div>
   ),

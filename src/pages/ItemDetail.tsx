@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Chip from '../components/Chip';
-import { useItemDetail } from '../hooks/useItemDetail';
+import { useItemDetail } from '../hooks/useItemOrWatchDetail';
 import { useParams } from 'react-router-dom';
 import UserRating from '../components/UserRating';
 import WatchButton from '../components/WatchButton';
@@ -58,7 +58,7 @@ const ItemDetail = () => {
       {item ? (
         <section
           id='item-detail'
-          className='max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto sm:px-4 mr-2 md:mr-0'
+          className='max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto xs:px-2 sm:px-4 lg:px-8 xl:px-12 mr-2 md:mr-0'
         >
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-opacity duration-1500 ease-in-out ${
@@ -205,29 +205,55 @@ const ItemDetail = () => {
                   </p>
                 )}
               </div>
-              <div className='flex md:flex-col flex-wrap  space-x-10 mb-4'>
-                <p className='text-xl font-bold mb-4'>
-                  Director:{' '}
-                  <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
-                    {directorName}
-                  </span>
-                </p>
-                <p className='text-xl mb-8 font-bold'>
-                  Writer:{' '}
-                  <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
-                    {writerName}
-                  </span>
-                </p>
-              </div>
+              {item.type === 'movie' ? (
+                <div className='flex md:flex-col flex-wrap  space-x-10 mb-4'>
+                  <p className='text-xl font-bold mb-4'>
+                    Director:{' '}
+                    <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
+                      {directorName}
+                    </span>
+                  </p>
+                  <p className='text-xl mb-8 font-bold'>
+                    Writer:{' '}
+                    <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
+                      {writerName}
+                    </span>
+                  </p>
+                </div>
+              ) : (
+                <>
+                  {item.created_by?.length > 0 && (
+                    <div className='flex flex-wrap md:flex-nowrap space-x-10 mb-4'>
+                      <p className='text-xl font-bold'>
+                        {item.created_by.length > 1 ? 'Creators:' : 'Creator:'}{' '}
+                        {item.created_by.map(
+                          (
+                            creator: { id: string; name: string },
+                            index: number,
+                          ) => (
+                            <span
+                              key={creator.id}
+                              className='text-lg text-gray-100/50 my-3 font-bold ml-1'
+                            >
+                              {creator.name}
+                              {index < item.created_by.length - 1 ? ', ' : ''}
+                            </span>
+                          ),
+                        )}
+                      </p>
+                    </div>
+                  )}
+                </>
+              )}
             </section>
 
             {/* Cast Section */}
             {item.cast?.length > 0 && (
-              <section className='w-full mt-30'>
+              <section className='w-full mt-24 '>
                 <h3 className='text-2xl/14 text-white/70  text-center'>
                   Top Cast
                 </h3>
-                <div className='flex flex-wrap gap-4'>
+                <div>
                   <CastList cast={item.cast} />
                 </div>
               </section>

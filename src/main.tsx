@@ -5,19 +5,24 @@ import App from './App.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-// import ItemDetail from './pages/ItemDetail.tsx';
-import ScrollToTop from './components/ScrollToTop.tsx';
-import Results from './pages/SearchPage.tsx';
-import MovieTopRated from './pages/moviePages/MovieTopRated.tsx';
-import MoviePopular from './pages/moviePages/MoviePopular.tsx';
-import MovieTrending from './pages/moviePages/MovieTrending.tsx';
-import TvTrending from './pages/tvPages/TvTrending.tsx';
-import TvTopRated from './pages/tvPages/TvTopRated.tsx';
-import TvPopular from './pages/tvPages/TvPopular.tsx';
-import WatchMovie from './pages/WatchMovie.tsx';
-import ItemDetailSkeleton from './components/LoadingSkels/ItemDetailSkeleton.tsx';
+const ScrollToTop = lazy(() => import('./components/ScrollToTop.tsx'));
 const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
-
+const Results = lazy(() => import('./pages/SearchPage.tsx'));
+const MovieTopRated = lazy(
+  () => import('./pages/moviePages/MovieTopRated.tsx'),
+);
+const MoviePopular = lazy(() => import('./pages/moviePages/MoviePopular.tsx'));
+const MovieTrending = lazy(
+  () => import('./pages/moviePages/MovieTrending.tsx'),
+);
+const TvTrending = lazy(() => import('./pages/tvPages/TvTrending.tsx'));
+const TvTopRated = lazy(() => import('./pages/tvPages/TvTopRated.tsx'));
+const TvPopular = lazy(() => import('./pages/tvPages/TvPopular.tsx'));
+const WatchMovie = lazy(() => import('./pages/WatchMovie.tsx'));
+const WatchTV = lazy(() => import('./pages/WatchTV.tsx'));
+const ItemDetailSkeleton = lazy(
+  () => import('./components/LoadingSkels/ItemDetailSkeleton.tsx'),
+);
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -78,6 +83,10 @@ const router = createBrowserRouter([
           {
             path: 'movie/:movie_id',
             element: <WatchMovie />,
+          },
+          {
+            path: 'tv/:series_id/:season_num/:episode_num',
+            element: <WatchTV />,
           },
         ],
       },
