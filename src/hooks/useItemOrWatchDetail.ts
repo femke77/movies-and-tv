@@ -113,7 +113,7 @@ export const useWatchDetails = (type: string, id: string) => {
           return {
           ...detail
           };
-        ''
+        
       }
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours

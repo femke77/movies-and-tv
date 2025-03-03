@@ -1,7 +1,7 @@
 import { useTVSeasonEpisodes, useWatchDetails } from "../hooks/useItemOrWatchDetail";
 
 const WatchTV = () => {
-const { data: show, isLoading, isFetching } = useWatchDetails('tv', '1668');
+const { data: show } = useWatchDetails('tv', '1668');
 console.log(show);
 const { data: episodes} = useTVSeasonEpisodes('1668', '2');
 console.log(episodes);
