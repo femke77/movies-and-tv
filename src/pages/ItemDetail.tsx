@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Chip from "../components/Chip";
-import { useItemDetail } from "../hooks/useItemDetail";
+import { useItemDetail } from "../hooks/useItemOrWatchDetail";
 import { useParams } from "react-router-dom";
 import UserRating from "../components/UserRating";
 import WatchButton from "../components/WatchButton";
@@ -222,23 +222,27 @@ const ItemDetail = () => {
                 </div>
               ) : (
                 <>
-                {item.created_by?.length > 0 && (
-                  <div className="flex flex-wrap md:flex-nowrap space-x-10 mb-4">
-                    <p className="text-xl font-bold">
-                      {item.created_by.length > 1 ? "Creators:" : "Creator:"}{" "}
-           
-                      {item.created_by.map((creator: { id: string; name: string }, index: number) => (
-                        <span
-                          key={creator.id}
-                          className="text-lg text-gray-100/50 my-3 font-bold ml-1"
-                        >
-                          {creator.name}{index < item.created_by.length - 1 ? ", " : ""}
-                        </span>
-                      ))}
-                    </p>
-                    
-                  </div>
-                )}
+                  {item.created_by?.length > 0 && (
+                    <div className="flex flex-wrap md:flex-nowrap space-x-10 mb-4">
+                      <p className="text-xl font-bold">
+                        {item.created_by.length > 1 ? "Creators:" : "Creator:"}{" "}
+                        {item.created_by.map(
+                          (
+                            creator: { id: string; name: string },
+                            index: number
+                          ) => (
+                            <span
+                              key={creator.id}
+                              className="text-lg text-gray-100/50 my-3 font-bold ml-1"
+                            >
+                              {creator.name}
+                              {index < item.created_by.length - 1 ? ", " : ""}
+                            </span>
+                          )
+                        )}
+                      </p>
+                    </div>
+                  )}
                 </>
               )}
             </section>

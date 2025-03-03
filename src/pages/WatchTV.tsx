@@ -1,8 +1,13 @@
-
+import { useTVSeasonEpisodes, useWatchDetails } from "../hooks/useItemOrWatchDetail";
 
 const WatchTV = () => {
+const { data: show, isLoading, isFetching } = useWatchDetails('tv', '1668');
+console.log(show);
+const { data: episodes} = useTVSeasonEpisodes('1668', '2');
+console.log(episodes);
+
     return (
-        <div>
+        <div className="mt-24">
             <h1>WatchTV</h1>
         </div>
     )   

@@ -157,7 +157,7 @@ const ItemCard = ({
                             <Chip
                               label={genre!}
                               key={genre}
-                              bg='bg-black/60'
+                              bg='bg-black/70'
                               fontSize={`text-xs sm:text-sm md:text-md `}
                             />
                           ))}

@@ -5,10 +5,12 @@ const fetchItemDetail = async (type: string, id: string) => {
   const { data } = await TMDBClient.get(`/${type}/${id}`);
   return data;
 };
-// const fetchSeasonDetail = async (type: string, id: string) => {
-//   const { data } = await TMDBClient.get(`/${type}/${id}`);
-//   return data;
-// };
+
+const fetchTVSeasonEpisodes = async (id: string, season_num: string ) => {
+  // tv/1668/season/1
+  const { data } = await TMDBClient.get(`/tv/${id}/season/${season_num}`);
+  return data;
+};
 
 const fetchTVContentRating = async (tv_id: string) => {
   const { data } = await TMDBClient.get(
@@ -37,6 +39,7 @@ const fetchItemCredits = async (type: string, id: string) => {
   return data;
 };
 
+// This is for the ItemDetail page with tv or movie content ratings and credits/cast information
 export const useItemDetail = (type: string, id: string) => {
   return useQuery({
     queryKey: ['item-detail', id],
@@ -79,3 +82,66 @@ export const useItemDetail = (type: string, id: string) => {
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
 };
+
+//  Watch Movie or Watch TV details including list of season 1 episodes. 
+export const useWatchDetails = (type: string, id: string) => {
+  return useQuery({
+    queryKey: ['watch-details', id, type],
+    queryFn: async () => {
+      if (!id) {
+        throw new Error('ID is required');
+      }
+
+      // get TV show details and season 1 episodes
+      if (type === 'tv') {
+        const [detail, episodes] = await Promise.all([
+          fetchItemDetail('tv', id),
+          fetchTVSeasonEpisodes(id, "1"),
+        ]);
+
+        return {
+        ...detail,
+          ...episodes,
+        };
+      }
+      // get movie details
+        else {
+          const [detail] = await Promise.all([
+            fetchItemDetail('movie', id),
+          ]);
+  
+          return {
+          ...detail
+          };
+        ''
+      }
+    },
+    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    gcTime: 1000 * 60 * 60 * 25, // 25 hours
+    refetchOnWindowFocus: false,
+    retry: 2,
+    enabled: !!id,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
+  });
+}
+
+// get TV show episodes for a specific season
+export const useTVSeasonEpisodes = (id: string, season_num: string) => {  
+  return useQuery({
+    queryKey: ['tv-season-episodes', id, season_num],
+    queryFn: async () => {
+      if (!id || !season_num) {
+        throw new Error('ID and season number is required');
+      }
+
+      const episodes = await fetchTVSeasonEpisodes(id, season_num);
+      return episodes;
+    },
+    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    gcTime: 1000 * 60 * 60 * 25, // 25 hours
+    refetchOnWindowFocus: false,
+    retry: 2,
+    enabled: !!id,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
+  });
+}
