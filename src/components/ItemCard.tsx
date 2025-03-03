@@ -91,7 +91,7 @@ const ItemCard = ({
             {item.poster_path ? (
               <>
                 {' '}
-                {/* Skeleton loader while images are loading */}
+                {/* Placeholder */}
                 {(!lowResLoaded || !highResLoaded) && <PosterPlaceHolder />}
                 {/* Low-res image */}
                 <div className='absolute inset-0 z-[2]'>
@@ -120,7 +120,7 @@ const ItemCard = ({
               </>
             ) : (
               <div>
-                <img src='/no_poster_available.svg' />
+                <img src='/no_poster_available.svg' alt={"no poster available"} />
               </div>
             )}
           </div>

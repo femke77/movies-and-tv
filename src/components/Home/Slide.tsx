@@ -4,17 +4,11 @@ import { useItemLogos } from '../../hooks/useTrendingWithLogoFetch';
 import genresData from '../../utils/data/genres.json';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { useState, useRef, lazy, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { lazy } from 'react';
 
 const UserRating = lazy(() => import('../UserRating'));
 const WatchButton = lazy(() => import('../WatchButton'));
-
-// TODO control showing of all left side components in order top to bottom with slight translateY when page loads
-
-// Placeholder components
-// const LogoPlaceholder = () => (
-//   <div className="w-64 h-[120px] bg-gray-700/30 rounded my-4"></div>
-// );
 
 const TextPlaceholder = () => (
   <div className='w-full space-y-2 mb-6'>
@@ -41,16 +35,11 @@ const Slide = ({
 }) => {
   const [highResBgLoaded, setHighResBgLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false);
-  const [logoLoaded, setLogoLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
-  const [showLogo, setShowLogo] = useState(false);
-
-  // References to avoid race conditions
-  const posterRef = useRef(new Image());
-  const logoRef = useRef(new Image());
-  const highResBgRef = useRef(new Image());
-
-  const criticalElementsLoaded = contentLoaded;
+  const [logoStatus, setLogoStatus] = useState({
+    loaded: false,
+    visible: false
+  });
 
   const formattedMovieDate = dayjs(slide.release_date).format('MMM D, YYYY');
   const { genres } = genresData;
@@ -69,7 +58,7 @@ const Slide = ({
     return genre?.name;
   });
 
-  // Preload images and set loaded state
+  // Simplified image preloading
   useEffect(() => {
     if (isVisible || currentIndex === 0) {
       // Set content as loaded after a brief delay
@@ -77,45 +66,50 @@ const Slide = ({
         setContentLoaded(true);
       }, 100);
 
+      // Preload background image
       if (slide.backdrop_path) {
-        highResBgRef.current.onload = () => setHighResBgLoaded(true);
-        highResBgRef.current.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`;
+        const bgImg = new Image();
+        bgImg.onload = () => setHighResBgLoaded(true);
+        bgImg.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}`;
       }
 
+      // Preload poster
       if (slide.poster_path) {
-        posterRef.current.onload = () => setPosterLoaded(true);
-        posterRef.current.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}`;
-      }
-
-      // Preload logo
-      if (displayLogo) {
-        const img = new Image();
-        img.src = `https://image.tmdb.org/t/p/w154${displayLogo}`;
-        logoRef.current = img;
-        img.onload = () => {
-          setLogoLoaded(true);
-        };
+        const posterImg = new Image();
+        posterImg.onload = () => setPosterLoaded(true);
+        posterImg.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}`;
       }
 
       return () => {
         clearTimeout(contentTimer);
       };
     }
-  }, [isVisible, currentIndex, slide, displayLogo]);
+  }, [isVisible, currentIndex, slide]);
 
-  // Delay showing the logo until other content is loaded
+  // Separate effect for logo loading to avoid race conditions
   useEffect(() => {
-    if (criticalElementsLoaded && logoLoaded && isVisible) {
+    if ((isVisible || currentIndex === 0) && displayLogo) {
+      const logoImg = new Image();
+      logoImg.onload = () => {
+        setLogoStatus(prev => ({ ...prev, loaded: true }));
+      };
+      logoImg.src = `https://image.tmdb.org/t/p/w185${displayLogo}`;
+    }
+  }, [isVisible, currentIndex, displayLogo]);
+
+  // Show logo after it's loaded and other content is ready
+  useEffect(() => {
+    if (contentLoaded && logoStatus.loaded && isVisible) {
       const logoTimer = setTimeout(() => {
-        setShowLogo(true);
+        setLogoStatus(prev => ({ ...prev, visible: true }));
       }, 500);
 
       return () => clearTimeout(logoTimer);
     }
-  }, [criticalElementsLoaded, logoLoaded, isVisible]);
+  }, [contentLoaded, logoStatus.loaded, isVisible]);
 
   return (
-    <div className='swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden '>
+    <div className='swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden'>
       <div
         className={clsx(`absolute inset-0 w-full h-full bg-cover bg-center md:bg-top transition-opacity 
          duration-1500 ease-in-out ${
@@ -126,14 +120,15 @@ const Slide = ({
         }}
       >
         {/* gradient overlays */}
-        <div className='absolute bottom-0 left-0 w-full h-1/8 sm:h-1/2 bg-gradient-to-t from-black to-transparent ' />
-        <div className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent ' />
+        <div className='absolute bottom-0 left-0 w-full h-1/8 sm:h-1/2 bg-gradient-to-t from-black to-transparent' />
+        <div className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
       </div>
+      
       {/* card content */}
       <div
         className='max-w-[1800px] mx-auto relative h-full'
         style={{
-          opacity: criticalElementsLoaded ? 1 : 0,
+          opacity: contentLoaded ? 1 : 0,
           transition: 'opacity 700ms ease-in-out',
         }}
       >
@@ -149,7 +144,7 @@ const Slide = ({
           {/* Genre and date section*/}
           <div
             className={clsx(
-              `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start `,
+              `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start`
             )}
           >
             <div className={`flex justify-start items-start mb-6 pb-6`}>
@@ -187,33 +182,24 @@ const Slide = ({
               <div
                 className={`flex flex-col items-center [@media(min-width:1050px)]:items-start`}
               >
-                {/* Logo with placeholder - shows placeholder until logo is ready to appear */}
+                {/* Logo with simplified rendering logic */}
                 <div className='h-[150px] my-6 mt-6 mb-10 flex items-center justify-center [@media(min-width:1050px)]:justify-start'>
                   {displayLogo ? (
-                    <>
-                      {/* {!showLogo && <LogoPlaceholder />} */}
+                    <div className="relative h-[120px] flex items-center">
+                      {/* Safari-friendly image rendering */}
                       <img
-                        className='h-auto max-h-[250px] transform'
+                        className={`h-auto max-h-[250px] transition-all duration-800 ease-in-out ${
+                          logoStatus.visible && isVisible 
+                            ? 'opacity-100 transform-none' 
+                            : 'opacity-0 translate-y-2'
+                        }`}
                         src={`https://image.tmdb.org/t/p/w185${displayLogo}`}
                         alt={slide.title || slide.name}
-                        style={{
-                          opacity: showLogo && isVisible ? 1 : 0,
-                          transition:
-                            'opacity 800ms ease-in-out, transform 500ms ease-out',
-                          position:
-                            showLogo && isVisible ? 'relative' : 'absolute',
-                          visibility:
-                            logoLoaded && isVisible ? 'visible' : 'hidden',
-                          transform:
-                            showLogo && isVisible
-                              ? 'translateY(0)'
-                              : 'translateY(8px)',
-                        }}
                         width={250}
                         height={120}
-                        onLoad={() => setLogoLoaded(true)}
+                        onLoad={() => setLogoStatus(prev => ({ ...prev, loaded: true }))}
                       />
-                    </>
+                    </div>
                   ) : (
                     <h2 className='text-4xl font-bold text-white'>
                       {slide.title || slide.name}
@@ -235,7 +221,7 @@ const Slide = ({
             {/* Buttons section */}
             <div
               className={clsx(
-                `flex flex-row items-center justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
+                `flex flex-row items-center justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`
               )}
             >
               <div className='mb-2 mr-10'>
@@ -259,7 +245,7 @@ const Slide = ({
           </div>
         </div>
 
-        {/* Poster image with placeholder  */}
+        {/* Poster image with placeholder */}
         {slide.poster_path && (
           <div className='hidden [@media(min-width:1050px)]:block [@media(min-width:1050px)]:absolute [@media(min-width:1050px)]:right-0 [@media(min-width:1050px)]:top-1/2 [@media(min-width:1050px)]:transform [@media(min-width:1050px)]:-translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 [@media(min-width:1050px)]:h-[450px] [@media(min-width:1050px)]:w-[320px] z-10'>
             {/* Poster placeholder */}
@@ -270,18 +256,16 @@ const Slide = ({
               style={{ transition: 'opacity 300ms ease-in-out' }}
             />
 
-            {/* Actual poster with direct onLoad handler */}
+            {/* Actual poster with simplified loading */}
             <img
-              className={`w-full h-auto rounded-lg object-cover ${
+              className={`w-full h-auto rounded-lg object-cover transition-opacity duration-500 ${
                 posterLoaded ? 'opacity-100' : 'opacity-0'
               }`}
-              style={{ transition: 'opacity 500ms ease-in-out' }}
               src={`https://image.tmdb.org/t/p/w500${slide.poster_path}`}
               alt={slide.title || slide.name}
               loading='eager'
               width={320}
               height={450}
-              onLoad={() => setPosterLoaded(true)}
             />
           </div>
         )}
@@ -291,3 +275,4 @@ const Slide = ({
 };
 
 export default Slide;
+
