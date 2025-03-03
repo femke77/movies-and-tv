@@ -145,15 +145,15 @@ const ItemDetail = () => {
                 {item.overview}
               </p>
 
-              <div className="flex flex-wrap md:flex-nowrap space-x-10 mb-4">
+              <div className="flex flex-wrap justify-center md:justify-start space-x-10 mb-4">
                 <p className="text-xl font-bold">
-                  Status:{" "}
+                  Status:{' '}
                   <span className="text-lg text-gray-100/50 my-3 font-bold ml-1">
                     {item.status}
                   </span>
                 </p>
                 <p className="text-xl font-bold">
-                  Release Date:{" "}
+                  Release Date:{' '}
                   <span className="text-lg text-gray-100/50 my-3 font-bold ml-1">
                     {(item.release_date &&
                       dayjs(item.release_date).format("MMM DD, YYYY")) ||
@@ -162,7 +162,7 @@ const ItemDetail = () => {
                   </span>
                 </p>
                 <p className="text-xl font-bold">
-                  Runtime:{" "}
+                  Runtime:{' '}
                   <span className="text-lg text-gray-100/50 my-3 font-bold ml-1">
                     {item.runtime
                       ? `${item.runtime} min`
@@ -173,10 +173,10 @@ const ItemDetail = () => {
                 </p>
               </div>
 
-              <div className="flex flex-wrap md:flex-nowrap md:justify-center space-x-10 mb-4">
+              <div className="flex flex-wrap justify-center md:justify-start space-x-10 mb-4">
                 {item.budget > 0 && (
                   <p className="text-xl font-bold">
-                    Budget:{" "}
+                    Budget:{' '}
                     <span className="text-lg text-gray-100/50 my-3 font-bold ml-1">
                       {item.budget.toLocaleString("en-US", {
                         style: "currency",
@@ -187,7 +187,7 @@ const ItemDetail = () => {
                 )}
                 {item.revenue > 0 && (
                   <p className="text-xl font-bold">
-                    Revenue:{" "}
+                    Revenue:{' '}
                     <span className="text-lg text-gray-100/50 my-3 ml-1 font-bold">
                       {item.revenue.toLocaleString("en-US", {
                         style: "currency",
@@ -198,7 +198,7 @@ const ItemDetail = () => {
                 )}
                 {ROI !== "0" && (
                   <p className="text-xl font-bold">
-                    ROI:{" "}
+                    ROI:{' '}
                     <span className="text-lg text-gray-100/50 my-3 ml-1 font-bold">
                       {ROI}%
                     </span>
@@ -206,15 +206,15 @@ const ItemDetail = () => {
                 )}
               </div>
               {item_type === "movie" ? (
-                <div className="flex md:flex-col flex-wrap  space-x-10 mb-4">
+                <div className="flex md:flex-col flex-wrap justify-center md:justify-start space-x-10 mb-4">
                   <p className="text-xl font-bold mb-4">
-                    Director:{" "}
+                    Director:{' '}
                     <span className="text-lg text-gray-100/50 my-3 font-bold ml-1">
                       {directorName}
                     </span>
                   </p>
                   <p className="text-xl mb-8 font-bold">
-                    Writer:{" "}
+                    Writer:{' '}
                     <span className="text-lg text-gray-100/50 my-3 font-bold ml-1">
                       {writerName}
                     </span>
@@ -223,7 +223,7 @@ const ItemDetail = () => {
               ) : (
                 <>
                   {item.created_by?.length > 0 && (
-                    <div className="flex flex-wrap md:flex-nowrap space-x-10 mb-4">
+                    <div className="flex flex-wrap md:flex-nowrap justify-center md:justify-start space-x-10 mb-4">
                       <p className="text-xl font-bold">
                         {item.created_by.length > 1 ? "Creators:" : "Creator:"}{" "}
                         {item.created_by.map(
@@ -241,8 +241,8 @@ const ItemDetail = () => {
                           )
                         )}
                       </p>
-                      <p className="text-xl mb-8 font-bold">
-                        Type:{" "}
+                      <p className="text-xl  font-bold">
+                        Series Type:{' '}
                         <span className="text-lg text-gray-100/50 my-3 font-bold ml-1">
                           {item.type}
                         </span>
