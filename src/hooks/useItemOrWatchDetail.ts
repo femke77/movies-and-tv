@@ -6,7 +6,7 @@ const fetchItemDetail = async (type: string, id: string) => {
   return data;
 };
 
-const fetchTVSeasonEpisodes = async (id: string, season_num: string ) => {
+const fetchTVSeasonEpisodes = async (id: string, season_num: string) => {
   // tv/1668/season/1
   const { data } = await TMDBClient.get(`/tv/${id}/season/${season_num}`);
   return data;
@@ -83,7 +83,7 @@ export const useItemDetail = (type: string, id: string) => {
   });
 };
 
-//  Watch Movie or Watch TV details including list of season 1 episodes. 
+//  Watch Movie or Watch TV details including list of season 1 episodes.
 export const useWatchDetails = (type: string, id: string) => {
   return useQuery({
     queryKey: ['watch-details', id, type],
@@ -96,24 +96,21 @@ export const useWatchDetails = (type: string, id: string) => {
       if (type === 'tv') {
         const [detail, episodes] = await Promise.all([
           fetchItemDetail('tv', id),
-          fetchTVSeasonEpisodes(id, "1"),
+          fetchTVSeasonEpisodes(id, '1'),
         ]);
 
         return {
-        ...detail,
+          ...detail,
           ...episodes,
         };
       }
       // get movie details
-        else {
-          const [detail] = await Promise.all([
-            fetchItemDetail('movie', id),
-          ]);
-  
-          return {
-          ...detail
-          };
-        
+      else {
+        const [detail] = await Promise.all([fetchItemDetail('movie', id)]);
+
+        return {
+          ...detail,
+        };
       }
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
@@ -123,10 +120,10 @@ export const useWatchDetails = (type: string, id: string) => {
     enabled: !!id,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
-}
+};
 
 // get TV show episodes for a specific season
-export const useTVSeasonEpisodes = (id: string, season_num: string) => {  
+export const useTVSeasonEpisodes = (id: string, season_num: string) => {
   return useQuery({
     queryKey: ['tv-season-episodes', id, season_num],
     queryFn: async () => {
@@ -144,4 +141,4 @@ export const useTVSeasonEpisodes = (id: string, season_num: string) => {
     enabled: !!id,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
-}
+};

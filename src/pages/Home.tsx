@@ -23,7 +23,7 @@ const Home = () => {
         <TopRatedTv />
         <PopularTv />
 
-        <WatchDescription/>
+        <WatchDescription />
       </div>
     </>
   );

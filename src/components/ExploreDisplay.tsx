@@ -44,7 +44,6 @@ const Explore = memo(
                 item={movie}
                 showGenres={true}
                 showRating={true}
-       
               />
             ))
           ) : (

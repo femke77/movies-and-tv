@@ -13,7 +13,7 @@ const ItemCard = ({
   itemType,
   showRating,
   showGenres,
-  textSize = "md",
+  textSize = 'md',
 }: {
   item: IItem;
   itemType: string;
@@ -70,7 +70,7 @@ const ItemCard = ({
 
   // Function to determine the correct text size class
   const getTitleSizeClass = () => {
-    switch(textSize) {
+    switch (textSize) {
       case 'xs':
         return 'text-xs';
       case 'sm':
@@ -82,7 +82,7 @@ const ItemCard = ({
       case '2xl':
         return 'text-2xl';
       default:
-        return 'text-md '; 
+        return 'text-md ';
     }
   };
 
@@ -128,7 +128,10 @@ const ItemCard = ({
               </>
             ) : (
               <div>
-                <img src='/no_poster_available.svg' alt={"no poster available"} />
+                <img
+                  src='/no_poster_available.svg'
+                  alt={'no poster available'}
+                />
               </div>
             )}
           </div>
@@ -204,7 +207,7 @@ const MemoizedItemCard = memo(
     itemType?: string;
     showRating?: boolean;
     showGenres?: boolean;
-    textSize?: string;  
+    textSize?: string;
   }) => (
     <div className='w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]'>
       <ItemCard

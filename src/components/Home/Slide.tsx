@@ -38,7 +38,7 @@ const Slide = ({
   const [contentLoaded, setContentLoaded] = useState(false);
   const [logoStatus, setLogoStatus] = useState({
     loaded: false,
-    visible: false
+    visible: false,
   });
 
   const formattedMovieDate = dayjs(slide.release_date).format('MMM D, YYYY');
@@ -91,7 +91,7 @@ const Slide = ({
     if ((isVisible || currentIndex === 0) && displayLogo) {
       const logoImg = new Image();
       logoImg.onload = () => {
-        setLogoStatus(prev => ({ ...prev, loaded: true }));
+        setLogoStatus((prev) => ({ ...prev, loaded: true }));
       };
       logoImg.src = `https://image.tmdb.org/t/p/w185${displayLogo}`;
     }
@@ -101,7 +101,7 @@ const Slide = ({
   useEffect(() => {
     if (contentLoaded && logoStatus.loaded && isVisible) {
       const logoTimer = setTimeout(() => {
-        setLogoStatus(prev => ({ ...prev, visible: true }));
+        setLogoStatus((prev) => ({ ...prev, visible: true }));
       }, 500);
 
       return () => clearTimeout(logoTimer);
@@ -123,7 +123,7 @@ const Slide = ({
         <div className='absolute bottom-0 left-0 w-full h-1/8 sm:h-1/2 bg-gradient-to-t from-black to-transparent' />
         <div className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
       </div>
-      
+
       {/* card content */}
       <div
         className='max-w-[1800px] mx-auto relative h-full'
@@ -144,7 +144,7 @@ const Slide = ({
           {/* Genre and date section*/}
           <div
             className={clsx(
-              `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start`
+              `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start`,
             )}
           >
             <div className={`flex justify-start items-start mb-6 pb-6`}>
@@ -185,19 +185,21 @@ const Slide = ({
                 {/* Logo with simplified rendering logic */}
                 <div className='h-[150px] my-6 mt-6 mb-10 flex items-center justify-center [@media(min-width:1050px)]:justify-start'>
                   {displayLogo ? (
-                    <div className="relative h-[120px] flex items-center">
+                    <div className='relative h-[120px] flex items-center'>
                       {/* Safari-friendly image rendering */}
                       <img
                         className={`h-auto max-h-[250px] transition-all duration-800 ease-in-out ${
-                          logoStatus.visible && isVisible 
-                            ? 'opacity-100 transform-none' 
+                          logoStatus.visible && isVisible
+                            ? 'opacity-100 transform-none'
                             : 'opacity-0 translate-y-2'
                         }`}
                         src={`https://image.tmdb.org/t/p/w185${displayLogo}`}
                         alt={slide.title || slide.name}
                         width={250}
                         height={120}
-                        onLoad={() => setLogoStatus(prev => ({ ...prev, loaded: true }))}
+                        onLoad={() =>
+                          setLogoStatus((prev) => ({ ...prev, loaded: true }))
+                        }
                       />
                     </div>
                   ) : (
@@ -221,7 +223,7 @@ const Slide = ({
             {/* Buttons section */}
             <div
               className={clsx(
-                `flex flex-row items-center justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`
+                `flex flex-row items-center justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
               )}
             >
               <div className='mb-2 mr-10'>
@@ -275,4 +277,3 @@ const Slide = ({
 };
 
 export default Slide;
-

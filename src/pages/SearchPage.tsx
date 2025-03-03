@@ -33,10 +33,10 @@ const Results = memo(() => {
       <div className='flex flex-wrap flex-1 gap-4 items-start'>
         {allItems.length > 0 ? (
           allItems.map((item: IItem) => (
-            <MemoizedItemCard 
-              key={`${item.media_type}-${item.id}`} 
-              item={item} 
-              textSize="md"
+            <MemoizedItemCard
+              key={`${item.media_type}-${item.id}`}
+              item={item}
+              textSize='md'
             />
           ))
         ) : (
@@ -71,12 +71,8 @@ const SearchContainer = memo(() => {
 
   return (
     <div className='mt-36 mx-4'>
-  
-      <h1 className='text-3xl font-bold mt-10 mb-8 relative'>
-        {headingText}
-      </h1>
-      
-  
+      <h1 className='text-3xl font-bold mt-10 mb-8 relative'>{headingText}</h1>
+
       <Results />
     </div>
   );
