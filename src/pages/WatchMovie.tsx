@@ -5,7 +5,7 @@ import WatchDescription from "../components/WatchDescription";
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useWatchDetails("movie", movie_id ?? "");
-  console.log(movie);
+  // console.log(movie);
 
   return (
     <div className="min-h-screen page pt-[60px]">
