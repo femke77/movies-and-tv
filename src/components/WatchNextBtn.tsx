@@ -1,11 +1,11 @@
 const WatchNextBtn = () => {
   const watchNext = () => {
-    console.log("Watch Next");
+  //  TODO : implement watch next
   };
 
   return (
     <button
-    className="next-button flex hover:cursor-pointer mx-2 bg-gray-700 p-2 px-4 pl-5 rounded-lg"
+    className="next-button flex hover:cursor-pointer mx-2 bg-gray-700/50 p-2 px-4 pl-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px]"
     onClick={watchNext}
     >
       <p className="text-sm mr-1"> Next</p>

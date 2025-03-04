@@ -10,12 +10,10 @@ const WatchDescription = ({
   date?: string;
   overview?: string;
 }) => {
-
-    console.log(title, rt, date, overview);
     
   return (
     <div>
-      <h1 className='text-xl mb-2'>{title}</h1>
+      <h1 className='text-xl mb-2'>{title || ""}</h1>
       <div className='flex items-center text-[#fff9] text-sm'>
         <div className='flex items-center'>
           <svg

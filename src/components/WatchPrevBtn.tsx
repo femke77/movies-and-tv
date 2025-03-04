@@ -1,10 +1,10 @@
 const WatchPrevBtn = () => {
   const watchPrev = () => {
-    console.log("watchPrev");
+// TODO //immplement watchPrev function
   };
   return (
     <button
-      className="back-button flex hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700 pr-5 rounded-lg"
+      className="back-button flex hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px]"
       onClick={watchPrev}
     >
       <svg

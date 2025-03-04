@@ -7,7 +7,7 @@ import { useWatchDetails } from "../../hooks/useItemOrWatchDetail";
 import WatchDescription from "../../components/WatchDescription";
 import BackButton from "../../components/BackBtn";
 import FullscreenBtn from "../../components/FullScreenBtn";
-import WatchPrevBtn from "../../components/WatchBackBtn";
+import WatchPrevBtn from "../../components/WatchPrevBtn";
 import WatchNextBtn from "../../components/WatchNextBtn";
 
 const WatchTV = () => {
@@ -24,7 +24,12 @@ const WatchTV = () => {
               <BackButton />
             </div>
             {series && (
-              <p className="font-bold truncate text-ellipsis mx-6" title={series.original_name}>{series.original_name || ""}</p>
+              <p
+                className="font-bold truncate text-ellipsis mx-6"
+                title={series.original_name}
+              >
+                {series.original_name || ""}
+              </p>
             )}
 
             <div>
@@ -72,21 +77,29 @@ const WatchTV = () => {
                 <hr className="h-0.5 w-full bg-gray-800/30 text-white" />
               </div>
             </div>
-            <div className="rounded-lg bg-[#1f1f1f]  border-[#2f2f2f] p-[24px] mb-[24px]">
+            <div className="rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]">
               {/* description */}
               {series && (
                 <WatchDescription
                   title={series.original_name}
                   rt={series.episode_run_time?.[0]}
                   date={series.first_air_date}
-                  overview={series.overview}
+                  overview={series.episodes[series.season_number-1].overview}
                 />
               )}
             </div>
           </main>
         </div>
-        <div className="secondary ">
-          {/* right side with server choices and episodes for tv*/}
+        <div className="secondary w-[400px] flex-shrink-0   ">
+          <div className="sidebar bg-[#1f1f1f] h-[calc(100vh-100px)] flex flex-col sticky top-[80px] rounded-lg">
+            <div className="sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]">
+              <div className="server-selection mb-[16px]">
+                {/* server selection select here */}
+              </div>
+              <div className="season-nav">{/* season nav here */}</div>
+            </div>
+            <div className="episode-list">{/* episode list here */}</div>
+          </div>
         </div>
       </div>
     </div>
