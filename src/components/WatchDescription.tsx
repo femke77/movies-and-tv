@@ -10,10 +10,9 @@ const WatchDescription = ({
   date?: string;
   overview?: string;
 }) => {
-    
   return (
     <div>
-      <h1 className='text-xl mb-2'>{title || ""}</h1>
+      <h1 className='text-xl mb-2'>{title || ''}</h1>
       <div className='flex items-center text-[#fff9] text-sm'>
         <div className='flex items-center'>
           <svg
@@ -34,7 +33,9 @@ const WatchDescription = ({
             <path d='M3 10h18' />
             <path d='M15 22v-4a2 2 0 0 1 2-2h4' />
           </svg>
-          <p className='ml-2 mr-4'>{dayjs(date).format('MMM DD, YYYY') || ""}</p>
+          <p className='ml-2 mr-4'>
+            {dayjs(date).format('MMM DD, YYYY') || ''}
+          </p>
         </div>
 
         <div className='flex items-center'>
@@ -56,7 +57,7 @@ const WatchDescription = ({
           <p className='ml-2'>{rt || '0'} min</p>
         </div>
       </div>
-      <p className='my-2'>{overview || "No synopsis available"}</p>
+      <p className='my-2'>{overview || 'No synopsis available'}</p>
     </div>
   );
 };

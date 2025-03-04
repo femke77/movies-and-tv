@@ -33,8 +33,8 @@ export const useQueryConfig = (
 ) => ({
   queryKey: [queryKey],
   queryFn,
-  staleTime: 1000 * 60 * 60 *6, // 6 hours
-  gcTime: 1000 * 60 * 370 , // 6 hours and 10 min
+  staleTime: 1000 * 60 * 60 * 6, // 6 hours
+  gcTime: 1000 * 60 * 370, // 6 hours and 10 min
   refetchOnWindowFocus: false,
   refetchInterval: 1000 * 60 * 30, // 30 minutes
   enabled,
