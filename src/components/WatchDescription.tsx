@@ -5,10 +5,10 @@ const WatchDescription = ({
   date,
   overview,
 }: {
-  title: string;
-  rt: string;
-  date: string;
-  overview: string;
+  title?: string;
+  rt?: string;
+  date?: string;
+  overview?: string;
 }) => {
   return (
     <div>
@@ -33,7 +33,7 @@ const WatchDescription = ({
             <path d='M3 10h18' />
             <path d='M15 22v-4a2 2 0 0 1 2-2h4' />
           </svg>
-          <p className='ml-2 mr-4'>{dayjs(date).format('MMM DD, YYYY')}</p>
+          <p className='ml-2 mr-4'>{dayjs(date).format('MMM DD, YYYY') || ""}</p>
         </div>
 
         <div className='flex items-center'>
@@ -52,10 +52,10 @@ const WatchDescription = ({
             <circle cx='12' cy='12' r='10' />
             <polyline points='12 6 12 12 16.5 12' />
           </svg>
-          <p className='ml-2'>{rt} min</p>
+          <p className='ml-2'>{rt || 'Unknown runtime'} min</p>
         </div>
       </div>
-      <p className='my-2'>{overview}</p>
+      <p className='my-2'>{overview || "No synopsis available"}</p>
     </div>
   );
 };

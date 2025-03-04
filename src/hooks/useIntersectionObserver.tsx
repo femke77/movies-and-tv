@@ -12,7 +12,7 @@ export const useIntersectionObserver = (targetId: string) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.0, rootMargin: '125px 0px' },
+      { threshold: 0.0, rootMargin: '100px 0px' },
     );
 
     const target = document.getElementById(targetId);

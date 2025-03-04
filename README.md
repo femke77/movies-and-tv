@@ -57,7 +57,7 @@
   You will need a TMDB api key in an env.
 
   ### Deployed Link
-  https://movies-unlimited.netlify.app/  
+  Temporary deploy link: https://movies-unlimited.netlify.app/  
 
 ### Screenshots
 ![movies-unlimited](src/assets/images/movies-unlimited.png)
