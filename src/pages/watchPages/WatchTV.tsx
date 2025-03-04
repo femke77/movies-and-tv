@@ -7,6 +7,8 @@ import { useWatchDetails } from "../../hooks/useItemOrWatchDetail";
 import WatchDescription from "../../components/WatchDescription";
 import BackButton from "../../components/BackBtn";
 import FullscreenBtn from "../../components/FullScreenBtn";
+import WatchPrevBtn from "../../components/WatchBackBtn";
+import WatchNextBtn from "../../components/WatchNextBtn";
 
 const WatchTV = () => {
   const { series_id } = useParams<{ series_id: string }>();
@@ -22,7 +24,7 @@ const WatchTV = () => {
               <BackButton />
             </div>
             {series && (
-              <p className="font-bold">{series.original_name || ""}</p>
+              <p className="font-bold truncate text-ellipsis mx-6" title={series.original_name}>{series.original_name || ""}</p>
             )}
 
             <div>
@@ -43,20 +45,29 @@ const WatchTV = () => {
                 ></iframe> */}
             </div>
 
-            <div className="rounded-lg flex align-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]">
+            <div className="rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]">
               {/* player controls (for tv) */}
               <div className="flex flex-col gap-2 w-full py-2">
-                <div>
-                  <p className="text-[#fff9] flex">
+                <div className="flex justify-center  sm:justify-between items-center flex-wrap">
+                  <p className="text-[#fff9] flex mx-5 sm:mx-0">
                     Current:{" "}
                     <p className="text-white ml-3">
-                      Season {series?.episodes?.[series.season_number - 1].season_number} &#x2022; Episode{" "}
+                      Season{" "}
+                      {
+                        series?.episodes?.[series.season_number - 1]
+                          .season_number
+                      }{" "}
+                      &#x2022; Episode{" "}
                       {
                         series?.episodes?.[series.season_number - 1]
                           ?.episode_number
                       }
-                    </p>{" "}
+                    </p>
                   </p>
+                  <div className="flex gap-2 my-3 mx-5 sm:mx-0">
+                    <WatchPrevBtn />
+                    <WatchNextBtn />
+                  </div>
                 </div>
                 <hr className="h-0.5 w-full bg-gray-800/30 text-white" />
               </div>
