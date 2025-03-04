@@ -5,7 +5,9 @@ import App from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-const ScrollToTop = lazy(() => import("./components/ScrollToTop.tsx"));
+import ScrollToTop from "./components/ScrollToTop.tsx";
+import ItemDetailSkeleton from "./components/LoadingSkels/ItemCardSkeleton.tsx";
+
 const ItemDetail = lazy(() => import("./pages/ItemDetail.tsx"));
 const Results = lazy(() => import("./pages/SearchPage.tsx"));
 const MovieTopRated = lazy(() =>
@@ -20,11 +22,10 @@ const TvTopRated = lazy(() => import("./pages/tvPages/TvTopRated.tsx"));
 const TvPopular = lazy(() => import("./pages/tvPages/TvPopular.tsx"));
 const WatchMovie = lazy(() => import("./pages/watchPages/WatchMovie.tsx"));
 const WatchTV = lazy(() => import("./pages/watchPages/WatchTV.tsx"));
-const ItemDetailSkeleton = lazy(() =>
-  import("./components/LoadingSkels/ItemDetailSkeleton.tsx")
-);
 
-export const queryClient = new QueryClient({
+// TODO need to add something better than loading to suspense fallback or make new skels for the other pages
+
+const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
@@ -106,6 +107,8 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
+      <Suspense fallback={"Loading...."}>
+      </Suspense>
       <RouterProvider router={router} />
     </QueryClientProvider>
   </StrictMode>

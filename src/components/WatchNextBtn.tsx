@@ -17,8 +17,8 @@ const WatchNextBtn = () => {
         fill="none"
         stroke="#ffffff"
         strokeWidth="2"
-        stroke-Linecap="round"
-        stroke-Linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         className="lucide lucide-arrow-right"
       >
         <path d="M5 12h14" />

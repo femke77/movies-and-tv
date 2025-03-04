@@ -1,7 +1,10 @@
-interface ISortOption {
-  sortByOption: string;
-  setSortByOption: (_option: string) => void;
-  sortOptions: { id: number; name: string; value: string }[];
+import { ReactElement } from 'react';
+
+interface IListBox {
+  title?: string | ReactElement;
+  selectedOption: string;
+  setSelectedOption: (_option: string) => void;
+  availableOptions: { id: number; name: string; value: string }[];
 }
 
 import {
@@ -13,13 +16,16 @@ import {
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 
-export default function Example({
-  sortByOption,
-  setSortByOption,
-  sortOptions,
-}: ISortOption) {
+export default function ListBoxComp({
+  title,
+  selectedOption: sortByOption,
+  setSelectedOption: setSortByOption,
+  availableOptions: sortOptions,
+}: IListBox) {
+ 
+ 
   return (
-    <div className='mb-8 w-70 mr-4 hover:translate-[1px] pt-[5px] rounded-md hover:outline-blue-700 hover:outline-1  '>
+    <div className='w-full mb-8 mr-4 hover:translate-[1px] pt-[5px] rounded-md hover:outline-blue-700 hover:outline-1  '>
       <Listbox value={sortByOption} onChange={setSortByOption}>
         <ListboxButton
           className={clsx(
@@ -27,8 +33,7 @@ export default function Example({
             'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25',
           )}
         >
-          {sortOptions.find((opt) => opt.value === sortByOption)?.name ??
-            'Select an option'}
+          {title ?? sortOptions.find((opt) => opt.value === sortByOption)?.name ?? 'Select an option'}
           <ChevronDownIcon
             className='group pointer-events-none absolute top-2.5 right-2.5 size-4 fill-white/60'
             aria-hidden='true'
