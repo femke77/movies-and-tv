@@ -10,6 +10,9 @@ const WatchDescription = ({
   date?: string;
   overview?: string;
 }) => {
+
+    console.log(title, rt, date, overview);
+    
   return (
     <div>
       <h1 className='text-xl mb-2'>{title}</h1>
@@ -52,7 +55,7 @@ const WatchDescription = ({
             <circle cx='12' cy='12' r='10' />
             <polyline points='12 6 12 12 16.5 12' />
           </svg>
-          <p className='ml-2'>{rt || 'Unknown runtime'} min</p>
+          <p className='ml-2'>{rt || '0'} min</p>
         </div>
       </div>
       <p className='my-2'>{overview || "No synopsis available"}</p>

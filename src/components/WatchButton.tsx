@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+// TODO refactor to just have one watch page
 
 const WatchButton = ({
   itemType,

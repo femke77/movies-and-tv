@@ -9,13 +9,7 @@ const WatchMovie = () => {
   const { data: movie } = useWatchDetails("movie", movie_id ?? "");
   // console.log(movie);
 
-  const goFullScreen = (element: HTMLElement | null) => {
-    if (element) {
-      (element as HTMLElement).requestFullscreen().catch((err) => {
-        console.error("Error attempting to enable fullscreen:", err);
-      });
-    }
-  };
+
 
   return (
     <div className="min-h-screen page pt-[60px]">
@@ -25,7 +19,7 @@ const WatchMovie = () => {
             <div>
               <BackButton />
             </div>
-            {movie && <p className="font-bold">{movie.title}</p>}
+            {movie && <p className="font-bold">{movie.title || ""}</p>}
 
             <div>
               <FullscreenBtn elementId="video-player" />
