@@ -12,8 +12,8 @@ const WatchDescription = ({
 }) => {
   return (
     <div>
-      <h1 className='text-2xl mb-2'>{title}</h1>
-      <div className='flex items-center'>
+      <h1 className='text-xl mb-2'>{title}</h1>
+      <div className='flex items-center text-[#fff9] text-sm'>
         <div className='flex items-center'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -21,7 +21,7 @@ const WatchDescription = ({
             height='20'
             viewBox='0 0 24 24'
             fill='none'
-            stroke='#ffffff'
+            stroke='#fff9'
             strokeWidth='2'
             strokeLinecap='round'
             strokeLinejoin='round'
@@ -43,7 +43,7 @@ const WatchDescription = ({
             height='20'
             viewBox='0 0 24 24'
             fill='none'
-            stroke='#ffffff'
+            stroke='#fff9'
             strokeWidth='2'
             strokeLinecap='round'
             strokeLinejoin='round'

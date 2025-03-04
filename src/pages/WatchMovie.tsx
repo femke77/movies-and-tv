@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useWatchDetails } from '../hooks/useItemOrWatchDetail';
 import WatchDescription from '../components/WatchDescription';
 
+
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useWatchDetails('movie', movie_id ?? '');
@@ -9,11 +10,21 @@ const WatchMovie = () => {
 
   return (
     <div className='min-h-screen page pt-[60px]'>
-      <div className='mt-24 flex flex-col lg:flex-row lg:gap-[24px] p-[16px]lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
+      <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
         <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
-          <header>{/* header here */}</header>
+          <header className="flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]">
+            <div>
+              <button className="back-button flex" onClick={() => history.back()}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
+               <p className="text-sm ml-1"> Back</p>
+               
+              </button>
+            </div>
+          <p className='font-bold'>{movie.title}</p> 
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-maximize2"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" x2="14" y1="3" y2="10"></line><line x1="3" x2="10" y1="21" y2="14"></line></svg>
+            </header>
           <main>
-            <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg'>
+            <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
               {/* <iframe
                   className="absolute top-0 left-0 w-full h-full "
                   width="100%"
