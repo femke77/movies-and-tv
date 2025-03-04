@@ -13,6 +13,7 @@ import ListBoxComp from '../../components/ListBox';
 import serverData from '../../utils/data/servers.json';
 import { useState } from 'react';
 import { Settings } from 'lucide-react';
+import SeasonNavigation from '../../components/SeasonNavigation';
 
 const WatchTV = () => {
   const { servers } = serverData;
@@ -67,6 +68,7 @@ const WatchTV = () => {
                     <p className='text-[#fff9] flex mx-5 sm:mx-0'>
                       Current:{' '}
                       <span className='text-white ml-3'>
+                        
                         Season{' '}
                         {series?.episodes?.[selectedSeason - 1]?.season_number}{' '}
                         &#x2022; Episode{' '}
@@ -114,7 +116,15 @@ const WatchTV = () => {
                   availableOptions={servers}
                 />
               </div>
-              <div className='season-nav'>{/* season nav here */}</div>
+              <div className='season-nav mb-[16px]'>{/* season nav here */}
+
+                <SeasonNavigation
+                selectedSeason={selectedSeason}
+                setSelectedSeason={setSelectedSeason}
+                numSeasons={series?.number_of_seasons || 0}
+                
+                />
+              </div>
             </div>
             <div className='episode-list'>{/* episode list here */}</div>
           </div>
