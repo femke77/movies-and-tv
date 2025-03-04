@@ -4,8 +4,7 @@ import { useTrendingTv } from '../../hooks/useTrending';
 import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
 
 const TrendingTV = () => {
-  const { data: shows = [], isLoading} = useTrendingTv();
-
+  const { data: shows = [], isLoading } = useTrendingTv();
 
   return (
     <div className='mt-20 min-h-[350px]' id='trending-tv-section'>

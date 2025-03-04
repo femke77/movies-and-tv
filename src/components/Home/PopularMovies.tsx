@@ -5,8 +5,7 @@ import CarouselContainer from '../CarouselContainer';
 import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
 
 const PopularMovies = () => {
-  const { data: movies=[], isLoading } = usePopularMovies();
-
+  const { data: movies = [], isLoading } = usePopularMovies();
 
   return (
     <div className='mt-20  min-h-[350px]' id='pop-section'>

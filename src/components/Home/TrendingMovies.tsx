@@ -3,14 +3,9 @@ import { useTrendingMovies } from '../../hooks/useTrending';
 
 import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
 
-
-
 const TrendingMovies = () => {
+  const { data: movies = [], isLoading } = useTrendingMovies();
 
-
-  const { data: movies=[], isLoading} = useTrendingMovies();
-
-  
   return (
     <div className='min-h-[350px]' id='trending-section'>
       <h2 className='text-2xl font-bold mb-8 ml-5 '>

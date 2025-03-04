@@ -2,10 +2,8 @@ import { useTopRatedMovies } from '../../hooks/useTopRated';
 import CarouselContainer from '../CarouselContainer';
 import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
 
-
 const TopRatedMovies = () => {
-  const { data: movies = [], isLoading} = useTopRatedMovies();
-
+  const { data: movies = [], isLoading } = useTopRatedMovies();
 
   return (
     <div className=' mt-20  min-h-[350px]' id='top-section'>

@@ -5,7 +5,6 @@ import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
 const PopularTv = () => {
   const { data: shows = [], isLoading } = usePopularTv();
 
-
   return (
     <div className=' mt-20  min-h-[350px]' id='pop-tv-section'>
       <h2 className='text-2xl font-bold mb-8 ml-5'>Popular TV 📈</h2>
