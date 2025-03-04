@@ -2,19 +2,6 @@
 //   useTVSeasonEpisodes,
 //   useWatchDetails,
 // } from '../hooks/useItemOrWatchDetail';
-<<<<<<< HEAD
-import { useParams } from "react-router-dom";
-import { useWatchDetails } from "../../hooks/useItemOrWatchDetail";
-import WatchDescription from "../../components/WatchDescription";
-import BackButton from "../../components/BackBtn";
-import FullscreenBtn from "../../components/FullScreenBtn";
-import WatchPrevBtn from "../../components/WatchPrevBtn";
-import WatchNextBtn from "../../components/WatchNextBtn";
-import ListBoxComp from "../../components/ListBox";
-import serverData from "../../utils/data/servers.json";
-import { useState } from "react";
-import { Settings } from "lucide-react";
-=======
 import { useParams } from 'react-router-dom';
 import { useWatchDetails } from '../../hooks/useItemOrWatchDetail';
 import WatchDescription from '../../components/WatchDescription';
@@ -26,7 +13,7 @@ import ListBoxComp from '../../components/ListBox';
 import serverData from '../../utils/data/servers.json';
 import { useState } from 'react';
 import { Settings } from 'lucide-react';
->>>>>>> e3e010bdd0bf0b5676d5b7216cf2b985448507d8
+
 const WatchTV = () => {
   const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();
