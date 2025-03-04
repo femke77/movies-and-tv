@@ -18,7 +18,11 @@ const WatchTV = () => {
   const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();
   const [selectedServer, setSelectedServer] = useState(servers[0].name);
+  const [selectedSeason, setSelectedSeason] = useState(1);
+  const [selectedEpisode, setSelectedEpisode] = useState(1);
+
   const { data: series } = useWatchDetails('tv', series_id ?? '');
+
   console.log(series);
 
   return (
@@ -55,34 +59,30 @@ const WatchTV = () => {
                   allowFullScreen
                 ></iframe> */}
             </div>
-
-            <div className='rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]'>
-              {/* player controls (for tv) */}
-              <div className='flex flex-col gap-2 w-full py-2'>
-                <div className='flex justify-center  sm:justify-between items-center flex-wrap'>
-                  <p className='text-[#fff9] flex mx-5 sm:mx-0'>
-                    Current:{' '}
-                    <span className='text-white ml-3'>
-                      Season{' '}
-                      {
-                        series?.episodes?.[series.season_number - 1]
-                          .season_number
-                      }{' '}
-                      &#x2022; Episode{' '}
-                      {
-                        series?.episodes?.[series.season_number - 1]
-                          ?.episode_number
-                      }
-                    </span>
-                  </p>
-                  <div className='flex gap-2 my-3 mx-5 sm:mx-0'>
-                    <WatchPrevBtn />
-                    <WatchNextBtn />
+            {series && (
+              <div className='rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]'>
+                {/* player controls (for tv) */}
+                <div className='flex flex-col gap-2 w-full py-2'>
+                  <div className='flex justify-center  sm:justify-between items-center flex-wrap'>
+                    <p className='text-[#fff9] flex mx-5 sm:mx-0'>
+                      Current:{' '}
+                      <span className='text-white ml-3'>
+                        Season{' '}
+                        {series?.episodes?.[selectedSeason - 1]?.season_number}{' '}
+                        &#x2022; Episode{' '}
+                        {series?.episodes?.[selectedSeason - 1]?.episode_number}
+                      </span>
+                    </p>
+                    <div className='flex gap-2 my-3 mx-5 sm:mx-0'>
+                      <WatchPrevBtn />
+                      <WatchNextBtn />
+                    </div>
                   </div>
+                  <hr className='h-0.5 w-full bg-gray-800/30 text-white' />
                 </div>
-                <hr className='h-0.5 w-full bg-gray-800/30 text-white' />
               </div>
-            </div>
+            )}
+
             <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]'>
               {/* description */}
               {series && (
@@ -96,7 +96,8 @@ const WatchTV = () => {
             </div>
           </main>
         </div>
-        <div className='secondary w-[400px] flex-shrink-0   '>
+        {/* Sidebar */}
+        <div className='secondary w-[400px] flex-shrink-0'>
           <div className='sidebar bg-[#1f1f1f] h-[calc(100vh-100px)] flex flex-col sticky top-[80px] rounded-lg'>
             <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
               <div className='server-selection mb-[16px]'>
