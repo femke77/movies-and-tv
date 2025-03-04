@@ -2,49 +2,49 @@
 //   useTVSeasonEpisodes,
 //   useWatchDetails,
 // } from '../hooks/useItemOrWatchDetail';
-import { useParams } from "react-router-dom";
-import { useWatchDetails } from "../../hooks/useItemOrWatchDetail";
-import WatchDescription from "../../components/WatchDescription";
-import BackButton from "../../components/BackBtn";
-import FullscreenBtn from "../../components/FullScreenBtn";
-import WatchPrevBtn from "../../components/WatchPrevBtn";
-import WatchNextBtn from "../../components/WatchNextBtn";
-import ListBoxComp from "../../components/ListBox";
-import serverData from "../../utils/data/servers.json";
-import { useState } from "react";
-import {Settings} from 'lucide-react'
+import { useParams } from 'react-router-dom';
+import { useWatchDetails } from '../../hooks/useItemOrWatchDetail';
+import WatchDescription from '../../components/WatchDescription';
+import BackButton from '../../components/BackBtn';
+import FullscreenBtn from '../../components/FullScreenBtn';
+import WatchPrevBtn from '../../components/WatchPrevBtn';
+import WatchNextBtn from '../../components/WatchNextBtn';
+import ListBoxComp from '../../components/ListBox';
+import serverData from '../../utils/data/servers.json';
+import { useState } from 'react';
+import { Settings } from 'lucide-react';
 const WatchTV = () => {
-  const {servers} = serverData;
+  const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();
   const [selectedServer, setSelectedServer] = useState(servers[0].name);
-  const { data: series } = useWatchDetails("tv", series_id ?? "");
+  const { data: series } = useWatchDetails('tv', series_id ?? '');
   console.log(series);
 
   return (
-    <div className="min-h-screen page pt-[60px]">
-      <div className="flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto">
-        <div className="primary flex-1 w-full lg:max-w-[calc(100%-424px)]">
-          <header className="flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]">
+    <div className='min-h-screen page pt-[60px]'>
+      <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
+        <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
+          <header className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
               <BackButton />
             </div>
             {series && (
               <p
-                className="font-bold truncate text-ellipsis mx-6"
+                className='font-bold truncate text-ellipsis mx-6'
                 title={series.original_name}
               >
-                {series.original_name || ""}
+                {series.original_name || ''}
               </p>
             )}
 
             <div>
-              <FullscreenBtn elementId="video-player" />
+              <FullscreenBtn elementId='video-player' />
             </div>
           </header>
           <main>
             <div
-              id="video-player"
-              className="relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]"
+              id='video-player'
+              className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'
             >
               {/* <iframe
                   className="absolute top-0 left-0 w-full h-full "
@@ -55,62 +55,66 @@ const WatchTV = () => {
                 ></iframe> */}
             </div>
 
-            <div className="rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]">
+            <div className='rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]'>
               {/* player controls (for tv) */}
-              <div className="flex flex-col gap-2 w-full py-2">
-                <div className="flex justify-center  sm:justify-between items-center flex-wrap">
-                  <p className="text-[#fff9] flex mx-5 sm:mx-0">
-                    Current:{" "}
-                    <span className="text-white ml-3">
-                      Season{" "}
+              <div className='flex flex-col gap-2 w-full py-2'>
+                <div className='flex justify-center  sm:justify-between items-center flex-wrap'>
+                  <p className='text-[#fff9] flex mx-5 sm:mx-0'>
+                    Current:{' '}
+                    <span className='text-white ml-3'>
+                      Season{' '}
                       {
                         series?.episodes?.[series.season_number - 1]
                           .season_number
-                      }{" "}
-                      &#x2022; Episode{" "}
+                      }{' '}
+                      &#x2022; Episode{' '}
                       {
                         series?.episodes?.[series.season_number - 1]
                           ?.episode_number
                       }
                     </span>
                   </p>
-                  <div className="flex gap-2 my-3 mx-5 sm:mx-0">
+                  <div className='flex gap-2 my-3 mx-5 sm:mx-0'>
                     <WatchPrevBtn />
                     <WatchNextBtn />
                   </div>
                 </div>
-                <hr className="h-0.5 w-full bg-gray-800/30 text-white" />
+                <hr className='h-0.5 w-full bg-gray-800/30 text-white' />
               </div>
             </div>
-            <div className="rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]">
+            <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]'>
               {/* description */}
               {series && (
                 <WatchDescription
                   title={series.original_name}
                   rt={series.episode_run_time?.[0]}
                   date={series.first_air_date}
-                  overview={series.episodes[series.season_number-1].overview}
+                  overview={series.episodes[series.season_number - 1].overview}
                 />
               )}
             </div>
           </main>
         </div>
-        <div className="secondary w-[400px] flex-shrink-0   ">
-          <div className="sidebar bg-[#1f1f1f] h-[calc(100vh-100px)] flex flex-col sticky top-[80px] rounded-lg">
-            <div className="sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]">
-              <div className="server-selection mb-[16px]">
+        <div className='secondary w-[400px] flex-shrink-0   '>
+          <div className='sidebar bg-[#1f1f1f] h-[calc(100vh-100px)] flex flex-col sticky top-[80px] rounded-lg'>
+            <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
+              <div className='server-selection mb-[16px]'>
                 {/* server selection select here */}
                 <ListBoxComp
-                title={<div className="flex items-center"><Settings size={20} className="mr-4" color="#ffffff" /><p>Change Server</p></div>}
-                selectedOption={selectedServer}
-                setSelectedOption={setSelectedServer}
-                availableOptions={servers}
-
+                  title={
+                    <div className='flex items-center'>
+                      <Settings size={20} className='mr-4' color='#ffffff' />
+                      <p>Change Server</p>
+                    </div>
+                  }
+                  selectedOption={selectedServer}
+                  setSelectedOption={setSelectedServer}
+                  availableOptions={servers}
                 />
               </div>
-              <div className="season-nav">{/* season nav here */}</div>
+              <div className='season-nav'>{/* season nav here */}</div>
             </div>
-            <div className="episode-list">{/* episode list here */}</div>
+            <div className='episode-list'>{/* episode list here */}</div>
           </div>
         </div>
       </div>
