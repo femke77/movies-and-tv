@@ -12,9 +12,9 @@ import WatchNextBtn from "../../components/WatchNextBtn";
 import ListBoxComp from "../../components/ListBox";
 import serverData from "../../utils/data/servers.json";
 import { useState } from "react";
-import {Settings} from 'lucide-react'
+import { Settings } from "lucide-react";
 const WatchTV = () => {
-  const {servers} = serverData;
+  const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();
   const [selectedServer, setSelectedServer] = useState(servers[0].name);
   const { data: series } = useWatchDetails("tv", series_id ?? "");
@@ -89,7 +89,7 @@ const WatchTV = () => {
                   title={series.original_name}
                   rt={series.episode_run_time?.[0]}
                   date={series.first_air_date}
-                  overview={series.episodes[series.season_number-1].overview}
+                  overview={series.episodes[series.season_number - 1].overview}
                 />
               )}
             </div>
@@ -99,13 +99,17 @@ const WatchTV = () => {
           <div className="sidebar bg-[#1f1f1f] h-[calc(100vh-100px)] flex flex-col sticky top-[80px] rounded-lg">
             <div className="sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]">
               <div className="server-selection mb-[16px]">
-                {/* server selection select here */}
+         
                 <ListBoxComp
-                title={<div className="flex items-center"><Settings size={20} className="mr-4" color="#ffffff" /><p>Change Server</p></div>}
-                selectedOption={selectedServer}
-                setSelectedOption={setSelectedServer}
-                availableOptions={servers}
-
+                  title={
+                    <div className="flex items-center">
+                      <Settings size={20} className="mr-4" color="#ffffff" />
+                      <p>Change Server</p>
+                    </div>
+                  }
+                  selectedOption={selectedServer}
+                  setSelectedOption={setSelectedServer}
+                  availableOptions={servers}
                 />
               </div>
               <div className="season-nav">{/* season nav here */}</div>
