@@ -23,7 +23,7 @@ const WatchMovie = () => {
           <header className="flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]">
             <div>
               <button
-                className="back-button flex"
+                className="back-button flex hover:cursor-pointer"
                 onClick={() => history.back()}
               >
                 <svg
@@ -46,7 +46,7 @@ const WatchMovie = () => {
             </div>
             {movie && <p className="font-bold">{movie.title}</p>}
 
-            <button className="w-[52px] pl-3" onClick={()=>goFullScreen(document.getElementById("video-player"))}>
+            <button className="w-[52px] pl-3 hover:cursor-pointer" onClick={()=>goFullScreen(document.getElementById("video-player"))}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -68,13 +68,13 @@ const WatchMovie = () => {
           </header>
           <main>
             <div id="video-player" className="relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]">
-              <iframe
+              {/* <iframe
                   className="absolute top-0 left-0 w-full h-full "
                   width="100%"
                   height="100%"
                   src={`https://vidsrc.xyz/embed/movie/${movie_id}`}
                   allowFullScreen
-                ></iframe>
+                ></iframe> */}
             </div>
 
             {/* <div className="rounded-lg flex align-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]"> */}

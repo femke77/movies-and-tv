@@ -33,8 +33,7 @@ export const queryClient = new QueryClient({
     },
   },
 });
-  queryClient.removeQueries({ queryKey: ["trending-movies"] });
-  queryClient.removeQueries({ queryKey: ["popular-movies"] });
+
 const router = createBrowserRouter([
   {
     path: '/',

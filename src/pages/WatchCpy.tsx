@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import { useWatchDetails } from "../hooks/useItemOrWatchDetail";
-import WatchDescription from "../components/WatchDescription";
+// import { useWatchDetails } from "../hooks/useItemOrWatchDetail";
+// import WatchDescription from "../components/WatchDescription";
 
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
-  const { data: movie } = useWatchDetails("movie", movie_id ?? "");
+  // const { data: movie } = useWatchDetails("movie", movie_id ?? "");
 
   return (
     <div className="mt-24 flex flex-wrap ">
