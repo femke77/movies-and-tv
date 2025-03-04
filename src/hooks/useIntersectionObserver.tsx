@@ -12,7 +12,7 @@ export const useIntersectionObserver = (targetId: string) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.0, rootMargin: '125px 0px' },
+      { threshold: 0.0, rootMargin: '100px 0px' },
     );
 
     const target = document.getElementById(targetId);
@@ -33,12 +33,12 @@ export const useQueryConfig = (
 ) => ({
   queryKey: [queryKey],
   queryFn,
-  staleTime: 1000 * 60 * 60 * 24, // 24 hours
-  gcTime: 1000 * 60 * 60 * 25, // 25 hours
+  staleTime: 1000 * 60 * 60 * 6, // 6 hours
+  gcTime: 1000 * 60 * 370, // 6 hours and 10 min
   refetchOnWindowFocus: false,
   refetchInterval: 1000 * 60 * 30, // 30 minutes
   enabled,
   retry: 2,
   retryDelay: (attempt: number) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
-  placeholderData: (previousData: IItem[] | undefined) => previousData ?? [],
+  // placeholderData: (previousData: IItem[] | undefined) => previousData ?? [],
 });

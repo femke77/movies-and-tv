@@ -3,7 +3,7 @@ import { useInfiniteDiscoverQuery } from '../hooks/useSearchAndDiscover';
 import GenreSelector from './GenreSelector';
 import Explore from './ExploreDisplay';
 import { IGenre } from '../interfaces/IGenre';
-import SortByListbox from './SortByListbox';
+import SortByListbox from './ListBox';
 
 // TODO make sure explore and item card really need to be memoized
 interface MediaListContainerProps {
@@ -74,11 +74,11 @@ const MediaListContainer = ({
         <h2 className='text-[1.75rem] font-semibold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text   mb-6 mr-4'>
           {heading}
         </h2>
-        <div className='mr-4'>
+        <div className='mr-[50px]'>
           <SortByListbox
-            sortByOption={sortByOption}
-            setSortByOption={setSortByOption}
-            sortOptions={sortOptions}
+            selectedOption={sortByOption}
+            setSelectedOption={setSortByOption}
+            availableOptions={sortOptions}
           />
         </div>
       </div>

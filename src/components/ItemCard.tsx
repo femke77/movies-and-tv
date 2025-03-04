@@ -65,7 +65,7 @@ const ItemCard = ({
   });
 
   const PosterPlaceHolder = () => (
-    <div className='w-full h-full bg-gray-900 absolute inset-0 z-[1] shimmer-effect' />
+    <div className='w-full h-full bg-gray-900 absolute inset-0 z-[1]' />
   );
 
   // Function to determine the correct text size class

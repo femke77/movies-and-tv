@@ -2,11 +2,9 @@ import CarouselContainer from '../CarouselContainer';
 import { useTrendingMovies } from '../../hooks/useTrending';
 
 import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
-import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 
 const TrendingMovies = () => {
-  const shouldFetch = useIntersectionObserver('trending-section');
-  const { data: movies = [], isLoading, isFetching } = useTrendingMovies();
+  const { data: movies = [], isLoading } = useTrendingMovies();
 
   return (
     <div className='min-h-[350px]' id='trending-section'>
@@ -14,14 +12,14 @@ const TrendingMovies = () => {
         Trending Movies Today 🔥
       </h2>
 
-      {!shouldFetch || isLoading || isFetching ? (
+      {isLoading && movies.length === 0 ? (
         <div className='flex gap-3 overflow-hidden'>
           {Array.from({ length: 6 }).map((_, i) => (
             <ItemCardSkeleton key={i} />
           ))}
         </div>
       ) : (
-        <CarouselContainer items={movies} itemType='movie' />
+        <CarouselContainer items={movies || []} itemType='movie' />
       )}
     </div>
   );
