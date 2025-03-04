@@ -77,11 +77,11 @@ const WatchMovie = () => {
                 ></iframe>
             </div>
 
-            <div className="rounded-lg flex align-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]">
-              {/* player controls */}
+            {/* <div className="rounded-lg flex align-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]"> */}
+              {/* player controls (for tv) */}
 
-              <hr className="h-0.5 w-full bg-gray-800/30 text-white" />
-            </div>
+              {/* <hr className="h-0.5 w-full bg-gray-800/30 text-white" /> */}
+            {/* </div> */}
             <div className="rounded-lg bg-[#1f1f1f]  border-[#2f2f2f] p-[24px] mb-[24px]">
               {/* description */}
               {movie && (

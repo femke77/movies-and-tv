@@ -14,7 +14,7 @@ const TrendingMovies = () => {
         Trending Movies Today 🔥
       </h2>
 
-      {!shouldFetch || isLoading || isFetching ? (
+      {!shouldFetch || isLoading || (isFetching && movies.length === 0)? (
         <div className='flex gap-3 overflow-hidden'>
           {Array.from({ length: 6 }).map((_, i) => (
             <ItemCardSkeleton key={i} />
