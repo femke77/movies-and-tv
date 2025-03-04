@@ -24,7 +24,7 @@ const ItemDetailSkeleton = lazy(
   () => import('./components/LoadingSkels/ItemDetailSkeleton.tsx'),
 );
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
@@ -33,7 +33,8 @@ const queryClient = new QueryClient({
     },
   },
 });
-
+  queryClient.removeQueries({ queryKey: ["trending-movies"] });
+  queryClient.removeQueries({ queryKey: ["popular-movies"] });
 const router = createBrowserRouter([
   {
     path: '/',
