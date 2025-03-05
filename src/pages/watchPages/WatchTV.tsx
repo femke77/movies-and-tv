@@ -16,7 +16,7 @@ import { Settings } from "lucide-react";
 import SeasonNavigation from "../../components/SeasonNavigation";
 
 const WatchTV = () => {
-  
+
   const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();
   const [selectedServer, setSelectedServer] = useState(servers[0].name);
@@ -85,6 +85,7 @@ const WatchTV = () => {
                       <WatchPrevBtn
                       selectedEpisode={selectedEpisode}
                       setSelectedEpisode={setSelectedEpisode}
+                      selectedSeason={selectedSeason}
                       />
                       <WatchNextBtn 
                       selectedEpisode={selectedEpisode}

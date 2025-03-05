@@ -1,14 +1,16 @@
 const WatchPrevBtn = ({  selectedEpisode,
-  setSelectedEpisode,}:
+  setSelectedEpisode,selectedSeason}:
 {
   selectedEpisode: number;
   setSelectedEpisode: (episode: any) => void;
+  selectedSeason: number;
 }) => {
 
   return (
     <button
-      className='back-button flex hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px]'
+      className={`back-button flex hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] ${selectedSeason === 1 && selectedEpisode === 1 ? 'opacity-50' : ''}`}
       onClick={()=>setSelectedEpisode(selectedEpisode - 1)}
+      disabled={selectedSeason === 1 && selectedEpisode === 1}
     
     >
       <svg
