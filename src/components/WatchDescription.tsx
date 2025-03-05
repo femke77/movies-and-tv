@@ -57,7 +57,7 @@ const WatchDescription = ({
           <p className='ml-2'>{rt || '0'} min</p>
         </div>
       </div>
-      <p className='my-2'>{overview || 'No synopsis available'}</p>
+      <p className='my-2'>{overview || ''}</p>
     </div>
   );
 };
