@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/SeasonNavigation';
 import Episode from '../../components/Episode';
+import EpisodeList from '../../components/EpisodeList';
 
 // TODO look into the flash of rerending when the api fetches the next season.
 // FIXME This needs to be more componentized
@@ -129,10 +130,10 @@ const WatchTV = () => {
         </div>
         {/* Sidebar */}
         <div className='secondary w-[400px] flex-shrink-0'>
-          <div className='sidebar bg-[#1f1f1f] h-[calc(100vh-100px)] flex flex-col sticky top-[80px] rounded-lg'>
+          <div className='sidebar bg-[#1f1f1f] max-h-[800px] flex flex-col  rounded-lg'>
             <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
               <div className='server-selection mb-[16px]'>
-                {/* server selection select here */}
+                {/* server selection */}
                 <ListBoxComp
                   title={
                     <div className='flex items-center'>
@@ -155,11 +156,10 @@ const WatchTV = () => {
                 />
               </div>
             </div>
-            <div className='episode-list'>{/* episode list here */}
+            <div className='episode-list'>
+              {/* episode list here */}
               {episodes && (
-              <Episode 
-                episode={episodes?.episodes?.[selectedEpisode - 1]}
-              />)}
+              <EpisodeList episodes={episodes.episodes} />)}
             </div>
           </div>
         </div>

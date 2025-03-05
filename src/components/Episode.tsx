@@ -6,9 +6,9 @@ const Episode = ({ episode }: { episode: IEpisode }) => {
     <div className="flex text-[12px] bg-[#1f1f1f]  rounded-lg p-2 w-full border border-[#303030]">
       <div className="w-[160px] h-[90px] relative overflow-hidden rounded-lg ml-3">
       <img
-        src={`https://image.tmdb.org/t/p/w300${episode?.still_path}`}
+        src={episode?.still_path?`https://image.tmdb.org/t/p/w300${episode?.still_path}` : '/noimage2.webp'}
         alt={episode?.name}
-        className="h-full w-full object-cover"
+        className={`h-full w-full object-cover ${episode?.still_path ? '' : 'filter grayscale-50'}`}
       /></div>
       <div className="flex flex-col min-w-0 px-4 w-1/2">
         <h1 className="text-white text-[14px] pb-1">{episode?.name}</h1>
