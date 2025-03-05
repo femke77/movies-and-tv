@@ -3,7 +3,10 @@
 //   useWatchDetails,
 // } from '../hooks/useItemOrWatchDetail';
 import { useParams } from "react-router-dom";
-import { useWatchDetails, useTVSeasonEpisodes } from "../../hooks/useItemOrWatchDetail";
+import {
+  useWatchDetails,
+  useTVSeasonEpisodes,
+} from "../../hooks/useItemOrWatchDetail";
 import WatchDescription from "../../components/WatchDescription";
 import BackButton from "../../components/BackBtn";
 import FullscreenBtn from "../../components/FullScreenBtn";
@@ -16,7 +19,6 @@ import { Settings } from "lucide-react";
 import SeasonNavigation from "../../components/SeasonNavigation";
 
 const WatchTV = () => {
-
   const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();
   const [selectedServer, setSelectedServer] = useState(servers[0].name);
@@ -24,14 +26,16 @@ const WatchTV = () => {
   const [selectedEpisode, setSelectedEpisode] = useState(1);
 
   const { data: series } = useWatchDetails("tv", series_id ?? "");
-  const { data: episodes=[] } = useTVSeasonEpisodes(series_id?? "", String(selectedSeason));
+  const { data: episodes } = useTVSeasonEpisodes(
+    series_id ?? "",
+    String(selectedSeason)
+  );
 
   console.log(series);
   console.log(episodes);
-  console.log(selectedEpisode);
+  console.log("selected Episode",selectedEpisode);
+  console.log("selected Season",selectedSeason);
   
-
- 
 
   return (
     <div className="min-h-screen page pt-[60px]">
@@ -75,21 +79,23 @@ const WatchTV = () => {
                     <p className="text-[#fff9] flex mx-5 sm:mx-0">
                       Current:{" "}
                       <span className="text-white ml-3">
-                        Season{" "}
-                        {selectedSeason}{" "}
-                        &#x2022; Episode{" "}
+                        Season {selectedSeason} &#x2022; Episode{" "}
                         {selectedEpisode}
                       </span>
                     </p>
                     <div className="flex gap-2 my-3 mx-5 sm:mx-0">
                       <WatchPrevBtn
-                      selectedEpisode={selectedEpisode}
-                      setSelectedEpisode={setSelectedEpisode}
-                      selectedSeason={selectedSeason}
+                        selectedEpisode={selectedEpisode}
+                        setSelectedEpisode={setSelectedEpisode}
+                        selectedSeason={selectedSeason}
                       />
-                      <WatchNextBtn 
-                      selectedEpisode={selectedEpisode}
-                      setSelectedEpisode={setSelectedEpisode}
+                      <WatchNextBtn
+                        selectedEpisode={selectedEpisode}
+                        setSelectedEpisode={setSelectedEpisode}
+                        selectedSeason={selectedSeason}
+                        setSelectedSeason={setSelectedSeason}
+                        numSeasons={series.number_of_seasons}
+                        currentSeasonLength={episodes?.episodes?.length || 0} 
                       />
                     </div>
                   </div>
@@ -138,10 +144,7 @@ const WatchTV = () => {
                 />
               </div>
             </div>
-            <div className="episode-list">
-              {/* episode list here */}
-              
-              </div>
+            <div className="episode-list">{/* episode list here */}</div>
           </div>
         </div>
       </div>
