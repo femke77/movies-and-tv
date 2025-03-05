@@ -13,7 +13,6 @@ const WatchNextBtn = ({
   numSeasons: number;
   currentSeasonLength: number;
 }) => {
-
   const handleNextEpisodeRequest = () => {
     // switching to next season if available
     if (
@@ -31,7 +30,7 @@ const WatchNextBtn = ({
     ) {
       setSelectedEpisode(selectedEpisode + 1);
       // disable button and stopping if last episode of last season
-    } 
+    }
   };
 
   return (

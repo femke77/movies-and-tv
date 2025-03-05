@@ -1,5 +1,5 @@
 export interface IEpisode {
-  id: number ;
+  id: number;
   name: string;
   overview: string;
   runtime: number;

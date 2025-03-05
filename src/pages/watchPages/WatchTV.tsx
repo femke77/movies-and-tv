@@ -36,7 +36,7 @@ const WatchTV = () => {
 
   useEffect(() => {
     if (episodes) {
-      console.log('episodes', episodes);
+      // console.log('episodes', episodes);
 
       // Shift previous season length when moving to a new season
       setPreviousSeasonLength(currentSeasonLength);
@@ -159,8 +159,7 @@ const WatchTV = () => {
             </div>
             <div className='episode-list'>
               {/* episode list here */}
-              {episodes && (
-              <EpisodeList episodes={episodes?.episodes} />)}
+              {episodes && <EpisodeList episodes={episodes?.episodes} />}
             </div>
           </div>
         </div>
