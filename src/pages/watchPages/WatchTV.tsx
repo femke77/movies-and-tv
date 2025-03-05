@@ -1,7 +1,3 @@
-// import {
-//   useTVSeasonEpisodes,
-//   useWatchDetails,
-// } from '../hooks/useItemOrWatchDetail';
 import { useParams } from "react-router-dom";
 import {
   useWatchDetails,
@@ -14,7 +10,7 @@ import WatchPrevBtn from "../../components/WatchPrevBtn";
 import WatchNextBtn from "../../components/WatchNextBtn";
 import ListBoxComp from "../../components/ListBox";
 import serverData from "../../utils/data/servers.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Settings } from "lucide-react";
 import SeasonNavigation from "../../components/SeasonNavigation";
 
@@ -24,6 +20,8 @@ const WatchTV = () => {
   const [selectedServer, setSelectedServer] = useState(servers[0].name);
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
+  const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
+  const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
 
   const { data: series } = useWatchDetails("tv", series_id ?? "");
   const { data: episodes } = useTVSeasonEpisodes(
@@ -31,11 +29,16 @@ const WatchTV = () => {
     String(selectedSeason)
   );
 
-  console.log(series);
-  console.log(episodes);
-  console.log("selected Episode",selectedEpisode);
-  console.log("selected Season",selectedSeason);
-  
+  useEffect(() => {
+    if (episodes) {
+      // console.log("episodes", episodes);
+      
+      // Shift previous season length when moving to a new season
+      setPreviousSeasonLength(currentSeasonLength);
+      setCurrentSeasonLength(episodes.episodes.length);
+    }
+  }, [selectedSeason, episodes]);
+
 
   return (
     <div className="min-h-screen page pt-[60px]">
@@ -83,21 +86,25 @@ const WatchTV = () => {
                         {selectedEpisode}
                       </span>
                     </p>
-                    <div className="flex gap-2 my-3 mx-5 sm:mx-0">
-                      <WatchPrevBtn
-                        selectedEpisode={selectedEpisode}
-                        setSelectedEpisode={setSelectedEpisode}
-                        selectedSeason={selectedSeason}
-                      />
-                      <WatchNextBtn
-                        selectedEpisode={selectedEpisode}
-                        setSelectedEpisode={setSelectedEpisode}
-                        selectedSeason={selectedSeason}
-                        setSelectedSeason={setSelectedSeason}
-                        numSeasons={series.number_of_seasons}
-                        currentSeasonLength={episodes?.episodes?.length || 0} 
-                      />
-                    </div>
+                    {episodes && (
+                      <div className="flex gap-2 my-3 mx-5 sm:mx-0">
+                        <WatchPrevBtn
+                          selectedEpisode={selectedEpisode}
+                          setSelectedEpisode={setSelectedEpisode}
+                          selectedSeason={selectedSeason}
+                          setSelectedSeason={setSelectedSeason}
+                          previousSeasonLength={previousSeasonLength}
+                        />
+                        <WatchNextBtn
+                          selectedEpisode={selectedEpisode}
+                          setSelectedEpisode={setSelectedEpisode}
+                          selectedSeason={selectedSeason}
+                          setSelectedSeason={setSelectedSeason}
+                          numSeasons={series.number_of_seasons}
+                          currentSeasonLength={currentSeasonLength}
+                        />
+                      </div>
+                    )}
                   </div>
                   <hr className="h-0.5 w-full bg-gray-800/30 text-white" />
                 </div>
@@ -140,7 +147,8 @@ const WatchTV = () => {
                 <SeasonNavigation
                   selectedSeason={selectedSeason}
                   setSelectedSeason={setSelectedSeason}
-                  numSeasons={series?.number_of_seasons || 0}
+                  numSeasons={series?.number_of_seasons}
+                  setSelectedEpisode={setSelectedEpisode}
                 />
               </div>
             </div>

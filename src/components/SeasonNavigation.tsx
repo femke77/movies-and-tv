@@ -2,17 +2,30 @@ const SeasonNavigation = ({
   selectedSeason,
   setSelectedSeason,
   numSeasons,
+  setSelectedEpisode
 }: {
   selectedSeason: number;
   setSelectedSeason: (_season: number) => void;
   numSeasons: number;
+  setSelectedEpisode: (_episode: number) => void;
 }) => {
+
+  const handleNextSeasonRequest = () => {
+    if (selectedSeason === numSeasons) return
+    setSelectedSeason(selectedSeason+1);
+    setSelectedEpisode(1);
+  };
+  const handlePrevSeasonRequest = () => {
+    if (selectedSeason === 1) return
+    setSelectedSeason(selectedSeason-1);
+    setSelectedEpisode(1);
+  };
   return (
     <div className="w-full flex items-center justify-around">
       <button
         className={`hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] ${selectedSeason === 1 ? 'opacity-50' : 'opacity-100'}`}
         disabled={selectedSeason === 1}
-        onClick={() => setSelectedSeason(selectedSeason - 1)}
+        onClick={handlePrevSeasonRequest}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +49,7 @@ const SeasonNavigation = ({
       <button
         className={`hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] ${selectedSeason === numSeasons ? 'opacity-50' : 'opacity-100'}`}
         disabled={selectedSeason === numSeasons}
-        onClick={() => setSelectedSeason(selectedSeason + 1)}
+        onClick={handleNextSeasonRequest}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

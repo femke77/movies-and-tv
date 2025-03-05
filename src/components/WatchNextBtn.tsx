@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 
 const WatchNextBtn = ({
   selectedEpisode,
@@ -17,10 +17,7 @@ const WatchNextBtn = ({
 }) => {
   console.log(selectedEpisode, currentSeasonLength, numSeasons);
 
-  const [isLastEpisode, setIsLastEpisode] = useState(false);
-  //  if selected episode is the last episode of the season AND there is another season, swtich to the next season, else disable
 
-  // TODO make it go to next season if last episode of current season
 
   const handleNextEpisodeRequest = () => {
     // switching to next season if available
@@ -30,22 +27,28 @@ const WatchNextBtn = ({
     ) {
       setSelectedSeason(selectedSeason + 1);
       setSelectedEpisode(1);
-    } 
-    // stopping if last episode of last season
+    }
+    // continuing to next episode
     else if (
       !(
         selectedEpisode === currentSeasonLength && selectedSeason === numSeasons
       )
     ) {
       setSelectedEpisode(selectedEpisode + 1);
-    } else setIsLastEpisode(true);
+      // disable button and stopping if last episode of last season
+    } else {
+      
+    }
   };
 
   return (
     <button
-      className={`next-button flex hover:cursor-pointer mx-2 bg-gray-700/50 p-2 px-4 pl-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] ${isLastEpisode ? 'opacity-50': ''} `}
+      className={`next-button flex hover:cursor-pointer mx-2 bg-gray-700/50 p-2 px-4 pl-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] ${selectedEpisode === currentSeasonLength && selectedSeason === numSeasons ? 'opacity-50': ''} `}
       onClick={handleNextEpisodeRequest}
-      disabled={isLastEpisode}
+      disabled={
+        selectedEpisode === currentSeasonLength && selectedSeason === numSeasons
+      }
+
     >
       <p className="text-sm mr-1"> Next</p>
       <svg
