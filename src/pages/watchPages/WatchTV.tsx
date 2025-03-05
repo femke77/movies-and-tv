@@ -15,6 +15,8 @@ import { Settings } from "lucide-react";
 import SeasonNavigation from "../../components/SeasonNavigation";
 
 // TODO look into the flash of rerending when the api fetches the next season. 
+// FIXME This needs to be more componentized 
+
 const WatchTV = () => {
   const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();

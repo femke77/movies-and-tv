@@ -17,7 +17,12 @@ const WatchMovie = () => {
             <div>
               <BackButton />
             </div>
-            {movie && <p className='font-bold'>{movie.title || ''}</p>}
+            {movie && <p
+                className="font-bold truncate text-ellipsis mx-6"
+                title={movie.title}
+              >
+                {movie.title || ""}
+              </p>}
 
             <div>
               <FullscreenBtn elementId='video-player' />
@@ -37,25 +42,21 @@ const WatchMovie = () => {
                 ></iframe> */}
             </div>
 
-            {/* <div className="rounded-lg flex align-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]"> */}
-            {/* player controls (for tv) */}
 
-            {/* <hr className="h-0.5 w-full bg-gray-800/30 text-white" /> */}
-            {/* </div> */}
             <div className='rounded-lg bg-[#1f1f1f]  border-[#2f2f2f] p-[24px] mb-[24px]'>
               {/* description */}
               {movie && (
                 <WatchDescription
-                  title={movie.title}
-                  rt={movie.runtime}
-                  date={movie.release_date}
-                  overview={movie.overview}
+                  title={movie?.title}
+                  rt={movie?.runtime}
+                  date={movie?.release_date}
+                  overview={movie?.overview || 'No summary available'}
                 />
               )}
             </div>
           </main>
         </div>
-        <div className='secondary '>
+        <div className='secondary w-[400px] flex-shrink-0 '>
           {/* right side with server choices and episodes for tv*/}
         </div>
       </div>
