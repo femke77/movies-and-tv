@@ -1,11 +1,15 @@
-const WatchPrevBtn = () => {
-  const watchPrev = () => {
-    // TODO //immplement watchPrev function
-  };
+const WatchPrevBtn = ({  selectedEpisode,
+  setSelectedEpisode,}:
+{
+  selectedEpisode: number;
+  setSelectedEpisode: (episode: any) => void;
+}) => {
+
   return (
     <button
       className='back-button flex hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px]'
-      onClick={watchPrev}
+      onClick={()=>setSelectedEpisode(selectedEpisode - 1)}
+    
     >
       <svg
         xmlns='http://www.w3.org/2000/svg'
