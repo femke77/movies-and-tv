@@ -21,3 +21,9 @@ export const filterTMDBResults = (results: IItem[]) => {
     return hasValidData && !isInvalidDueToDate;
   });
 };
+
+
+export const isIphoneSafari = () => {
+  const ua = navigator.userAgent;
+  return /iPhone/i.test(ua) && /Safari/i.test(ua) && !/CriOS|FxiOS|OPiOS/i.test(ua);
+};
