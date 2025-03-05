@@ -5,4 +5,5 @@ export interface IEpisode {
   still_path: string;
   season_number: number;
   episode_number: number;
+  air_date: string;
 }

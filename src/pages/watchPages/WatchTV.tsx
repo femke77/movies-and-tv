@@ -13,6 +13,7 @@ import serverData from '../../utils/data/servers.json';
 import { useEffect, useState } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/SeasonNavigation';
+import Episode from '../../components/Episode';
 
 // TODO look into the flash of rerending when the api fetches the next season.
 // FIXME This needs to be more componentized
@@ -34,7 +35,7 @@ const WatchTV = () => {
 
   useEffect(() => {
     if (episodes) {
-      // console.log('episodes', episodes);
+      console.log('episodes', episodes);
 
       // Shift previous season length when moving to a new season
       setPreviousSeasonLength(currentSeasonLength);
@@ -154,7 +155,12 @@ const WatchTV = () => {
                 />
               </div>
             </div>
-            <div className='episode-list'>{/* episode list here */}</div>
+            <div className='episode-list'>{/* episode list here */}
+              {episodes && (
+              <Episode 
+                episode={episodes?.episodes?.[selectedEpisode - 1]}
+              />)}
+            </div>
           </div>
         </div>
       </div>
