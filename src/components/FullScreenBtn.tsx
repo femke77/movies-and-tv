@@ -2,7 +2,7 @@ const FullscreenBtn = ({ elementId }: { elementId: string }) => {
   const goFullScreen = (element: HTMLElement | null) => {
     if (element) {
       (element as HTMLElement).requestFullscreen().catch((err) => {
-        console.error('Error attempting to enable fullscreen:', err);
+        throw new Error(`Error attempting to enable full-screen mode: ${err}`);
       });
     }
   };

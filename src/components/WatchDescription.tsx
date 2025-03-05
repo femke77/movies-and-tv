@@ -58,7 +58,6 @@ const WatchDescription = ({
         </div>
       </div>
       <p className='my-2'>{overview || ''}</p>
-
     </div>
   );
 };
