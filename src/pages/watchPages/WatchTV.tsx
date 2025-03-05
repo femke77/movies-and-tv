@@ -13,7 +13,7 @@ import serverData from '../../utils/data/servers.json';
 import { useEffect, useState } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/SeasonNavigation';
-import Episode from '../../components/Episode';
+
 import EpisodeList from '../../components/EpisodeList';
 
 // TODO look into the flash of rerending when the api fetches the next season.
@@ -42,7 +42,8 @@ const WatchTV = () => {
       setPreviousSeasonLength(currentSeasonLength);
       setCurrentSeasonLength(episodes?.episodes?.length);
     }
-  }, [selectedSeason, episodes, currentSeasonLength]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSeason, episodes]);
 
   return (
     <div className='min-h-screen page pt-[60px]'>
@@ -120,9 +121,9 @@ const WatchTV = () => {
               {series && (
                 <WatchDescription
                   title={series?.original_name}
-                  rt={episodes?.episodes?.[selectedEpisode - 1].runtime}
+                  rt={episodes?.episodes?.[selectedEpisode - 1]?.runtime}
                   date={series?.first_air_date}
-                  overview={episodes?.episodes?.[selectedEpisode - 1].overview}
+                  overview={episodes?.episodes?.[selectedEpisode - 1]?.overview}
                 />
               )}
             </div>
@@ -159,7 +160,7 @@ const WatchTV = () => {
             <div className='episode-list'>
               {/* episode list here */}
               {episodes && (
-              <EpisodeList episodes={episodes.episodes} />)}
+              <EpisodeList episodes={episodes?.episodes} />)}
             </div>
           </div>
         </div>

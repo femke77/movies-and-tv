@@ -3,6 +3,7 @@ import { useWatchDetails } from '../../hooks/useItemOrWatchDetail';
 import WatchDescription from '../../components/WatchDescription';
 import BackButton from '../../components/BackBtn';
 import FullscreenBtn from '../../components/FullScreenBtn';
+import ServerList from '../../components/ServerButton';
 
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
@@ -59,6 +60,9 @@ const WatchMovie = () => {
         </div>
         <div className='secondary w-[400px] flex-shrink-0 '>
           {/* right side with server choices and episodes for tv*/}
+          <div className='sidebar bg-[#1f1f1f] max-h-[800px] flex flex-col  rounded-lg'>
+            <ServerList />
+          </div>
         </div>
       </div>
     </div>
