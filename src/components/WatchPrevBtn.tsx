@@ -16,15 +16,13 @@ const WatchPrevBtn = ({
 
  
   
-  // if previous season available, switch to last episode of previous season
   const handlePrevEpisodeRequest = () => {
-    // If on the first episode of a season other than the first season
+    // if previous season available, switch to last episode of previous season
     if (selectedEpisode === 1 && selectedSeason > 1) {
-      // Move to previous season and its last episode
       setSelectedSeason(selectedSeason - 1);
       setSelectedEpisode(previousSeasonLength);
     }
-    // If not on the first episode, move to previous episode
+
     else if (selectedEpisode > 1) {
       setSelectedEpisode(selectedEpisode - 1);
     }

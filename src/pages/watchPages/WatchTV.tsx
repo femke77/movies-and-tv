@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { Settings } from "lucide-react";
 import SeasonNavigation from "../../components/SeasonNavigation";
 
+// TODO look into the flash of rerending when the api fetches the next season. 
 const WatchTV = () => {
   const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();
@@ -31,7 +32,7 @@ const WatchTV = () => {
 
   useEffect(() => {
     if (episodes) {
-      // console.log("episodes", episodes);
+      console.log("episodes", episodes);
       
       // Shift previous season length when moving to a new season
       setPreviousSeasonLength(currentSeasonLength);
@@ -115,10 +116,10 @@ const WatchTV = () => {
               {/* description */}
               {series && (
                 <WatchDescription
-                  title={series.original_name}
-                  rt={series.episodes?.[0].runtime}
-                  date={series.first_air_date}
-                  overview={series.episodes[0].overview}
+                  title={series?.original_name}
+                  rt={episodes?.episodes?.[selectedEpisode-1].runtime}
+                  date={series?.first_air_date}
+                  overview={episodes?.episodes?.[selectedEpisode-1].overview}
                 />
               )}
             </div>
