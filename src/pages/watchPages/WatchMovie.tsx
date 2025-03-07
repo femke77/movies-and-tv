@@ -4,11 +4,12 @@ import WatchDescription from '../../components/WatchDescription';
 import BackButton from '../../components/BackBtn';
 import FullscreenBtn from '../../components/FullScreenBtn';
 import ServerList from '../../components/ServerButton';
-import { isIphoneSafari } from '../../utils/helpers';
+import { isIphoneSafari, isSafariOnIPad } from '../../utils/helpers';
+
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useWatchDetails('movie', movie_id ?? '');
-  // console.log(movie);
+
 
   return (
     <div className='min-h-screen  pt-[60px]'>
@@ -27,7 +28,7 @@ const WatchMovie = () => {
               </p>
             )}
 
-            <div className={`${isIphoneSafari() ? 'invisible' : ''}`}>     
+            <div className={`${isIphoneSafari() || isSafariOnIPad() ? 'invisible' : ''}`}>     
               <FullscreenBtn elementId='iframe' />
             </div>
           </div>

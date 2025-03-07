@@ -13,7 +13,7 @@ import serverData from "../../utils/data/servers.json";
 import { useEffect, useState } from "react";
 import { Settings } from "lucide-react";
 import SeasonNavigation from "../../components/SeasonNavigation";
-import { isIphoneSafari } from "../../utils/helpers";
+import { isIphoneSafari, isSafariOnIPad } from "../../utils/helpers";
 import EpisodeList from "../../components/EpisodeList";
 
 // TODO look into the flash of rerending when the api fetches the next season.
@@ -36,12 +36,8 @@ const WatchTV = () => {
     String(selectedSeason)
   );
 
-  console.log(selectedEpisode, selectedSeason);
-  
   useEffect(() => {
     if (episodes) {
-
-      
       // Shift previous season length when moving to a new season
       setPreviousSeasonLength(currentSeasonLength);
       setCurrentSeasonLength(episodes?.episodes?.length);
@@ -70,7 +66,11 @@ const WatchTV = () => {
               </p>
             )}
 
-            <div className={`${isIphoneSafari() ? "invisible" : ""}`}>
+            <div
+              className={`${
+                isIphoneSafari() || isSafariOnIPad() ? "invisible" : ""
+              }`}
+            >
               <FullscreenBtn elementId="video-player" />
             </div>
           </div>
@@ -98,6 +98,11 @@ const WatchTV = () => {
                         Season {selectedSeason} &#x2022; Episode{" "}
                         {selectedEpisode}
                       </span>
+                      {episodes && (
+                        <span className="ml-3">
+                          {episodes?.episodes?.[selectedEpisode - 1].name}
+                        </span>
+                      )}
                     </p>
                     {episodes && (
                       <div className="flex gap-2 my-3 mx-5 sm:mx-0">
@@ -167,9 +172,13 @@ const WatchTV = () => {
             </div>
             <div className="episode-list">
               {/* episode list here */}
-              {episodes && <EpisodeList episodes={episodes?.episodes} 
-              setSelectedEpisode={setSelectedEpisode} setSelectedSeason={setSelectedSeason}
-              />}
+              {episodes && (
+                <EpisodeList
+                  episodes={episodes?.episodes}
+                  setSelectedEpisode={setSelectedEpisode}
+                  setSelectedSeason={setSelectedSeason}
+                />
+              )}
             </div>
           </div>
         </div>
