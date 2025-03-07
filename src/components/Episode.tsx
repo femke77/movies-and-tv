@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 
 const Episode = ({ episode }: { episode: IEpisode }) => {
   return (
-    <div className='flex text-[12px] bg-[#1f1f1f] rounded-lg p-2 w-full border border-[#303030]'>
+    <div className='flex flex-wrap sm:flex-nowrap text-[12px] bg-[#1f1f1f] rounded-lg p-2 w-full border border-[#303030] mb-2'>
       <div className='w-[160px] h-[90px] relative overflow-hidden rounded-lg ml-3'>
         <img
           src={
@@ -17,7 +17,8 @@ const Episode = ({ episode }: { episode: IEpisode }) => {
           className={`h-full w-full object-cover ${episode?.still_path ? '' : 'filter grayscale-50'}`}
         />
       </div>
-      <div className='flex flex-col min-w-0 px-4 w-1/2'>
+
+      <div className='flex flex-col min-w-0 px-4 w-full mt-2 sm:mt-0 sm:w-1/2'>
         <h1 className='text-white text-[14px] pb-1'>{episode?.name}</h1>
         <p className='text-gray-400 line-clamp-2 text-ellipsis'>
           {episode?.overview}
