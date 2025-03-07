@@ -27,3 +27,10 @@ export const isIphoneSafari = () => {
   const ua = navigator.userAgent;
   return /iPhone/i.test(ua) && /Safari/i.test(ua) && !/CriOS|FxiOS|OPiOS/i.test(ua);
 };
+
+export const isSafariOnIPad = () => {
+  return (
+    navigator.userAgent.includes("Macintosh") && 
+    navigator.maxTouchPoints > 1 // Ensures it's a touchscreen
+  );
+};

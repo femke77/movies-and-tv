@@ -28,15 +28,16 @@ const WatchMovie = () => {
             )}
 
             <div className={`${isIphoneSafari() ? 'invisible' : ''}`}>     
-              <FullscreenBtn elementId='video-player' />
+              <FullscreenBtn elementId='iframe' />
             </div>
           </div>
           <main>
             <div
-              id='video-player'
+           
               className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'
             >
               {/* <iframe
+                  id='iframe'
                   className="absolute top-0 left-0 w-full h-full "
                   width="100%"
                   height="100%"
@@ -58,7 +59,7 @@ const WatchMovie = () => {
             </div>
           </main>
         </div>
-        <div className='secondary w-[400px] flex-shrink-0 '>
+        <div className='secondary lg:w-[400px] lg:flex-shrink-0 '>
           {/* right side with server choices and episodes for tv*/}
           <div className='sidebar bg-[#1f1f1f] max-h-[800px] flex flex-col  rounded-lg'>
             <ServerList />

@@ -130,7 +130,7 @@ const WatchTV = () => {
           </main>
         </div>
         {/* Sidebar */}
-        <div className="secondary w-[400px] flex-shrink-0">
+        <div className="secondary lg:w-[400px] lg:flex-shrink-0">
           <div className="sidebar bg-[#1f1f1f] max-h-[800px] flex flex-col  rounded-lg">
             <div className="sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]">
               <div className="server-selection mb-[16px]">
