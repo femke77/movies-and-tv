@@ -16,9 +16,9 @@ import SeasonNavigation from "../../components/SeasonNavigation";
 import { isIphoneSafari } from "../../utils/helpers";
 import EpisodeList from "../../components/EpisodeList";
 
-
 // TODO look into the flash of rerending when the api fetches the next season.
 // FIXME This needs to be more componentized
+// FIXME url params controlled instead of state controlled would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management
 
 const WatchTV = () => {
   const { servers } = serverData;
@@ -36,10 +36,12 @@ const WatchTV = () => {
     String(selectedSeason)
   );
 
+  console.log(selectedEpisode, selectedSeason);
+  
   useEffect(() => {
     if (episodes) {
-      // console.log('episodes', episodes);
 
+      
       // Shift previous season length when moving to a new season
       setPreviousSeasonLength(currentSeasonLength);
       setCurrentSeasonLength(episodes?.episodes?.length);
@@ -165,7 +167,9 @@ const WatchTV = () => {
             </div>
             <div className="episode-list">
               {/* episode list here */}
-              {episodes && <EpisodeList episodes={episodes?.episodes}  />}
+              {episodes && <EpisodeList episodes={episodes?.episodes} 
+              setSelectedEpisode={setSelectedEpisode} setSelectedSeason={setSelectedSeason}
+              />}
             </div>
           </div>
         </div>
