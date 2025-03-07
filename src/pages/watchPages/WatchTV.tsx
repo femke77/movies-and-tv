@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   useWatchDetails,
   useTVSeasonEpisodes,
@@ -16,6 +16,7 @@ import SeasonNavigation from "../../components/SeasonNavigation";
 import { isIphoneSafari } from "../../utils/helpers";
 import EpisodeList from "../../components/EpisodeList";
 
+
 // TODO look into the flash of rerending when the api fetches the next season.
 // FIXME This needs to be more componentized
 
@@ -27,6 +28,7 @@ const WatchTV = () => {
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
   const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
+  const navigate = useNavigate();
 
   const { data: series } = useWatchDetails("tv", series_id ?? "");
   const { data: episodes } = useTVSeasonEpisodes(
@@ -44,6 +46,10 @@ const WatchTV = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSeason, episodes]);
+
+  useEffect(() => {
+    navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
+  }, [selectedSeason, selectedEpisode]);
 
   return (
     <div className="min-h-screen page pt-[60px]">
@@ -159,7 +165,7 @@ const WatchTV = () => {
             </div>
             <div className="episode-list">
               {/* episode list here */}
-              {episodes && <EpisodeList episodes={episodes?.episodes} />}
+              {episodes && <EpisodeList episodes={episodes?.episodes}  />}
             </div>
           </div>
         </div>

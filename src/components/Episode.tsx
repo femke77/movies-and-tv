@@ -1,12 +1,17 @@
 import { IEpisode } from '../interfaces/IEpisode';
 import dayjs from 'dayjs';
+import { useParams } from 'react-router-dom';
 
-// TODO episode clickable to play it, active episode should be highlighted
+// TODO episode clickable to play it
 
 const Episode = ({ episode }: { episode: IEpisode }) => {
+  
+  const {season_number, episode_number} = useParams<{season_number: string, episode_number: string}>();
+
+ 
   return (
-    <div className='flex flex-wrap sm:flex-nowrap text-[12px] bg-[#1f1f1f] rounded-lg p-2 w-full border border-[#303030] mb-2'>
-      <div className='w-[160px] h-[90px] relative overflow-hidden rounded-lg ml-3'>
+    <div className={`flex flex-wrap sm:flex-nowrap text-[12px]  rounded-lg p-2 w-full border border-[#303030] mb-2 ${episode?.episode_number === parseInt(episode_number!) && episode?.season_number === parseInt(season_number!) ? 'bg-[#303030]' : ''}`}>
+      <div className='w-[160px] h-[90px] relative overflow-hidden rounded-lg ml-3 mt-2'>
         <img
           src={
             episode?.still_path
@@ -18,7 +23,7 @@ const Episode = ({ episode }: { episode: IEpisode }) => {
         />
       </div>
 
-      <div className='flex flex-col min-w-0 px-4 w-full mt-2 sm:mt-0 sm:w-1/2'>
+      <div className='flex flex-col min-w-0 px-4 w-full sm:w-1/2 mt-2 sm:mt-0'> 
         <h1 className='text-white text-[14px] pb-1'>{episode?.name}</h1>
         <p className='text-gray-400 line-clamp-2 text-ellipsis'>
           {episode?.overview}
