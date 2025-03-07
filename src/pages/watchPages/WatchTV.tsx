@@ -81,7 +81,7 @@ const WatchTV = () => {
                   className="absolute top-0 left-0 w-full h-full "
                   width="100%"
                   height="100%"
-                  src={`https://vidsrc.xyz/embed/series/${series_id}`}
+                  src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
                   allowFullScreen
                 ></iframe> */}
             </div>
