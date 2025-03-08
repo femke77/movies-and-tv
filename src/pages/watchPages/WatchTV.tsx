@@ -15,14 +15,14 @@ import { Settings } from "lucide-react";
 import SeasonNavigation from "../../components/SeasonNavigation";
 import { isIphoneSafari, isSafariOnIPad } from "../../utils/helpers";
 import EpisodeList from "../../components/EpisodeList";
-import useAdBlocker from "../../hooks/useAdBlock";
+
 
 // TODO look into the flash of rerending when the api fetches the next season.
 // FIXME This needs to be more componentized
 // FIXME url params controlled instead of state controlled would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management
 
 const WatchTV = () => {
-  useAdBlocker();
+
   const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();
   const [selectedServer, setSelectedServer] = useState(servers[0].name);
@@ -88,8 +88,9 @@ const WatchTV = () => {
                   className="absolute top-0 left-0 w-full h-full "
                   width="100%"
                   height="100%"
-       sandbox="allow-same-origin allow-forms"
-                  src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
+                sandbox="allow-scripts allow-same-origin allow-presentation"
+                src='/api/video'
+                  // src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
                   allowFullScreen
                 ></iframe>
             </div>
