@@ -23,7 +23,7 @@ const Header = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <header>
+    <header className='bg-[#222222]'>
       <div
         ref={headerRef}
         className={clsx(

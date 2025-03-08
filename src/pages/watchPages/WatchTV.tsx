@@ -16,13 +16,11 @@ import SeasonNavigation from "../../components/SeasonNavigation";
 import { isIphoneSafari, isSafariOnIPad } from "../../utils/helpers";
 import EpisodeList from "../../components/EpisodeList";
 
-
 // TODO look into the flash of rerending when the api fetches the next season.
 // FIXME This needs to be more componentized
 // FIXME url params controlled instead of state controlled would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management
 
 const WatchTV = () => {
-
   const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();
   const [selectedServer, setSelectedServer] = useState(servers[0].name);
@@ -50,8 +48,6 @@ const WatchTV = () => {
   useEffect(() => {
     navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
   }, [selectedSeason, selectedEpisode]);
-
- 
 
   return (
     <div className="min-h-screen page pt-[60px]">
@@ -83,16 +79,18 @@ const WatchTV = () => {
               id="video-player"
               className="relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]"
             >
-              <iframe
-              id="player_iframe"
-                  className="absolute top-0 left-0 w-full h-full "
-                  width="100%"
-                  height="100%"
-                sandbox="allow-scripts allow-same-origin allow-presentation"
-                src='/api/video'
-                  // src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
-                  allowFullScreen
-                ></iframe>
+              {/* <iframe
+                id="player_iframe"
+                className="absolute top-0 left-0 w-full h-full "
+                width="100%"
+                height="100%"
+
+                sandbox="allow-scripts allow-same-origin"
+                src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
+
+                // src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
+                allowFullScreen
+              ></iframe> */}
             </div>
             {series && (
               <div className="rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]">
