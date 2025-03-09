@@ -9,9 +9,7 @@ import ScrollToTop from "./components/ScrollToTop.tsx";
 import ItemDetailSkeleton from "./components/LoadingSkels/ItemCardSkeleton.tsx";
 import ErrorPage from "./pages/404.tsx";
 import NotFound from "./pages/404.tsx";
-import Loading from "./pages/Suspense.tsx";
 
-const DMCA = lazy(() => import("./pages/DMCA.tsx"));
 const ItemDetail = lazy(() => import("./pages/ItemDetail.tsx"));
 const Results = lazy(() => import("./pages/SearchPage.tsx"));
 const MovieTopRated = lazy(() =>
@@ -26,8 +24,8 @@ const TvTopRated = lazy(() => import("./pages/tvPages/TvTopRated.tsx"));
 const TvPopular = lazy(() => import("./pages/tvPages/TvPopular.tsx"));
 const WatchMovie = lazy(() => import("./pages/watchPages/WatchMovie.tsx"));
 const WatchTV = lazy(() => import("./pages/watchPages/WatchTV.tsx"));
+const DMCA = lazy(() => import("./pages/DMCA.tsx"));
 
-// TODO need to add something better than loading to suspense fallback or make new skels for the other pages
 
 const queryClient = new QueryClient({
   defaultOptions: {

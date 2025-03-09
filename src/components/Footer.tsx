@@ -111,8 +111,14 @@ const Footer = () => {
             <Link to="/explore/movies" >
               Sci Fi
             </Link>
-            <Link to="/explore/tv" >
+            <Link to="/explore/popular" >
               Romance
+            </Link>
+            <Link to="/explore/popular" >
+              Comedy
+            </Link>
+            <Link to="/explore/popular" >
+              Crime
             </Link>
           </div>
         </div>
