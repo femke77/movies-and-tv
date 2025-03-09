@@ -14,6 +14,7 @@ export default defineConfig({
         target: 'http://localhost:3004',
         changeOrigin: true,
         secure: false,
-      }
-  },}
+      },
+    },
+  },
 });
