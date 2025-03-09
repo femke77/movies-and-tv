@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      { path: '*', element: <NotFound /> },
+
       {
         path: 'search/:query?',
         element: <Results />,
@@ -114,6 +114,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ]);
