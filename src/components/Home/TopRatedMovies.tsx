@@ -1,6 +1,6 @@
 import { useTopRatedMovies } from '../../hooks/useTopRated';
 import CarouselContainer from '../CarouselContainer';
-import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
+import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeltonHome';
 
 const TopRatedMovies = () => {
   const { data: movies = [], isLoading } = useTopRatedMovies();

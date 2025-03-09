@@ -1,7 +1,7 @@
 import CarouselContainer from '../CarouselContainer';
 import { usePopularTv } from '../../hooks/usePopular';
 
-import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
+import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeltonHome';
 const PopularTv = () => {
   const { data: shows = [], isLoading } = usePopularTv();
 

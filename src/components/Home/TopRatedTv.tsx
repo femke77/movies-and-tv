@@ -1,7 +1,7 @@
 import CarouselContainer from '../CarouselContainer';
 import { useTopRatedTv } from '../../hooks/useTopRated';
 
-import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
+import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeltonHome';
 
 const TopRatedTv = () => {
   const { data: shows = [], isLoading } = useTopRatedTv();

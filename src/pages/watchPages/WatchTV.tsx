@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   useWatchDetails,
   useTVSeasonEpisodes,
@@ -13,11 +13,12 @@ import serverData from '../../utils/data/servers.json';
 import { useEffect, useState } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/SeasonNavigation';
-
+import { isIphoneSafari, isSafariOnIPad } from '../../utils/helpers';
 import EpisodeList from '../../components/EpisodeList';
 
 // TODO look into the flash of rerending when the api fetches the next season.
 // FIXME This needs to be more componentized
+// FIXME url params controlled instead of state controlled would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management
 
 const WatchTV = () => {
   const { servers } = serverData;
@@ -27,6 +28,7 @@ const WatchTV = () => {
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
   const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
+  const navigate = useNavigate();
 
   const { data: series } = useWatchDetails('tv', series_id ?? '');
   const { data: episodes } = useTVSeasonEpisodes(
@@ -36,8 +38,6 @@ const WatchTV = () => {
 
   useEffect(() => {
     if (episodes) {
-      // console.log('episodes', episodes);
-
       // Shift previous season length when moving to a new season
       setPreviousSeasonLength(currentSeasonLength);
       setCurrentSeasonLength(episodes?.episodes?.length);
@@ -45,11 +45,15 @@ const WatchTV = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSeason, episodes]);
 
+  useEffect(() => {
+    navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
+  }, [selectedSeason, selectedEpisode]);
+
   return (
     <div className='min-h-screen page pt-[60px]'>
       <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
         <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
-          <header className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
+          <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
               <BackButton />
             </div>
@@ -62,22 +66,31 @@ const WatchTV = () => {
               </p>
             )}
 
-            <div>
+            <div
+              className={`${
+                isIphoneSafari() || isSafariOnIPad() ? 'invisible' : ''
+              }`}
+            >
               <FullscreenBtn elementId='video-player' />
             </div>
-          </header>
+          </div>
           <main>
             <div
               id='video-player'
               className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'
             >
               {/* <iframe
-                  className="absolute top-0 left-0 w-full h-full "
-                  width="100%"
-                  height="100%"
-                  src={`https://vidsrc.xyz/embed/series/${series_id}`}
-                  allowFullScreen
-                ></iframe> */}
+                id="player_iframe"
+                className="absolute top-0 left-0 w-full h-full "
+                width="100%"
+                height="100%"
+
+                sandbox="allow-scripts allow-same-origin"
+                src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
+
+                // src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
+                allowFullScreen
+              ></iframe> */}
             </div>
             {series && (
               <div className='rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]'>
@@ -90,6 +103,11 @@ const WatchTV = () => {
                         Season {selectedSeason} &#x2022; Episode{' '}
                         {selectedEpisode}
                       </span>
+                      {episodes && (
+                        <span className='ml-3'>
+                          {episodes?.episodes?.[selectedEpisode - 1].name}
+                        </span>
+                      )}
                     </p>
                     {episodes && (
                       <div className='flex gap-2 my-3 mx-5 sm:mx-0'>
@@ -130,7 +148,7 @@ const WatchTV = () => {
           </main>
         </div>
         {/* Sidebar */}
-        <div className='secondary w-[400px] flex-shrink-0'>
+        <div className='secondary lg:w-[400px] lg:flex-shrink-0'>
           <div className='sidebar bg-[#1f1f1f] max-h-[800px] flex flex-col  rounded-lg'>
             <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
               <div className='server-selection mb-[16px]'>
@@ -159,7 +177,13 @@ const WatchTV = () => {
             </div>
             <div className='episode-list'>
               {/* episode list here */}
-              {episodes && <EpisodeList episodes={episodes?.episodes} />}
+              {episodes && (
+                <EpisodeList
+                  episodes={episodes?.episodes}
+                  setSelectedEpisode={setSelectedEpisode}
+                  setSelectedSeason={setSelectedSeason}
+                />
+              )}
             </div>
           </div>
         </div>

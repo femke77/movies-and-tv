@@ -2,7 +2,7 @@ import { usePopularMovies } from '../../hooks/usePopular';
 
 import CarouselContainer from '../CarouselContainer';
 
-import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
+import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeltonHome';
 
 const PopularMovies = () => {
   const { data: movies = [], isLoading } = usePopularMovies();

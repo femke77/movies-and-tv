@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ScrollToTop from './components/ScrollToTop.tsx';
 import ItemDetailSkeleton from './components/LoadingSkels/ItemCardSkeleton.tsx';
 
+const DMCA = lazy(() => import('./pages/DMCA.tsx'));
 const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
 const Results = lazy(() => import('./pages/SearchPage.tsx'));
 const MovieTopRated = lazy(
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: 'search/:query?',
         element: <Results />,
+      },
+      {
+        path: 'dmca',
+        element: <DMCA />,
       },
       {
         path: ':item_type/:id',
@@ -95,7 +100,7 @@ const router = createBrowserRouter([
             element: <WatchMovie />,
           },
           {
-            path: 'tv/:series_id/:season_num/:episode_num',
+            path: 'tv/:series_id/:season_number/:episode_number',
             element: <WatchTV />,
           },
         ],

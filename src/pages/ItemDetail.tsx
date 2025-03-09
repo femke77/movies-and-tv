@@ -10,17 +10,29 @@ import dayjs from 'dayjs';
 
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [backgroundLoaded, setBackgroundLoaded] = useState(false);
   const [lowResPosterLoaded, setLowResPosterLoaded] = useState(false);
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
 
   useEffect(() => {
-    setIsVisible(true);
+    if (item?.backdrop_path) {
+      const img = new Image();
+      img.src = `https://image.tmdb.org/t/p/w342${item.backdrop_path}`;
+      img.onload = () => {
+        setBackgroundLoaded(true);
+        setIsVisible(true);
+      };
+    } else {
+      setIsVisible(true);
+    }
+
     return () => {
       setIsVisible(false);
+      setBackgroundLoaded(false);
     };
-  }, []);
+  }, [item?.backdrop_path]);
 
   if (!item) return null;
 
@@ -61,11 +73,13 @@ const ItemDetail = () => {
           className='max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto xs:px-2 sm:px-4 lg:px-8 xl:px-12 mr-2 md:mr-0'
         >
           <div
-            className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-opacity duration-1500 ease-in-out ${
-              isVisible ? 'opacity-40' : 'opacity-0'
+            className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-all duration-800 ease-in ${
+              isVisible && backgroundLoaded ? 'opacity-40' : 'opacity-0'
             }`}
             style={{
-              backgroundImage: `url('https://image.tmdb.org/t/p/w342${item?.backdrop_path}')`,
+              backgroundImage: backgroundLoaded
+                ? `url('https://image.tmdb.org/t/p/w342${item?.backdrop_path}')`
+                : 'none',
             }}
           ></div>
           {/* content */}

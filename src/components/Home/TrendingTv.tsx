@@ -1,7 +1,7 @@
 import CarouselContainer from '../CarouselContainer';
 import { useTrendingTv } from '../../hooks/useTrending';
 
-import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
+import ItemCardSkeletonHome from '../LoadingSkels/ItemCardSkeltonHome';
 
 const TrendingTV = () => {
   const { data: shows = [], isLoading } = useTrendingTv();
@@ -12,7 +12,7 @@ const TrendingTV = () => {
       {isLoading ? (
         <div className='flex gap-3 overflow-hidden'>
           {Array.from({ length: 8 }).map((_, i) => (
-            <ItemCardSkeleton key={i} />
+            <ItemCardSkeletonHome key={i} />
           ))}
         </div>
       ) : (
