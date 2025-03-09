@@ -34,7 +34,6 @@ const Header = ({ children }: { children: ReactNode }) => {
       >
         <h1>
           <Link
-          tabIndex={0}
             to='/'
             className='bg-gray-900 font-kyrilla text-2xl sm:text-[1.75rem] font-semibold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text m-0 py-2 mr-8'
           >

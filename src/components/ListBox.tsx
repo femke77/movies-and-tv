@@ -26,9 +26,10 @@ export default function ListBoxComp({
     <div className='w-full mb-8 mr-4 hover:translate-[1px] pt-[5px] rounded-md hover:outline-blue-700 hover:outline-1  '>
       <Listbox value={sortByOption} onChange={setSortByOption}>
         <ListboxButton
+          tabIndex={0}
           className={clsx(
             'relative block w-full rounded-lg bg-white/5 py-1.5 pr-8 pl-3 text-left text-sm/6 text-white',
-            'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25',
+            'focus:outline-white data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25',
           )}
         >
           {title ??
