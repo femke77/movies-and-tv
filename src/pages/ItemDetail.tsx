@@ -92,7 +92,7 @@ const ItemDetail = () => {
                     <img
                       src={loResPosterPath}
                       alt={`official poster for ${item.title || item.name}`}
-                      className={`md:pr-4 md:pt-2 w-full h-auto rounded-lg transition-opacity duration-100 ease-in-out blur-[10px] ${
+                      className={`md:pr-4 md:pt-2 w-full h-auto rounded-lg transition-opacity duration-300 ease-in-out blur-[10px] ${
                         lowResPosterLoaded && !highResPosterLoaded
                           ? 'opacity-100'
                           : 'opacity-0'
@@ -104,7 +104,7 @@ const ItemDetail = () => {
                     <img
                       src={hiResPosterPath}
                       alt={`official poster for ${item.title || item.name}`}
-                      className={`md:pr-4 md:pt-2 w-full h-auto rounded-lg transition-opacity duration-300 ease-in-out ${
+                      className={`md:pr-4 md:pt-2 w-full h-auto rounded-lg transition-opacity duration-500 ease-in-out ${
                         highResPosterLoaded ? 'opacity-100' : 'opacity-0'
                       }`}
                       onLoad={() => setHighResPosterLoaded(true)}
