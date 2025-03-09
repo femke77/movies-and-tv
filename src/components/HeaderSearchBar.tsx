@@ -56,8 +56,9 @@ const Search = ({
       <div className='pointer-events-auto absolute flex justify-end items-end pb-3.5 right-6'>
         {inputRef?.current?.value && (
           <button
+     
             onClick={handleClear}
-            className='pr-6 hover:text-gray-300 focus:outline-none hover:cursor-pointer'
+            className='pr-6 hover:text-gray-300 focus:outline-white hover:cursor-pointer'
           >
             Clear
           </button>
@@ -65,7 +66,7 @@ const Search = ({
 
         <button
           aria-label='close search'
-          className='pointer-events-auto text-white text-2xl  hover:text-gray-300 focus:outline-none hover:cursor-pointer'
+          className='pointer-events-auto text-white text-2xl  hover:text-gray-300 focus:outline-white hover:cursor-pointer'
           onClick={closeSearch}
           type='submit'
         >

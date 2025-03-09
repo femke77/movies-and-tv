@@ -136,9 +136,9 @@ const ItemCard = ({
               </div>
             )}
           </div>
-
-          <div className='flex flex-col h-[80px] flex-grow items-start justify-start w-full pt-4 bg-black'>
-            <div className='relative -top-13 left-3 w-[166px]'>
+          <div className='flex flex-col h-[80px] mb-6 flex-grow items-start justify-start w-full pt-4 bg-black'>
+{/* FIXME this line needs to be fixed for tab nav outline, this div hangs over the right */}
+            <div className='relative -top-13 left-3 w-full'>
               <div className='flex min-h-11 items-end justify-between'>
                 {showRating && (
                   <div className='z-10 relative'>
