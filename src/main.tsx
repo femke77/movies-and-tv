@@ -124,7 +124,7 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       {/* TODO update this: */}
       <Suspense fallback={'Loading....'}>
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
       </Suspense>
     </QueryClientProvider>
   </StrictMode>,
