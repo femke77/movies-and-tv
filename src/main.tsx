@@ -7,6 +7,8 @@ import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ScrollToTop from './components/ScrollToTop.tsx';
 import ItemDetailSkeleton from './components/LoadingSkels/ItemCardSkeleton.tsx';
+import ErrorPage from './pages/404.tsx';
+import NotFound from './pages/404.tsx';
 
 const DMCA = lazy(() => import('./pages/DMCA.tsx'));
 const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
@@ -39,12 +41,15 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     path: '/',
+    errorElement: <ErrorPage />,
+
     element: <App />,
     children: [
       {
         index: true,
         element: <Home />,
       },
+      { path: '*', element: <NotFound /> },
       {
         path: 'search/:query?',
         element: <Results />,
