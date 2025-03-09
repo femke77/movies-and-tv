@@ -23,7 +23,7 @@ export default function ListBoxComp({
   availableOptions: sortOptions,
 }: IListBox) {
   return (
-    <div className='w-full mb-8 mr-4 hover:translate-[1px] pt-[5px] rounded-md hover:outline-blue-700 hover:outline-1  '>
+    <div className='w-full mb-8 mr-4 hover:translate-[1px] pt-[5px] rounded-md hover:outline-blue-700 hover:outline-1 z-50 '>
       <Listbox value={sortByOption} onChange={setSortByOption}>
         <ListboxButton
           tabIndex={0}
@@ -44,7 +44,7 @@ export default function ListBoxComp({
           anchor='bottom'
           transition
           className={clsx(
-            'w-[var(--button-width)] rounded-xl border border-white/5 bg-black p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none',
+            'w-[var(--button-width)] rounded-xl border z-100 border-white/5 bg-black p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none',
             'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0',
             '[&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-700 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500',
           )}
