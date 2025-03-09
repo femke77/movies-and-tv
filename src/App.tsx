@@ -28,7 +28,7 @@ function App() {
         <Header>
           <Nav setSearchQuery={setSearchQuery} />
         </Header>
-        <main className='min-h-screen '>
+        <main className='min-h-screen  '>
           <Outlet context={searchQuery} />
         </main>
         <Footer />

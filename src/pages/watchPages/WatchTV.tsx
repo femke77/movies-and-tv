@@ -79,18 +79,17 @@ const WatchTV = () => {
               id='video-player'
               className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'
             >
-              {/* <iframe
-                id="player_iframe"
-                className="absolute top-0 left-0 w-full h-full "
-                width="100%"
-                height="100%"
+              <iframe
+                id='player_iframe'
+                className='absolute top-0 left-0 w-full h-full '
+                width='100%'
+                height='100%'
+                // sandbox="allow-scripts allow-same-origin"
+                // src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
 
-                sandbox="allow-scripts allow-same-origin"
-                src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
-
-                // src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
+                src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
                 allowFullScreen
-              ></iframe> */}
+              ></iframe>
             </div>
             {series && (
               <div className='rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]'>

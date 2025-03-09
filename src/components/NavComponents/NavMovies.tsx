@@ -5,7 +5,10 @@ import MenuItemLink from './MenuItemLink';
 const NavMovies = () => {
   return (
     <Menu>
-      <MenuButton className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md  py-1.5 px-3 text-sm/6 font-semibold text-white focus:outline-none data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white  z-50'>
+      <MenuButton
+        tabIndex={0}
+        className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md  py-1.5 px-3 text-sm/6 font-semibold text-white focus:outline-white data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white  z-50'
+      >
         {({ open }) => (
           <>
             Movies

@@ -5,7 +5,7 @@ import MenuItemLink from './MenuItemLink';
 const NavTVShows = () => {
   return (
     <Menu>
-      <MenuButton className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md py-1.5 px-3 text-sm/6 font-semibold text-white focus:outline-none data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white'>
+      <MenuButton className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md py-1.5 px-3 text-sm/6 font-semibold text-white focus:outline-white data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white'>
         {({ open }) => (
           <>
             TV Shows

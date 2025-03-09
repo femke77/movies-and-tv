@@ -109,7 +109,9 @@ const Slide = ({
   }, [contentLoaded, logoStatus.loaded, isVisible]);
 
   return (
-    <div className='swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden'>
+    <div
+      className={`swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden ${isVisible ? 'visible' : 'invisible'}`}
+    >
       <div
         className={clsx(`absolute inset-0 w-full h-full bg-cover bg-center md:bg-top transition-opacity 
          duration-1500 ease-in-out ${

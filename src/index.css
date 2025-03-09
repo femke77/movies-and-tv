@@ -19,6 +19,10 @@
 
 }
 
+*:focus {
+  /* outline: 2px solid white; This will make focused elements outlined in red */
+}
+
 html,
 body,
 #root {
@@ -26,13 +30,43 @@ body,
   margin: 0;
   padding: 0;
 
-  -ms-overflow-style: none;
+  /* -ms-overflow-style: none; */
   /* Internet Explorer 10+  */
-  scrollbar-width: none;
+  /* scrollbar-width: none; */
   display: flex;
   flex-direction: column;
   background-color: black;
+  overflow-x: hidden;
 
+}
+
+
+/* Base scrollbar styles */
+/* For all elements */
+* {
+  /* WebKit properties */
+  &::-webkit-scrollbar { width: 0.25rem; height: 0.25rem; }
+  &::-webkit-scrollbar-track { background-color: #000000; }
+  &::-webkit-scrollbar-thumb { background-color: #373737; }
+  &::-webkit-scrollbar-thumb:hover { background-color: #848485; }
+  
+  /* Standard properties (Firefox and newer Chrome) */
+  /* scrollbar-width: thin; */
+  /* scrollbar-color: #373737 #000000; */
+
+}
+
+/* For specific elements */
+#item-info {
+  /* WebKit properties */
+  &::-webkit-scrollbar { width: 0.5rem !important; height: 0.5rem !important; }
+  &::-webkit-scrollbar-track { background-color: #374151 !important; }
+  &::-webkit-scrollbar-thumb { background-color: #d1d5db !important; }
+  
+  /* Standard properties (Firefox and newer Chrome) */
+  scrollbar-width: thin !important;
+  scrollbar-color: #d1d5db #374151 !important;
+  
 }
 
 footer {
@@ -40,20 +74,20 @@ footer {
 
 }
 
-html::-webkit-scrollbar {
-  display: none;
+/* html::-webkit-scrollbar { */
+  /* display: none; */
   /* Safari and Chrome */
-}
 
-body::-webkit-scrollbar {
-  display: none;
-  /* Safari and Chrome */
-}
 
-#root::-webkit-scrollbar {
-  display: none;
+/* body::-webkit-scrollbar { */
+  /* display: none; */
   /* Safari and Chrome */
-}
+
+
+/* #root::-webkit-scrollbar { */
+  /* display: none; */
+  /* Safari and Chrome */
+
 
 
 body {
