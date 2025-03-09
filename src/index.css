@@ -35,10 +35,8 @@ body,
   overflow-x: hidden;
 
 }
-*:hover::-webkit-scrollbar{
 
-  background-color: red;
-}
+
 /* Base scrollbar styles */
 /* For all elements */
 * {
@@ -53,10 +51,6 @@ body,
   /* scrollbar-color: #373737 #000000; */
 
 }
-
-
-
-
 
 /* For specific elements */
 #item-info {

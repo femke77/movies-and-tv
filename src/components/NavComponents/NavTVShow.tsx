@@ -4,8 +4,11 @@ import MenuItemLink from './MenuItemLink';
 
 const NavTVShows = () => {
   return (
-    <Menu>
-      <MenuButton className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md py-1.5 px-3 text-sm/6 font-semibold text-white focus:outline-none data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white'>
+    <Menu as="div" className="relative">
+      <MenuButton
+        tabIndex={0}
+        className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md py-1.5 px-3 text-sm/6 font-semibold text-white focus:outline-none data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white'
+      >
         {({ open }) => (
           <>
             TV Shows
@@ -21,10 +24,9 @@ const NavTVShows = () => {
       <MenuItems
         transition
         anchor='bottom end'
-        className='relative z-50 w-64 origin-top-right rounded-xl border border-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:12px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0  bg-gray-900/95'
+        className='relative z-50 w-64 origin-top-right rounded-xl border border-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:12px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 bg-gray-900/95'
       >
-        {' '}
-        <div className='flex justify-start items-center p-4 '>
+        <div className='flex justify-start items-center p-4'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='24'
@@ -42,6 +44,7 @@ const NavTVShows = () => {
           </svg>
           <h3 className='text-md font-bold ml-3'>TV Shows</h3>
         </div>
+
         <MenuItemLink to='/explore/tv' name='Trending Series' />
         <MenuItemLink to='/explore/top-series' name='Top Rated Series' />
         <MenuItemLink to='/explore/popular-tv' name='Popular TV' />
