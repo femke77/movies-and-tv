@@ -242,7 +242,7 @@ const ItemDetail = () => {
                   <>
                     {item.created_by?.length > 0 && (
                       <>
-                        <p className='text-xl font-bold'>
+                        <p className='text-xl font-bold mb-4'>
                           {item.created_by.length > 1
                             ? 'Creators:'
                             : 'Creator:'}{' '}
