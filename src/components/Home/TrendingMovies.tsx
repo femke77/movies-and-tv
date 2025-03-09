@@ -1,7 +1,7 @@
 import CarouselContainer from '../CarouselContainer';
 import { useTrendingMovies } from '../../hooks/useTrending';
 
-import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
+import ItemCardSkeletonHome from '../LoadingSkels/ItemCardSkeltonHome';
 
 const TrendingMovies = () => {
   const { data: movies = [], isLoading } = useTrendingMovies();
@@ -15,7 +15,7 @@ const TrendingMovies = () => {
       {isLoading && movies.length === 0 ? (
         <div className='flex gap-3 overflow-hidden'>
           {Array.from({ length: 6 }).map((_, i) => (
-            <ItemCardSkeleton key={i} />
+            <ItemCardSkeletonHome key={i} />
           ))}
         </div>
       ) : (
