@@ -38,11 +38,10 @@ const WatchMovie = () => {
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
               <iframe
-                id="iframe"
-                className="absolute top-0 left-0 w-full h-full "
-                width="100%"
-                height="100%"
-
+                id='iframe'
+                className='absolute top-0 left-0 w-full h-full '
+                width='100%'
+                height='100%'
                 // sandbox="allow-scripts allow-same-origin"
                 // src={`/api/video/movie/${movie_id}`}
 
