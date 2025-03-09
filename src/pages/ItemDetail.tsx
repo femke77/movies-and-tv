@@ -121,7 +121,7 @@ const ItemDetail = () => {
               </section>
             </div>
             {/* Right Section */}
-            <section className='mr-4 flex-grow md:max-h-[525px] basis-full md:basis-2/5 ml-12  pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-700 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 '>
+            <section id='item-info' className='mr-4 flex-grow md:max-h-[525px] basis-full md:basis-2/5 ml-12  pr-6 overflow-auto flex flex-col items-center md:items-start  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-700 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 '>
               <h2 className='text-4xl mb-4 font-bold md:pr-16 text-center md:text-left'>
                 {item.title || item.name} ({releaseYearMovie || releaseYearTV})
               </h2>

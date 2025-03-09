@@ -35,7 +35,7 @@ const Explore = memo(
     const allItems = data?.pages.flatMap((page) => page.results) ?? [];
     return (
       <div className='ml-2 mt-8'>
-        <div className='flex flex-wrap flex-1 gap-4 items-start'>
+        <div className='flex flex-wrap flex-1 gap-4 items-start '>
           {allItems.length > 0 ? (
             allItems.map((movie: IItem) => (
               <MemoizedItemCard
