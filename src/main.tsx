@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      { path: '*', element: <NotFound /> },
+
       {
         path: 'search/:query?',
         element: <Results />,
@@ -114,6 +114,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ]);
@@ -121,8 +122,10 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={'Loading....'}></Suspense>
+      {/* TODO update this: */}
+      <Suspense fallback={'Loading....'}>
       <RouterProvider router={router} />
+      </Suspense>
     </QueryClientProvider>
   </StrictMode>,
 );
