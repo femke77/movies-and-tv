@@ -56,7 +56,6 @@ const Search = ({
       <div className='pointer-events-auto absolute flex justify-end items-end pb-3.5 right-6'>
         {inputRef?.current?.value && (
           <button
-     
             onClick={handleClear}
             className='pr-6 hover:text-gray-300 focus:outline-white hover:cursor-pointer'
           >

@@ -4,7 +4,7 @@ import { MenuItem } from '@headlessui/react';
 
 const MenuItemLink = ({ to, name }: { to: string; name: string }) => {
   return (
-    <MenuItem >
+    <MenuItem>
       <NavLink
         to={to}
         tabIndex={0}

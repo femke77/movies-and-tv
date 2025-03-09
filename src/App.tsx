@@ -22,10 +22,14 @@ function App() {
   }, [searchQuery]);
 
   useEffect(() => {
-    document.addEventListener('focus', () => {
-      console.log(document.activeElement);
-    }, true);
-  },[]  );
+    document.addEventListener(
+      'focus',
+      () => {
+        console.log(document.activeElement);
+      },
+      true,
+    );
+  }, []);
 
   return (
     <>

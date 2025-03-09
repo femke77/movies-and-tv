@@ -89,7 +89,6 @@ export default function Navigation({
                     </DisclosureButton>
                   </div>
                   <div className='flex flex-1 items-center justify-center md:items-stretch md:justify-start'>
-                
                     <div className='hidden md:flex flex-1 items-center py-6 pl-2'>
                       <div className='flex space-x-4 items-center pr-4 '>
                         <NavMovies />

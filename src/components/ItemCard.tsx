@@ -89,13 +89,12 @@ const ItemCard = ({
   return (
     <>
       <div
-
         className={`relative flex flex-col items-center justify-between w-full bg-black rounded-xl shadow-lg  
         transition-opacity duration-500 ease-linear ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <Link  to={`/${itemType}/${item.id}`}   className="w-full ">
+        <Link to={`/${itemType}/${item.id}`} className='w-full '>
           <div className='relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-900'>
             {item.poster_path ? (
               <>
@@ -137,7 +136,7 @@ const ItemCard = ({
             )}
           </div>
           <div className='flex flex-col h-[80px] mb-6 flex-grow items-start justify-start w-full pt-4 bg-black'>
-{/* FIXME this line needs to be fixed for tab nav outline, this div hangs over the right */}
+            {/* FIXME this line needs to be fixed for tab nav outline, this div hangs over the right */}
             <div className='relative -top-13 left-3 w-full'>
               <div className='flex min-h-11 items-end justify-between'>
                 {showRating && (

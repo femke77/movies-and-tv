@@ -5,7 +5,10 @@ import MenuItemLink from './MenuItemLink';
 const NavMovies = () => {
   return (
     <Menu>
-      <MenuButton   tabIndex={0} className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md  py-1.5 px-3 text-sm/6 font-semibold text-white focus:outline-white data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white  z-50'>
+      <MenuButton
+        tabIndex={0}
+        className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md  py-1.5 px-3 text-sm/6 font-semibold text-white focus:outline-white data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white  z-50'
+      >
         {({ open }) => (
           <>
             Movies
@@ -48,7 +51,6 @@ const NavMovies = () => {
           </svg>
           <h3 className='text-md font-bold ml-3'>Movies</h3>
         </div>
-        
         <MenuItemLink to='/explore/movies' name='Trending Movies' />
         <MenuItemLink to='/explore/toprated' name='Top Rated Movies' />
         <MenuItemLink to='/explore/popular' name='Popular Movies' />
