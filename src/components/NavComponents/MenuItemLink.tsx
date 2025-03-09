@@ -8,7 +8,7 @@ const MenuItemLink = ({ to, name }: { to: string; name: string }) => {
       <NavLink
         to={to}
         tabIndex={0}
-        className='mx-auto my-2 w-[96%] bg-white/10 group flex  items-center  rounded-lg py-1.5 px-4 hover:bg-gray-800/95 active:translate-[3px] hover:translate-[2px] transition-all ease-in-out'
+        className='data-[focus]:bg-gray-800/95 data-[focus]:translate-[2px] mx-auto my-2 w-[96%] bg-white/10 group flex  items-center  rounded-lg py-1.5 px-4 hover:bg-gray-800/95 active:translate-[3px] hover:translate-[2px] transition-all ease-in-out'
       >
         {name}
       </NavLink>
