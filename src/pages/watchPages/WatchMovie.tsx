@@ -37,7 +37,7 @@ const WatchMovie = () => {
           </div>
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
-              {/* <iframe
+              <iframe
                 id="iframe"
                 className="absolute top-0 left-0 w-full h-full "
                 width="100%"
@@ -48,7 +48,7 @@ const WatchMovie = () => {
 
                 src={`https://vidsrc.xyz/embed/movie/${movie_id}`}
                 allowFullScreen
-              ></iframe> */}
+              ></iframe>
             </div>
 
             <div className='rounded-lg bg-[#1f1f1f]  border-[#2f2f2f] p-[24px] mb-[24px]'>
