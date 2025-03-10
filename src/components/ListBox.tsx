@@ -23,13 +23,13 @@ export default function ListBoxComp({
   availableOptions: sortOptions,
 }: IListBox) {
   return (
-    <div className='w-full mb-8 mr-4 hover:translate-[1px] pt-[5px] rounded-md hover:outline-blue-700 hover:outline-1 z-50 '>
+    <div className='w-full  mb-8 mr-4 hover:translate-[1px] pt-[5px] rounded-md  z-50 '>
       <Listbox value={sortByOption} onChange={setSortByOption}>
         <ListboxButton
           tabIndex={0}
           className={clsx(
-            'relative block w-full rounded-lg bg-white/5 py-1.5 pr-8 pl-3 text-left text-sm/6 text-white',
-            'focus:outline-white data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25',
+            'relative block w-[230px] rounded-lg bg-gray-700/50 py-1.5 pr-8 pl-3 text-left text-md/6 text-white',
+            'focus:outline-white data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white hover:outline-blue-700 hover:outline-1',
           )}
         >
           {title ??
@@ -46,7 +46,6 @@ export default function ListBoxComp({
           className={clsx(
             'w-[var(--button-width)] rounded-xl border z-100 border-white/5 bg-black p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none',
             'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0',
-            '[&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-700 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500',
           )}
         >
           {sortOptions.map((opt) => (
