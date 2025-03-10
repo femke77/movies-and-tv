@@ -10,7 +10,6 @@ import ItemDetailSkeleton from './components/LoadingSkels/ItemCardSkeleton.tsx';
 import ErrorPage from './pages/404.tsx';
 import NotFound from './pages/404.tsx';
 
-const DMCA = lazy(() => import('./pages/DMCA.tsx'));
 const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
 const Results = lazy(() => import('./pages/SearchPage.tsx'));
 const MovieTopRated = lazy(
@@ -25,8 +24,7 @@ const TvTopRated = lazy(() => import('./pages/tvPages/TvTopRated.tsx'));
 const TvPopular = lazy(() => import('./pages/tvPages/TvPopular.tsx'));
 const WatchMovie = lazy(() => import('./pages/watchPages/WatchMovie.tsx'));
 const WatchTV = lazy(() => import('./pages/watchPages/WatchTV.tsx'));
-
-// TODO need to add something better than loading to suspense fallback or make new skels for the other pages
+const DMCA = lazy(() => import('./pages/DMCA.tsx'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,7 +47,6 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-
       {
         path: 'search/:query?',
         element: <Results />,
@@ -105,10 +102,6 @@ const router = createBrowserRouter([
             element: <WatchMovie />,
           },
           {
-            path: 'tv/:series_id',
-            element: <WatchTV />,
-          },
-          {
             path: 'tv/:series_id/:season_number/:episode_number',
             element: <WatchTV />,
           },
@@ -122,9 +115,10 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      {/* TODO update this: */}
-      <Suspense fallback={'Loading....'}>
-      <RouterProvider router={router} />
+      <Suspense
+        fallback={<span className='loader min-h-screen flex mx-auto'></span>}
+      >
+        <RouterProvider router={router} />
       </Suspense>
     </QueryClientProvider>
   </StrictMode>,

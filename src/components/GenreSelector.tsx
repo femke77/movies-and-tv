@@ -126,7 +126,7 @@ const GenreSelector = ({
                   ? 'bg-blue-800 border-blue-900'
                   : deselectedGenres.includes(String(genre.id))
                     ? 'bg-red-800/50 border-red-900 line-through'
-                    : 'bg-white/[0.05]'
+                    : 'bg-gray-800/50'
               }
             `)}
           >

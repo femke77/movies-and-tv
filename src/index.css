@@ -44,12 +44,25 @@ body,
 /* Base scrollbar styles */
 /* For all elements */
 * {
+
   /* WebKit properties */
-  &::-webkit-scrollbar { width: 0.25rem; height: 0.25rem; }
-  &::-webkit-scrollbar-track { background-color: #000000; }
-  &::-webkit-scrollbar-thumb { background-color: #373737; }
-  &::-webkit-scrollbar-thumb:hover { background-color: #848485; }
-  
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+    height: 0.25rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #000000;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #373737;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #848485;
+  }
+
   /* Standard properties (Firefox and newer Chrome) */
   /* scrollbar-width: thin; */
   /* scrollbar-color: #373737 #000000; */
@@ -58,15 +71,25 @@ body,
 
 /* For specific elements */
 #item-info {
+
   /* WebKit properties */
-  &::-webkit-scrollbar { width: 0.5rem !important; height: 0.5rem !important; }
-  &::-webkit-scrollbar-track { background-color: #374151 !important; }
-  &::-webkit-scrollbar-thumb { background-color: #d1d5db !important; }
-  
+  &::-webkit-scrollbar {
+    width: 0.5rem !important;
+    height: 0.5rem !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #374151 !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #d1d5db !important;
+  }
+
   /* Standard properties (Firefox and newer Chrome) */
   scrollbar-width: thin !important;
   scrollbar-color: #d1d5db #374151 !important;
-  
+
 }
 
 footer {
@@ -75,18 +98,18 @@ footer {
 }
 
 /* html::-webkit-scrollbar { */
-  /* display: none; */
-  /* Safari and Chrome */
+/* display: none; */
+/* Safari and Chrome */
 
 
 /* body::-webkit-scrollbar { */
-  /* display: none; */
-  /* Safari and Chrome */
+/* display: none; */
+/* Safari and Chrome */
 
 
 /* #root::-webkit-scrollbar { */
-  /* display: none; */
-  /* Safari and Chrome */
+/* display: none; */
+/* Safari and Chrome */
 
 
 
@@ -188,17 +211,15 @@ header {
   bottom: 0;
   left: 0;
   transform: translateX(-100%);
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0,
-    rgba(255, 255, 255, 0.1) 20%,
-    rgba(255, 255, 255, 0.2) 60%,
-    rgba(255, 255, 255, 0)
-  );
+  background-image: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.1) 20%,
+      rgba(255, 255, 255, 0.2) 60%,
+      rgba(255, 255, 255, 0));
   animation: shimmer 5s infinite;
 }
 
-.fontSize{
+.fontSize {
   font-size: 1rem !important;
 }
 
@@ -212,12 +233,71 @@ header {
 
 @media screen and (max-width: 1400px) {
 
-
-
   .swiper-button-next::after,
   .swiper-button-prev::after,
   .swiper-rtl {
- font-size: 25px !important
+    font-size: 25px !important
   }
 
+}
+
+
+.loader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 6rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  animation: pulsOut 1.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 1rem rgba(255, 255, 255, 0.75));
+}
+
+.loader:before {
+  width: 100%;
+  padding-bottom: 100%;
+  box-shadow: inset 0 0 0 1rem #fff;
+  animation-name: pulsIn;
+}
+
+.loader:after {
+  width: calc(100% - 2rem);
+  padding-bottom: calc(100% - 2rem);
+  box-shadow: 0 0 0 0 #fff;
+}
+
+@keyframes pulsIn {
+  0% {
+    box-shadow: inset 0 0 0 1rem #fff;
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    box-shadow: inset 0 0 0 0 #fff;
+    opacity: 0;
+  }
+}
+
+@keyframes pulsOut {
+
+  0%,
+  50% {
+    box-shadow: 0 0 0 0 #fff;
+    opacity: 0;
+  }
+
+  100% {
+    box-shadow: 0 0 0 1rem #fff;
+    opacity: 1;
+  }
 }
