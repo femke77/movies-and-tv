@@ -137,8 +137,8 @@ const ItemCard = ({
           </div>
           <div className='flex flex-col h-[80px] mb-6 flex-grow items-start justify-start w-full pt-4 bg-black'>
             {/* FIXME this line needs to be fixed for tab nav outline, this div hangs over the right */}
-            <div className='relative -top-13 left-3 w-full'>
-              <div className='flex min-h-11 items-end justify-between'>
+            <div className='relative -top-13  w-full'>
+              <div className='flex min-h-11 pl-2 items-end justify-between'>
                 {showRating && (
                   <div className='z-10 relative'>
                     <UserRating
@@ -151,7 +151,7 @@ const ItemCard = ({
                 )}
                 {/* Genres*/}
                 {showGenres && movieGenres?.length >= 1 && (
-                  <div className='flex justify-end flex-wrap gap-1 relative -top-8 right-3.5 sm:right-2 w-full z-10'>
+                  <div className='flex justify-end flex-wrap gap-1 relative -top-8 sm:right-2 w-full z-10'>
                     {width > 400 ? (
                       <>
                         {movieGenres
@@ -171,13 +171,13 @@ const ItemCard = ({
               </div>
 
               <h2
-                className={`w-full truncate ${getTitleSizeClass()} leading-6  -ml-2 mt-1`}
+                className={`w-full truncate ${getTitleSizeClass()} leading-6  pl-1 mt-1`}
                 title={item.name || item.title} // Tooltip for full text on hover
               >
                 {item.name || item.title}
               </h2>
 
-              <p className='text-sm font-light -ml-2'>
+              <p className='text-sm font-light pl-1'>
                 {itemType === 'tv'
                   ? formattedAirDate !== 'Invalid Date'
                     ? formattedAirDate
