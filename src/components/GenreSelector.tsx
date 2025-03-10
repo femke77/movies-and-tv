@@ -90,7 +90,7 @@ const GenreSelector = ({
           </p>
           <div
             className={clsx(
-              `grid gap-2 mt-4 ${
+              `grid gap-1 mt-4 ${
                 width < 400
                   ? `grid-cols-1`
                   : `grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-1`
