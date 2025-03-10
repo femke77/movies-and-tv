@@ -25,9 +25,9 @@ function App() {
   // if assets hash changes need a reload to 
   useEffect(() => {
     window.addEventListener('vite:preloadError', () => {
-      window.location.reload()
-    })
-  },[] )
+      window.location.reload();
+    });
+  }, []);
 
   return (
     <>
