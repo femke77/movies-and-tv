@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [backgroundLoaded, setBackgroundLoaded] = useState(false);
-  const [lowResPosterLoaded, setLowResPosterLoaded] = useState(false);
+  // const [lowResPosterLoaded, setLowResPosterLoaded] = useState(false);
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
@@ -39,9 +39,9 @@ const ItemDetail = () => {
   const hiResPosterPath = item?.poster_path
     ? `https://image.tmdb.org/t/p/w780${item.poster_path}`
     : '/no_poster_available.svg';
-  const loResPosterPath = item?.poster_path
-    ? `https://image.tmdb.org/t/p/w92${item.poster_path}`
-    : '/no_poster_available.svg';
+  // const loResPosterPath = item?.poster_path
+  //   ? `https://image.tmdb.org/t/p/w92${item.poster_path}`
+  //   : '/no_poster_available.svg';
 
   const releaseYearMovie = item?.release_date?.split('-')[0];
   const releaseYearTV = item?.first_air_date?.split('-')[0];
@@ -89,22 +89,22 @@ const ItemDetail = () => {
               <section className='w-[280px] sm:w-[450px]  md:w-[300px] flex-shrink-0 '>
                 <div className='relative md:w-[340px] h-auto md:mb-12 mx-auto overflow-hidden'>
                   <div className='absolute inset-0 '>
-                    <img
+                    {/* <img
                       src={loResPosterPath}
                       alt={`official poster for ${item.title || item.name}`}
-                      className={`md:pr-4 md:pt-2 w-full h-auto transition-opacity duration-300 ease-in-out blur-[10px] ${
+                      className={`md:pr-4 md:pt-2 w-full h-auto transition-opacity duration-100 ease-in-out blur-[10px] ${
                         lowResPosterLoaded && !highResPosterLoaded
                           ? 'opacity-100'
                           : 'opacity-0'
                       }`}
                       onLoad={() => setLowResPosterLoaded(true)}
-                    />
+                    /> */}
                   </div>
                   <div className='absolute inset-0'>
                     <img
                       src={hiResPosterPath}
                       alt={`official poster for ${item.title || item.name}`}
-                      className={`md:pr-4 md:pt-2 w-full h-auto transition-opacity duration-500 ease-in-out ${
+                      className={`md:pr-4 md:pt-2 w-full h-auto transition-opacity duration-600 ease-in-out ${
                         highResPosterLoaded ? 'opacity-100' : 'opacity-0'
                       }`}
                       onLoad={() => setHighResPosterLoaded(true)}

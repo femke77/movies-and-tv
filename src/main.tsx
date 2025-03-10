@@ -1,5 +1,5 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import { StrictMode, Suspense, lazy, Component } from 'react';
+import { StrictMode, Suspense, lazy} from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ScrollToTop from './components/ScrollToTop.tsx';
-import ItemDetailSkeleton from './components/LoadingSkels/ItemCardSkeleton.tsx';
+import ItemDetailSkeleton from './components/LoadingSkels/ItemDetailSkeleton.tsx';
 import ErrorPage from './pages/404.tsx';
 import NotFound from './pages/404.tsx';
 
