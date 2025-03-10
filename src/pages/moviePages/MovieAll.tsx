@@ -13,11 +13,12 @@ const MovieAll = () => {
     <MediaListContainer
       mediaType='movie'
       //   listType="popular"
-      heading='Discover All Movies'
+      heading='Explore All Movies'
       genres={genres}
       sortBy='popularity.desc'
       sortOptions={sortOptions}
-    
+      voteAverage={0}
+      voteCount={0}
     />
   );
 };

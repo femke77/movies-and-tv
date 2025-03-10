@@ -45,6 +45,7 @@ const NavTVShows = () => {
         <MenuItemLink to='/explore/tv' name='Trending Series' />
         <MenuItemLink to='/explore/top-series' name='Top Rated Series' />
         <MenuItemLink to='/explore/popular-tv' name='Popular TV' />
+        <MenuItemLink to='/explore/all-tv' name='All TV' />
       </MenuItems>
     </Menu>
   );
