@@ -36,13 +36,13 @@ interface IErrorProps {
 
 // Error fallback component
 const ErrorFallback = () => {
-  //  won't actually see this 
+  // Reloading means we won't actually see this 
   return <div>Reloading application...</div>;
 };
 
-// Error handler function for redeploys with lazy routes
+// Error handler function for redeploys with lazy loaded pages
 const handleError = (error: IErrorProps) => {
-  //  chunk load error?
+  // is it the chunk load error?
   if (
     error.name === 'ChunkLoadError' || 
     (error.message && (
