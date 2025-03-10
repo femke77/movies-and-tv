@@ -7,7 +7,7 @@ const NavMovies = () => {
     <Menu>
       <MenuButton
         tabIndex={0}
-        className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md  py-1.5 px-3 text-sm/6 font-semibold text-white focus:outline-white data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white  z-50'
+        className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md  py-1.5 px-3 text-md/6 font-semibold text-white focus:outline-white data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white  z-50'
       >
         {({ open }) => (
           <>
@@ -54,7 +54,7 @@ const NavMovies = () => {
         <MenuItemLink to='/explore/movies' name='Trending Movies' />
         <MenuItemLink to='/explore/toprated' name='Top Rated Movies' />
         <MenuItemLink to='/explore/popular' name='Popular Movies' />
-        <MenuItemLink to='/explore/all-movies' name='All Movies' />
+        <MenuItemLink to='/explore/all-movies' name='Explore All Movies' />
       </MenuItems>
     </Menu>
   );

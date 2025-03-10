@@ -1,4 +1,4 @@
-import { StrictMode, Suspense, lazy } from 'react';
+import { StrictMode, Suspense, lazy, Component } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
@@ -27,6 +27,52 @@ const TvPopular = lazy(() => import('./pages/tvPages/TvPopular.tsx'));
 const WatchMovie = lazy(() => import('./pages/watchPages/WatchMovie.tsx'));
 const WatchTV = lazy(() => import('./pages/watchPages/WatchTV.tsx'));
 const DMCA = lazy(() => import('./pages/DMCA.tsx'));
+
+interface ChunkLoadErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+class ChunkLoadErrorBoundary extends Component<ChunkLoadErrorBoundaryProps> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError(error: { message: string }) {
+    // for lazy loading 404 errors after a redeploy
+    if (error.message && error.message.includes('Loading chunk')) {
+      return { hasError: true };
+    }
+    return { hasError: false };
+  }
+
+  componentDidCatch(error: { message: string }) {
+    console.error('Chunk loading error:', error);
+  }
+
+  refreshPage = () => {
+    window.location.reload();
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className='mt-40 text-center'>
+          <h2>Something went wrong</h2>
+          <p>
+            The app was likely updated. Please refresh to get the latest
+            version.
+          </p>
+          <button
+            className='bg-gray-800/50 text-white'
+            onClick={this.refreshPage}
+          >
+            Refresh Now
+          </button>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -125,11 +171,13 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Suspense
-        fallback={<span className='loader min-h-screen flex mx-auto'></span>}
-      >
-        <RouterProvider router={router} />
-      </Suspense>
+      <ChunkLoadErrorBoundary>
+        <Suspense
+          fallback={<span className='loader min-h-screen flex mx-auto'></span>}
+        >
+          <RouterProvider router={router} />
+        </Suspense>
+      </ChunkLoadErrorBoundary>
     </QueryClientProvider>
   </StrictMode>,
 );

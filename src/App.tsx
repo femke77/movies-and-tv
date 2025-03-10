@@ -21,14 +21,6 @@ function App() {
     }
   }, [searchQuery]);
 
-  // lazy loaded routes break if app open and redeploy happens.
-  // if assets hash changes need a reload to
-  useEffect(() => {
-    window.addEventListener('vite:preloadError', () => {
-      window.location.reload();
-    });
-  }, []);
-
   return (
     <>
       <ScrollRestoration />

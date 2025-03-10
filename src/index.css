@@ -97,6 +97,7 @@ footer {
 
 }
 
+
 /* html::-webkit-scrollbar { */
 /* display: none; */
 /* Safari and Chrome */
@@ -191,6 +192,43 @@ header {
 }
 
 
+
+.shine {
+  background: #222;
+  background-image: linear-gradient(to right, #222 0%, #222 45%, #fff 50%, #222 55%, #222 100%);
+  background-size: 200px;
+  color: rgba(255, 255, 255, 0.3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation-name: shine;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  text-shadow: 0 0px 0px rgba(255, 255, 255, 0.5);
+}
+
+.chrome {
+  background: #222;
+  background-image: linear-gradient(-40deg, transparent 0%, transparent 40%, #fff 50%, transparent 60%, transparent 100%);
+  background-size: 200px;
+  color: rgba(255, 255, 255, 0.3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation-name: shine;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  text-shadow: 0 0px 0px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes shine {
+  0% {
+    background-position: -200px;
+  }
+  100% {
+    background-position: 200px;
+  }
+}
 
 @keyframes shimmer {
   100% {

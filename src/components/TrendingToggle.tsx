@@ -18,12 +18,12 @@ const TrendingToggle = ({
   };
 
   return (
-    <div className='relative h-[30px] rounded-[15px] bg-[#1c4b91]/20'>
+    <div className='relative h-[30px] rounded-[15px] bg-gray-700/50'>
       <div className='relative flex h-full'>
         <div
           className={`
             absolute h-[30px] w-[100px] rounded-[15px]
-            bg-gradient-to-r from-[#5c676b] to-[#3d3737]
+            bg-gradient-to-r from-[#3e4c51] to-[#3d3737]
             transition-transform duration-400 ease-[cubic-bezier(0.88,-0.35,0.565,1.35)]
           `}
           style={{
@@ -33,13 +33,13 @@ const TrendingToggle = ({
 
         <button
           onClick={() => handleChange('day')}
-          className='relative z-10 flex h-full w-[100px] cursor-pointer items-center justify-center text-sm text-white transition-colors duration-300'
+          className='relative z-10 flex h-full w-[100px] cursor-pointer items-center justify-center text-md text-white transition-colors duration-300'
         >
           Today
         </button>
         <button
           onClick={() => handleChange('week')}
-          className='relative z-10 flex h-full w-[100px] cursor-pointer items-center justify-center text-sm text-white transition-colors duration-300'
+          className='relative z-10 flex h-full w-[100px] cursor-pointer items-center justify-center text-md text-white transition-colors duration-300'
         >
           This Week
         </button>
