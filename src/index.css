@@ -97,6 +97,9 @@ footer {
 
 }
 
+.br {
+  border-radius: 20px;
+}
 /* html::-webkit-scrollbar { */
 /* display: none; */
 /* Safari and Chrome */

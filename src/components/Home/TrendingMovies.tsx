@@ -1,6 +1,6 @@
 import CarouselContainer from '../CarouselContainer';
 import { useTrendingMovies } from '../../hooks/useTrending';
-
+import { Link } from 'react-router-dom';
 import ItemCardSkeletonHome from '../LoadingSkels/ItemCardSkeltonHome';
 
 const TrendingMovies = () => {
@@ -8,9 +8,11 @@ const TrendingMovies = () => {
 
   return (
     <div className='min-h-[350px]' id='trending-section'>
-      <h2 className='text-2xl font-bold mb-8 ml-5 '>
-        Trending Movies Today 🔥
+      <Link to="/explore/movies">
+      <h2  className='text-2xl font-bold mb-6 ml-5 '>
+        Today's Trending Movies
       </h2>
+      </Link  >
 
       {isLoading && movies.length === 0 ? (
         <div className='flex gap-3 overflow-hidden'>

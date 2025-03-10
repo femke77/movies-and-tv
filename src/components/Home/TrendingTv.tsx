@@ -1,6 +1,6 @@
 import CarouselContainer from '../CarouselContainer';
 import { useTrendingTv } from '../../hooks/useTrending';
-
+import { Link } from 'react-router-dom';
 import ItemCardSkeletonHome from '../LoadingSkels/ItemCardSkeltonHome';
 
 const TrendingTV = () => {
@@ -8,7 +8,8 @@ const TrendingTV = () => {
 
   return (
     <div className='mt-20 min-h-[350px]' id='trending-tv-section'>
-      <h2 className='text-2xl font-bold mb-8 ml-5'>Trending TV Today 🔥</h2>
+       <Link to="/explore/tv">
+      <h2 className='text-2xl font-bold mb-6 ml-5'>Today's Trending TV</h2></Link>
       {isLoading ? (
         <div className='flex gap-3 overflow-hidden'>
           {Array.from({ length: 8 }).map((_, i) => (

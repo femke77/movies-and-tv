@@ -87,12 +87,12 @@ const ItemDetail = () => {
             {/* Left Section */}
             <div className='relative  md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3'>
               <section className='w-[280px] sm:w-[450px]  md:w-[300px] flex-shrink-0 '>
-                <div className='relative md:w-[340px] h-auto md:mb-12 mx-auto'>
-                  <div className='absolute inset-0'>
+                <div className='relative md:w-[340px] h-auto md:mb-12 mx-auto overflow-hidden'>
+                  <div className='absolute inset-0 ' >
                     <img
                       src={loResPosterPath}
                       alt={`official poster for ${item.title || item.name}`}
-                      className={`md:pr-4 md:pt-2 w-full h-auto rounded-lg transition-opacity duration-300 ease-in-out blur-[10px] ${
+                      className={`md:pr-4 md:pt-2 w-full h-auto transition-opacity duration-300 ease-in-out blur-[10px] ${
                         lowResPosterLoaded && !highResPosterLoaded
                           ? 'opacity-100'
                           : 'opacity-0'
@@ -104,7 +104,7 @@ const ItemDetail = () => {
                     <img
                       src={hiResPosterPath}
                       alt={`official poster for ${item.title || item.name}`}
-                      className={`md:pr-4 md:pt-2 w-full h-auto rounded-lg transition-opacity duration-500 ease-in-out ${
+                      className={`md:pr-4 md:pt-2 w-full h-auto transition-opacity duration-500 ease-in-out ${
                         highResPosterLoaded ? 'opacity-100' : 'opacity-0'
                       }`}
                       onLoad={() => setHighResPosterLoaded(true)}
@@ -114,7 +114,7 @@ const ItemDetail = () => {
                   <img
                     src={hiResPosterPath}
                     alt=''
-                    className='opacity-0 w-full h-auto pointer-events-none'
+                    className='opacity-0 w-full h-auto pointer-events-none '
                     aria-hidden='true'
                   />
                 </div>
