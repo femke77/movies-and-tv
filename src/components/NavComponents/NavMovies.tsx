@@ -54,6 +54,7 @@ const NavMovies = () => {
         <MenuItemLink to='/explore/movies' name='Trending Movies' />
         <MenuItemLink to='/explore/toprated' name='Top Rated Movies' />
         <MenuItemLink to='/explore/popular' name='Popular Movies' />
+        <MenuItemLink to='/explore/all-movies' name='All Movies' />
       </MenuItems>
     </Menu>
   );
