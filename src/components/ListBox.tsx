@@ -23,12 +23,12 @@ export default function ListBoxComp({
   availableOptions: sortOptions,
 }: IListBox) {
   return (
-    <div className='w-full  mb-8 mr-4 hover:translate-[1px] pt-[5px] rounded-md  z-50 '>
+    <div className='w-full  mr-4 hover:translate-[1px] rounded-md  z-50 '>
       <Listbox value={sortByOption} onChange={setSortByOption}>
         <ListboxButton
           tabIndex={0}
           className={clsx(
-            'relative block w-[230px] rounded-lg bg-gray-700/50 py-1.5 pr-8 pl-3 text-left text-md/6 text-white',
+            'relative block w-full rounded-lg  bg-gradient-to-r from-[#292e30] to-[#3d3737] py-1.5 pr-8 pl-3 text-left text-md/6 text-white',
             'focus:outline-white data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white hover:outline-blue-700 hover:outline-1',
           )}
         >
