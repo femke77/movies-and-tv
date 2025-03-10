@@ -82,7 +82,7 @@ const GenreSelector = ({
       </div>
       {open && (
         <>
-          <p className="mx-4 text-white/65 text-md mt-6">
+          <p className="mx-4 text-white/65 text-md mt-4 lg:-mt-3">
             Genres{" "}
             <span className="text-sm italic">
               (click or press to include, right click or long press to exclude)
