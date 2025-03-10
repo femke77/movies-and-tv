@@ -10,7 +10,6 @@ import ItemDetailSkeleton from './components/LoadingSkels/ItemCardSkeleton.tsx';
 import ErrorPage from './pages/404.tsx';
 import NotFound from './pages/404.tsx';
 
-
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
 const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
 const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
@@ -86,7 +85,6 @@ const router = createBrowserRouter([
           {
             path: 'all-movies',
             element: <MovieAll />,
-
           },
           {
             path: 'tv',

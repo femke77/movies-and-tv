@@ -17,7 +17,6 @@ const MoviePopular = () => {
       genres={genres}
       sortBy='popularity.desc'
       sortOptions={sortOptions}
-
     />
   );
 };
