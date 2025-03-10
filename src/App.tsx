@@ -21,6 +21,12 @@ function App() {
     }
   }, [searchQuery]);
 
+  useEffect(() => {
+    window.addEventListener('vite:preloadError', () => {
+      window.location.reload();
+    });
+  }, []);
+
   return (
     <>
       <ScrollRestoration />
