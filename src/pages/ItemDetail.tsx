@@ -88,7 +88,7 @@ const ItemDetail = () => {
             <div className='relative  md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3'>
               <section className='w-[280px] sm:w-[450px]  md:w-[300px] flex-shrink-0 '>
                 <div className='relative md:w-[340px] h-auto md:mb-12 mx-auto overflow-hidden'>
-                  <div className='absolute inset-0 ' >
+                  <div className='absolute inset-0 '>
                     <img
                       src={loResPosterPath}
                       alt={`official poster for ${item.title || item.name}`}

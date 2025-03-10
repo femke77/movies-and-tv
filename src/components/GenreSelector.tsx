@@ -1,7 +1,7 @@
-import { IGenre } from "../interfaces/IGenre";
-import { useWindowSize } from "../hooks/useWindowSize";
-import { useState, useRef } from "react";
-import clsx from "clsx";
+import { IGenre } from '../interfaces/IGenre';
+import { useWindowSize } from '../hooks/useWindowSize';
+import { useState, useRef } from 'react';
+import clsx from 'clsx';
 
 const GenreSelector = ({
   genres,
@@ -71,20 +71,20 @@ const GenreSelector = ({
 
   return (
     <>
-     <div className="flex justify-start lg:justify-end mr-12 ">
-      <button
-        onClick={() => setOpen(!open)}
-        className="mb-2  mx-4 text-center text-white text-md  h-[35px] w-[150px] rounded-[15px]
-            bg-gradient-to-r from-[#292e30] to-[#3d3737] cursor-pointer hover:outline-blue-700 hover:outline-1  hover:translate-[1px] active:translate-[1px]"
-      >
-        Select By Genres
-      </button>
+      <div className='flex justify-start lg:justify-end mr-12 '>
+        <button
+          onClick={() => setOpen(!open)}
+          className='mb-2  mx-4 text-center text-white text-md  h-[35px] w-[150px] rounded-[15px]
+            bg-gradient-to-r from-[#292e30] to-[#3d3737] cursor-pointer hover:outline-blue-700 hover:outline-1  hover:translate-[1px] active:translate-[1px]'
+        >
+          Select By Genres
+        </button>
       </div>
       {open && (
         <>
-          <p className="mx-4 text-white/65 text-md mt-4 lg:-mt-3">
-            Genres{" "}
-            <span className="text-sm italic">
+          <p className='mx-4 text-white/65 text-md mt-4 lg:-mt-3'>
+            Genres{' '}
+            <span className='text-sm italic'>
               (click or press to include, right click or long press to exclude)
             </span>
           </p>
@@ -94,7 +94,7 @@ const GenreSelector = ({
                 width < 400
                   ? `grid-cols-1`
                   : `grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-1`
-              }`
+              }`,
             )}
           >
             {genres.map((genre) => (
@@ -135,10 +135,10 @@ const GenreSelector = ({
               active:translate-[3px]
               ${
                 selectedGenres.includes(String(genre.id))
-                  ? "bg-blue-800 border-blue-900"
+                  ? 'bg-blue-800 border-blue-900'
                   : deselectedGenres.includes(String(genre.id))
-                  ? "bg-red-800/50 border-red-900 line-through"
-                  : "bg-gray-800/50"
+                    ? 'bg-red-800/50 border-red-900 line-through'
+                    : 'bg-gray-800/50'
               }
             `)}
               >

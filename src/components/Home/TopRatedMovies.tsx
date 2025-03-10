@@ -8,8 +8,11 @@ const TopRatedMovies = () => {
 
   return (
     <div className=' mt-20  min-h-[350px]' id='top-section'>
-       <Link to="/explore/toprated">
-      <h2 className='text-2xl font-bold mb-6  ml-5'>All-time Top Rated Movies </h2></Link>
+      <Link to='/explore/toprated'>
+        <h2 className='text-2xl font-bold mb-6  ml-5'>
+          All-time Top Rated Movies{' '}
+        </h2>
+      </Link>
       {isLoading ? (
         <div className='flex gap-3 overflow-hidden'>
           {Array.from({ length: 6 }).map((_, i) => (

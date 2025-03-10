@@ -8,8 +8,9 @@ const TrendingTV = () => {
 
   return (
     <div className='mt-20 min-h-[350px]' id='trending-tv-section'>
-       <Link to="/explore/tv">
-      <h2 className='text-2xl font-bold mb-6 ml-5'>Today's Trending TV</h2></Link>
+      <Link to='/explore/tv'>
+        <h2 className='text-2xl font-bold mb-6 ml-5'>Today's Trending TV</h2>
+      </Link>
       {isLoading ? (
         <div className='flex gap-3 overflow-hidden'>
           {Array.from({ length: 8 }).map((_, i) => (
