@@ -16,8 +16,9 @@ const TvPopular = () => {
       heading='Discover Popular TV Shows'
       genres={genres}
       sortBy='popularity.desc'
-      voteAverage={0}
+      voteAverage={5}
       sortOptions={sortOptions}
+      voteCount={500}
     />
   );
 };
