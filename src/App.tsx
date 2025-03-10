@@ -22,7 +22,6 @@ function App() {
   }, [searchQuery]);
 
 
-
   return (
     <>
       <ScrollRestoration />
