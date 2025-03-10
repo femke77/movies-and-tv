@@ -23,9 +23,9 @@ function App() {
 
   useEffect(() => {
     window.addEventListener('vite:preloadError', () => {
-      window.location.reload()
-    })
-  },[] )
+      window.location.reload();
+    });
+  }, []);
 
   return (
     <>
