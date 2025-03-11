@@ -16,7 +16,7 @@ const TrendingMovies = () => {
 
       {isLoading && movies.length === 0 ? (
         <div className='flex gap-3 overflow-hidden'>
-          {Array.from({ length: 6 }).map((_, i) => (
+          {Array.from({ length: 10 }).map((_, i) => (
             <ItemCardSkeletonHome key={i} />
           ))}
         </div>

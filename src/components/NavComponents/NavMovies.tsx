@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
 import MenuItemLink from './MenuItemLink';
+import { Clapperboard } from 'lucide-react';
 
 const NavMovies = () => {
   return (
@@ -28,27 +29,7 @@ const NavMovies = () => {
       >
         {' '}
         <div className='flex justify-start items-center p-4 '>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='24'
-            height='24'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='#f8f7f7'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            className='lucide lucide-film'
-          >
-            <rect width='18' height='18' x='3' y='3' rx='2' />
-            <path d='M7 3v18' />
-            <path d='M3 7.5h4' />
-            <path d='M3 12h18' />
-            <path d='M3 16.5h4' />
-            <path d='M17 3v18' />
-            <path d='M17 7.5h4' />
-            <path d='M17 16.5h4' />
-          </svg>
+        <Clapperboard color="#ffffff" />
           <h3 className='text-md font-bold ml-3'>Movies</h3>
         </div>
         <MenuItemLink to='/explore/movies' name='Trending Movies' />

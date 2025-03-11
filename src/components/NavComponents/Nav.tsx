@@ -99,7 +99,7 @@ export default function Navigation({
                     {open ? (
                       <DisclosureButton
                         role='search'
-                        aria-label='search'
+              
                         onClick={() => openSearch()}
                         className='relative -right-2 top-0 hover:cursor-pointer'
                       >
@@ -108,7 +108,7 @@ export default function Navigation({
                     ) : (
                       <button
                         role='search'
-                        aria-label='search'
+                
                         onClick={() => openSearch()}
                         className='relative -right-2 top-0 hover:cursor-pointer'
                       >

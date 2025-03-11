@@ -74,7 +74,7 @@ const GenreSelector = ({
       <div className='flex justify-start lg:justify-end mr-6 '>
         <button
           onClick={() => setOpen(!open)}
-          className='mb-2  mx-4 text-center text-white text-md  h-[35px] w-[150px] rounded-[15px]
+          className='mb-2  mx-4 text-center text-white text-md  h-[35px] w-[150px] rounded-lg
             bg-gradient-to-r from-[#292e30] to-[#3d3737] cursor-pointer hover:outline-blue-700 hover:outline-1 hover:translate-[1px] active:translate-[1px]'
         >
           Select By Genres

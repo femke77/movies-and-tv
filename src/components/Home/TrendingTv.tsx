@@ -13,7 +13,7 @@ const TrendingTV = () => {
       </Link>
       {isLoading ? (
         <div className='flex gap-3 overflow-hidden'>
-          {Array.from({ length: 8 }).map((_, i) => (
+          {Array.from({ length: 10 }).map((_, i) => (
             <ItemCardSkeletonHome key={i} />
           ))}
         </div>
