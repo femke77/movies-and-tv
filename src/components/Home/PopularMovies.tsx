@@ -1,11 +1,11 @@
 import { usePopularMovies } from '../../hooks/usePopular';
 import { Link } from 'react-router-dom';
 import CarouselContainer from '../CarouselContainer';
-
-import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeltonHome';
+import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
 
 const PopularMovies = () => {
   const { data: movies = [], isLoading } = usePopularMovies();
+
 
   return (
     <div className='mt-20  min-h-[350px]' id='pop-section'>
@@ -14,7 +14,7 @@ const PopularMovies = () => {
       </Link>
       {isLoading ? (
         <div className='flex gap-3 overflow-hidden'>
-          {Array.from({ length: 10 }).map((_, i) => (
+          {Array.from({ length: 6}).map((_, i) => (
             <ItemCardSkeleton key={i} />
           ))}
         </div>

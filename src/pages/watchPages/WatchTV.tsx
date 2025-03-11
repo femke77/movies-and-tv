@@ -52,7 +52,7 @@ const WatchTV = () => {
   }, [selectedSeason, selectedEpisode]);
 
   return (
-    <div className='min-h-screen page pt-[60px]'>
+    <div className='min-h-screen pt-[60px]'>
       <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
         <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
           <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
@@ -98,17 +98,18 @@ const WatchTV = () => {
                 {/* player controls (for tv) */}
                 <div className='flex flex-col gap-2 w-full py-2'>
                   <div className='flex justify-center  sm:justify-between items-center flex-wrap'>
-                    <p className='text-[#fff9] flex mx-5 sm:mx-0'>
-                      Current:{' '}
+                    <p className='text-[#fff9] flex  mx-5 sm:mx-0'>
+                      <div className='flex flex-col sm:flex-row'>
+                     
                       <span className='text-white ml-3'>
-                        Season {selectedSeason} &#x2022; Episode{' '}
-                        {selectedEpisode}
+                        Season {selectedSeason} &#x2022; Episode{' '} {selectedEpisode}
                       </span>
                       {episodes && (
-                        <span className='ml-3'>
+                        <span className='ml-3 text-center'>
                           {episodes?.episodes?.[selectedEpisode - 1]?.name}
                         </span>
                       )}
+                      </div>
                     </p>
                     {episodes && (
                       <div className='flex gap-2 my-3 mx-5 sm:mx-0'>
@@ -149,8 +150,8 @@ const WatchTV = () => {
           </main>
         </div>
         {/* Sidebar */}
-        <div className='secondary lg:w-[400px] lg:flex-shrink-0'>
-          <div className='sidebar bg-[#1f1f1f] max-h-[800px] flex flex-col  rounded-lg'>
+        <div className=' lg:w-[400px] lg:flex-shrink-0'>
+          <div className='sidebar bg-[#1f1f1f] max-h-[700px] flex flex-col  rounded-lg'>
             <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
               <div className='server-selection mb-[16px]'>
                 {/* server selection */}

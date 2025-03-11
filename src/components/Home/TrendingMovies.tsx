@@ -1,7 +1,7 @@
 import CarouselContainer from '../CarouselContainer';
 import { useTrendingMovies } from '../../hooks/useTrending';
 import { Link } from 'react-router-dom';
-import ItemCardSkeletonHome from '../LoadingSkels/ItemCardSkeltonHome';
+import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
 
 const TrendingMovies = () => {
   const { data: movies = [], isLoading } = useTrendingMovies();
@@ -15,9 +15,9 @@ const TrendingMovies = () => {
       </Link>
 
       {isLoading && movies.length === 0 ? (
-        <div className='flex gap-3 overflow-hidden'>
-          {Array.from({ length: 10 }).map((_, i) => (
-            <ItemCardSkeletonHome key={i} />
+        <div className='flex gap-3 w-[180px] flex-shrink-0 not-[]:overflow-hidden'>
+          {Array.from({ length:6 }).map((_, i) => (
+            <ItemCardSkeleton key={i} />
           ))}
         </div>
       ) : (

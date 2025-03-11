@@ -1,6 +1,6 @@
 import { useTopRatedMovies } from '../../hooks/useTopRated';
 import CarouselContainer from '../CarouselContainer';
-import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeltonHome';
+import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
 import { Link } from 'react-router-dom';
 
 const TopRatedMovies = () => {
@@ -15,7 +15,7 @@ const TopRatedMovies = () => {
       </Link>
       {isLoading ? (
         <div className='flex gap-3 overflow-hidden'>
-          {Array.from({ length: 10 }).map((_, i) => (
+          {Array.from({ length: 6 }).map((_, i) => (
             <ItemCardSkeleton key={i} />
           ))}
         </div>

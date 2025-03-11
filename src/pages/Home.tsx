@@ -21,6 +21,7 @@ const Home = () => {
         <TrendingTV />
         <TopRatedTv />
         <PopularTv />
+
       </div>
     </>
   );

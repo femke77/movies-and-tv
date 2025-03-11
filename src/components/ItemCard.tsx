@@ -1,7 +1,7 @@
 import { IItem } from '../interfaces/IItem';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
-import UserRating from './UserRating';
+import UserRating from './NewUserRating';
 import { getStrokeColor } from '../utils/helpers';
 import { useEffect, useState, memo } from 'react';
 import genreData from '../utils/data/genres.json';
@@ -136,16 +136,15 @@ const ItemCard = ({
             )}
           </div>
           <div className='flex flex-col h-[80px] mb-6 flex-grow items-start justify-start w-full pt-4 bg-black'>
-            {/* FIXME this line needs to be fixed for tab nav outline, this div hangs over the right */}
-            <div className='relative -top-13  w-full'>
-              <div className='flex min-h-11 pl-2 items-end justify-between'>
+            <div className='relative -top-15  w-full'>
+              <div className='flex min-h-11 pl-1 items-end justify-between'>
                 {showRating && (
                   <div className='z-10 relative'>
                     <UserRating
                       rating={item.vote_average ?? 0}
                       color={strokeColor}
-                      width='w-12'
-                      height='h-12'
+                      width='w-14'
+                      height='h-15'
                     />
                   </div>
                 )}

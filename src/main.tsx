@@ -1,49 +1,52 @@
 // import { ErrorBoundary} from 'react-error-boundary';
-import { StrictMode, Suspense, lazy, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App.tsx';
-import { createBrowserRouter, RouterProvider, useRouteError } from 'react-router-dom';
-import Home from './pages/Home.tsx';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ScrollToTop from './components/ScrollToTop.tsx';
-import ItemDetailSkeleton from './components/LoadingSkels/ItemDetailSkeleton.tsx';
-import ErrorPage from './pages/404.tsx';
-import NotFound from './pages/404.tsx';
+import { StrictMode, Suspense, lazy, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.tsx";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useRouteError,
+} from "react-router-dom";
+import Home from "./pages/Home.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ScrollToTop from "./components/ScrollToTop.tsx";
+import ItemDetailSkeleton from "./components/LoadingSkels/ItemDetailSkeleton.tsx";
+import ErrorPage from "./pages/404.tsx";
+import NotFound from "./pages/404.tsx";
+import ItemCardSkeletonGrid from "./components/LoadingSkels/ItemCardSkeletonGrid.tsx";
 
-const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
-const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
-const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
-const Results = lazy(() => import('./pages/SearchPage.tsx'));
-const MovieTopRated = lazy(
-  () => import('./pages/moviePages/MovieTopRated.tsx'),
+const TvAll = lazy(() => import("./pages/tvPages/TvAll.tsx"));
+const MovieAll = lazy(() => import("./pages/moviePages/MovieAll.tsx"));
+const ItemDetail = lazy(() => import("./pages/ItemDetail.tsx"));
+const Results = lazy(() => import("./pages/SearchPage.tsx"));
+const MovieTopRated = lazy(() =>
+  import("./pages/moviePages/MovieTopRated.tsx")
 );
-const MoviePopular = lazy(() => import('./pages/moviePages/MoviePopular.tsx'));
-const MovieTrending = lazy(
-  () => import('./pages/moviePages/MovieTrending.tsx'),
+const MoviePopular = lazy(() => import("./pages/moviePages/MoviePopular.tsx"));
+const MovieTrending = lazy(() =>
+  import("./pages/moviePages/MovieTrending.tsx")
 );
-const TvTrending = lazy(() => import('./pages/tvPages/TvTrending.tsx'));
-const TvTopRated = lazy(() => import('./pages/tvPages/TvTopRated.tsx'));
-const TvPopular = lazy(() => import('./pages/tvPages/TvPopular.tsx'));
-const WatchMovie = lazy(() => import('./pages/watchPages/WatchMovie.tsx'));
-const WatchTV = lazy(() => import('./pages/watchPages/WatchTV.tsx'));
-const DMCA = lazy(() => import('./pages/DMCA.tsx'));
-
-
+const TvTrending = lazy(() => import("./pages/tvPages/TvTrending.tsx"));
+const TvTopRated = lazy(() => import("./pages/tvPages/TvTopRated.tsx"));
+const TvPopular = lazy(() => import("./pages/tvPages/TvPopular.tsx"));
+const WatchMovie = lazy(() => import("./pages/watchPages/WatchMovie.tsx"));
+const WatchTV = lazy(() => import("./pages/watchPages/WatchTV.tsx"));
+const DMCA = lazy(() => import("./pages/DMCA.tsx"));
 
 function ChunkErrorHandler() {
   const error = useRouteError();
   console.error("Router error caught:", error);
-  
+
   // Check if it's a chunk loading error
   if (
-    (error instanceof Error && error.name === 'ChunkLoadError') || 
-    (error instanceof Error && error.name === 'TypeError') ||
-    (error instanceof Error && error.message && (
-      error.message.includes('Failed to fetch dynamically imported module') ||
-      error.message.includes('Loading chunk') ||
-      error.message.includes('Failed to load module script')
-    ))
+    (error instanceof Error && error.name === "ChunkLoadError") ||
+    (error instanceof Error && error.name === "TypeError") ||
+    (error instanceof Error &&
+      error.message &&
+      (error.message.includes("Failed to fetch dynamically imported module") ||
+        error.message.includes("Loading chunk") ||
+        error.message.includes("Failed to load module script")))
   ) {
     // Reload the page after a brief moment
     useEffect(() => {
@@ -51,10 +54,10 @@ function ChunkErrorHandler() {
         window.location.reload();
       }, 100);
     }, []);
-    
+
     return <div>Application update detected. Reloading...</div>;
   }
-  
+
   // For any other errors, show your regular error page
   return <ErrorPage />;
 }
@@ -71,7 +74,7 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     errorElement: <ChunkErrorHandler />,
 
     element: <App />,
@@ -81,15 +84,15 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'search/:query?',
+        path: "search/:query?",
         element: <Results />,
       },
       {
-        path: 'dmca',
+        path: "dmca",
         element: <DMCA />,
       },
       {
-        path: ':item_type/:id',
+        path: ":item_type/:id",
         element: (
           <ScrollToTop>
             <Suspense fallback={<ItemDetailSkeleton />}>
@@ -99,70 +102,70 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'explore',
+        path: "explore",
         children: [
           {
-            path: 'movies',
+            path: "movies",
             element: <MovieTrending />,
           },
           {
-            path: 'toprated',
+            path: "toprated",
             element: <MovieTopRated />,
           },
           {
-            path: 'popular',
+            path: "popular",
             element: <MoviePopular />,
           },
           {
-            path: 'all-movies',
+            path: "all-movies",
             element: <MovieAll />,
           },
           {
-            path: 'tv',
+            path: "tv",
             element: <TvTrending />,
           },
           {
-            path: 'top-series',
+            path: "top-series",
             element: <TvTopRated />,
           },
           {
-            path: 'popular-tv',
+            path: "popular-tv",
             element: <TvPopular />,
           },
           {
-            path: 'all-tv',
+            path: "all-tv",
             element: <TvAll />,
           },
         ],
       },
       {
-        path: 'watch',
+        path: "watch",
         children: [
           {
-            path: 'movie/:movie_id',
+            path: "movie/:movie_id",
             element: <WatchMovie />,
           },
           {
-            path: 'tv/:series_id/:season_number/:episode_number',
+            path: "tv/:series_id/:season_number/:episode_number",
             element: <WatchTV />,
           },
         ],
       },
-      { path: '*', element: <NotFound /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-    
-        <Suspense
-          fallback={<span className='loader min-h-screen flex mx-auto'></span>}
-        >
-          <RouterProvider router={router} />
-        </Suspense>
-    
+      <Suspense
+        fallback={
+          <ItemCardSkeletonGrid />
+        }
+      >
+        <RouterProvider router={router} />
+      </Suspense>
     </QueryClientProvider>
-  </StrictMode>,
+  </StrictMode>
 );

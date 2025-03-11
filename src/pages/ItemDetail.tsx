@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Chip from '../components/Chip';
 import { useItemDetail } from '../hooks/useItemOrWatchDetail';
 import { useParams } from 'react-router-dom';
-import UserRating from '../components/UserRating';
+import UserRating from '../components/NewUserRating';
 import WatchButton from '../components/WatchButton';
 import { getStrokeColor } from '../utils/helpers';
 import { CastList } from '../components/CastList';

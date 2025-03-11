@@ -1,7 +1,7 @@
 import CarouselContainer from '../CarouselContainer';
 import { usePopularTv } from '../../hooks/usePopular';
 import { Link } from 'react-router-dom';
-import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeltonHome';
+import ItemCardSkeleton from '../LoadingSkels/ItemCardSkeleton';
 const PopularTv = () => {
   const { data: shows = [], isLoading } = usePopularTv();
 
@@ -12,7 +12,7 @@ const PopularTv = () => {
       </Link>
       {isLoading ? (
         <div className='flex gap-3 overflow-hidden'>
-          {Array.from({ length: 10 }).map((_, i) => (
+          {Array.from({ length: 6 }).map((_, i) => (
             <ItemCardSkeleton key={i} />
           ))}
         </div>
