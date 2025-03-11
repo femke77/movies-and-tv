@@ -15,6 +15,7 @@ import ItemDetailSkeleton from "./components/LoadingSkels/ItemDetailSkeleton.tsx
 import ErrorPage from "./pages/404.tsx";
 import NotFound from "./pages/404.tsx";
 import ItemCardSkeletonGrid from "./components/LoadingSkels/ItemCardSkeletonGrid.tsx";
+import DelayedSuspense from "./components/DelayedSuspense.tsx";
 
 const TvAll = lazy(() => import("./pages/tvPages/TvAll.tsx"));
 const MovieAll = lazy(() => import("./pages/moviePages/MovieAll.tsx"));
@@ -95,9 +96,9 @@ const router = createBrowserRouter([
         path: ":item_type/:id",
         element: (
           <ScrollToTop>
-            <Suspense fallback={<ItemDetailSkeleton />}>
+            <DelayedSuspense fallback={<ItemDetailSkeleton />}>
               <ItemDetail />
-            </Suspense>
+            </DelayedSuspense>
           </ScrollToTop>
         ),
       },
@@ -159,13 +160,11 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Suspense
-        fallback={
-          <ItemCardSkeletonGrid />
-        }
-      >
+      <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+      
         <RouterProvider router={router} />
-      </Suspense>
+  
+      </DelayedSuspense>
     </QueryClientProvider>
   </StrictMode>
 );

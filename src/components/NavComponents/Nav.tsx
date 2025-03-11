@@ -10,7 +10,7 @@ import NavMovies from './NavMovies';
 import NavTVShow from './NavTVShow';
 // import NavDiscover from './NavComponents/NavDiscover';
 import Search from '../HeaderSearchBar';
-import { Clapperboard } from 'lucide-react';
+import { Clapperboard, Tv } from 'lucide-react';
 
 const moviesNav = [
   { title: 'Trending Movies', url: '/explore/movies' },
@@ -133,7 +133,8 @@ export default function Navigation({
                     <div className='text-white'>
                       <div className='flex justify-start items-center p-4 '>
                         <Clapperboard className='text-white' />
-                        <h3 className='text-lg font-bold ml-3'>Movies</h3>
+                        <h2 className="ml-3 text-xl font-bold bg-gradient-to-r from-white to-blue-600/70 text-transparent bg-clip-text" >Movies</h2> 
+
                       </div>
                       <div className='flex flex-col'>
                         {moviesNav.map((item, index) => (
@@ -150,29 +151,8 @@ export default function Navigation({
                     </div>
                     <div className='text-white'>
                       <div className='flex justify-start items-center p-4 '>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width='24'
-                          height='24'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='#ffffff'
-                          strokeWidth='2'
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          className='lucide lucide-tv'
-                        >
-                          <rect
-                            width='20'
-                            height='15'
-                            x='2'
-                            y='7'
-                            rx='2'
-                            ry='2'
-                          />
-                          <polyline points='17 2 12 7 7 2' />
-                        </svg>
-                        <h3 className='text-lg font-bold ml-3'>TV Shows</h3>
+                        <Tv className='text-white' />
+                        <h2 className="ml-3 text-xl font-bold bg-gradient-to-r from-white to-blue-600/70 text-transparent bg-clip-text" >TV Shows</h2> 
                       </div>
                       <div className='flex flex-col'>
                         {tvNav.map((item, index) => (

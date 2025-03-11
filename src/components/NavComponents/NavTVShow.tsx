@@ -8,7 +8,8 @@ const NavTVShows = () => {
       <MenuButton className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md py-1.5 px-3 text-md/6 font-semibold text-white focus:outline-white data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white'>
         {({ open }) => (
           <>
-            TV Shows
+            <h2 className="text-lg font-bold bg-gradient-to-r from-white to-blue-500/70 text-transparent bg-clip-text" >TV Shows</h2> 
+
             {open ? (
               <ChevronUpIcon className='size-4 fill-white/60' />
             ) : (

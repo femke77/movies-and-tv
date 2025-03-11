@@ -18,7 +18,7 @@ const TrendingContainer = ({
   return (
     <div className='mt-24'>
       <div className='flex flex-col sm:flex-row items-center justify-between mx-3 mb-6'>
-        <h2 className='chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text'>
+        <h2 className='mx-1 px-1 chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text'>
           {heading}
         </h2>
         <div className='pt-2 sm:pt-0 sm:pr-4 md:pr-10'>
