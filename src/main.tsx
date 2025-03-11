@@ -1,4 +1,5 @@
-import { StrictMode, Suspense, lazy, Component } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { StrictMode, Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
@@ -6,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ScrollToTop from './components/ScrollToTop.tsx';
-import ItemDetailSkeleton from './components/LoadingSkels/ItemCardSkeleton.tsx';
+import ItemDetailSkeleton from './components/LoadingSkels/ItemDetailSkeleton.tsx';
 import ErrorPage from './pages/404.tsx';
 import NotFound from './pages/404.tsx';
 
@@ -28,51 +29,31 @@ const WatchMovie = lazy(() => import('./pages/watchPages/WatchMovie.tsx'));
 const WatchTV = lazy(() => import('./pages/watchPages/WatchTV.tsx'));
 const DMCA = lazy(() => import('./pages/DMCA.tsx'));
 
-interface ChunkLoadErrorBoundaryProps {
-  children: React.ReactNode;
+interface IErrorProps {
+  name: string;
+  message: string;
 }
 
-class ChunkLoadErrorBoundary extends Component<ChunkLoadErrorBoundaryProps> {
-  state = { hasError: false };
+// Error fallback component
+const ErrorFallback = () => {
+  // Reloading means we won't actually see this
+  return <div>Reloading application...</div>;
+};
 
-  static getDerivedStateFromError(error: { message: string }) {
-    // for lazy loading 404 errors after a redeploy
-    if (error.message && error.message.includes('Loading chunk')) {
-      return { hasError: true };
-    }
-    return { hasError: false };
-  }
-
-  componentDidCatch(error: { message: string }) {
-    console.error('Chunk loading error:', error);
-  }
-
-  refreshPage = () => {
+// Error handler function for redeploys with lazy loaded pages
+const handleError = (error: IErrorProps) => {
+  // is it the chunk load error?
+  if (
+    error.name === 'ChunkLoadError' ||
+    (error.message &&
+      (error.message.includes('Loading chunk') ||
+        error.message.includes('Failed to fetch dynamically imported module')))
+  ) {
+    console.error('Chunk error caught:', error);
+    // Immediately reload the page
     window.location.reload();
-  };
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className='mt-40 text-center'>
-          <h2>Something went wrong</h2>
-          <p>
-            The app was likely updated. Please refresh to get the latest
-            version.
-          </p>
-          <button
-            className='bg-gray-800/50 text-white'
-            onClick={this.refreshPage}
-          >
-            Refresh Now
-          </button>
-        </div>
-      );
-    }
-
-    return this.props.children;
   }
-}
+};
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -171,13 +152,13 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ChunkLoadErrorBoundary>
+      <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
         <Suspense
           fallback={<span className='loader min-h-screen flex mx-auto'></span>}
         >
           <RouterProvider router={router} />
         </Suspense>
-      </ChunkLoadErrorBoundary>
+      </ErrorBoundary>
     </QueryClientProvider>
   </StrictMode>,
 );

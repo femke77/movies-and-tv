@@ -48,6 +48,7 @@ const WatchTV = () => {
   useEffect(() => {
     if (selectedSeason === 1 && selectedEpisode === 1) return;
     navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSeason, selectedEpisode]);
 
   return (

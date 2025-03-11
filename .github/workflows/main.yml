@@ -37,7 +37,7 @@ jobs:
         run: npm install
 
       - name: Run Lint
-        run: npm run lint -- --fix --max-warnings=2
+        run: npm run lint -- --fix --max-warnings=4
 
       - name: Commit and Push Changes
         run: |

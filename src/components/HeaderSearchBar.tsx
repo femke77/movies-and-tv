@@ -36,6 +36,7 @@ const Search = ({
   };
   return (
     <form
+      role='search'
       onSubmit={(e) => e.preventDefault()}
       className={clsx(
         `fixed top-0 left-0 w-full h-34 bg-transparent transition-all duration-700 flex items-end pb-4 justify-center z-50 ${

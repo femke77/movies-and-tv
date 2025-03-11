@@ -14,7 +14,7 @@ const PopularMovies = () => {
       </Link>
       {isLoading ? (
         <div className='flex gap-3 overflow-hidden'>
-          {Array.from({ length: 6 }).map((_, i) => (
+          {Array.from({ length: 10 }).map((_, i) => (
             <ItemCardSkeleton key={i} />
           ))}
         </div>
