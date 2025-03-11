@@ -106,7 +106,7 @@ const WatchTV = () => {
                       </span>
                       {episodes && (
                         <span className='ml-3'>
-                          {episodes?.episodes?.[selectedEpisode - 1].name}
+                          {episodes?.episodes?.[selectedEpisode - 1]?.name}
                         </span>
                       )}
                     </p>
