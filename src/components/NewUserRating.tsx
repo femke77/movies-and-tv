@@ -8,51 +8,49 @@ interface UserRatingProps {
 
 const UserRating = ({
   rating,
-  width = "w-20",
-  height = "h-20",
-//   color = "white",
-//   fontSize = 10,
+  width = 'w-20',
+  height = 'h-20',
+  //   color = "white",
+  //   fontSize = 10,
 }: UserRatingProps) => {
   return (
-    <div className="flex items-center mt-4 mr-4">
+    <div className='flex items-center mt-4 mr-4'>
       <svg
-        xmlns="http://www.w3.org/2000/svg"
+        xmlns='http://www.w3.org/2000/svg'
         className={`${width} ${height}`}
-        viewBox="0 0 37 37"
+        viewBox='0 0 37 37'
       >
         <circle
-          cx="18"
-          cy="18"
-          r="17"
-          stroke="white"
-          strokeWidth="1"
-          fill="black"
-          className="opacity-80"
+          cx='18'
+          cy='18'
+          r='17'
+          stroke='white'
+          strokeWidth='1'
+          fill='black'
+          className='opacity-80'
         />
         <circle
-          cx="18"
-          cy="18"
-          r="17"
-          stroke="blue"
-          strokeWidth="3"
-          fill="black"
-          fillOpacity="0.3"
-
-   
-          className="transition-all duration-300 ease-out"
+          cx='18'
+          cy='18'
+          r='17'
+          stroke='blue'
+          strokeWidth='3'
+          fill='black'
+          fillOpacity='0.3'
+          className='transition-all duration-300 ease-out'
         />
         <text
-          x="49%"
-          y="52%"
-          font-size="20"
-          font-family="Impact, sans-serif"
-          fill="rgba(55, 65, 81, 0.5)"
-          stroke="#FFFFFF"
-          stroke-width="0.5"
-          text-anchor="middle"
-          alignment-baseline="middle"
+          x='49%'
+          y='52%'
+          font-size='20'
+          font-family='Impact, sans-serif'
+          fill='rgba(55, 65, 81, 0.5)'
+          stroke='#FFFFFF'
+          stroke-width='0.5'
+          text-anchor='middle'
+          alignment-baseline='middle'
         >
-         {rating.toFixed(1)}
+          {rating.toFixed(1)}
         </text>
       </svg>
     </div>

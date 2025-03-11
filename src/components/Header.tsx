@@ -37,7 +37,7 @@ const Header = ({ children }: { children: ReactNode }) => {
             to='/'
             className='bg-gray-900 font-kyrilla text-[1.75rem]  md:text-5xl font-semibold bg-gradient-to-r from-white to-blue-600/70 text-transparent bg-clip-text m-0 py-2 mr-8'
           >
-           BingeBox
+            BingeBox
           </Link>
         </h1>
         {children}

@@ -12,7 +12,9 @@ const NavMovies = () => {
       >
         {({ open }) => (
           <>
-          <h2 className="text-lg font-bold bg-gradient-to-r from-white to-blue-500/70 text-transparent bg-clip-text" >Movies</h2> 
+            <h2 className='text-lg font-bold bg-gradient-to-r from-white to-blue-500/70 text-transparent bg-clip-text'>
+              Movies
+            </h2>
             {open ? (
               <ChevronUpIcon className='size-4 fill-white/60' />
             ) : (

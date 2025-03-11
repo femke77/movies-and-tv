@@ -1,6 +1,6 @@
-import genreData from "../../utils/data/tvGenres.json";
-import MediaListContainer from "../../components/containers/MediaListContainer";
-import sortOptionsData from "../../utils/data/sortOptions.json";
+import genreData from '../../utils/data/tvGenres.json';
+import MediaListContainer from '../../components/containers/MediaListContainer';
+import sortOptionsData from '../../utils/data/sortOptions.json';
 
 const TvPopular = () => {
   const { genres } = genreData;
@@ -11,11 +11,11 @@ const TvPopular = () => {
 
   return (
     <MediaListContainer
-      mediaType="tv"
+      mediaType='tv'
       //   listType="top_rated"
-      heading="Discover Popular TV Shows"
+      heading='Discover Popular TV Shows'
       genres={genres}
-      sortBy="popularity.desc"
+      sortBy='popularity.desc'
       voteAverage={5}
       sortOptions={sortOptions}
       voteCount={500}

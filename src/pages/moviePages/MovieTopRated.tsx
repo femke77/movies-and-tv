@@ -1,6 +1,6 @@
-import genreData from "../../utils/data/movieGenres.json";
-import MediaListContainer from "../../components/containers/MediaListContainer";
-import sortOptionsData from "../../utils/data/sortOptions.json";
+import genreData from '../../utils/data/movieGenres.json';
+import MediaListContainer from '../../components/containers/MediaListContainer';
+import sortOptionsData from '../../utils/data/sortOptions.json';
 
 const MovieTopRated = () => {
   const { genres } = genreData;
@@ -11,11 +11,11 @@ const MovieTopRated = () => {
 
   return (
     <MediaListContainer
-      mediaType="movie"
+      mediaType='movie'
       //   listType="top_rated"
-      heading="Discover Top Rated Movies"
+      heading='Discover Top Rated Movies'
       genres={genres}
-      sortBy="vote_average.desc"
+      sortBy='vote_average.desc'
       voteAverage={7}
       sortOptions={sortOptions}
       voteCount={1000}
