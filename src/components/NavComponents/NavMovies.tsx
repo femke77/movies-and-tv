@@ -29,7 +29,7 @@ const NavMovies = () => {
       >
         {' '}
         <div className='flex justify-start items-center p-4 '>
-        <Clapperboard color="#ffffff" />
+          <Clapperboard color='#ffffff' />
           <h3 className='text-md font-bold ml-3'>Movies</h3>
         </div>
         <MenuItemLink to='/explore/movies' name='Trending Movies' />

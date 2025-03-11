@@ -1,5 +1,5 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import { StrictMode, Suspense, lazy} from 'react';
+import { StrictMode, Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
@@ -30,13 +30,13 @@ const WatchTV = lazy(() => import('./pages/watchPages/WatchTV.tsx'));
 const DMCA = lazy(() => import('./pages/DMCA.tsx'));
 
 interface IErrorProps {
- name: string;
- message: string;
+  name: string;
+  message: string;
 }
 
 // Error fallback component
 const ErrorFallback = () => {
-  // Reloading means we won't actually see this 
+  // Reloading means we won't actually see this
   return <div>Reloading application...</div>;
 };
 
@@ -44,13 +44,12 @@ const ErrorFallback = () => {
 const handleError = (error: IErrorProps) => {
   // is it the chunk load error?
   if (
-    error.name === 'ChunkLoadError' || 
-    (error.message && (
-      error.message.includes('Loading chunk') || 
-      error.message.includes('Failed to fetch dynamically imported module')
-    ))
+    error.name === 'ChunkLoadError' ||
+    (error.message &&
+      (error.message.includes('Loading chunk') ||
+        error.message.includes('Failed to fetch dynamically imported module')))
   ) {
-    console.error("Chunk error caught:", error);
+    console.error('Chunk error caught:', error);
     // Immediately reload the page
     window.location.reload();
   }
@@ -153,7 +152,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-    <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
+      <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
         <Suspense
           fallback={<span className='loader min-h-screen flex mx-auto'></span>}
         >
