@@ -149,7 +149,7 @@ const ItemDetail = () => {
                   height='h-20'
                   color={strokeColor}
                 />
-                <div className='pl-6 h-20 sm:pl-8 pt-4'>
+                <div className='xs:pl-4  h-20 sm:pl-8 sm:pt-1.5 md:pt-3'>
                   <WatchButton itemType={item_type!} id={item.id} />
                 </div>
               </div>
