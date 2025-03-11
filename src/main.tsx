@@ -1,9 +1,9 @@
-import { ErrorBoundary } from 'react-error-boundary';
-import { StrictMode, Suspense, lazy } from 'react';
+// import { ErrorBoundary} from 'react-error-boundary';
+import { StrictMode, Suspense, lazy, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, useRouteError } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ScrollToTop from './components/ScrollToTop.tsx';
@@ -29,31 +29,35 @@ const WatchMovie = lazy(() => import('./pages/watchPages/WatchMovie.tsx'));
 const WatchTV = lazy(() => import('./pages/watchPages/WatchTV.tsx'));
 const DMCA = lazy(() => import('./pages/DMCA.tsx'));
 
-interface IErrorProps {
-  name: string;
-  message: string;
-}
 
-// Error fallback component
-const ErrorFallback = () => {
-  // Reloading means we won't actually see this
-  return <div>Reloading application...</div>;
-};
 
-// Error handler function for redeploys with lazy loaded pages
-const handleError = (error: IErrorProps) => {
-  // is it the chunk load error?
+function ChunkErrorHandler() {
+  const error = useRouteError();
+  console.error("Router error caught:", error);
+  
+  // Check if it's a chunk loading error
   if (
-    error.name === 'ChunkLoadError' ||
-    (error.message &&
-      (error.message.includes('Loading chunk') ||
-        error.message.includes('Failed to fetch dynamically imported module')))
+    (error instanceof Error && error.name === 'ChunkLoadError') || 
+    (error instanceof Error && error.name === 'TypeError') ||
+    (error instanceof Error && error.message && (
+      error.message.includes('Failed to fetch dynamically imported module') ||
+      error.message.includes('Loading chunk') ||
+      error.message.includes('Failed to load module script')
+    ))
   ) {
-    console.error('Chunk error caught:', error);
-    // Immediately reload the page
-    window.location.reload();
+    // Reload the page after a brief moment
+    useEffect(() => {
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+    }, []);
+    
+    return <div>Application update detected. Reloading...</div>;
   }
-};
+  
+  // For any other errors, show your regular error page
+  return <ErrorPage />;
+}
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -68,7 +72,7 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     path: '/',
-    errorElement: <ErrorPage />,
+    errorElement: <ChunkErrorHandler />,
 
     element: <App />,
     children: [
@@ -152,13 +156,13 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
+    
         <Suspense
           fallback={<span className='loader min-h-screen flex mx-auto'></span>}
         >
           <RouterProvider router={router} />
         </Suspense>
-      </ErrorBoundary>
+    
     </QueryClientProvider>
   </StrictMode>,
 );
