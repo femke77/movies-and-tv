@@ -98,7 +98,7 @@ const WatchTV = () => {
                 {/* player controls (for tv) */}
                 <div className='flex flex-col gap-2 w-full py-2'>
                   <div className='flex justify-center  sm:justify-between items-center flex-wrap'>
-                    <p className='text-[#fff9] flex  mx-5 sm:mx-0'>
+                    <div className='text-[#fff9] flex  mx-5 sm:mx-0'>
                       <div className='flex flex-col sm:flex-row'>
                         <span className='text-white ml-3'>
                           Season {selectedSeason} &#x2022; Episode{' '}
@@ -110,7 +110,7 @@ const WatchTV = () => {
                           </span>
                         )}
                       </div>
-                    </p>
+                    </div>
                     {episodes && (
                       <div className='flex gap-2 my-3 mx-5 sm:mx-0'>
                         <WatchPrevBtn

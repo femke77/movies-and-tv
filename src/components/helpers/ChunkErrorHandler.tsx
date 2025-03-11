@@ -2,11 +2,13 @@ import { useEffect } from 'react';
 import { useRouteError } from 'react-router';
 import ErrorPage from '../../pages/ErrorPage';
 
+// For solving the problem of a redeploy while user is sitting on page, and all lazy-loaded chunks are invalidated. This will reload the page.
+
 const ChunkErrorHandler = () => {
   const error = useRouteError() as Error | null;
   console.error('Router error caught:', error);
 
-  // Check if it's a chunk loading error
+  // Check if it's a chunk loading error so we can gracefully reload the page
   const isChunkError =
     error?.name === 'ChunkLoadError' ||
     error?.name === 'TypeError' ||
@@ -15,7 +17,6 @@ const ChunkErrorHandler = () => {
         error.message.includes('Loading chunk') ||
         error.message.includes('Failed to load module script')));
 
-  // Use the hook unconditionally
   useEffect(() => {
     if (isChunkError) {
       setTimeout(() => {
@@ -28,7 +29,7 @@ const ChunkErrorHandler = () => {
     return <div>Application update detected. Reloading...</div>;
   }
 
-  // For any other errors, show your regular error page
+  // For any other errors:
   return <ErrorPage />;
 };
 export default ChunkErrorHandler;

@@ -14,11 +14,13 @@ const TopRatedMovies = () => {
         </h2>
       </Link>
       {isLoading ? (
-        <div className='flex gap-3 overflow-hidden'>
-          {Array.from({ length: 6 }).map((_, i) => (
-            <ItemCardSkeleton key={i} />
-          ))}
-        </div>
+        <div className="flex gap-3 px-4 py-2 w-full  ">
+        {Array.from({ length: 15 }).map((_, i) => (
+      <div className=" w-[180px] flex-shrink-0">
+          <ItemCardSkeleton key={i} />
+      </div>
+        ))}
+    </div>
       ) : (
         <CarouselContainer items={movies} itemType='movie' />
       )}

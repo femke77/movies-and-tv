@@ -43,7 +43,7 @@ const NavTVShows = () => {
             <rect width='20' height='15' x='2' y='7' rx='2' ry='2' />
             <polyline points='17 2 12 7 7 2' />
           </svg>
-          <h3 className='text-md font-bold ml-3'>TV Shows</h3>
+          <h3 className='text-md font-bold ml-3'>Explore New TV Shows</h3>
         </div>
         <MenuItemLink to='/explore/tv' name='Trending Series' />
         <MenuItemLink to='/explore/top-series' name='Top Rated Series' />

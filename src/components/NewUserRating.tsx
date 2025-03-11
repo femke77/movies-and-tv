@@ -42,13 +42,13 @@ const UserRating = ({
         <text
           x='49%'
           y='52%'
-          font-size='20'
-          font-family='Impact, sans-serif'
+          fontSize='20'
+          fontFamily='Impact, sans-serif'
           fill='rgba(55, 65, 81, 0.5)'
           stroke='#FFFFFF'
-          stroke-width='0.5'
-          text-anchor='middle'
-          alignment-baseline='middle'
+          strokeWidth='0.5'
+          textAnchor='middle'
+          alignmentBaseline='middle'
         >
           {rating.toFixed(1)}
         </text>
