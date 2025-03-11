@@ -1,13 +1,13 @@
 import { lazy } from 'react';
 
-import SwiperElement from '../components/Home/Swiper';
+import SwiperElement from '../components/home/Swiper';
 
-const PopularMovies = lazy(() => import('../components/Home/PopularMovies'));
-const TrendingMovies = lazy(() => import('../components/Home/TrendingMovies'));
-const TopRatedMovies = lazy(() => import('../components/Home/TopRatedMovies'));
-const PopularTv = lazy(() => import('../components/Home/PopularTv'));
-const TrendingTV = lazy(() => import('../components/Home/TrendingTv'));
-const TopRatedTv = lazy(() => import('../components/Home/TopRatedTv'));
+const PopularMovies = lazy(() => import('../components/home/PopularMovies'));
+const TrendingMovies = lazy(() => import('../components/home/TrendingMovies'));
+const TopRatedMovies = lazy(() => import('../components/home/TopRatedMovies'));
+const PopularTv = lazy(() => import('../components/home/PopularTv'));
+const TrendingTV = lazy(() => import('../components/home/TrendingTv'));
+const TopRatedTv = lazy(() => import('../components/home/TopRatedTv'));
 
 const Home = () => {
   return (

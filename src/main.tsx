@@ -10,12 +10,12 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ScrollToTop from "./components/ScrollToTop.tsx";
-import ItemDetailSkeleton from "./components/LoadingSkels/ItemDetailSkeleton.tsx";
+import ScrollToTop from "./components/helpers/ScrollToTop.tsx";
+import ItemDetailSkeleton from "./components/loadingSkeletons/ItemDetailSkeleton.tsx";
 import ErrorPage from "./pages/404.tsx";
 import NotFound from "./pages/404.tsx";
-import ItemCardSkeletonGrid from "./components/LoadingSkels/ItemCardSkeletonGrid.tsx";
-import DelayedSuspense from "./components/DelayedSuspense.tsx";
+import ItemCardSkeletonGrid from "./components/loadingSkeletons/ItemCardSkeletonGrid.tsx";
+import DelayedSuspense from "./components/helpers/DelayedSuspense.tsx";
 
 const TvAll = lazy(() => import("./pages/tvPages/TvAll.tsx"));
 const MovieAll = lazy(() => import("./pages/moviePages/MovieAll.tsx"));
@@ -161,9 +161,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
-      
         <RouterProvider router={router} />
-  
       </DelayedSuspense>
     </QueryClientProvider>
   </StrictMode>
