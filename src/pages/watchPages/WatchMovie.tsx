@@ -8,7 +8,7 @@ import { isIphoneSafari, isSafariOnIPad } from '../../utils/helpers';
 
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
-  const { data: movie } = useWatchDetails('movie', movie_id ?? '');
+  const { data: movie={} } = useWatchDetails('movie', movie_id ?? '');
 
   return (
     <div className='min-h-screen  pt-[60px]'>

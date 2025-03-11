@@ -18,7 +18,7 @@ import EpisodeList from '../../components/EpisodeList';
 
 // TODO look into the flash of rerending when the api fetches the next season.
 // FIXME This needs to be more componentized
-// FIXME url params controlled instead of state controlled would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management
+// FIXME url params controlled ???? instead of state controlled would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management
 
 const WatchTV = () => {
   const { servers } = serverData;
