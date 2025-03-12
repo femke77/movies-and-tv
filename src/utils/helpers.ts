@@ -29,8 +29,9 @@ export const isIphoneSafari = () => {
   );
 };
 
-export const isSafariOnIPad = () => {
+export const isIPad = () => {
   return (
-    navigator.userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1 // Ensures it's a touchscreen
+    /iPad/.test(navigator.userAgent) || 
+    (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1)
   );
 };

@@ -13,7 +13,7 @@ import serverData from '../../utils/data/servers.json';
 import { useEffect, useState } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/buttons/SeasonNavigation';
-import { isIphoneSafari, isSafariOnIPad } from '../../utils/helpers';
+import { isIphoneSafari } from '../../utils/helpers';
 import EpisodeList from '../../components/EpisodeList';
 
 // TODO look into the flash of rerending when the api fetches the next season.
@@ -70,7 +70,7 @@ const WatchTV = () => {
 
             <div
               className={`${
-                isIphoneSafari() || isSafariOnIPad() ? 'invisible' : ''
+                isIphoneSafari()  ? 'invisible' : ''
               }`}
             >
               <FullscreenBtn elementId='video-player' />
@@ -86,10 +86,10 @@ const WatchTV = () => {
                 className='absolute top-0 left-0 w-full h-full '
                 width='100%'
                 height='100%'
-                // sandbox="allow-scripts allow-same-origin"
-                // src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
+                sandbox="allow-scripts allow-same-origin"
+                src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
 
-                src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
+                // src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
                 allowFullScreen
               ></iframe>
             </div>

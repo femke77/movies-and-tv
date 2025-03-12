@@ -1,35 +1,37 @@
 // import { ErrorBoundary} from 'react-error-boundary';
-import { StrictMode, lazy } from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App.tsx';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/Home.tsx';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ScrollToTop from './components/helpers/ScrollToTop.tsx';
-import ItemDetailSkeleton from './components/loadingSkeletons/ItemDetailSkeleton.tsx';
-import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
-import NotFound from './pages/404.tsx';
-import ItemCardSkeletonGrid from './components/loadingSkeletons/ItemCardSkeletonGrid.tsx';
-import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
+import { StrictMode, lazy } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.tsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ScrollToTop from "./components/helpers/ScrollToTop.tsx";
+import ItemDetailSkeleton from "./components/loadingSkeletons/ItemDetailSkeleton.tsx";
+import ChunkErrorHandler from "./components/helpers/ChunkErrorHandler.tsx";
+import NotFound from "./pages/404.tsx";
+import ItemCardSkeletonGrid from "./components/loadingSkeletons/ItemCardSkeletonGrid.tsx";
+import DelayedSuspense from "./components/helpers/DelayedSuspense.tsx";
 
-const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
-const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
-const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
-const Results = lazy(() => import('./pages/SearchPage.tsx'));
-const MovieTopRated = lazy(
-  () => import('./pages/moviePages/MovieTopRated.tsx'),
+import WatchMovieTmp from "./pages/watchPages/WatchTemp.tsx";
+
+const TvAll = lazy(() => import("./pages/tvPages/TvAll.tsx"));
+const MovieAll = lazy(() => import("./pages/moviePages/MovieAll.tsx"));
+const ItemDetail = lazy(() => import("./pages/ItemDetail.tsx"));
+const Results = lazy(() => import("./pages/SearchPage.tsx"));
+const MovieTopRated = lazy(() =>
+  import("./pages/moviePages/MovieTopRated.tsx")
 );
-const MoviePopular = lazy(() => import('./pages/moviePages/MoviePopular.tsx'));
-const MovieTrending = lazy(
-  () => import('./pages/moviePages/MovieTrending.tsx'),
+const MoviePopular = lazy(() => import("./pages/moviePages/MoviePopular.tsx"));
+const MovieTrending = lazy(() =>
+  import("./pages/moviePages/MovieTrending.tsx")
 );
-const TvTrending = lazy(() => import('./pages/tvPages/TvTrending.tsx'));
-const TvTopRated = lazy(() => import('./pages/tvPages/TvTopRated.tsx'));
-const TvPopular = lazy(() => import('./pages/tvPages/TvPopular.tsx'));
-const WatchMovie = lazy(() => import('./pages/watchPages/WatchMovie.tsx'));
-const WatchTV = lazy(() => import('./pages/watchPages/WatchTV.tsx'));
-const DMCA = lazy(() => import('./pages/DMCA.tsx'));
+const TvTrending = lazy(() => import("./pages/tvPages/TvTrending.tsx"));
+const TvTopRated = lazy(() => import("./pages/tvPages/TvTopRated.tsx"));
+const TvPopular = lazy(() => import("./pages/tvPages/TvPopular.tsx"));
+const WatchMovie = lazy(() => import("./pages/watchPages/WatchMovie.tsx"));
+const WatchTV = lazy(() => import("./pages/watchPages/WatchTV.tsx"));
+const DMCA = lazy(() => import("./pages/DMCA.tsx"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,7 +45,7 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     errorElement: <ChunkErrorHandler />,
 
     element: <App />,
@@ -53,15 +55,15 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'search/:query?',
+        path: "search/:query?",
         element: <Results />,
       },
       {
-        path: 'dmca',
+        path: "dmca",
         element: <DMCA />,
       },
       {
-        path: ':item_type/:id',
+        path: ":item_type/:id",
         element: (
           <ScrollToTop>
             <DelayedSuspense fallback={<ItemDetailSkeleton />}>
@@ -71,66 +73,100 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'explore',
+        path: "explore",
         children: [
           {
-            path: 'movies',
-            element: <MovieTrending />,
+            path: "movies",
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <MovieTrending />
+              </DelayedSuspense>
+            ),
           },
           {
-            path: 'toprated',
-            element: <MovieTopRated />,
+            path: "toprated",
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <MovieTopRated />
+              </DelayedSuspense>
+            ),
           },
           {
-            path: 'popular',
-            element: <MoviePopular />,
+            path: "popular",
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <MoviePopular />
+              </DelayedSuspense>
+            ),
           },
           {
-            path: 'all-movies',
-            element: <MovieAll />,
+            path: "all-movies",
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <MovieAll />
+              </DelayedSuspense>
+            ),
           },
           {
-            path: 'tv',
-            element: <TvTrending />,
+            path: "tv",
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <TvTrending />
+              </DelayedSuspense>
+            ),
           },
           {
-            path: 'top-series',
-            element: <TvTopRated />,
+            path: "top-series",
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <TvTopRated />
+              </DelayedSuspense>
+            ),
           },
           {
-            path: 'popular-tv',
-            element: <TvPopular />,
+            path: "popular-tv",
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <TvPopular />
+              </DelayedSuspense>
+            ),
           },
           {
-            path: 'all-tv',
-            element: <TvAll />,
+            path: "all-tv",
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <TvAll />
+              </DelayedSuspense>
+            ),
           },
         ],
       },
       {
-        path: 'watch',
+        path: "watch",
         children: [
           {
-            path: 'movie/:movie_id',
+            path: "movie/:movie_id",
             element: <WatchMovie />,
           },
           {
-            path: 'tv/:series_id/:season_number/:episode_number',
+            path: "tv/:series_id/:season_number/:episode_number",
             element: <WatchTV />,
+          },
+          {
+            path: "temp/:movie_id",
+            element: <WatchMovieTmp />,
           },
         ],
       },
-      { path: '*', element: <NotFound /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
-        <RouterProvider router={router} />
-      </DelayedSuspense>
+      <RouterProvider router={router} />
     </QueryClientProvider>
-  </StrictMode>,
+  </StrictMode>
 );

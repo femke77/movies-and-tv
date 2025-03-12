@@ -14,7 +14,7 @@ const UserRating = ({
   //   fontSize = 10,
 }: UserRatingProps) => {
   return (
-    <div className='flex items-center mt-4 mr-4'>
+    <div className={`flex items-center mt-4 mr-4`}>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         className={`${width} ${height}`}
@@ -23,7 +23,7 @@ const UserRating = ({
         <circle
           cx='18'
           cy='18'
-          r='17'
+          r='16'
           stroke='white'
           strokeWidth='1'
           fill='black'
@@ -32,7 +32,7 @@ const UserRating = ({
         <circle
           cx='18'
           cy='18'
-          r='17'
+          r='16'
           stroke='blue'
           strokeWidth='3'
           fill='black'
@@ -40,8 +40,8 @@ const UserRating = ({
           className='transition-all duration-300 ease-out'
         />
         <text
-          x='49%'
-          y='52%'
+          x='50%'
+          y='50%'
           fontSize='20'
           fontFamily='Impact, sans-serif'
           fill='rgba(55, 65, 81, 0.5)'

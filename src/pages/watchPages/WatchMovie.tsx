@@ -4,12 +4,18 @@ import WatchDescription from '../../components/WatchDescription';
 import BackButton from '../../components/buttons/BackBtn';
 import FullscreenBtn from '../../components/buttons/FullScreenBtn';
 import ServerList from '../../components/buttons/ServerButton';
-import { isIphoneSafari, isSafariOnIPad } from '../../utils/helpers';
+import { isIphoneSafari, isIPad } from '../../utils/helpers';
 
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie = {} } = useWatchDetails('movie', movie_id ?? '');
 
+  const getPlayBackUrl = () => {
+    if (!isIPad()) {
+      return `/api/video/movie/${movie_id}`;
+    }
+    return `https://vidsrc.xyz/embed/movie/${movie_id}`;
+  }
   return (
     <div className='min-h-screen  pt-[60px]'>
       <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
@@ -29,7 +35,7 @@ const WatchMovie = () => {
 
             <div
               className={`${
-                isIphoneSafari() || isSafariOnIPad() ? 'invisible' : ''
+                isIphoneSafari() ? 'invisible' : ''
               }`}
             >
               <FullscreenBtn elementId='iframe' />
@@ -42,10 +48,14 @@ const WatchMovie = () => {
                 className='absolute top-0 left-0 w-full h-full '
                 width='100%'
                 height='100%'
-                // sandbox="allow-scripts allow-same-origin"
+                {...(!isIPad() && {
+                  sandbox: 'allow-scripts allow-same-origin allow-presentation',
+                })}
+                src={getPlayBackUrl()}
+                // sandbox="allow-scripts allow-same-origin allow-presentation"
                 // src={`/api/video/movie/${movie_id}`}
-
-                src={`https://vidsrc.xyz/embed/movie/${movie_id}`}
+          
+                // src={`https://vidsrc.xyz/embed/movie/${movie_id}`}
                 allowFullScreen
               ></iframe>
             </div>
