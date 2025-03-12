@@ -1,5 +1,5 @@
 // import { ErrorBoundary} from 'react-error-boundary';
-import { StrictMode, lazy } from 'react';
+import { StrictMode, lazy, Component } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
@@ -42,6 +42,54 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+interface ChunkLoadErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+class ChunkLoadErrorBoundary extends Component<ChunkLoadErrorBoundaryProps> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError(error: Error) {
+    // Check if it's a chunk load error
+    if (
+      (error.message &&
+        error.message.includes(
+          'Failed to fetch dynamically imported module',
+        )) ||
+      error.message.includes('Loading chunk') ||
+      error.message.includes('Failed to load module script')
+    ) {
+      return { hasError: true };
+    }
+    return { hasError: false };
+  }
+
+  componentDidCatch(error: Error) {
+    console.error('Chunk loading error:', error);
+  }
+
+  refreshPage = () => {
+    window.location.reload();
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div>
+          <h2>Something went wrong</h2>
+          <p>
+            The app was likely updated. Please refresh to get the latest
+            version.
+          </p>
+          <button onClick={this.refreshPage}>Refresh Now</button>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
 
 const router = createBrowserRouter([
   {
@@ -166,7 +214,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <ChunkLoadErrorBoundary>
+        <RouterProvider router={router} />
+      </ChunkLoadErrorBoundary>
     </QueryClientProvider>
   </StrictMode>,
 );
