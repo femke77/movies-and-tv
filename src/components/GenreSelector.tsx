@@ -72,17 +72,19 @@ const GenreSelector = ({
 
   return (
     <>
- {width < 768 ? (<div className='flex justify-start lg:justify-end mr-6 '>
-        <button
-          onClick={() => setOpen(!open)}
-          className='mb-2  mx-4 text-center text-white text-md  h-[35px] w-[150px] rounded-lg
+      {width < 768 ? (
+        <div className='flex justify-start lg:justify-end mr-6 '>
+          <button
+            onClick={() => setOpen(!open)}
+            className='mb-2  mx-4 text-center text-white text-md  h-[35px] w-[150px] rounded-lg
             bg-gradient-to-r from-[#292e30] to-[#3d3737] cursor-pointer hover:outline-blue-700 hover:outline-1 hover:translate-[1px] active:translate-[1px]'
-        >
-          {!open ? 'Select by Genre' : 'Close Genres'}
-        </button>
-      </div>) : null}
-      
-      {(open || (width >=768&& !open ))&& (
+          >
+            {!open ? 'Select by Genre' : 'Close Genres'}
+          </button>
+        </div>
+      ) : null}
+
+      {(open || (width >= 768 && !open)) && (
         <>
           <p className='mx-4 text-white/65 text-md mt-4 lg:-mt-3'>
             Genres{' '}

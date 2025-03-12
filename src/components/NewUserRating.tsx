@@ -50,7 +50,7 @@ const UserRating = ({
           textAnchor='middle'
           alignmentBaseline='middle'
         >
-          {rating === 10 ? rating: rating.toFixed(1)}
+          {rating === 10 ? rating : rating.toFixed(1)}
         </text>
       </svg>
     </div>
