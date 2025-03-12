@@ -21,8 +21,8 @@ const moviesNav = [
 
 const tvNav = [
   { title: 'Trending TV', url: '/explore/tv' },
-  { title: 'Popular TV', url: '/explore/popular-tv' },
   { title: 'Top Rated Series', url: '/explore/top-series' },
+  { title: 'Popular TV', url: '/explore/popular-tv' },
   { title: 'All TV', url: '/explore/all-tv' },
 ];
 

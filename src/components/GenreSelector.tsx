@@ -18,7 +18,7 @@ const GenreSelector = ({
 }) => {
   const { width } = useWindowSize();
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [longPressTimer, setLongPressTimer] = useState<number | null>(null);
   const touchStartTimeRef = useRef<number>(0);
   const touchDurationThreshold = 500; // Time in ms to consider a touch as a long press
