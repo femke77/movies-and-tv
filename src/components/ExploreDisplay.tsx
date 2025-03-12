@@ -31,17 +31,17 @@ const Explore = memo(
       }
     }, [inView, hasNextPage, fetchNextPage]);
 
-    if (isLoading) return null;
+    if (isLoading) return null; //suspense will take care of this
     const allItems = data?.pages.flatMap((page) => page.results) ?? [];
     return (
       <div className='ml-2 mt-8'>
         <div className='flex flex-wrap flex-1 gap-4 items-start '>
           {allItems.length > 0 ? (
-            allItems.map((movie: IItem) => (
+            allItems.map((item: IItem) => (
               <MemoizedItemCard
                 itemType={itemType}
-                key={`movie-${movie.id}`}
-                item={movie}
+                key={`${itemType}-${item.id}`}
+                item={item}
                 showGenres={true}
                 showRating={true}
               />

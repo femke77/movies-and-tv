@@ -11,7 +11,7 @@ const UserRating = ({
   width = 'w-20',
   height = 'h-20',
   //   color = "white",
-  //   fontSize = 10,
+    fontSize = 30,
 }: UserRatingProps) => {
   return (
     <div className={`flex items-center mt-4 mr-4`}>
@@ -20,7 +20,7 @@ const UserRating = ({
         className={`${width} ${height}`}
         viewBox='0 0 37 37'
       >
-        <circle
+        {/* <circle
           cx='18'
           cy='18'
           r='16'
@@ -28,8 +28,8 @@ const UserRating = ({
           strokeWidth='1'
           fill='black'
           className='opacity-80'
-        />
-        <circle
+        /> */}
+        {/* <circle
           cx='18'
           cy='18'
           r='16'
@@ -38,13 +38,13 @@ const UserRating = ({
           fill='black'
           fillOpacity='0.3'
           className='transition-all duration-300 ease-out'
-        />
+        /> */}
         <text
           x='50%'
           y='50%'
-          fontSize='20'
+          fontSize={fontSize}
           fontFamily='Impact, sans-serif'
-          fill='rgba(55, 65, 81, 0.5)'
+          fill='black'
           stroke='#FFFFFF'
           strokeWidth='0.5'
           textAnchor='middle'

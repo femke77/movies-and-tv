@@ -17,6 +17,7 @@ const GenreSelector = ({
   onUnwantedGenreToggle: (_genre: string) => void;
 }) => {
   const { width } = useWindowSize();
+  
   const [open, setOpen] = useState(false);
   const [longPressTimer, setLongPressTimer] = useState<number | null>(null);
   const touchStartTimeRef = useRef<number>(0);

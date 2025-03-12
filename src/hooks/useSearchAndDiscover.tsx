@@ -23,8 +23,8 @@ export const useInfiniteSearchQuery = (query: string) => {
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: !!query,
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours
-    gcTime: 1000 * 60 * 60 * 25, // 25 hours
+    staleTime: 1000 * 60 * 60 * 1, // 1 hour
+    gcTime: 1000 * 60 * 60 * 65, // 65min
     refetchOnWindowFocus: false,
     placeholderData: (previousData) => previousData,
     select: (data) => ({
@@ -93,10 +93,10 @@ export const useInfiniteDiscoverQuery = (
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: true,
-    staleTime: 0,
+    staleTime: 1000 * 60 * 60 * 1, // 1 hour
+    gcTime: 1000 * 60 * 60 * 65, // 65min
     retry: 2,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
-    placeholderData: (previousData) => previousData,
     select: (data) => ({
       pages: data.pages.map((page) => ({
         ...page,
@@ -104,6 +104,7 @@ export const useInfiniteDiscoverQuery = (
       })),
       pageParams: data.pageParams,
     }),
+    placeholderData: (previousData) => previousData,
   });
 };
 
@@ -135,8 +136,8 @@ export const useInfiniteTrendingQuery = (
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: true,
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours
-    gcTime: 1000 * 60 * 60 * 25, // 25 hours
+    staleTime: 1000 * 60 * 60 * 1, // 1 hour
+    gcTime: 1000 * 60 * 60 * 65, // 65min
     refetchOnWindowFocus: false,
     placeholderData: (previousData) => previousData,
     select: (data) => ({

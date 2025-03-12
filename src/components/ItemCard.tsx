@@ -143,7 +143,7 @@ const ItemCard = ({
                     <UserRating
                       rating={item.vote_average ?? 0}
                       color={strokeColor}
-                      width='w-14'
+                      width='w-14=5'
                       height='h-15'
                     />
                   </div>
@@ -170,7 +170,7 @@ const ItemCard = ({
               </div>
 
               <h2
-                className={`w-full truncate ${getTitleSizeClass()} leading-6  pl-1 mt-1`}
+                className={`w-full truncate ${getTitleSizeClass()} leading-6  pl-1 -mt-2 `}
                 title={item.name || item.title} // Tooltip for full text on hover
               >
                 {item.name || item.title}

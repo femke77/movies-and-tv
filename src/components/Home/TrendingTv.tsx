@@ -14,7 +14,7 @@ const TrendingTV = () => {
       {isLoading ? (
         <div className="flex gap-3 px-4 py-2 w-full  ">
           {Array.from({ length: 15 }).map((_, i) => (
-            <div className=" w-[180px] flex-shrink-0">
+            <div key={i} className=" w-[180px] flex-shrink-0">
               <ItemCardSkeleton key={i} />
             </div>
           ))}

@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { useState, useEffect } from 'react';
 import { lazy } from 'react';
 
-const UserRating = lazy(() => import('../UserRating'));
+const UserRating = lazy(() => import('../NewUserRating'));
 const WatchButton = lazy(() => import('../buttons/WatchButton'));
 
 const TextPlaceholder = () => (
@@ -230,7 +230,7 @@ const Slide = ({
                 `flex flex-row items-center justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
               )}
             >
-              <div className='mb-2 mr-10'>
+              <div className='mb-3 mr-10'>
                 {contentLoaded ? (
                   <WatchButton
                     itemType={slide.media_type!}
@@ -242,7 +242,7 @@ const Slide = ({
               </div>
               <div className='mb-2'>
                 {contentLoaded ? (
-                  <UserRating rating={slide.vote_average ?? 0} />
+                  <UserRating rating={slide.vote_average ?? 0} fontSize={26} />
                 ) : (
                   <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
                 )}

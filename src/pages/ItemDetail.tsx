@@ -83,11 +83,11 @@ const ItemDetail = () => {
             {/* Left Section - Poster Image */}
             <div className='relative md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3'>
               <section className='w-[280px] sm:w-[450px] md:w-[300px] flex-shrink-0'>
-                {/* This is the main poster container with proper aspect ratio */}
+                {/* main poster container*/}
                 <div
                   className='relative w-full md:w-[340px] mx-auto overflow-hidden'
                   style={{
-                    // Use aspect-ratio to maintain poster dimensions before image loads
+                    //  maintain poster dimensions before image loads
                     aspectRatio: '2/3',
                     backgroundColor: 'rgba(0,0,0,0.2)',
                   }}
@@ -95,7 +95,7 @@ const ItemDetail = () => {
                   <img
                     src={hiResPosterPath}
                     alt={`official poster for ${item.title || item.name}`}
-                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-600 ease-in-out ${
+                    className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-600 ease-in-out ${
                       isVisible && highResPosterLoaded
                         ? 'opacity-100'
                         : 'opacity-0'
@@ -135,7 +135,7 @@ const ItemDetail = () => {
                   height='h-20'
                   color={strokeColor}
                 />
-                <div className='xs:pl-4 h-20 sm:pl-8 sm:pt-1.5 md:pt-3'>
+                <div className='xs:pl-4 h-20 sm:pl-8 sm:pt-1.5 '>
                   <WatchButton itemType={item_type!} id={item.id} />
                 </div>
               </div>
