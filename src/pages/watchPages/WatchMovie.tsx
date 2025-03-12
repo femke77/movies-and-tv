@@ -4,7 +4,7 @@ import WatchDescription from '../../components/WatchDescription';
 import BackButton from '../../components/buttons/BackBtn';
 import FullscreenBtn from '../../components/buttons/FullScreenBtn';
 import ServerList from '../../components/buttons/ServerButton';
-import { isIphoneSafari, isIPad } from '../../utils/helpers';
+import { isIphoneSafari} from '../../utils/helpers';
 
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
@@ -16,7 +16,7 @@ const WatchMovie = () => {
   //   }
   //   return `https://vidsrc.xyz/embed/movie/${movie_id}`;
   // }
-  
+
   return (
     <div className='min-h-screen  pt-[60px]'>
       <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
