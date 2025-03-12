@@ -48,14 +48,14 @@ const WatchMovie = () => {
                 className='absolute top-0 left-0 w-full h-full '
                 width='100%'
                 height='100%'
-                {...(!isIPad() && {
-                  sandbox: 'allow-scripts allow-same-origin allow-presentation',
-                })}
-                src={getPlayBackUrl()}
+                // {...(!isIPad() && {
+                //   sandbox: 'allow-scripts allow-same-origin allow-presentation',
+                // })}
+                // src={getPlayBackUrl()}
                 // sandbox="allow-scripts allow-same-origin allow-presentation"
                 // src={`/api/video/movie/${movie_id}`}
           
-                // src={`https://vidsrc.xyz/embed/movie/${movie_id}`}
+                src={`https://vidsrc.xyz/embed/movie/${movie_id}`}
                 allowFullScreen
               ></iframe>
             </div>

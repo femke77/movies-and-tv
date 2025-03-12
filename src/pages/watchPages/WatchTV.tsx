@@ -86,10 +86,10 @@ const WatchTV = () => {
                 className='absolute top-0 left-0 w-full h-full '
                 width='100%'
                 height='100%'
-                sandbox="allow-scripts allow-same-origin"
-                src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
+                // sandbox="allow-scripts allow-same-origin"
+                // src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
 
-                // src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
+                src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
                 allowFullScreen
               ></iframe>
             </div>
