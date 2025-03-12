@@ -12,7 +12,7 @@ const NavMovies = () => {
       >
         {({ open }) => (
           <>
-            <h2 className='text-lg font-bold bg-gradient-to-r from-white to-gray-500/70 text-transparent bg-clip-text'>
+            <h2 className='text-lg font-bold bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text'>
               Movies
             </h2>
             {open ? (

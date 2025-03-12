@@ -50,7 +50,7 @@ const UserRating = ({
           fontSize={fontSize}
           fontWeight='bold'
         >
-          {rating.toFixed(1)}
+          {rating === 10 ? rating : rating.toFixed(1)}
         </text>
       </svg>
     </div>
