@@ -4,7 +4,7 @@ import WatchDescription from '../../components/WatchDescription';
 import BackButton from '../../components/buttons/BackBtn';
 import FullscreenBtn from '../../components/buttons/FullScreenBtn';
 import ServerList from '../../components/buttons/ServerButton';
-import { isIphoneSafari} from '../../utils/helpers';
+import { isIphoneSafari } from '../../utils/helpers';
 
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
@@ -34,11 +34,7 @@ const WatchMovie = () => {
               </p>
             )}
 
-            <div
-              className={`${
-                isIphoneSafari() ? 'invisible' : ''
-              }`}
-            >
+            <div className={`${isIphoneSafari() ? 'invisible' : ''}`}>
               <FullscreenBtn elementId='iframe' />
             </div>
           </div>
@@ -55,7 +51,7 @@ const WatchMovie = () => {
                 // src={getPlayBackUrl()}
                 // sandbox="allow-scripts allow-same-origin allow-presentation"
                 // src={`/api/video/movie/${movie_id}`}
-          
+
                 src={`https://vidsrc.xyz/embed/movie/${movie_id}`}
                 allowFullScreen
               ></iframe>

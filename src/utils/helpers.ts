@@ -31,7 +31,7 @@ export const isIphoneSafari = () => {
 
 export const isIPad = () => {
   return (
-    /iPad/.test(navigator.userAgent) || 
+    /iPad/.test(navigator.userAgent) ||
     (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1)
   );
 };

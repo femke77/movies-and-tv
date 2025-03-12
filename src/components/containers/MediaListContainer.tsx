@@ -28,18 +28,18 @@ const MediaListContainer = ({
   voteCount,
 }: MediaListContainerProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   // Initialize state from URL params
   const [selectedGenres, setSelectedGenres] = useState<string[]>(() => {
     const genresParam = searchParams.get('genres');
     return genresParam ? genresParam.split(',') : [];
   });
-  
+
   const [deSelectedGenres, setDeSelectedGenres] = useState<string[]>(() => {
     const deselectedParam = searchParams.get('deselected');
     return deselectedParam ? deselectedParam.split(',') : [];
   });
-  
+
   const [sortByOption, setSortByOption] = useState<string>(() => {
     return searchParams.get('sortBy') || sortBy || '';
   });
@@ -47,27 +47,34 @@ const MediaListContainer = ({
   // Update URL params when state changes
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
-    
+
     if (selectedGenres.length > 0) {
       params.set('genres', selectedGenres.join(','));
     } else {
       params.delete('genres');
     }
-    
+
     if (deSelectedGenres.length > 0) {
       params.set('deselected', deSelectedGenres.join(','));
     } else {
       params.delete('deselected');
     }
-    
+
     if (sortByOption && sortByOption !== sortBy) {
       params.set('sortBy', sortByOption);
     } else {
       params.delete('sortBy');
     }
-    
+
     setSearchParams(params);
-  }, [selectedGenres, deSelectedGenres, sortByOption, setSearchParams, searchParams, sortBy]);
+  }, [
+    selectedGenres,
+    deSelectedGenres,
+    sortByOption,
+    setSearchParams,
+    searchParams,
+    sortBy,
+  ]);
 
   const toggleGenre = (genreId: string) => {
     setSelectedGenres((prev) => {
@@ -77,7 +84,7 @@ const MediaListContainer = ({
         setDeSelectedGenres((deselected) =>
           deselected.filter((genre) => genre !== genreId),
         );
-        
+
         return [...prev, genreId];
       }
     });
@@ -145,18 +152,12 @@ const MediaListContainer = ({
 
 export default MediaListContainer;
 
-
-
-
-
-
 // import { useState } from 'react';
 // import { useInfiniteDiscoverQuery } from '../../hooks/useSearchAndDiscover';
 // import GenreSelector from '../GenreSelector';
 // import Explore from '../ExploreDisplay';
 // import { IGenre } from '../../interfaces/IGenre';
 // import SortByListbox from '../ListBox';
-
 
 // interface MediaListContainerProps {
 //   mediaType: 'movie' | 'tv';
@@ -180,7 +181,6 @@ export default MediaListContainer;
 //   voteCount,
 // }: MediaListContainerProps) => {
 //   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-  
 
 //   const [deSelectedGenres, setDeSelectedGenres] = useState<string[]>([]);
 //   const [sortByOption, setSortByOption] = useState<string>(sortBy!);
@@ -193,12 +193,11 @@ export default MediaListContainer;
 //         setDeSelectedGenres((deselected) =>
 //           deselected.filter((genre) => genre !== genreId),
 //       );
-      
+
 //       return [...prev, genreId];
 //     }
 //   });
-  
-  
+
 // };
 
 // const toggleUnwantedGenre = (genreId: string) => {
@@ -213,8 +212,6 @@ export default MediaListContainer;
 //       }
 //     });
 //   };
-  
- 
 
 //   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
 //     useInfiniteDiscoverQuery(

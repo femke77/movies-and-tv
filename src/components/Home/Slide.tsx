@@ -242,7 +242,7 @@ const Slide = ({
               </div>
               <div className='mb-2'>
                 {contentLoaded ? (
-                  <UserRating rating={slide.vote_average ?? 0}  />
+                  <UserRating rating={slide.vote_average ?? 0} />
                 ) : (
                   <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
                 )}

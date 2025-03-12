@@ -11,7 +11,7 @@ const UserRating = ({
   width = 'w-20',
   height = 'h-20',
   //   color = "white",
-    fontSize = 30,
+  fontSize = 30,
 }: UserRatingProps) => {
   return (
     <div className={`flex items-center mt-4 mr-4`}>
