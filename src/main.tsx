@@ -1,15 +1,19 @@
 // import { ErrorBoundary} from 'react-error-boundary';
-import { StrictMode, Suspense, lazy, useEffect } from 'react';
+import { StrictMode, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
-import { createBrowserRouter, RouterProvider, useRouteError } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ScrollToTop from './components/ScrollToTop.tsx';
-import ItemDetailSkeleton from './components/LoadingSkels/ItemDetailSkeleton.tsx';
-import ErrorPage from './pages/404.tsx';
+import ScrollToTop from './components/helpers/ScrollToTop.tsx';
+import ItemDetailSkeleton from './components/loadingSkeletons/ItemDetailSkeleton.tsx';
+import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
 import NotFound from './pages/404.tsx';
+import ItemCardSkeletonGrid from './components/loadingSkeletons/ItemCardSkeletonGrid.tsx';
+import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
+
+import WatchMovieTmp from './pages/watchPages/WatchTemp.tsx';
 
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
 const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
@@ -28,36 +32,6 @@ const TvPopular = lazy(() => import('./pages/tvPages/TvPopular.tsx'));
 const WatchMovie = lazy(() => import('./pages/watchPages/WatchMovie.tsx'));
 const WatchTV = lazy(() => import('./pages/watchPages/WatchTV.tsx'));
 const DMCA = lazy(() => import('./pages/DMCA.tsx'));
-
-
-
-function ChunkErrorHandler() {
-  const error = useRouteError();
-  console.error("Router error caught:", error);
-  
-  // Check if it's a chunk loading error
-  if (
-    (error instanceof Error && error.name === 'ChunkLoadError') || 
-    (error instanceof Error && error.name === 'TypeError') ||
-    (error instanceof Error && error.message && (
-      error.message.includes('Failed to fetch dynamically imported module') ||
-      error.message.includes('Loading chunk') ||
-      error.message.includes('Failed to load module script')
-    ))
-  ) {
-    // Reload the page after a brief moment
-    useEffect(() => {
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
-    }, []);
-    
-    return <div>Application update detected. Reloading...</div>;
-  }
-  
-  // For any other errors, show your regular error page
-  return <ErrorPage />;
-}
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -92,9 +66,9 @@ const router = createBrowserRouter([
         path: ':item_type/:id',
         element: (
           <ScrollToTop>
-            <Suspense fallback={<ItemDetailSkeleton />}>
+            <DelayedSuspense fallback={<ItemDetailSkeleton />}>
               <ItemDetail />
-            </Suspense>
+            </DelayedSuspense>
           </ScrollToTop>
         ),
       },
@@ -103,35 +77,67 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'movies',
-            element: <MovieTrending />,
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <MovieTrending />
+              </DelayedSuspense>
+            ),
           },
           {
             path: 'toprated',
-            element: <MovieTopRated />,
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <MovieTopRated />
+              </DelayedSuspense>
+            ),
           },
           {
             path: 'popular',
-            element: <MoviePopular />,
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <MoviePopular />
+              </DelayedSuspense>
+            ),
           },
           {
             path: 'all-movies',
-            element: <MovieAll />,
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <MovieAll />
+              </DelayedSuspense>
+            ),
           },
           {
             path: 'tv',
-            element: <TvTrending />,
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <TvTrending />
+              </DelayedSuspense>
+            ),
           },
           {
             path: 'top-series',
-            element: <TvTopRated />,
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <TvTopRated />
+              </DelayedSuspense>
+            ),
           },
           {
             path: 'popular-tv',
-            element: <TvPopular />,
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <TvPopular />
+              </DelayedSuspense>
+            ),
           },
           {
             path: 'all-tv',
-            element: <TvAll />,
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <TvAll />
+              </DelayedSuspense>
+            ),
           },
         ],
       },
@@ -146,6 +152,10 @@ const router = createBrowserRouter([
             path: 'tv/:series_id/:season_number/:episode_number',
             element: <WatchTV />,
           },
+          {
+            path: 'temp/:movie_id',
+            element: <WatchMovieTmp />,
+          },
         ],
       },
       { path: '*', element: <NotFound /> },
@@ -156,13 +166,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-    
-        <Suspense
-          fallback={<span className='loader min-h-screen flex mx-auto'></span>}
-        >
-          <RouterProvider router={router} />
-        </Suspense>
-    
+      <RouterProvider router={router} />
     </QueryClientProvider>
   </StrictMode>,
 );

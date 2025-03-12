@@ -1,14 +1,21 @@
 import { useParams } from 'react-router-dom';
 import { useWatchDetails } from '../../hooks/useItemOrWatchDetail';
 import WatchDescription from '../../components/WatchDescription';
-import BackButton from '../../components/BackBtn';
-import FullscreenBtn from '../../components/FullScreenBtn';
-import ServerList from '../../components/ServerButton';
-import { isIphoneSafari, isSafariOnIPad } from '../../utils/helpers';
+import BackButton from '../../components/buttons/BackBtn';
+import FullscreenBtn from '../../components/buttons/FullScreenBtn';
+import ServerList from '../../components/buttons/ServerButton';
+import { isIphoneSafari } from '../../utils/helpers';
 
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
-  const { data: movie } = useWatchDetails('movie', movie_id ?? '');
+  const { data: movie = {} } = useWatchDetails('movie', movie_id ?? '');
+
+  // const getPlayBackUrl = () => {
+  //   if (!isIPad()) {
+  //     return `/api/video/movie/${movie_id}`;
+  //   }
+  //   return `https://vidsrc.xyz/embed/movie/${movie_id}`;
+  // }
 
   return (
     <div className='min-h-screen  pt-[60px]'>
@@ -27,11 +34,7 @@ const WatchMovie = () => {
               </p>
             )}
 
-            <div
-              className={`${
-                isIphoneSafari() || isSafariOnIPad() ? 'invisible' : ''
-              }`}
-            >
+            <div className={`${isIphoneSafari() ? 'invisible' : ''}`}>
               <FullscreenBtn elementId='iframe' />
             </div>
           </div>
@@ -42,7 +45,11 @@ const WatchMovie = () => {
                 className='absolute top-0 left-0 w-full h-full '
                 width='100%'
                 height='100%'
-                // sandbox="allow-scripts allow-same-origin"
+                // {...(!isIPad() && {
+                //   sandbox: 'allow-scripts allow-same-origin allow-presentation',
+                // })}
+                // src={getPlayBackUrl()}
+                // sandbox="allow-scripts allow-same-origin allow-presentation"
                 // src={`/api/video/movie/${movie_id}`}
 
                 src={`https://vidsrc.xyz/embed/movie/${movie_id}`}

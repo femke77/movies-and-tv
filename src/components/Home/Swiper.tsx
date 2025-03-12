@@ -2,8 +2,9 @@ import { useRef, useState, lazy } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
-import SlideSkeleton from '../LoadingSkels/SlideSkeleton';
-import { Suspense } from 'react';
+import SlideSkeleton from '../loadingSkeletons/SlideSkeleton';
+import DelayedSuspense from '../helpers/DelayedSuspense';
+
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -44,19 +45,19 @@ export default function SwiperElement() {
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
-        speed={20}
+        speed={10}
       >
         {items &&
           items.map((item, index) => (
             <SwiperSlide key={`item-${item.id}`}>
-              <Suspense fallback={<SlideSkeleton />}>
+              <DelayedSuspense fallback={<SlideSkeleton />}>
                 <Slide
                   slide={item}
                   isVisible={index === currentIndex}
                   currentIndex={index}
                   movieList={items}
                 />
-              </Suspense>
+              </DelayedSuspense>
             </SwiperSlide>
           ))}
 

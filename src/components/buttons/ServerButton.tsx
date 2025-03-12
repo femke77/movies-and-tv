@@ -1,5 +1,5 @@
 import { Settings } from 'lucide-react';
-import serverData from '../utils/data/servers.json';
+import serverData from '../../utils/data/servers.json';
 
 const ServerButton = ({ name, value }: { name: string; value: string }) => {
   return (

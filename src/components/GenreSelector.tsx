@@ -17,7 +17,8 @@ const GenreSelector = ({
   onUnwantedGenreToggle: (_genre: string) => void;
 }) => {
   const { width } = useWindowSize();
-  const [open, setOpen] = useState(false);
+
+  const [open] = useState(true);
   const [longPressTimer, setLongPressTimer] = useState<number | null>(null);
   const touchStartTimeRef = useRef<number>(0);
   const touchDurationThreshold = 500; // Time in ms to consider a touch as a long press
@@ -71,15 +72,15 @@ const GenreSelector = ({
 
   return (
     <>
-      <div className='flex justify-start lg:justify-end mr-6 '>
+      {/* <div className='flex justify-start lg:justify-end mr-6 '>
         <button
           onClick={() => setOpen(!open)}
           className='mb-2  mx-4 text-center text-white text-md  h-[35px] w-[150px] rounded-lg
             bg-gradient-to-r from-[#292e30] to-[#3d3737] cursor-pointer hover:outline-blue-700 hover:outline-1 hover:translate-[1px] active:translate-[1px]'
         >
-          Select By Genres
+          {!open ? 'Select by Genre' : 'Close Genres'}
         </button>
-      </div>
+      </div> */}
       {open && (
         <>
           <p className='mx-4 text-white/65 text-md mt-4 lg:-mt-3'>

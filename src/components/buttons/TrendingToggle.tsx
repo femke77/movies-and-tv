@@ -33,13 +33,13 @@ const TrendingToggle = ({
 
         <button
           onClick={() => handleChange('day')}
-          className='relative z-10 flex h-full w-[100px] cursor-pointer items-center justify-center text-md text-white transition-colors duration-300'
+          className='relative z-10 flex h-full w-[100px] cursor-pointer items-center justify-center text-sm sm:text-md text-white transition-colors duration-300'
         >
           Today
         </button>
         <button
           onClick={() => handleChange('week')}
-          className='relative z-10 flex h-full w-[100px] cursor-pointer items-center justify-center text-md text-white transition-colors duration-300'
+          className='relative z-10 flex h-full w-[100px] cursor-pointer items-center justify-center text-sm sm:text-md text-white transition-colors duration-300'
         >
           This Week
         </button>
