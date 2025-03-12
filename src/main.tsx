@@ -1,37 +1,37 @@
 // import { ErrorBoundary} from 'react-error-boundary';
-import { StrictMode, lazy } from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App.tsx';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/Home.tsx';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ScrollToTop from './components/helpers/ScrollToTop.tsx';
-import ItemDetailSkeleton from './components/loadingSkeletons/ItemDetailSkeleton.tsx';
-import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
-import NotFound from './pages/404.tsx';
-import ItemCardSkeletonGrid from './components/loadingSkeletons/ItemCardSkeletonGrid.tsx';
-import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
+import { StrictMode, lazy, Component } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.tsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ScrollToTop from "./components/helpers/ScrollToTop.tsx";
+import ItemDetailSkeleton from "./components/loadingSkeletons/ItemDetailSkeleton.tsx";
+import ChunkErrorHandler from "./components/helpers/ChunkErrorHandler.tsx";
+import NotFound from "./pages/404.tsx";
+import ItemCardSkeletonGrid from "./components/loadingSkeletons/ItemCardSkeletonGrid.tsx";
+import DelayedSuspense from "./components/helpers/DelayedSuspense.tsx";
 
-import WatchMovieTmp from './pages/watchPages/WatchTemp.tsx';
+import WatchMovieTmp from "./pages/watchPages/WatchTemp.tsx";
 
-const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
-const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
-const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
-const Results = lazy(() => import('./pages/SearchPage.tsx'));
-const MovieTopRated = lazy(
-  () => import('./pages/moviePages/MovieTopRated.tsx'),
+const TvAll = lazy(() => import("./pages/tvPages/TvAll.tsx"));
+const MovieAll = lazy(() => import("./pages/moviePages/MovieAll.tsx"));
+const ItemDetail = lazy(() => import("./pages/ItemDetail.tsx"));
+const Results = lazy(() => import("./pages/SearchPage.tsx"));
+const MovieTopRated = lazy(() =>
+  import("./pages/moviePages/MovieTopRated.tsx")
 );
-const MoviePopular = lazy(() => import('./pages/moviePages/MoviePopular.tsx'));
-const MovieTrending = lazy(
-  () => import('./pages/moviePages/MovieTrending.tsx'),
+const MoviePopular = lazy(() => import("./pages/moviePages/MoviePopular.tsx"));
+const MovieTrending = lazy(() =>
+  import("./pages/moviePages/MovieTrending.tsx")
 );
-const TvTrending = lazy(() => import('./pages/tvPages/TvTrending.tsx'));
-const TvTopRated = lazy(() => import('./pages/tvPages/TvTopRated.tsx'));
-const TvPopular = lazy(() => import('./pages/tvPages/TvPopular.tsx'));
-const WatchMovie = lazy(() => import('./pages/watchPages/WatchMovie.tsx'));
-const WatchTV = lazy(() => import('./pages/watchPages/WatchTV.tsx'));
-const DMCA = lazy(() => import('./pages/DMCA.tsx'));
+const TvTrending = lazy(() => import("./pages/tvPages/TvTrending.tsx"));
+const TvTopRated = lazy(() => import("./pages/tvPages/TvTopRated.tsx"));
+const TvPopular = lazy(() => import("./pages/tvPages/TvPopular.tsx"));
+const WatchMovie = lazy(() => import("./pages/watchPages/WatchMovie.tsx"));
+const WatchTV = lazy(() => import("./pages/watchPages/WatchTV.tsx"));
+const DMCA = lazy(() => import("./pages/DMCA.tsx"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,9 +43,55 @@ const queryClient = new QueryClient({
   },
 });
 
+interface ChunkLoadErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+class ChunkLoadErrorBoundary extends Component<ChunkLoadErrorBoundaryProps> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError(error: Error) {
+    // Check if it's a chunk load error
+    if (
+      error.message &&
+      error.message.includes("Failed to fetch dynamically imported module")||
+      error.message.includes('Loading chunk') ||
+      error.message.includes('Failed to load module script')
+    ) {
+      return { hasError: true };
+    }
+    return { hasError: false };
+  }
+
+  componentDidCatch(error: Error) {
+    console.error("Chunk loading error:", error);
+  }
+
+  refreshPage = () => {
+    window.location.reload();
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div>
+          <h2>Something went wrong</h2>
+          <p>
+            The app was likely updated. Please refresh to get the latest
+            version.
+          </p>
+          <button onClick={this.refreshPage}>Refresh Now</button>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     errorElement: <ChunkErrorHandler />,
 
     element: <App />,
@@ -55,15 +101,15 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'search/:query?',
+        path: "search/:query?",
         element: <Results />,
       },
       {
-        path: 'dmca',
+        path: "dmca",
         element: <DMCA />,
       },
       {
-        path: ':item_type/:id',
+        path: ":item_type/:id",
         element: (
           <ScrollToTop>
             <DelayedSuspense fallback={<ItemDetailSkeleton />}>
@@ -73,10 +119,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'explore',
+        path: "explore",
         children: [
           {
-            path: 'movies',
+            path: "movies",
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <MovieTrending />
@@ -84,7 +130,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'toprated',
+            path: "toprated",
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <MovieTopRated />
@@ -92,7 +138,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'popular',
+            path: "popular",
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <MoviePopular />
@@ -100,7 +146,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'all-movies',
+            path: "all-movies",
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <MovieAll />
@@ -108,7 +154,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'tv',
+            path: "tv",
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <TvTrending />
@@ -116,7 +162,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'top-series',
+            path: "top-series",
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <TvTopRated />
@@ -124,7 +170,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'popular-tv',
+            path: "popular-tv",
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <TvPopular />
@@ -132,7 +178,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'all-tv',
+            path: "all-tv",
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <TvAll />
@@ -142,31 +188,33 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: 'watch',
+        path: "watch",
         children: [
           {
-            path: 'movie/:movie_id',
+            path: "movie/:movie_id",
             element: <WatchMovie />,
           },
           {
-            path: 'tv/:series_id/:season_number/:episode_number',
+            path: "tv/:series_id/:season_number/:episode_number",
             element: <WatchTV />,
           },
           {
-            path: 'temp/:movie_id',
+            path: "temp/:movie_id",
             element: <WatchMovieTmp />,
           },
         ],
       },
-      { path: '*', element: <NotFound /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <ChunkLoadErrorBoundary>
+        <RouterProvider router={router} />
+      </ChunkLoadErrorBoundary>
     </QueryClientProvider>
-  </StrictMode>,
+  </StrictMode>
 );
