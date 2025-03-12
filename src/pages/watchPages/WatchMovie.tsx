@@ -10,12 +10,13 @@ const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie = {} } = useWatchDetails('movie', movie_id ?? '');
 
-  const getPlayBackUrl = () => {
-    if (!isIPad()) {
-      return `/api/video/movie/${movie_id}`;
-    }
-    return `https://vidsrc.xyz/embed/movie/${movie_id}`;
-  }
+  // const getPlayBackUrl = () => {
+  //   if (!isIPad()) {
+  //     return `/api/video/movie/${movie_id}`;
+  //   }
+  //   return `https://vidsrc.xyz/embed/movie/${movie_id}`;
+  // }
+  
   return (
     <div className='min-h-screen  pt-[60px]'>
       <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
