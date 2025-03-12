@@ -12,7 +12,7 @@ const NavTVShows = () => {
               TV Shows
             </h2>
 
-            {open ? ( 
+            {open ? (
               <ChevronUpIcon className='size-4 fill-white/60' />
             ) : (
               <ChevronDownIcon className='size-4 fill-white/60' />
