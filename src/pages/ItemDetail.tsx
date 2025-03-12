@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import Chip from '../components/Chip';
 import { useItemDetail } from '../hooks/useItemOrWatchDetail';
 import { useParams } from 'react-router-dom';
-import UserRating from '../components/UserRating';
-import WatchButton from '../components/WatchButton';
+import UserRating from '../components/NewUserRating';
+import WatchButton from '../components/buttons/WatchButton';
 import { getStrokeColor } from '../utils/helpers';
 import { CastList } from '../components/CastList';
 import dayjs from 'dayjs';
@@ -11,7 +11,6 @@ import dayjs from 'dayjs';
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [backgroundLoaded, setBackgroundLoaded] = useState(false);
-  // const [lowResPosterLoaded, setLowResPosterLoaded] = useState(false);
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
@@ -39,9 +38,6 @@ const ItemDetail = () => {
   const hiResPosterPath = item?.poster_path
     ? `https://image.tmdb.org/t/p/w780${item.poster_path}`
     : '/no_poster_available.svg';
-  // const loResPosterPath = item?.poster_path
-  //   ? `https://image.tmdb.org/t/p/w92${item.poster_path}`
-  //   : '/no_poster_available.svg';
 
   const releaseYearMovie = item?.release_date?.split('-')[0];
   const releaseYearTV = item?.first_air_date?.split('-')[0];
@@ -84,46 +80,36 @@ const ItemDetail = () => {
           ></div>
           {/* content */}
           <div className='relative z-10 w-full flex flex-wrap mx-auto'>
-            {/* Left Section */}
-            <div className='relative  md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3'>
-              <section className='w-[280px] sm:w-[450px]  md:w-[300px] flex-shrink-0 '>
-                <div className='relative md:w-[340px] h-auto md:mb-12 mx-auto overflow-hidden'>
-                  <div className='absolute inset-0 '>
-                    {/* <img
-                      src={loResPosterPath}
-                      alt={`official poster for ${item.title || item.name}`}
-                      className={`md:pr-4 md:pt-2 w-full h-auto transition-opacity duration-100 ease-in-out blur-[10px] ${
-                        lowResPosterLoaded && !highResPosterLoaded
-                          ? 'opacity-100'
-                          : 'opacity-0'
-                      }`}
-                      onLoad={() => setLowResPosterLoaded(true)}
-                    /> */}
-                  </div>
-                  <div className='absolute inset-0'>
-                    <img
-                      src={hiResPosterPath}
-                      alt={`official poster for ${item.title || item.name}`}
-                      className={`md:pr-4 md:pt-2 w-full h-auto transition-opacity duration-600 ease-in-out ${
-                        highResPosterLoaded ? 'opacity-100' : 'opacity-0'
-                      }`}
-                      onLoad={() => setHighResPosterLoaded(true)}
-                    />
-                  </div>
-                  {/* Invisible spacer to maintain correct height */}
+            {/* Left Section - Poster Image */}
+            <div className='relative md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3'>
+              <section className='w-[280px] sm:w-[450px] md:w-[300px] flex-shrink-0'>
+                {/* main poster container*/}
+                <div
+                  className='relative w-full md:w-[340px] mx-auto overflow-hidden'
+                  style={{
+                    //  maintain poster dimensions before image loads
+                    aspectRatio: '2/3',
+                    backgroundColor: 'rgba(0,0,0,0.2)',
+                  }}
+                >
                   <img
                     src={hiResPosterPath}
-                    alt=''
-                    className='opacity-0 w-full h-auto pointer-events-none '
-                    aria-hidden='true'
+                    alt={`official poster for ${item.title || item.name}`}
+                    className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-600 ease-in-out ${
+                      isVisible && highResPosterLoaded
+                        ? 'opacity-100'
+                        : 'opacity-0'
+                    }`}
+                    onLoad={() => setHighResPosterLoaded(true)}
                   />
                 </div>
               </section>
             </div>
+
             {/* Right Section */}
             <section
               id='item-info'
-              className='mr-4 flex-grow md:max-h-[525px] basis-full md:basis-2/5 ml-12  pr-6 overflow-auto flex flex-col items-center md:items-start  '
+              className='md:pl-4 flex-grow md:max-h-[525px] basis-full md:basis-2/5 ml-12 pr-10 overflow-auto flex flex-col items-center md:items-start'
             >
               <h2 className='text-4xl mb-4 font-bold md:pr-16 text-center md:text-left'>
                 {item.title || item.name} ({releaseYearMovie || releaseYearTV})
@@ -142,14 +128,14 @@ const ItemDetail = () => {
                   {item.rating}
                 </span>
               </p>
-              <div className='flex items-center  mb-4 md:mb-0'>
+              <div className='flex items-center mb-4 md:mb-0'>
                 <UserRating
                   rating={item.vote_average}
                   width='w-20'
                   height='h-20'
                   color={strokeColor}
                 />
-                <div className='pl-6 h-20 sm:pl-8 pt-4'>
+                <div className='mt-4 md:mt-2 xs:pl-4 h-20 ml-2 md:ml-0 sm:pl-8 sm:pt-1.5 '>
                   <WatchButton itemType={item_type!} id={item.id} />
                 </div>
               </div>
@@ -157,8 +143,7 @@ const ItemDetail = () => {
               <h3 className='text-3xl font-bold mt-4 text-center md:text-left'>
                 Overview
               </h3>
-              {/* put min width 400 if you want the y-axis too */}
-              <p className='text-lg text-center md:text-left text-white/60  my-3 mb-6 font-bold'>
+              <p className='text-lg text-center md:text-left text-white/60 my-3 mb-6 font-bold'>
                 {item.overview}
               </p>
 
@@ -261,7 +246,7 @@ const ItemDetail = () => {
                             ),
                           )}
                         </p>
-                        <p className='text-xl  font-bold'>
+                        <p className='text-xl font-bold'>
                           Series Type:{' '}
                           <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
                             {item.type}
@@ -276,8 +261,8 @@ const ItemDetail = () => {
 
             {/* Cast Section */}
             {item.cast?.length > 0 && (
-              <section className='w-full mt-24 '>
-                <h3 className='text-2xl/14 text-white/70  text-center'>
+              <section className='w-full mt-24'>
+                <h3 className='text-2xl/14 text-white/70 text-center'>
                   Top Cast
                 </h3>
                 <div>

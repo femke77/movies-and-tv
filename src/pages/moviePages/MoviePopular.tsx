@@ -1,5 +1,5 @@
 import genreData from '../../utils/data/movieGenres.json';
-import MediaListContainer from '../../components/MediaListContainer';
+import MediaListContainer from '../../components/containers/MediaListContainer';
 import sortOptionsData from '../../utils/data/sortOptions.json';
 
 const MoviePopular = () => {

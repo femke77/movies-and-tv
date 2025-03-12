@@ -12,7 +12,9 @@ const NavMovies = () => {
       >
         {({ open }) => (
           <>
-            Movies
+            <h2 className='text-lg font-bold bg-gradient-to-r from-white to-blue-500/70 text-transparent bg-clip-text'>
+              Movies
+            </h2>
             {open ? (
               <ChevronUpIcon className='size-4 fill-white/60' />
             ) : (
@@ -30,7 +32,7 @@ const NavMovies = () => {
         {' '}
         <div className='flex justify-start items-center p-4 '>
           <Clapperboard color='#ffffff' />
-          <h3 className='text-md font-bold ml-3'>Movies</h3>
+          <h3 className='text-md font-bold ml-3'>Discover New Movies</h3>
         </div>
         <MenuItemLink to='/explore/movies' name='Trending Movies' />
         <MenuItemLink to='/explore/toprated' name='Top Rated Movies' />

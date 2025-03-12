@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { lazy } from 'react';
 
 const UserRating = lazy(() => import('../UserRating'));
-const WatchButton = lazy(() => import('../WatchButton'));
+const WatchButton = lazy(() => import('../buttons/WatchButton'));
 
 const TextPlaceholder = () => (
   <div className='w-full space-y-2 mb-6'>
@@ -110,7 +110,9 @@ const Slide = ({
 
   return (
     <div
-      className={` swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden ${isVisible ? 'visible' : 'invisible'}`}
+      className={` swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden ${
+        isVisible ? 'visible' : 'invisible'
+      }`}
     >
       <div
         className={clsx(`mt-10 absolute inset-0 w-full h-full bg-cover bg-center md:bg-top transition-opacity 
@@ -122,7 +124,7 @@ const Slide = ({
         }}
       >
         {/* gradient overlays */}
-        <div className='absolute bottom-0 left-0 w-full h-1/8 sm:h-1/2 bg-gradient-to-t from-black to-transparent' />
+        <div className='absolute bottom-0 left-0 w-full h-1/4 sm:h-1/2 bg-gradient-to-t from-black to-transparent' />
         <div className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
       </div>
 
@@ -213,7 +215,7 @@ const Slide = ({
 
                 {/* Overview text with placeholder */}
                 {contentLoaded ? (
-                  <p className='text-white line-clamp-2 md:line-clamp-3 text-center [@media(min-width:1050px)]:text-left mb-10 h-[72px] px-0 sm:px-6 [@media(min-width:1050px)]:px-0'>
+                  <p className='text-white line-clamp-3 text-center [@media(min-width:1050px)]:text-left mb-10 h-[72px] px-0 sm:px-6 [@media(min-width:1050px)]:px-0'>
                     {slide.overview}
                   </p>
                 ) : (
@@ -228,7 +230,7 @@ const Slide = ({
                 `flex flex-row items-center justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
               )}
             >
-              <div className='mb-2 mr-10'>
+              <div className='mb-3 mr-10'>
                 {contentLoaded ? (
                   <WatchButton
                     itemType={slide.media_type!}

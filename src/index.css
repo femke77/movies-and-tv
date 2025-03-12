@@ -261,6 +261,14 @@ header {
   font-size: 1rem !important;
 }
 
+.inter-700> {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: bold;
+}
+
+
 @media screen and (max-width: 880px) and (max-height: 600px) {
 
   .swiper {
@@ -269,7 +277,7 @@ header {
 
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1800px) {
 
   .swiper-button-next::after,
   .swiper-button-prev::after,

@@ -1,7 +1,7 @@
-import CarouselContainer from '../CarouselContainer';
+import CarouselContainer from '../containers/CarouselContainer';
 import { useTrendingTv } from '../../hooks/useTrending';
 import { Link } from 'react-router-dom';
-import ItemCardSkeletonHome from '../LoadingSkels/ItemCardSkeltonHome';
+import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
 
 const TrendingTV = () => {
   const { data: shows = [], isLoading } = useTrendingTv();
@@ -12,9 +12,11 @@ const TrendingTV = () => {
         <h2 className='text-2xl font-bold mb-6 ml-5'>Today's Trending TV</h2>
       </Link>
       {isLoading ? (
-        <div className='flex gap-3 overflow-hidden'>
-          {Array.from({ length: 10 }).map((_, i) => (
-            <ItemCardSkeletonHome key={i} />
+        <div className='flex gap-3 px-4 py-2 w-full  '>
+          {Array.from({ length: 15 }).map((_, i) => (
+            <div key={i} className=' w-[180px] flex-shrink-0'>
+              <ItemCardSkeleton key={i} />
+            </div>
           ))}
         </div>
       ) : (
