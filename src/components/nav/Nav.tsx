@@ -73,7 +73,7 @@ export default function Navigation({
         <Disclosure>
           {({ open }) => (
             <>
-              <div className='mx-auto mr-4 px-4 sm:px-2 lg:px-4 '>
+              <div className='mx-auto mr-4 sm:px-2 lg:px-4 '>
                 <div className='relative flex h-16 items-center justify-between '>
                   <div className='absolute inset-y-0 -left-10 flex items-center md:hidden'>
                     <DisclosureButton className='relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
@@ -133,7 +133,7 @@ export default function Navigation({
                     <div className='text-white'>
                       <div className='flex justify-start items-center p-4 '>
                         <Clapperboard className='text-white' />
-                        <h2 className='ml-3 text-xl font-bold bg-gradient-to-r from-white to-blue-600/70 text-transparent bg-clip-text'>
+                        <h2 className='ml-3 text-xl font-bold bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text'>
                           Movies
                         </h2>
                       </div>
@@ -153,7 +153,7 @@ export default function Navigation({
                     <div className='text-white'>
                       <div className='flex justify-start items-center p-4 '>
                         <Tv className='text-white' />
-                        <h2 className='ml-3 text-xl font-bold bg-gradient-to-r from-white to-blue-600/70 text-transparent bg-clip-text'>
+                        <h2 className='ml-3 text-xl font-bold bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text'>
                           TV Shows
                         </h2>
                       </div>
