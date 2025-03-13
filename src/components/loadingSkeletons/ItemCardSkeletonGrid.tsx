@@ -2,7 +2,7 @@ import ItemCardSkeleton from './ItemCardSkeleton';
 
 const ItemCardSkeletonGrid = () => {
   return (
-    <div className='ml-2 mt-100'>
+    <div className='ml-2 mt-44 md:mt-100'>
       <div className='flex flex-wrap flex-1 gap-4 items-start'>
         {Array(10)
           .fill(0)
