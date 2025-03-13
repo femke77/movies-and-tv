@@ -28,7 +28,7 @@ const MediaListContainer = ({
   const [searchParams, setSearchParams] = useSearchParams();
 
   const isInitialMount = useRef(true);
-  
+
   const [selectedGenres, setSelectedGenres] = useState<string[]>(() => {
     const genresParam = searchParams.get('genres');
     if (genresParam) {
@@ -38,7 +38,7 @@ const MediaListContainer = ({
       return stored ? JSON.parse(stored) : [];
     }
   });
-  
+
   const [deSelectedGenres, setDeSelectedGenres] = useState<string[]>(() => {
     const deselectedParam = searchParams.get('deselected');
     if (deselectedParam) {
@@ -48,7 +48,7 @@ const MediaListContainer = ({
       return stored ? JSON.parse(stored) : [];
     }
   });
-  
+
   const [sortByOption, setSortByOption] = useState<string>(() => {
     const sortParam = searchParams.get('sortBy');
     if (sortParam) {
@@ -59,32 +59,37 @@ const MediaListContainer = ({
     }
   });
 
-
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;
     }
-    
-    sessionStorage.setItem(`${mediaType}-selectedGenres`, JSON.stringify(selectedGenres));
-    sessionStorage.setItem(`${mediaType}-deSelectedGenres`, JSON.stringify(deSelectedGenres));
+
+    sessionStorage.setItem(
+      `${mediaType}-selectedGenres`,
+      JSON.stringify(selectedGenres),
+    );
+    sessionStorage.setItem(
+      `${mediaType}-deSelectedGenres`,
+      JSON.stringify(deSelectedGenres),
+    );
     sessionStorage.setItem(`${mediaType}-sortBy`, sortByOption);
-    
+
     if (!isInitialMount.current) {
       const params = new URLSearchParams();
-      
+
       if (selectedGenres.length > 0) {
         params.set('genres', selectedGenres.join(','));
       }
-      
+
       if (deSelectedGenres.length > 0) {
         params.set('deselected', deSelectedGenres.join(','));
       }
-      
+
       if (sortByOption && sortByOption !== sortBy) {
         params.set('sortBy', sortByOption);
       }
-      
+
       if (params.toString() !== searchParams.toString()) {
         setSearchParams(params, { replace: true });
       }
@@ -99,7 +104,7 @@ const MediaListContainer = ({
         setDeSelectedGenres((deselected) =>
           deselected.filter((genre) => genre !== genreId),
         );
-        
+
         return [...prev, genreId];
       }
     });
