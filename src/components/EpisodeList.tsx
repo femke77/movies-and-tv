@@ -11,7 +11,7 @@ const EpisodeList = ({
   setSelectedSeason: (_season: number) => void;
 }) => {
   return (
-    <div className='max-h-[500px] overflow-y-auto p-[16px] '>
+    <div className='max-h-[750px] overflow-y-auto p-[16px] '>
       {episodes &&
         episodes.map((episode: IEpisode) => (
           <Episode

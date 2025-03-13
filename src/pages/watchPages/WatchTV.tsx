@@ -147,7 +147,7 @@ const WatchTV = () => {
         </div>
         {/* Sidebar */}
         <div className=' lg:w-[400px] lg:flex-shrink-0'>
-          <div className='sidebar bg-[#1f1f1f] max-h-[700px] flex flex-col  rounded-lg'>
+          <div className='sidebar bg-[#1f1f1f] max-h-[900px] flex flex-col  rounded-lg'>
             <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
               <div className='server-selection mb-[16px]'>
                 {/* server selection */}
