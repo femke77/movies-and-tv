@@ -8,7 +8,7 @@ import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ScrollToTop from './components/helpers/ScrollToTop.tsx';
 import ItemDetailSkeleton from './components/loadingSkeletons/ItemDetailSkeleton.tsx';
-import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
+// import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
 import NotFound from './pages/404.tsx';
 import ItemCardSkeletonGrid from './components/loadingSkeletons/ItemCardSkeletonGrid.tsx';
 import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
