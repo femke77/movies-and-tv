@@ -1,12 +1,13 @@
-import { useEffect, useState, useRef } from 'react';
-import { useInfiniteDiscoverQuery } from '../../hooks/useSearchAndDiscover';
-import GenreSelector from '../GenreSelector';
-import Explore from '../ExploreDisplay';
-import { IGenre } from '../../interfaces/IGenre';
-import SortByListbox from '../ListBox';
+import { useEffect, useState, useRef } from "react";
+import { useInfiniteDiscoverQuery } from "../../hooks/useSearchAndDiscover";
+import GenreSelector from "../GenreSelector";
+import Explore from "../ExploreDisplay";
+import { IGenre } from "../../interfaces/IGenre";
+import SortByListbox from "../ListBox";
+import { useLocation } from "react-router-dom";
 
 interface MediaListContainerProps {
-  mediaType: 'movie' | 'tv';
+  mediaType: "movie" | "tv";
   heading: string;
   genres: IGenre[];
   sortBy?: string;
@@ -26,6 +27,8 @@ const MediaListContainer = ({
 }: MediaListContainerProps) => {
   const isInitialMount = useRef(true);
 
+  const location = useLocation();
+
   const [selectedGenres, setSelectedGenres] = useState<string[]>(() => {
     const stored = sessionStorage.getItem(`${mediaType}-selectedGenres`);
     return stored ? JSON.parse(stored) : [];
@@ -37,11 +40,16 @@ const MediaListContainer = ({
   });
 
   const [sortByOption, setSortByOption] = useState<string>(() => {
+    if (location.pathname !== sessionStorage.getItem("lastPath")) {
+      return sortBy || "";
+    }
     const stored = sessionStorage.getItem(`${mediaType}-sortBy`);
-    return stored || sortBy || '';
+    return stored || sortBy || "";
   });
 
   useEffect(() => {
+    sessionStorage.setItem("lastPath", location.pathname);
+
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;
@@ -49,11 +57,11 @@ const MediaListContainer = ({
 
     sessionStorage.setItem(
       `${mediaType}-selectedGenres`,
-      JSON.stringify(selectedGenres),
+      JSON.stringify(selectedGenres)
     );
     sessionStorage.setItem(
       `${mediaType}-deSelectedGenres`,
-      JSON.stringify(deSelectedGenres),
+      JSON.stringify(deSelectedGenres)
     );
     sessionStorage.setItem(`${mediaType}-sortBy`, sortByOption);
   }, [selectedGenres, deSelectedGenres, sortByOption, mediaType]);
@@ -64,7 +72,7 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setDeSelectedGenres((deselected) =>
-          deselected.filter((genre) => genre !== genreId),
+          deselected.filter((genre) => genre !== genreId)
         );
 
         return [...prev, genreId];
@@ -78,31 +86,36 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setSelectedGenres((selected) =>
-          selected.filter((genre) => genre !== genreId),
+          selected.filter((genre) => genre !== genreId)
         );
         return [...prev, genreId];
       }
     });
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteDiscoverQuery(
-      mediaType,
-      selectedGenres?.join(','),
-      sortByOption,
-      '',
-      voteAverage,
-      voteCount,
-      deSelectedGenres.join(','),
-    );
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteDiscoverQuery(
+    mediaType,
+    selectedGenres?.join(","),
+    sortByOption,
+    "",
+    voteAverage,
+    voteCount,
+    deSelectedGenres.join(",")
+  );
 
   return (
-    <div className='mt-24'>
-      <div className='mx-3 flex flex-wrap justify-between align-center w-full'>
-        <h2 className='chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text mb-2 lg:mb-6 mr-2'>
+    <div className="mt-24">
+      <div className="mx-3 flex flex-wrap justify-between align-center w-full">
+        <h2 className="chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text mb-2 lg:mb-6 mr-2">
           {heading}
         </h2>
-        <div className='mr-[50px] h-[50px] mb-6 lg:mb-0 pt-1 md:pt-4'>
+        <div className="mr-[50px] h-[50px] mb-6 lg:mb-0 pt-1 md:pt-4">
           <SortByListbox
             selectedOption={sortByOption}
             setSelectedOption={setSortByOption}
