@@ -4,7 +4,6 @@ import GenreSelector from '../GenreSelector';
 import Explore from '../ExploreDisplay';
 import { IGenre } from '../../interfaces/IGenre';
 import SortByListbox from '../ListBox';
-import { useSearchParams } from 'react-router-dom';
 
 interface MediaListContainerProps {
   mediaType: 'movie' | 'tv';
@@ -25,38 +24,21 @@ const MediaListContainer = ({
   sortOptions,
   voteCount,
 }: MediaListContainerProps) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
   const isInitialMount = useRef(true);
 
   const [selectedGenres, setSelectedGenres] = useState<string[]>(() => {
-    const genresParam = searchParams.get('genres');
-    if (genresParam) {
-      return genresParam.split(',');
-    } else {
-      const stored = sessionStorage.getItem(`${mediaType}-selectedGenres`);
-      return stored ? JSON.parse(stored) : [];
-    }
+    const stored = sessionStorage.getItem(`${mediaType}-selectedGenres`);
+    return stored ? JSON.parse(stored) : [];
   });
 
   const [deSelectedGenres, setDeSelectedGenres] = useState<string[]>(() => {
-    const deselectedParam = searchParams.get('deselected');
-    if (deselectedParam) {
-      return deselectedParam.split(',');
-    } else {
-      const stored = sessionStorage.getItem(`${mediaType}-deSelectedGenres`);
-      return stored ? JSON.parse(stored) : [];
-    }
+    const stored = sessionStorage.getItem(`${mediaType}-deSelectedGenres`);
+    return stored ? JSON.parse(stored) : [];
   });
 
   const [sortByOption, setSortByOption] = useState<string>(() => {
-    const sortParam = searchParams.get('sortBy');
-    if (sortParam) {
-      return sortParam;
-    } else {
-      const stored = sessionStorage.getItem(`${mediaType}-sortBy`);
-      return stored || sortBy || '';
-    }
+    const stored = sessionStorage.getItem(`${mediaType}-sortBy`);
+    return stored || sortBy || '';
   });
 
   useEffect(() => {
@@ -74,26 +56,6 @@ const MediaListContainer = ({
       JSON.stringify(deSelectedGenres),
     );
     sessionStorage.setItem(`${mediaType}-sortBy`, sortByOption);
-
-    if (!isInitialMount.current) {
-      const params = new URLSearchParams();
-
-      if (selectedGenres.length > 0) {
-        params.set('genres', selectedGenres.join(','));
-      }
-
-      if (deSelectedGenres.length > 0) {
-        params.set('deselected', deSelectedGenres.join(','));
-      }
-
-      if (sortByOption && sortByOption !== sortBy) {
-        params.set('sortBy', sortByOption);
-      }
-
-      if (params.toString() !== searchParams.toString()) {
-        setSearchParams(params, { replace: true });
-      }
-    }
   }, [selectedGenres, deSelectedGenres, sortByOption, mediaType]);
 
   const toggleGenre = (genreId: string) => {

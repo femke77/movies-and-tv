@@ -1,4 +1,3 @@
-// import { ErrorBoundary} from 'react-error-boundary';
 import { StrictMode, lazy, Component } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
@@ -8,12 +7,12 @@ import Home from './pages/Home.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ScrollToTop from './components/helpers/ScrollToTop.tsx';
 import ItemDetailSkeleton from './components/loadingSkeletons/ItemDetailSkeleton.tsx';
-import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
 import NotFound from './pages/404.tsx';
 import ItemCardSkeletonGrid from './components/loadingSkeletons/ItemCardSkeletonGrid.tsx';
 import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
 
 import WatchMovieTmp from './pages/watchPages/WatchTemp.tsx';
+import ErrorPage from './pages/ErrorPage.tsx';
 
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
 const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
@@ -94,7 +93,7 @@ class ChunkLoadErrorBoundary extends Component<ChunkLoadErrorBoundaryProps> {
 const router = createBrowserRouter([
   {
     path: '/',
-    errorElement: <ChunkErrorHandler />,
+    errorElement: <ErrorPage />,
 
     element: <App />,
     children: [

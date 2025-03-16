@@ -43,10 +43,10 @@ const UserRating = ({
           x='50%'
           y='50%'
           fontSize={fontSize}
-          fontFamily='Impact, sans-serif'
-          fill='black'
+          fontFamily='Anton, sans-serif'
+          fill='rgba(50,50,50,0.8)'
           stroke='#FFFFFF'
-          strokeWidth='0.5'
+          strokeWidth='0.8'
           textAnchor='middle'
           alignmentBaseline='middle'
         >
