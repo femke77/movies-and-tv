@@ -3,7 +3,7 @@ import { useRouteError } from 'react-router';
 import ErrorPage from '../../pages/ErrorPage';
 
 const ChunkErrorHandler = () => {
-  const error = useRouteError() as any;
+  const error = useRouteError() as Error;
   const [countdown, setCountdown] = useState(5);
 
   console.error('Router error caught:', error);
