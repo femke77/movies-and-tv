@@ -1,5 +1,5 @@
 
-import { StrictMode, lazy, Component } from 'react';
+import { StrictMode, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
@@ -13,7 +13,7 @@ import ItemCardSkeletonGrid from './components/loadingSkeletons/ItemCardSkeleton
 import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
 
 import WatchMovieTmp from './pages/watchPages/WatchTemp.tsx';
-import ErrorPage from './pages/ErrorPage.tsx';
+
 import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
 
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
