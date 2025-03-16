@@ -34,7 +34,7 @@ export default function ListBoxComp({
         >
           {title ??
             sortOptions.find((opt) => opt.value === sortByOption)?.name ??
-            'Select an option'}
+            'Sort By'}
           <ChevronDownIcon
             className='group pointer-events-none absolute top-2.5 right-2.5 size-4 fill-white/60'
             aria-hidden='true'

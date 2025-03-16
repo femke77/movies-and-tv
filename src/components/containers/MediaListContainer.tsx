@@ -4,6 +4,7 @@ import GenreSelector from '../GenreSelector';
 import Explore from '../ExploreDisplay';
 import { IGenre } from '../../interfaces/IGenre';
 import SortByListbox from '../ListBox';
+import { useLocation } from 'react-router-dom';
 
 interface MediaListContainerProps {
   mediaType: 'movie' | 'tv';
@@ -26,6 +27,8 @@ const MediaListContainer = ({
 }: MediaListContainerProps) => {
   const isInitialMount = useRef(true);
 
+  const location = useLocation();
+
   const [selectedGenres, setSelectedGenres] = useState<string[]>(() => {
     const stored = sessionStorage.getItem(`${mediaType}-selectedGenres`);
     return stored ? JSON.parse(stored) : [];
@@ -37,11 +40,16 @@ const MediaListContainer = ({
   });
 
   const [sortByOption, setSortByOption] = useState<string>(() => {
+    if (location.pathname !== sessionStorage.getItem('lastPath')) {
+      return sortBy || '';
+    }
     const stored = sessionStorage.getItem(`${mediaType}-sortBy`);
     return stored || sortBy || '';
   });
 
   useEffect(() => {
+    sessionStorage.setItem('lastPath', location.pathname);
+
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;
