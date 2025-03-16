@@ -232,19 +232,19 @@ const Slide = ({
             >
               <div className='mb-3 mr-10'>
                 {contentLoaded ? (
+                  <UserRating rating={slide.vote_average ?? 0} />
+                ) : (
+                  <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
+                )}
+              </div>
+              <div className='mb-2'>
+                {contentLoaded ? (
                   <WatchButton
                     itemType={slide.media_type!}
                     id={slide.id! as string}
                   />
                 ) : (
                   <ButtonPlaceholder />
-                )}
-              </div>
-              <div className='mb-2'>
-                {contentLoaded ? (
-                  <UserRating rating={slide.vote_average ?? 0} />
-                ) : (
-                  <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
                 )}
               </div>
             </div>
