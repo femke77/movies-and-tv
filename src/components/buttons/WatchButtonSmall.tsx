@@ -33,7 +33,6 @@ const WatchButton = ({
         width='35px'
         className='mx-auto'
       />
-
     </button>
   );
 };

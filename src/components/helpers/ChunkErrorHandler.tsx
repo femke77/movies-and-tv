@@ -7,21 +7,22 @@ const ChunkErrorHandler = () => {
   const [countdown, setCountdown] = useState(5);
 
   console.error('Router error caught:', error);
-  
-  // Extract the error message 
+
+  // Extract the error message
   const errorMessage = error?.message || '';
-  
+
   // Check specifically for chunk loading errors
-  const isChunkError = 
+  const isChunkError =
     errorMessage.includes('Failed to fetch dynamically imported module') ||
     errorMessage.includes('Failed to load module script') ||
-    (errorMessage.includes('MIME type') && errorMessage.includes('module scripts'));
-  
+    (errorMessage.includes('MIME type') &&
+      errorMessage.includes('module scripts'));
+
   console.log('Is chunk error detected:', isChunkError);
 
   useEffect(() => {
     if (!isChunkError) return;
-    
+
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {

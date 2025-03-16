@@ -11,9 +11,9 @@ const UserRating = ({
   rating,
   width = 'w-20',
   height = 'h-20',
-  color = "white",
+  color = 'white',
   fontSize = 30,
-  fill ='rgba(50,50,50,0.8)',
+  fill = 'rgba(50,50,50,0.8)',
 }: UserRatingProps) => {
   return (
     <div className={`flex items-center mt-4 mr-4`}>
@@ -22,7 +22,6 @@ const UserRating = ({
         className={`${width} ${height}`}
         viewBox='0 0 37 37'
       >
-       
         <text
           x='50%'
           y='50%'
@@ -34,7 +33,7 @@ const UserRating = ({
           textAnchor='middle'
           alignmentBaseline='middle'
         >
-          {rating === 10  ? rating : rating.toFixed(1)}
+          {rating === 10 ? rating : rating.toFixed(1)}
         </text>
       </svg>
     </div>
