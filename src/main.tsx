@@ -1,4 +1,3 @@
-
 import { StrictMode, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
@@ -216,7 +215,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       {/* <ChunkLoadErrorBoundary> */}
-        <RouterProvider router={router} />
+      <RouterProvider router={router} />
       {/* </ChunkLoadErrorBoundary> */}
     </QueryClientProvider>
   </StrictMode>,
