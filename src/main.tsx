@@ -14,6 +14,7 @@ import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
 
 import WatchMovieTmp from './pages/watchPages/WatchTemp.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
+import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
 
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
 const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
@@ -43,58 +44,58 @@ const queryClient = new QueryClient({
   },
 });
 
-interface ChunkLoadErrorBoundaryProps {
-  children: React.ReactNode;
-}
+// interface ChunkLoadErrorBoundaryProps {
+//   children: React.ReactNode;
+// }
 
-class ChunkLoadErrorBoundary extends Component<ChunkLoadErrorBoundaryProps> {
-  state = { hasError: false };
+// class ChunkLoadErrorBoundary extends Component<ChunkLoadErrorBoundaryProps> {
+//   state = { hasError: false };
 
-  static getDerivedStateFromError(error: Error) {
-    // Check if it's a chunk load error
-    if (
-      (error.message &&
-        error.message.includes(
-          'Failed to fetch dynamically imported module',
-        )) ||
-      error.message.includes('Loading chunk') ||
-      error.message.includes('Failed to load module script')
-    ) {
-      return { hasError: true };
-    }
-    return { hasError: false };
-  }
+//   static getDerivedStateFromError(error: Error) {
+//     // Check if it's a chunk load error
+//     if (
+//       (error.message &&
+//         error.message.includes(
+//           'Failed to fetch dynamically imported module',
+//         )) ||
+//       error.message.includes('Loading chunk') ||
+//       error.message.includes('Failed to load module script')
+//     ) {
+//       return { hasError: true };
+//     }
+//     return { hasError: false };
+//   }
 
-  componentDidCatch(error: Error) {
-    console.error('Chunk loading error:', error);
-  }
+//   componentDidCatch(error: Error) {
+//     console.error('Chunk loading error:', error);
+//   }
 
-  refreshPage = () => {
-    window.location.reload();
-  };
+//   refreshPage = () => {
+//     window.location.reload();
+//   };
 
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div>
-          <h2>Something went wrong</h2>
-          <p>
-            The app was likely updated. Please refresh to get the latest
-            version.
-          </p>
-          <button onClick={this.refreshPage}>Refresh Now</button>
-        </div>
-      );
-    }
+//   render() {
+//     if (this.state.hasError) {
+//       return (
+//         <div>
+//           <h2>Something went wrong</h2>
+//           <p>
+//             The app was likely updated. Please refresh to get the latest
+//             version.
+//           </p>
+//           <button onClick={this.refreshPage}>Refresh Now</button>
+//         </div>
+//       );
+//     }
 
-    return this.props.children;
-  }
-}
+//     return this.props.children;
+//   }
+// }
 
 const router = createBrowserRouter([
   {
     path: '/',
-    errorElement: <ErrorPage />,
+    errorElement: <ChunkErrorHandler />,
 
     element: <App />,
     children: [
@@ -214,9 +215,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ChunkLoadErrorBoundary>
+      {/* <ChunkLoadErrorBoundary> */}
         <RouterProvider router={router} />
-      </ChunkLoadErrorBoundary>
+      {/* </ChunkLoadErrorBoundary> */}
     </QueryClientProvider>
   </StrictMode>,
 );

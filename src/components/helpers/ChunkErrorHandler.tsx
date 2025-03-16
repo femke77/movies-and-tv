@@ -1,35 +1,62 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouteError } from 'react-router';
 import ErrorPage from '../../pages/ErrorPage';
 
-// For solving the problem of a redeploy while user is sitting on page, and all lazy-loaded chunks are invalidated. This will reload the page.
-
 const ChunkErrorHandler = () => {
   const error = useRouteError() as Error | null;
+  const [countdown, setCountdown] = useState(5);
+  
   console.error('Router error caught:', error);
 
-  // Check if it's a chunk loading error so we can gracefully reload the page
+  // Specific check for chunk loading errors
   const isChunkError =
     error?.name === 'ChunkLoadError' ||
-    error?.name === 'TypeError' ||
     (error?.message &&
       (error.message.includes('Failed to fetch dynamically imported module') ||
-        error.message.includes('Loading chunk') ||
-        error.message.includes('Failed to load module script')));
+       error.message.includes('Loading chunk') ||
+       error.message.includes('Failed to load module script')));
 
   useEffect(() => {
-    if (isChunkError) {
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
-    }
+    if (!isChunkError) return;
+    
+    // Countdown timer
+    const timer = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          window.location.reload();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    
+    return () => clearInterval(timer);
   }, [isChunkError]);
 
+  const handleManualRefresh = () => {
+    window.location.reload();
+  };
+
   if (isChunkError) {
-    return <div>Application update detected. Reloading...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center p-8 text-center min-h-screen">
+        <h2 className="text-xl font-bold mb-4">Application Update Detected</h2>
+        <p className="mb-4">
+          The application has been updated. Reloading in {countdown} seconds to get the latest version...
+        </p>
+        <button 
+          onClick={handleManualRefresh}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+        >
+          Refresh Now
+        </button>
+      </div>
+    );
   }
 
   // For any other errors:
   return <ErrorPage />;
 };
+
 export default ChunkErrorHandler;
