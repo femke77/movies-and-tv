@@ -5,7 +5,7 @@ import ErrorPage from '../../pages/ErrorPage';
 const ChunkErrorHandler = () => {
   const error = useRouteError() as Error | null;
   const [countdown, setCountdown] = useState(5);
-  
+
   console.error('Router error caught:', error);
 
   // Specific check for chunk loading errors
@@ -13,15 +13,15 @@ const ChunkErrorHandler = () => {
     error?.name === 'ChunkLoadError' ||
     (error?.message &&
       (error.message.includes('Failed to fetch dynamically imported module') ||
-       error.message.includes('Loading chunk') ||
-       error.message.includes('Failed to load module script')));
+        error.message.includes('Loading chunk') ||
+        error.message.includes('Failed to load module script')));
 
   useEffect(() => {
     if (!isChunkError) return;
-    
+
     // Countdown timer
     const timer = setInterval(() => {
-      setCountdown(prev => {
+      setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
           window.location.reload();
@@ -30,7 +30,7 @@ const ChunkErrorHandler = () => {
         return prev - 1;
       });
     }, 1000);
-    
+
     return () => clearInterval(timer);
   }, [isChunkError]);
 
@@ -40,14 +40,15 @@ const ChunkErrorHandler = () => {
 
   if (isChunkError) {
     return (
-      <div className="flex flex-col items-center justify-center p-8 text-center min-h-screen">
-        <h2 className="text-xl font-bold mb-4">Application Update Detected</h2>
-        <p className="mb-4">
-          The application has been updated. Reloading in {countdown} seconds to get the latest version...
+      <div className='flex flex-col items-center justify-center p-8 text-center min-h-screen'>
+        <h2 className='text-xl font-bold mb-4'>Application Update Detected</h2>
+        <p className='mb-4'>
+          The application has been updated. Reloading in {countdown} seconds to
+          get the latest version...
         </p>
-        <button 
+        <button
           onClick={handleManualRefresh}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          className='px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors'
         >
           Refresh Now
         </button>
