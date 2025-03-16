@@ -237,7 +237,7 @@ const Slide = ({
                   <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
                 )}
               </div>
-              <div className='mb-2'>
+              <div className='mb-2 mt-3'>
                 {contentLoaded ? (
                   <WatchButton
                     itemType={slide.media_type!}
