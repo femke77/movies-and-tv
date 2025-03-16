@@ -40,5 +40,4 @@ const UserRating = ({
     </div>
   );
 };
-
 export default UserRating;

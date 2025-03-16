@@ -134,7 +134,7 @@ const ItemDetail = () => {
                   width='w-20'
                   height='h-20'
                   color={strokeColor}
-                  fill='white'
+                  fill='rgba(255,255,255,0.9)'
                 />
                 <div className='mt-4 md:mt-2 xs:pl-4 h-20 ml-2 md:ml-0 sm:pl-8 sm:pt-1.5 '>
                   <WatchButton itemType={item_type!} id={item.id} />
