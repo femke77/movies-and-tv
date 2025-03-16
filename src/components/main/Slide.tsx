@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { lazy } from 'react';
 
 const UserRating = lazy(() => import('../UserRating'));
-const WatchButton = lazy(() => import('../buttons/WatchButton'));
+const WatchButton = lazy(() => import('../buttons/WatchButtonSmall'));
 
 const TextPlaceholder = () => (
   <div className='w-full space-y-2 mb-6'>

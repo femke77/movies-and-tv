@@ -111,7 +111,7 @@ export default function Navigation({
                       <button
                         role='search'
                         onClick={() => openSearch()}
-                        className='relative -right-2 top-0 hover:cursor-pointer'
+                        className='relative -right-2 top-0 md:top-5 h-[50px] hover:cursor-pointer'
                       >
                         <img src='/mag.svg' alt='search' className='w-8 h-8' />
                       </button>
