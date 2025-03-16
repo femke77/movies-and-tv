@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { lazy } from 'react';
 
 const UserRating = lazy(() => import('../UserRating'));
-const WatchButton = lazy(() => import('../buttons/WatchButton'));
+const WatchButton = lazy(() => import('../buttons/WatchButtonSmall'));
 
 const TextPlaceholder = () => (
   <div className='w-full space-y-2 mb-6'>
@@ -58,7 +58,7 @@ const Slide = ({
     return genre?.name;
   });
 
-  // Simplified image preloading
+  // image preloading
   useEffect(() => {
     if (isVisible || currentIndex === 0) {
       // Set content as loaded after a brief delay
@@ -186,7 +186,7 @@ const Slide = ({
               <div
                 className={`flex flex-col items-center [@media(min-width:1050px)]:items-start`}
               >
-                {/* Logo with simplified rendering logic */}
+                {/* Logo  */}
                 <div className='h-[150px] my-6 mt-6 mb-10 flex items-center justify-center [@media(min-width:1050px)]:justify-start'>
                   {displayLogo ? (
                     <div className='relative h-[120px] flex items-center'>
@@ -232,19 +232,19 @@ const Slide = ({
             >
               <div className='mb-3 mr-10'>
                 {contentLoaded ? (
+                  <UserRating rating={slide.vote_average ?? 0} />
+                ) : (
+                  <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
+                )}
+              </div>
+              <div className='mb-2 mt-3'>
+                {contentLoaded ? (
                   <WatchButton
                     itemType={slide.media_type!}
                     id={slide.id! as string}
                   />
                 ) : (
                   <ButtonPlaceholder />
-                )}
-              </div>
-              <div className='mb-2'>
-                {contentLoaded ? (
-                  <UserRating rating={slide.vote_average ?? 0} />
-                ) : (
-                  <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
                 )}
               </div>
             </div>

@@ -3,23 +3,26 @@ import { useRouteError } from 'react-router';
 import ErrorPage from '../../pages/ErrorPage';
 
 const ChunkErrorHandler = () => {
-  const error = useRouteError() as Error | null;
+  const error = useRouteError() as Error;
   const [countdown, setCountdown] = useState(5);
 
   console.error('Router error caught:', error);
 
-  // Specific check for chunk loading errors
+  // Extract the error message
+  const errorMessage = error?.message || '';
+
+  // Check specifically for chunk loading errors
   const isChunkError =
-    error?.name === 'ChunkLoadError' ||
-    (error?.message &&
-      (error.message.includes('Failed to fetch dynamically imported module') ||
-        error.message.includes('Loading chunk') ||
-        error.message.includes('Failed to load module script')));
+    errorMessage.includes('Failed to fetch dynamically imported module') ||
+    errorMessage.includes('Failed to load module script') ||
+    (errorMessage.includes('MIME type') &&
+      errorMessage.includes('module scripts'));
+
+  console.log('Is chunk error detected:', isChunkError);
 
   useEffect(() => {
     if (!isChunkError) return;
 
-    // Countdown timer
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {

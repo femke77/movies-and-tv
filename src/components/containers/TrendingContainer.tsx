@@ -10,7 +10,7 @@ const TrendingContainer = ({
   mediaType: string;
   heading: string;
 }) => {
-  const [timePeriod, setTimePeriod] = useState('week');
+  const [timePeriod, setTimePeriod] = useState('day');
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteTrendingQuery(mediaType, timePeriod);
@@ -22,7 +22,10 @@ const TrendingContainer = ({
           {heading}
         </h2>
         <div className='pt-2 sm:pt-0 sm:pr-4 md:pr-10'>
-          <TrendingToggle onTimeChange={setTimePeriod} />
+          <TrendingToggle
+            timePeriod={timePeriod}
+            onTimeChange={setTimePeriod}
+          />
         </div>
       </div>
 

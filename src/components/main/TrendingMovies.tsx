@@ -8,7 +8,7 @@ const TrendingMovies = () => {
 
   return (
     <div className='min-h-[350px]' id='trending-section'>
-      <Link to='/explore/movies'>
+      <Link to='/explore/movies' state={{ time: 'day' }}>
         <h2 className='text-2xl font-bold mb-6 ml-5 '>
           Today's Trending Movies
         </h2>

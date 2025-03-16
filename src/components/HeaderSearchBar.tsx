@@ -61,7 +61,7 @@ const Search = ({
           <button
             type='reset'
             onClick={handleClear}
-            className='pr-6 hover:text-gray-300 focus:outline-white hover:cursor-pointer'
+            className='pr-8 text-center pl-6 hover:text-gray-300 focus:outline-white hover:cursor-pointer'
           >
             Clear
           </button>
