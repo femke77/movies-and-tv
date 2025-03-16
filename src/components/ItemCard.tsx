@@ -134,13 +134,14 @@ const ItemCard = ({
             )}
           </div>
           <div className='flex flex-col h-[80px] mb-6 flex-grow items-start justify-start w-full pt-4 bg-black'>
-            <div className={`relative -top-15  w-full ${!showRating && 'pt-3'}`}>
+            <div
+              className={`relative -top-15  w-full ${!showRating && 'pt-3'}`}
+            >
               <div className='flex min-h-11 pl-1 items-end justify-between'>
                 {showRating && (
                   <div className='z-10 relative'>
                     <UserRating
                       rating={item.vote_average ?? 0}
-           
                       width='w-15'
                       height='h-15'
                     />
