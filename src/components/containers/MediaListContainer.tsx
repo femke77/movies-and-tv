@@ -40,6 +40,7 @@ const MediaListContainer = ({
   });
 
   const [sortByOption, setSortByOption] = useState<string>(() => {
+  
     if (location.pathname !== sessionStorage.getItem("lastPath")) {
       return sortBy || "";
     }
