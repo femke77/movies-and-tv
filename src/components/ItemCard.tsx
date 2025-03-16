@@ -140,7 +140,6 @@ const ItemCard = ({
                   <div className='z-10 relative'>
                     <UserRating
                       rating={item.vote_average ?? 0}
-           
                       width='w-14=5'
                       height='h-15'
                     />
