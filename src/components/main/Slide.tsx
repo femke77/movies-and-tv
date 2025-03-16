@@ -58,7 +58,7 @@ const Slide = ({
     return genre?.name;
   });
 
-  // Simplified image preloading
+  // image preloading
   useEffect(() => {
     if (isVisible || currentIndex === 0) {
       // Set content as loaded after a brief delay
@@ -186,7 +186,7 @@ const Slide = ({
               <div
                 className={`flex flex-col items-center [@media(min-width:1050px)]:items-start`}
               >
-                {/* Logo with simplified rendering logic */}
+                {/* Logo  */}
                 <div className='h-[150px] my-6 mt-6 mb-10 flex items-center justify-center [@media(min-width:1050px)]:justify-start'>
                   {displayLogo ? (
                     <div className='relative h-[120px] flex items-center'>
