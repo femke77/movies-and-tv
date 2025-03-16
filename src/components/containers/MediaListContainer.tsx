@@ -39,9 +39,9 @@ const MediaListContainer = ({
     return stored ? JSON.parse(stored) : [];
   });
 
-  const [sortByOption, setSortByOption] = useState<string>(() => { 
-    if (location.pathname !== sessionStorage.getItem("lastPath")) {
-      return sortBy || "";
+  const [sortByOption, setSortByOption] = useState<string>(() => {
+    if (location.pathname !== sessionStorage.getItem('lastPath')) {
+      return sortBy || '';
     }
     const stored = sessionStorage.getItem(`${mediaType}-sortBy`);
     return stored || sortBy || '';

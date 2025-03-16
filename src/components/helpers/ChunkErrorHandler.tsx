@@ -44,7 +44,9 @@ const ChunkErrorHandler = () => {
   if (isChunkError) {
     return (
       <div className='flex flex-col items-center justify-center p-8 text-center min-h-screen'>
-        <h2 className='text-xl font-bold mb-4 text-white'>Application Update Detected</h2>
+        <h2 className='text-xl font-bold mb-4 text-white'>
+          Application Update Detected
+        </h2>
         <p className='mb-4 text-white'>
           The application has been updated. Reloading in {countdown} seconds to
           get the latest version...
