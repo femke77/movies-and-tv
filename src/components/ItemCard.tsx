@@ -2,7 +2,6 @@ import { IItem } from '../interfaces/IItem';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import UserRating from './NewUserRating';
-import { getStrokeColor } from '../utils/helpers';
 import { useEffect, useState, memo } from 'react';
 import genreData from '../utils/data/genres.json';
 import Chip from './Chip';
@@ -27,7 +26,6 @@ const ItemCard = ({
   const formattedReleaseDate = dayjs(item.release_date).format('MMM D, YYYY');
   const formattedAirDate = dayjs(item.first_air_date).format('MMM D, YYYY');
   const { genres } = genreData;
-  const strokeColor = getStrokeColor(item.vote_average ?? 0);
   const { width } = useWindowSize();
 
   useEffect(() => {
@@ -142,7 +140,7 @@ const ItemCard = ({
                   <div className='z-10 relative'>
                     <UserRating
                       rating={item.vote_average ?? 0}
-                      color={strokeColor}
+           
                       width='w-14=5'
                       height='h-15'
                     />
