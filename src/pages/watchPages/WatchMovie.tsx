@@ -1,19 +1,39 @@
-import { useParams } from "react-router-dom";
-import { useWatchDetails } from "../../hooks/useItemOrWatchDetail";
-import WatchDescription from "../../components/WatchDescription";
-import BackButton from "../../components/buttons/BackBtn";
-import FullscreenBtn from "../../components/buttons/FullScreenBtn";
-import ServerList from "../../components/ServerList";
-import { isIphoneSafari } from "../../utils/helpers";
-import serverData from "../../utils/data/servers.json";
-import { useState } from "react";
+import { useParams } from 'react-router-dom';
+import { useWatchDetails } from '../../hooks/useItemOrWatchDetail';
+import WatchDescription from '../../components/WatchDescription';
+import BackButton from '../../components/buttons/BackBtn';
+import FullscreenBtn from '../../components/buttons/FullScreenBtn';
+import ServerList from '../../components/ServerList';
+import { isIphoneSafari } from '../../utils/helpers';
+import serverData from '../../utils/data/servers.json';
+import { useEffect, useState } from 'react';
 
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
-  const { data: movie = {} } = useWatchDetails("movie", movie_id ?? "");
-  const [selectedServer, setSelectedServer] = useState(serverData.servers[0].name || "");
+  const { data: movie = {} } = useWatchDetails('movie', movie_id ?? '');
+  const [selectedServer, setSelectedServer] = useState('');
+  const [serverURL, setServerURL] = useState('');
   const { servers } = serverData;
 
+  useEffect(() => {
+    const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
+    lastSelectedServer
+      ? setSelectedServer(lastSelectedServer)
+      : setSelectedServer(servers[0].value);
+  }, []);
+
+  useEffect(() => {
+    switch (selectedServer) {
+      case 'vidsrc.xyz':
+        setServerURL(`https://vidsrc.xyz/embed/movie/${movie_id}`);
+        break;
+      case 'videasy.net':
+        setServerURL(`https://player.videasy.net/movie/${movie_id}`);
+        break;
+    }
+
+    sessionStorage.setItem('lastSelectedServer', selectedServer);
+  }, [selectedServer, movie_id]);
   
   return (
     <div className="min-h-screen  pt-[60px]">
@@ -25,14 +45,14 @@ const WatchMovie = () => {
             </div>
             {movie && (
               <p
-              className="font-bold truncate text-ellipsis mx-6"
-              title={movie.title}
+                className="font-bold truncate text-ellipsis mx-6"
+                title={movie.title}
               >
-                {movie.title || ""}
+                {movie.title || ''}
               </p>
             )}
 
-            <div className={`${isIphoneSafari() ? "invisible" : ""}`}>
+            <div className={`${isIphoneSafari() ? 'invisible' : ''}`}>
               <FullscreenBtn elementId="iframe" />
             </div>
           </div>
@@ -44,25 +64,26 @@ const WatchMovie = () => {
                 width="100%"
                 height="100%"
                 // {...(!isIPad() && {
-                  //   sandbox: 'allow-scripts allow-same-origin allow-presentation',
-                  // })}
-                  // src={getPlayBackUrl()}
-                  // sandbox="allow-scripts allow-same-origin allow-presentation"
-                  // src={`/api/video/movie/${movie_id}`}
-                  
-                  src={`https://vidsrc.xyz/embed/movie/${movie_id}`}
-                  allowFullScreen
-                  ></iframe>
+                //   sandbox: 'allow-scripts allow-same-origin allow-presentation',
+                // })}
+                // src={getPlayBackUrl()}
+                // sandbox="allow-scripts allow-same-origin allow-presentation"
+                // src={`/api/video/movie/${movie_id}`}
+
+                src={serverURL}
+                allow="encrypted-media"
+                allowFullScreen
+              ></iframe>
             </div>
 
             <div className="rounded-lg bg-[#1f1f1f]  border-[#2f2f2f] p-[24px] mb-[24px]">
               {/* description */}
               {movie && (
                 <WatchDescription
-                title={movie?.title}
-                rt={movie?.runtime}
-                date={movie?.release_date}
-                overview={movie?.overview || "No summary available"}
+                  title={movie?.title}
+                  rt={movie?.runtime}
+                  date={movie?.release_date}
+                  overview={movie?.overview || 'No summary available'}
                 />
               )}
             </div>
@@ -71,7 +92,11 @@ const WatchMovie = () => {
         <div className="secondary lg:w-[400px] lg:flex-shrink-0 ">
           {/* right side with server choices and episodes for tv*/}
           <div className="sidebar bg-[#1f1f1f] max-h-[800px] flex flex-col  rounded-lg">
-            <ServerList serverData={servers} selectedServer={selectedServer} setSelectedServer={setSelectedServer}/>
+            <ServerList
+              serverData={servers}
+              selectedServer={selectedServer}
+              setSelectedServer={setSelectedServer}
+            />
           </div>
         </div>
       </div>
@@ -81,23 +106,20 @@ const WatchMovie = () => {
 
 export default WatchMovie;
 
-
-
-
 // const getPlayBackUrl = () => {
-  //   if (!isIPad()) {
-    //     return `/api/video/movie/${movie_id}`;
-    //   }
-    //   return `https://vidsrc.xyz/embed/movie/${movie_id}`;
-    // }
-    
-    //   useEffect(() => {
-    //   window.addEventListener("message", function (event) {
-    //     console.log("event: ", event);
-    //     // console.log("Message received from the player: ", JSON.parse(event.data)); // Message received from player
-    //     // if (typeof event.data === "string") {
-    //     //   var messageArea = document.querySelector("#messageArea");
-    //     //   if (messageArea) messageArea.innerText = event.data;
-    //     // }
-    //   });
-    // }, []);
+//   if (!isIPad()) {
+//     return `/api/video/movie/${movie_id}`;
+//   }
+//   return `https://vidsrc.xyz/embed/movie/${movie_id}`;
+// }
+
+//   useEffect(() => {
+//   window.addEventListener("message", function (event) {
+//     console.log("event: ", event);
+//     // console.log("Message received from the player: ", JSON.parse(event.data)); // Message received from player
+//     // if (typeof event.data === "string") {
+//     //   var messageArea = document.querySelector("#messageArea");
+//     //   if (messageArea) messageArea.innerText = event.data;
+//     // }
+//   });
+// }, []);
