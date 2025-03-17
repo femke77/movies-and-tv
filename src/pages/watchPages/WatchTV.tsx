@@ -64,6 +64,9 @@ const WatchTV = () => {
       case 'videasy.net':
         setServerURL(`https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
         break;
+        case 'vidlink.pro':
+          setServerURL(`https://vidlink.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
+          break;
     }
 
     sessionStorage.setItem('lastSelectedServer', selectedServer);

@@ -28,6 +28,9 @@ const WatchMovie = () => {
       case 'videasy.net':
         setServerURL(`https://player.videasy.net/movie/${movie_id}`);
         break;
+      case 'vidlink.pro':
+        setServerURL(`https://vidlink.pro/movie/${movie_id}`);
+        break;
     }
 
     sessionStorage.setItem('lastSelectedServer', selectedServer);
