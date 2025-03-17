@@ -48,7 +48,6 @@ const MediaListContainer = ({
   });
 
   useEffect(() => {
-    
     if (isInitialMount.current) {
       sessionStorage.setItem('lastPath', location.pathname);
       isInitialMount.current = false;
