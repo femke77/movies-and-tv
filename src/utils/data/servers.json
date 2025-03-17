@@ -3,7 +3,12 @@
 		{
 			"id": 1,
 			"name": "VidSrc",
-			"value": "vidsrc.me"
+			"value": "vidsrc.xyz"
+		},
+		{
+			"id": 2,
+			"name": "VidEasy",
+			"value": "videasy.net"
 		}
 		
 	]
