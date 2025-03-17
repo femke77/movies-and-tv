@@ -70,7 +70,7 @@ const WatchTV = () => {
     }
 
     sessionStorage.setItem('lastSelectedServer', selectedServer);
-  }, [selectedServer, series_id]);
+  }, [selectedServer, series_id, selectedSeason, selectedEpisode]);
 
   return (
     <div className='min-h-screen pt-[60px]'>
