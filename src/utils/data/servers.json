@@ -2,8 +2,18 @@
 	"servers": [
 		{
 			"id": 1,
-			"name": "vidsrc.me",
-			"value": "vidsrc.me"
+			"name": "VidSrc",
+			"value": "vidsrc.xyz"
+		},
+		{
+			"id": 2,
+			"name": "VidEasy",
+			"value": "videasy.net"
+		},
+		{
+			"id": 3,
+			"name": "VidLink Pro",
+			"value": "vidlink.pro"
 		}
 		
 	]
