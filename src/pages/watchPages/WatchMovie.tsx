@@ -17,7 +17,7 @@ const WatchMovie = () => {
     const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
     return lastSelectedServer || servers[0].value;
   });
-  
+
   const [serverURL, setServerURL] = useState('');
 
   useEffect(() => {
@@ -30,10 +30,9 @@ const WatchMovie = () => {
         break;
     }
 
- 
     sessionStorage.setItem('lastSelectedServer', selectedServer);
   }, [selectedServer, movie_id]);
-  
+
   return (
     <div className="min-h-screen pt-[60px]">
       <div className="flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto">
@@ -50,7 +49,7 @@ const WatchMovie = () => {
                 {movie.title || ''}
               </p>
             )}
-
+            {/* iphone safari doesn't support the FS api */}
             <div className={`${isIphoneSafari() ? 'invisible' : ''}`}>
               <FullscreenBtn elementId="iframe" />
             </div>

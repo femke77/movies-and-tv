@@ -23,11 +23,16 @@ import EpisodeList from '../../components/EpisodeList';
 const WatchTV = () => {
   const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();
-  const [selectedServer, setSelectedServer] = useState(servers[0].name);
+  const [selectedServer, setSelectedServer] = useState(() => {
+    const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
+    return lastSelectedServer || servers[0].value;
+  });
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
   const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
+  const [serverURL, setServerURL] = useState('');
+
   const navigate = useNavigate();
 
   const { data: series } = useWatchDetails('tv', series_id ?? '');
@@ -50,6 +55,19 @@ const WatchTV = () => {
     navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSeason, selectedEpisode]);
+
+  useEffect(() => {
+    switch (selectedServer) {
+      case 'vidsrc.xyz':
+        setServerURL(`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`);
+        break;
+      case 'videasy.net':
+        setServerURL(`https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
+        break;
+    }
+
+    sessionStorage.setItem('lastSelectedServer', selectedServer);
+  }, [selectedServer, series_id]);
 
   return (
     <div className='min-h-screen pt-[60px]'>
@@ -85,7 +103,7 @@ const WatchTV = () => {
                 // sandbox="allow-scripts allow-same-origin"
                 // src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
 
-                src={`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`}
+                src={serverURL}
                 allowFullScreen
               ></iframe>
             </div>
