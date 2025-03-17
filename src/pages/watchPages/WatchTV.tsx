@@ -59,14 +59,20 @@ const WatchTV = () => {
   useEffect(() => {
     switch (selectedServer) {
       case 'vidsrc.xyz':
-        setServerURL(`https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`);
+        setServerURL(
+          `https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`,
+        );
         break;
       case 'videasy.net':
-        setServerURL(`https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
+        setServerURL(
+          `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`,
+        );
         break;
-        case 'vidlink.pro':
-          setServerURL(`https://vidlink.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
-          break;
+      case 'vidlink.pro':
+        setServerURL(
+          `https://vidlink.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`,
+        );
+        break;
     }
 
     sessionStorage.setItem('lastSelectedServer', selectedServer);
