@@ -10,7 +10,6 @@ const BookmarkBtn = ({
   type: string;
   isBookmarked: boolean;
 }) => {
-
   const handleClick = () => {
     if (isBookmarked) {
       const bookmarks = localStorage.getItem(`bookmarks-${type}`);
@@ -20,7 +19,7 @@ const BookmarkBtn = ({
         const bookmarks = localStorage.getItem(`bookmarks-${type}`);
 
         if (bookmarks) {
-            // remove from bookmarks
+          // remove from bookmarks
         }
       }
     }

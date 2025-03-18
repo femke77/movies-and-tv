@@ -1,7 +1,7 @@
-import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-const BackButton = ({url}: {url: string}) => {
+const BackButton = ({ url }: { url: string }) => {
   const navigate = useNavigate();
   return (
     <button

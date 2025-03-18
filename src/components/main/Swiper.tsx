@@ -1,4 +1,4 @@
-import { useRef, useState, lazy, Suspense} from 'react';
+import { useRef, useState, lazy, Suspense } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';

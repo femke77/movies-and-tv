@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-
 const SeasonNavigation = ({
   selectedSeason,
   setSelectedSeason,
@@ -36,7 +35,7 @@ const SeasonNavigation = ({
     }, 250);
   };
   return (
-    <div className="w-full flex items-center justify-around">
+    <div className='w-full flex items-center justify-around'>
       <button
         className={`hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] ${
           selectedSeason === 1 ? 'opacity-50' : 'opacity-100'
@@ -44,7 +43,7 @@ const SeasonNavigation = ({
         disabled={selectedSeason === 1}
         onClick={handlePrevSeasonRequest}
       >
-        <ArrowLeft size={20} color="#ffffff" />
+        <ArrowLeft size={20} color='#ffffff' />
       </button>
       <p>
         Season {selectedSeason} of {numSeasons}
@@ -56,7 +55,7 @@ const SeasonNavigation = ({
         disabled={selectedSeason === numSeasons}
         onClick={handleNextSeasonRequest}
       >
-        <ArrowRight size={20} color="#ffffff" />
+        <ArrowRight size={20} color='#ffffff' />
       </button>
     </div>
   );
