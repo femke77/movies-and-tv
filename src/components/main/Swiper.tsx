@@ -1,9 +1,11 @@
-import { useRef, useState, lazy } from 'react';
+import { useRef, useState, lazy, Suspense} from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
 import SlideSkeleton from '../loadingSkeletons/SlideSkeleton';
-import DelayedSuspense from '../helpers/DelayedSuspense';
+// import DelayedSuspense from '../helpers/DelayedSuspense';
+
+// TODO decide if you need delayed suspense or regular suspense
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -50,14 +52,14 @@ export default function SwiperElement() {
         {items &&
           items.map((item, index) => (
             <SwiperSlide key={`item-${item.id}`}>
-              <DelayedSuspense fallback={<SlideSkeleton />}>
+              <Suspense fallback={<SlideSkeleton />}>
                 <Slide
                   slide={item}
                   isVisible={index === currentIndex}
                   currentIndex={index}
                   movieList={items}
                 />
-              </DelayedSuspense>
+              </Suspense>
             </SwiperSlide>
           ))}
 

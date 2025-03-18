@@ -1,3 +1,5 @@
+import  { useRef } from "react";
+
 const SeasonNavigation = ({
   selectedSeason,
   setSelectedSeason,
@@ -9,15 +11,29 @@ const SeasonNavigation = ({
   numSeasons: number;
   setSelectedEpisode: (_episode: number) => void;
 }) => {
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
   const handleNextSeasonRequest = () => {
     if (selectedSeason === numSeasons) return;
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    debounceRef.current = setTimeout(() => {
     setSelectedSeason(selectedSeason + 1);
     setSelectedEpisode(1);
+    }
+    , 200);
   };
   const handlePrevSeasonRequest = () => {
     if (selectedSeason === 1) return;
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    debounceRef.current = setTimeout(() => {
     setSelectedSeason(selectedSeason - 1);
     setSelectedEpisode(1);
+    }
+    , 200);
   };
   return (
     <div className='w-full flex items-center justify-around'>
