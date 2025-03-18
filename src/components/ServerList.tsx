@@ -22,7 +22,10 @@ const ServerButton = ({
       value={value}
       onClick={(e) => setSelectedServer(e.currentTarget.value)}
       className={`flex items-center w-full p-3 bg-gray-700/50 hover:bg-gray-700/70 rounded-lg mb-2 hover:cursor-pointer hover:translate-[1px] active:translate-[1px] ${
-        selectedServer === value ? "border-2 border-blue-600" : "border-2 border-transparent"}`}
+        selectedServer === value
+          ? 'border-2 border-blue-600'
+          : 'border-2 border-transparent'
+      }`}
     >
       <Settings size={20} className='mr-4' color='#ffffff' />
       <p>{name}</p>
