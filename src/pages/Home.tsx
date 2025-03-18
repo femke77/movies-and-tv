@@ -1,5 +1,4 @@
 import { lazy } from 'react';
-
 import SwiperElement from '../components/main/Swiper';
 
 const PopularMovies = lazy(() => import('../components/main/PopularMovies'));
@@ -10,6 +9,7 @@ const TrendingTV = lazy(() => import('../components/main/TrendingTv'));
 const TopRatedTv = lazy(() => import('../components/main/TopRatedTv'));
 
 const Home = () => {
+
   return (
     <>
       <SwiperElement />
@@ -22,6 +22,7 @@ const Home = () => {
         <TopRatedTv />
         <PopularTv />
       </div>
+      
     </>
   );
 };
