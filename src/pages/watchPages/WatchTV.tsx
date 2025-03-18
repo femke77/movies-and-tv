@@ -29,14 +29,18 @@ const WatchTV = () => {
     return lastSelectedServer || servers[0].value;
   });
   const [selectedSeason, setSelectedSeason] = useState(() => {
-    const lastSelectedSeason = sessionStorage.getItem(`${series_id}-lastSelectedSeason`);
+    const lastSelectedSeason = sessionStorage.getItem(
+      `${series_id}-lastSelectedSeason`,
+    );
     if (lastSelectedSeason) return Number(lastSelectedSeason);
-    return  1;
+    return 1;
   });
   const [selectedEpisode, setSelectedEpisode] = useState(() => {
-    const lastSelectedEpisode = sessionStorage.getItem(`${series_id}-lastSelectedEpisode`);
+    const lastSelectedEpisode = sessionStorage.getItem(
+      `${series_id}-lastSelectedEpisode`,
+    );
     if (lastSelectedEpisode) return Number(lastSelectedEpisode);
-    return  1;
+    return 1;
   });
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
   const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
@@ -61,8 +65,14 @@ const WatchTV = () => {
 
   useEffect(() => {
     if (selectedSeason === 1 && selectedEpisode === 1) return;
-    sessionStorage.setItem(`${series_id}-lastSelectedSeason`, String(selectedSeason));
-    sessionStorage.setItem(`${series_id}-lastSelectedEpisode`, String(selectedEpisode));
+    sessionStorage.setItem(
+      `${series_id}-lastSelectedSeason`,
+      String(selectedSeason),
+    );
+    sessionStorage.setItem(
+      `${series_id}-lastSelectedEpisode`,
+      String(selectedEpisode),
+    );
     navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSeason, selectedEpisode]);
