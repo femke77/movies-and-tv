@@ -93,16 +93,16 @@ const ItemCard = ({
         }`}
       >
         <Link to={`/${itemType}/${item.id}`} className='w-full '>
-          <div className='relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-900'>
+          <div className='group relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-900'>
             {item.poster_path ? (
               <>
-                {' '}
+    
                 {/* Placeholder */}
                 {(!lowResLoaded || !highResLoaded) && <PosterPlaceHolder />}
                 {/* Low-res image */}
                 <div className='absolute inset-0 z-[2]'>
                   <img
-                    className={`w-full h-full object-cover rounded-b-lg transition-opacity duration-400 ease-in-out ${
+                    className={`w-full h-full object-cover rounded-b-lg  transition-opacity duration-400 ease-in-out ${
                       lowResLoaded
                         ? 'opacity-100 blur-0'
                         : 'opacity-0 blur-[10px]'
@@ -115,7 +115,7 @@ const ItemCard = ({
                 {/* High-res image */}
                 <div className='absolute inset-0 z-[3]'>
                   <img
-                    className={`w-full h-full object-cover rounded-b-lg transition-all duration-300 ease-in-out ${
+                    className={`w-full h-full object-cover rounded-b-lg  hover:scale-110 transition-all duration-300 ease-in-out ${
                       highResLoaded ? 'opacity-100' : 'opacity-0'
                     }`}
                     src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
@@ -132,6 +132,7 @@ const ItemCard = ({
                 />
               </div>
             )}
+               <div className='absolute inset-0 z-[4] bg-black opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-50'></div>
           </div>
           <div className='flex flex-col h-[80px] mb-6 flex-grow items-start justify-start w-full pt-4 bg-black'>
             <div
