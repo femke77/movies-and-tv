@@ -23,12 +23,25 @@ import EpisodeList from '../../components/EpisodeList';
 const WatchTV = () => {
   const { servers } = serverData;
   const { series_id } = useParams<{ series_id: string }>();
+
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
     return lastSelectedServer || servers[0].value;
   });
-  const [selectedSeason, setSelectedSeason] = useState(1);
-  const [selectedEpisode, setSelectedEpisode] = useState(1);
+  const [selectedSeason, setSelectedSeason] = useState(() => {
+    const lastSelectedSeason = sessionStorage.getItem(
+      `${series_id}-lastSelectedSeason`,
+    );
+    if (lastSelectedSeason) return Number(lastSelectedSeason);
+    return 1;
+  });
+  const [selectedEpisode, setSelectedEpisode] = useState(() => {
+    const lastSelectedEpisode = sessionStorage.getItem(
+      `${series_id}-lastSelectedEpisode`,
+    );
+    if (lastSelectedEpisode) return Number(lastSelectedEpisode);
+    return 1;
+  });
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
   const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
   const [serverURL, setServerURL] = useState('');
@@ -52,6 +65,14 @@ const WatchTV = () => {
 
   useEffect(() => {
     if (selectedSeason === 1 && selectedEpisode === 1) return;
+    sessionStorage.setItem(
+      `${series_id}-lastSelectedSeason`,
+      String(selectedSeason),
+    );
+    sessionStorage.setItem(
+      `${series_id}-lastSelectedEpisode`,
+      String(selectedEpisode),
+    );
     navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSeason, selectedEpisode]);
@@ -76,7 +97,7 @@ const WatchTV = () => {
     }
 
     sessionStorage.setItem('lastSelectedServer', selectedServer);
-  }, [selectedServer, series_id]);
+  }, [selectedServer, series_id, selectedSeason, selectedEpisode]);
 
   return (
     <div className='min-h-screen pt-[60px]'>
