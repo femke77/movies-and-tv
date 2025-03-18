@@ -19,6 +19,8 @@ import EpisodeList from '../../components/EpisodeList';
 // TODO look into the flash of rerending when the api fetches the next season.
 // FIXME This needs to be more componentized
 // FIXME url params controlled ???? instead of state controlled would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management
+// FIXME active server on listboxcomp should be name not value. 
+
 
 const WatchTV = () => {
   const { servers } = serverData;
@@ -204,6 +206,7 @@ const WatchTV = () => {
                     <div className='flex items-center'>
                       <Settings size={20} className='mr-4' color='#ffffff' />
                       <p>Change Server</p>
+                      <p className='text-white/70 text-sm ml-14 truncate text-ellipsis'>Active: {selectedServer}</p>
                     </div>
                   }
                   selectedOption={selectedServer}
