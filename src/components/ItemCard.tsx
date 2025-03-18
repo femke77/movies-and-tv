@@ -96,7 +96,6 @@ const ItemCard = ({
           <div className='group relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-900'>
             {item.poster_path ? (
               <>
-    
                 {/* Placeholder */}
                 {(!lowResLoaded || !highResLoaded) && <PosterPlaceHolder />}
                 {/* Low-res image */}
@@ -132,7 +131,7 @@ const ItemCard = ({
                 />
               </div>
             )}
-               <div className='absolute inset-0 z-[4] bg-black opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-50'></div>
+            <div className='absolute inset-0 z-[4] bg-black opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-50'></div>
           </div>
           <div className='flex flex-col h-[80px] mb-6 flex-grow items-start justify-start w-full pt-4 bg-black'>
             <div
