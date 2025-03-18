@@ -103,17 +103,25 @@ export default function Navigation({
                       <DisclosureButton
                         role='search'
                         onClick={() => openSearch()}
-                        className='relative -right-2 top-0 hover:cursor-pointer'
+                        className='relative -right-2 top-0 hover:cursor-pointer h-[50px] w-[50px]  rounded-[50%] active:bg-gray-700 bg-gray-800 hover:bg-gray-700'
                       >
-                        <img src='/mag.svg' alt='search' className='w-8 h-8' />
+                        <img
+                          src='/mag.svg'
+                          alt='search'
+                          className='w-8 h-8 ml-2'
+                        />
                       </DisclosureButton>
                     ) : (
                       <button
                         role='search'
                         onClick={() => openSearch()}
-                        className='relative -right-2 top-0 md:top-5 h-[50px] hover:cursor-pointer'
+                        className='relative -right-2 top-0 md:top-5 h-[50px] w-[50px] hover:cursor-pointer rounded-[50%] active:bg-gray-700 bg-gray-800 hover:bg-gray-700'
                       >
-                        <img src='/mag.svg' alt='search' className='w-8 h-8' />
+                        <img
+                          src='/mag.svg'
+                          alt='search'
+                          className='w-8 h-8 ml-2 '
+                        />
                       </button>
                     )}
                   </div>

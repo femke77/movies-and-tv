@@ -16,9 +16,9 @@ import SeasonNavigation from '../../components/buttons/SeasonNavigation';
 import { isIphoneSafari } from '../../utils/helpers';
 import EpisodeList from '../../components/EpisodeList';
 
-// TODO look into the flash of rerending when the api fetches the next season.
-// FIXME This needs to be more componentized
-// FIXME url params controlled ???? instead of state controlled would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management
+// FIXME This needs to be more componentized. iframe at least needs it's own component.
+// FIXME url params controlled instead of state controlled ??? would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management. Thinking about this.
+// FIXME active server on listboxcomp should be name not value.
 
 const WatchTV = () => {
   const { servers } = serverData;
@@ -105,7 +105,7 @@ const WatchTV = () => {
         <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
           <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
-              <BackButton />
+              <BackButton url={`/tv/${series_id}`} />
             </div>
             {series && (
               <p
@@ -204,6 +204,9 @@ const WatchTV = () => {
                     <div className='flex items-center'>
                       <Settings size={20} className='mr-4' color='#ffffff' />
                       <p>Change Server</p>
+                      <p className='text-white/70 text-sm ml-14 truncate text-ellipsis'>
+                        Active: {selectedServer}
+                      </p>
                     </div>
                   }
                   selectedOption={selectedServer}

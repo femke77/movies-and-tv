@@ -4,8 +4,7 @@ import { useItemLogos } from '../../hooks/useTrendingWithLogoFetch';
 import genresData from '../../utils/data/genres.json';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { useState, useEffect } from 'react';
-import { lazy } from 'react';
+import { useState, useEffect, lazy } from 'react';
 
 const UserRating = lazy(() => import('../UserRating'));
 const WatchButton = lazy(() => import('../buttons/WatchButtonSmall'));
@@ -247,6 +246,7 @@ const Slide = ({
                   <ButtonPlaceholder />
                 )}
               </div>
+              <div className='mb-2 mt-3'>{/* Bookmark */}</div>
             </div>
           </div>
         </div>
