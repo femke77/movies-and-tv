@@ -11,7 +11,7 @@ const BookmarkBtn = ({
   isBookmarked: boolean;
 }) => {
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = () => {
     if (isBookmarked) {
       const bookmarks = localStorage.getItem(`bookmarks-${type}`);
       if (bookmarks) {
