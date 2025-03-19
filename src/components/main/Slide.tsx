@@ -5,6 +5,7 @@ import genresData from '../../utils/data/genres.json';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { useState, useEffect, lazy } from 'react';
+import BookmarkBtn from '../buttons/BookmarkBtn';
 
 const UserRating = lazy(() => import('../UserRating'));
 const WatchButton = lazy(() => import('../buttons/WatchButtonSmall'));
@@ -26,11 +27,15 @@ const Slide = ({
   isVisible,
   currentIndex,
   movieList,
+  isBookmarked,
+  onBookmarkClick,
 }: {
   slide: IItem;
   isVisible: boolean;
   currentIndex: number;
   movieList: IItem[];
+  isBookmarked: boolean;
+  onBookmarkClick: (_id: string, _type: string, _isBookmarked: boolean) => void;
 }) => {
   const [highResBgLoaded, setHighResBgLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false);
@@ -226,17 +231,17 @@ const Slide = ({
             {/* Buttons section */}
             <div
               className={clsx(
-                `flex flex-row items-center justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
+                `flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
               )}
             >
-              <div className='mb-3 mr-10'>
+              <div className='mr-6'>
                 {contentLoaded ? (
                   <UserRating rating={slide.vote_average ?? 0} />
                 ) : (
                   <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
                 )}
               </div>
-              <div className='mb-2 mt-3'>
+              <div className='mr-6'>
                 {contentLoaded ? (
                   <WatchButton
                     itemType={slide.media_type!}
@@ -246,7 +251,15 @@ const Slide = ({
                   <ButtonPlaceholder />
                 )}
               </div>
-              <div className='mb-2 mt-3'>{/* Bookmark */}</div>
+              <div className='mr-6'>
+                {/* Bookmark */}
+                <BookmarkBtn
+                  id={slide.id! as string}
+                  type={slide.media_type!}
+                  isBookmarked={isBookmarked}
+                  onBookmarkClick={onBookmarkClick}
+                />
+              </div>
             </div>
           </div>
         </div>

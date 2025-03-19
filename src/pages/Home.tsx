@@ -1,5 +1,4 @@
 import { lazy } from 'react';
-
 import SwiperElement from '../components/main/Swiper';
 
 const PopularMovies = lazy(() => import('../components/main/PopularMovies'));

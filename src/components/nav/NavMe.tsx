@@ -1,9 +1,9 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
 import MenuItemLink from './MenuItemLink';
-import { Clapperboard } from 'lucide-react';
+import { CircleUser } from 'lucide-react';
 
-const NavMovies = () => {
+const NavMe = () => {
   return (
     <Menu>
       <MenuButton
@@ -13,7 +13,7 @@ const NavMovies = () => {
         {({ open }) => (
           <>
             <h2 className='text-lg font-bold bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text'>
-              Movies
+              My BingeBox
             </h2>
             {open ? (
               <ChevronUpIcon className='size-4 fill-white/60' />
@@ -32,16 +32,13 @@ const NavMovies = () => {
       >
         {' '}
         <div className='flex justify-start items-center p-4 '>
-          <Clapperboard color='#ffffff' />
-          <h3 className='text-md font-bold ml-3'>Discover New Movies</h3>
+          <CircleUser className='text-white' />
+          <h3 className='text-md font-bold ml-3'>Account</h3>
         </div>
-        <MenuItemLink to='/explore/movies' name='Trending Movies' />
-        <MenuItemLink to='/explore/toprated' name='Top Rated Movies' />
-        <MenuItemLink to='/explore/popular' name='Popular Movies' />
-        <MenuItemLink to='/explore/all-movies' name='Explore All Movies' />
+        <MenuItemLink to='/account/saved' name='Saved Movies & Tv' />
       </MenuItems>
     </Menu>
   );
 };
 
-export default NavMovies;
+export default NavMe;

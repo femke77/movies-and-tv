@@ -1,33 +1,35 @@
 import { Bookmark, BookmarkCheck } from 'lucide-react';
+import Tooltip from '../ToolTip';
+
+interface BookmarkBtnProps {
+  id: string;
+  type: string;
+  isBookmarked: boolean;
+  onBookmarkClick: (_id: string, _type: string, _isBookmarked: boolean) => void;
+  iconSize?: number;
+}
 
 const BookmarkBtn = ({
   id,
   type,
-
   isBookmarked,
-}: {
-  id: string;
-  type: string;
-  isBookmarked: boolean;
-}) => {
-  const handleClick = () => {
-    if (isBookmarked) {
-      const bookmarks = localStorage.getItem(`bookmarks-${type}`);
-      if (bookmarks) {
-        // add to bookmarks
-      } else {
-        const bookmarks = localStorage.getItem(`bookmarks-${type}`);
-
-        if (bookmarks) {
-          // remove from bookmarks
-        }
-      }
-    }
-  };
+  onBookmarkClick,
+  iconSize = 40,
+}: BookmarkBtnProps) => {
   return (
-    <button value={id} onClick={handleClick}>
-      {isBookmarked ? <BookmarkCheck /> : <Bookmark />}
-    </button>
+    <Tooltip text={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}>
+      <button
+        className='rounded-[50%]  cursor-pointer w-[64px] h-[64px] flex items-center  bg-white text-black  hover:bg-gray-200'
+        value={id}
+        onClick={() => onBookmarkClick(id, type, isBookmarked)}
+      >
+        {isBookmarked ? (
+          <BookmarkCheck className='mx-auto' size={iconSize} color='black' />
+        ) : (
+          <Bookmark className='mx-auto' size={iconSize} color='black' />
+        )}
+      </button>
+    </Tooltip>
   );
 };
 
