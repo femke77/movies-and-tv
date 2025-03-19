@@ -5,11 +5,13 @@ import Footer from './components/Footer';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ScrollRestoration } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
-// TODO finish footer
+// import { useBookmarkStore } from './state/store';
+import BookmarkModal from './components/BookmarkModal2';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
+    // const { confirm } = useBookmarkStore();
+   
 
   // maintains search query on reload
   useEffect(() => {
@@ -33,6 +35,7 @@ function App() {
         </main>
         <Footer />
       </div>
+        <BookmarkModal />
       <ReactQueryDevtools />
     </>
   );
