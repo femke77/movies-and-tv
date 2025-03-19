@@ -70,11 +70,11 @@ export default function Navigation({
 
   return (
     <div>
-      <nav className='bg-gray-900 h-16 relative z-40'>
+      <nav className='bg-gray-900 h-16 relative z-40 overflow-hidden'>
         <Disclosure>
           {({ open }) => (
             <>
-              <div className='mx-auto mr-4 sm:px-2 lg:px-4 '>
+              <div className='mx-auto mr-4 sm:px-2 lg:px-4 overflow-hidden '>
                 <div className='relative flex h-16 items-center justify-between '>
                   <div className='absolute inset-y-0 -left-10 flex items-center md:hidden'>
                     <DisclosureButton className='relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
@@ -94,7 +94,7 @@ export default function Navigation({
                   </div>
                   <div className='flex flex-1 items-center justify-center md:items-stretch md:justify-start'>
                     <div className='hidden md:flex flex-1 items-center py-6 pl-2'>
-                      <div className='flex space-x-6 items-center pr-4 '>
+                      <div className='flex space-x-5 items-center pr-4 '>
                         <NavMovies />
                         <NavTVShow />
                         <NavMe />

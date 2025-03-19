@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
 import MenuItemLink from './MenuItemLink';
-import { CircleUser, Clapperboard } from 'lucide-react';
+import { CircleUser } from 'lucide-react';
 
 const NavMe = () => {
   return (
@@ -27,6 +27,7 @@ const NavMe = () => {
       <MenuItems
         transition
         anchor='bottom end'
+        modal={false}
         className='w-64 origin-top-right rounded-xl border border-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:12px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0  bg-gray-900/95 relative z-50'
       >
         {' '}
