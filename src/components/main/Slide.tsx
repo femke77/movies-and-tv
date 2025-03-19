@@ -28,14 +28,14 @@ const Slide = ({
   currentIndex,
   movieList,
   isBookmarked,
-  onBookmarkClick
+  onBookmarkClick,
 }: {
   slide: IItem;
   isVisible: boolean;
   currentIndex: number;
   movieList: IItem[];
   isBookmarked: boolean;
-  onBookmarkClick: (id: string, type: string, isBookmarked: boolean) => void;
+  onBookmarkClick: (_id: string, _type: string, _isBookmarked: boolean) => void;
 }) => {
   const [highResBgLoaded, setHighResBgLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false);
@@ -61,7 +61,7 @@ const Slide = ({
     const genre = genres.find((genre) => genre.id === genreId);
     return genre?.name;
   });
- 
+
   // image preloading
   useEffect(() => {
     if (isVisible || currentIndex === 0) {
@@ -112,7 +112,6 @@ const Slide = ({
     }
   }, [contentLoaded, logoStatus.loaded, isVisible]);
 
- 
   return (
     <div
       className={` swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden ${
@@ -255,10 +254,10 @@ const Slide = ({
               <div className='mr-6'>
                 {/* Bookmark */}
                 <BookmarkBtn
-                   id={slide.id! as string}
-                   type={slide.media_type!}
-                   isBookmarked={isBookmarked}
-                   onBookmarkClick={onBookmarkClick}
+                  id={slide.id! as string}
+                  type={slide.media_type!}
+                  isBookmarked={isBookmarked}
+                  onBookmarkClick={onBookmarkClick}
                 />
               </div>
             </div>

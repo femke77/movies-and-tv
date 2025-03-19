@@ -9,7 +9,6 @@ const TrendingTV = lazy(() => import('../components/main/TrendingTv'));
 const TopRatedTv = lazy(() => import('../components/main/TopRatedTv'));
 
 const Home = () => {
-
   return (
     <>
       <SwiperElement />
@@ -22,7 +21,6 @@ const Home = () => {
         <TopRatedTv />
         <PopularTv />
       </div>
-      
     </>
   );
 };

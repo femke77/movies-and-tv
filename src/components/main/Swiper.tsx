@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, lazy, Suspense} from 'react';
+import { useRef, useState, useEffect, lazy, Suspense } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
@@ -12,9 +12,15 @@ const Slide = lazy(() => import('./Slide'));
 
 export default function SwiperElement() {
   const { data: items = [] } = useTrendingAll();
-  const [modalData, setModalData] = useState({ id: '', type: '', isBookmarked: false });
-  const [bookmarks, setBookmarks] = useState<{id: string, type: string}[]>([]);
-  
+  const [modalData, setModalData] = useState({
+    id: '',
+    type: '',
+    isBookmarked: false,
+  });
+  const [bookmarks, setBookmarks] = useState<{ id: string; type: string }[]>(
+    [],
+  );
+
   useEffect(() => {
     const loadBookmarks = () => {
       const bookmarksString = localStorage.getItem('bookmarks');
@@ -22,27 +28,38 @@ export default function SwiperElement() {
         setBookmarks(JSON.parse(bookmarksString));
       }
     };
-    
+
     loadBookmarks();
   }, []);
-  
-  const handleBookmarkClick = (id: string, type: string, isBookmarked: boolean) => {
+
+  const handleBookmarkClick = (
+    id: string,
+    type: string,
+    isBookmarked: boolean,
+  ) => {
     setModalData({ id, type, isBookmarked });
-    (document.getElementById('my_modal_3') as HTMLDialogElement | null)?.showModal();
+    (
+      document.getElementById('my_modal_3') as HTMLDialogElement | null
+    )?.showModal();
   };
-  
-  const handleBookmarkChange = (id: string, type: string, isBookmarked: boolean) => {
+
+  const handleBookmarkChange = (
+    id: string,
+    type: string,
+    isBookmarked: boolean,
+  ) => {
     if (isBookmarked) {
-      setBookmarks(prev => [...prev, {id, type}]);
+      setBookmarks((prev) => [...prev, { id, type }]);
     } else {
-      setBookmarks(prev => prev.filter(b => !(b.id === id && b.type === type)));
+      setBookmarks((prev) =>
+        prev.filter((b) => !(b.id === id && b.type === type)),
+      );
     }
   };
-  
+
   const isItemBookmarked = (id: string, type: string) => {
-    return bookmarks.some(b => b.id === id && b.type === type);
+    return bookmarks.some((b) => b.id === id && b.type === type);
   };
-  
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -87,7 +104,10 @@ export default function SwiperElement() {
                   isVisible={index === currentIndex}
                   currentIndex={index}
                   movieList={items}
-                  isBookmarked={isItemBookmarked(item.id as string, item.media_type!)}
+                  isBookmarked={isItemBookmarked(
+                    item.id as string,
+                    item.media_type!,
+                  )}
                   onBookmarkClick={handleBookmarkClick}
                 />
               </Suspense>
@@ -100,12 +120,12 @@ export default function SwiperElement() {
           </svg>
           <span ref={progressContent}></span>
         </div>
-        <BookmarkModal 
-        id={modalData.id}
-        type={modalData.type}
-        isBookmarked={modalData.isBookmarked}
-        onBookmarkChange={handleBookmarkChange}
-      />
+        <BookmarkModal
+          id={modalData.id}
+          type={modalData.type}
+          isBookmarked={modalData.isBookmarked}
+          onBookmarkChange={handleBookmarkChange}
+        />
       </Swiper>
     </>
   );

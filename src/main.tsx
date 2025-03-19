@@ -44,8 +44,6 @@ const queryClient = new QueryClient({
   },
 });
 
-
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -65,7 +63,7 @@ const router = createBrowserRouter([
         path: 'dmca',
         element: <DMCA />,
       },
-      
+
       {
         path: ':item_type/:id',
         element: (
@@ -164,7 +162,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'account',
-        children:[
+        children: [
           {
             path: 'saved',
             element: <SavedItems />,

@@ -32,11 +32,10 @@ const NavMe = () => {
       >
         {' '}
         <div className='flex justify-start items-center p-4 '>
-        <CircleUser className='text-white' />
+          <CircleUser className='text-white' />
           <h3 className='text-md font-bold ml-3'>Account</h3>
         </div>
         <MenuItemLink to='/account/saved' name='Saved Movies & Tv' />
-        
       </MenuItems>
     </Menu>
   );

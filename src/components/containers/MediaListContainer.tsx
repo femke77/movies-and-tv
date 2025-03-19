@@ -63,7 +63,13 @@ const MediaListContainer = ({
       JSON.stringify(deSelectedGenres),
     );
     sessionStorage.setItem(`${mediaType}-sortBy`, sortByOption);
-  }, [selectedGenres, deSelectedGenres, sortByOption, mediaType]);
+  }, [
+    selectedGenres,
+    deSelectedGenres,
+    sortByOption,
+    mediaType,
+    location.pathname,
+  ]);
 
   const toggleGenre = (genreId: string) => {
     setSelectedGenres((prev) => {
