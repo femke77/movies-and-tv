@@ -4,9 +4,6 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
 import SlideSkeleton from '../loadingSkeletons/SlideSkeleton';
 import BookmarkModal from '../BookmarkModal';
-// import DelayedSuspense from '../helpers/DelayedSuspense';
-
-// TODO decide if you need delayed suspense or regular suspense
 
 import 'swiper/css';
 import 'swiper/css/pagination';

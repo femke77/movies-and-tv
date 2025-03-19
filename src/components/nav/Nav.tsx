@@ -8,6 +8,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 import NavMovies from './NavMovies';
 import NavTVShow from './NavTVShow';
+import NavMe from './NavMe';
 // import NavDiscover from './NavComponents/NavDiscover';
 import Search from '../HeaderSearchBar';
 import { Clapperboard, Tv } from 'lucide-react';
@@ -93,9 +94,10 @@ export default function Navigation({
                   </div>
                   <div className='flex flex-1 items-center justify-center md:items-stretch md:justify-start'>
                     <div className='hidden md:flex flex-1 items-center py-6 pl-2'>
-                      <div className='flex space-x-4 items-center pr-4 '>
+                      <div className='flex space-x-6 items-center pr-4 '>
                         <NavMovies />
                         <NavTVShow />
+                        <NavMe />
                         {/* <NavDiscover /> */}
                       </div>
                     </div>
