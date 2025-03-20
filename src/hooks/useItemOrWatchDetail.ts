@@ -14,10 +14,10 @@ const fetchTVSeasonEpisodes = async (id: string, season_num: string) => {
 
 const fetchTVContentRating = async (tv_id: string) => {
   const { data } = await TMDBClient.get(
-    `/tv/${tv_id}/content_ratings?language=en`,
+    `/tv/${tv_id}/content_ratings?language=en`
   );
   const usRegion = data.results.find(
-    (region: { iso_3166_1: string }) => region.iso_3166_1 === 'US',
+    (region: { iso_3166_1: string }) => region.iso_3166_1 === 'US'
   );
   const certification = usRegion?.rating || 'N/A';
   return certification;
@@ -25,10 +25,10 @@ const fetchTVContentRating = async (tv_id: string) => {
 
 const fetchMovieRating = async (movie_id: string) => {
   const { data } = await TMDBClient.get(
-    `/movie/${movie_id}/release_dates?language=en`,
+    `/movie/${movie_id}/release_dates?language=en`
   );
   const usRegion = data.results.find(
-    (region: { iso_3166_1: string }) => region.iso_3166_1 === 'US',
+    (region: { iso_3166_1: string }) => region.iso_3166_1 === 'US'
   );
   const certification = usRegion?.release_dates?.[0].certification || 'N/A';
   return certification;
@@ -133,6 +133,32 @@ export const useTVSeasonEpisodes = (id: string, season_num: string) => {
 
       const episodes = await fetchTVSeasonEpisodes(id, season_num);
       return episodes;
+    },
+    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    gcTime: 1000 * 60 * 60 * 25, // 25 hours
+    refetchOnWindowFocus: false,
+    retry: 2,
+    enabled: !!id,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
+  });
+};
+
+export const useBookmarkDetail = (type: string, id: string) => {
+  return useQuery({
+    queryKey: ['bookmark-detail', id, type],
+    queryFn: async () => {
+      if (!(id && type)) {
+        throw new Error('ID and type are required');
+      }
+
+      if (type === 'movie') {
+        const movie = await fetchItemDetail(type, id);
+        return movie;
+
+      } else if (type === 'tv') {
+        const tv = await fetchItemDetail(type, id);
+        return tv;
+      }
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
     gcTime: 1000 * 60 * 60 * 25, // 25 hours
