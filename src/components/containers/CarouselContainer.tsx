@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { ItemCard } from '../ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../../interfaces/IItem';
-
+import { useBookmarkStore } from '../../state/store';
 const SlideContainer = ({
   items,
   itemType,
@@ -11,7 +11,7 @@ const SlideContainer = ({
   itemType: string;
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  const bookmarks = useBookmarkStore((state) => state.bookmarks);
   const scrollLeft = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
@@ -48,6 +48,10 @@ const SlideContainer = ({
               itemType={itemType}
               showRating={true}
               showGenres={false}
+              isBookmarked={bookmarks.some(
+                (bookmarks) =>
+                  bookmarks.id === item.id && bookmarks.type === itemType,
+              )}
             />
           </div>
         ))}

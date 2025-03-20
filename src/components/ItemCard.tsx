@@ -6,6 +6,7 @@ import { useEffect, useState, memo } from 'react';
 import genreData from '../utils/data/genres.json';
 import Chip from './Chip';
 import { useWindowSize } from '../hooks/useWindowSize';
+import BookmarkBtn from './buttons/BookmarkBtn';
 
 const ItemCard = ({
   item,
@@ -13,12 +14,14 @@ const ItemCard = ({
   showRating,
   showGenres,
   textSize = 'md',
+  isBookmarked,
 }: {
   item: IItem;
   itemType: string;
   showRating?: boolean;
   showGenres?: boolean;
   textSize?: string;
+  isBookmarked: boolean;
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [lowResLoaded, setLowResLoaded] = useState(false);
@@ -132,6 +135,15 @@ const ItemCard = ({
               </div>
             )}
             <div className='absolute inset-0 z-[4] bg-black opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-50'></div>
+            <div className='absolute top-0 -right-1 p-1 z-[5]'>
+              <BookmarkBtn
+                id={item.id}
+                type={itemType}
+                isBookmarked={isBookmarked}
+                iconSize={35}
+                color='white'
+              />
+            </div>
           </div>
           <div className='flex flex-col h-[80px] mb-6 flex-grow items-start justify-start w-full pt-4 bg-black'>
             <div
@@ -200,12 +212,14 @@ const MemoizedItemCard = memo(
     showRating = false,
     showGenres = false,
     textSize,
+    isBookmarked,
   }: {
     item: IItem;
     itemType?: string;
     showRating?: boolean;
     showGenres?: boolean;
     textSize?: string;
+    isBookmarked: boolean;
   }) => (
     <div className='w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]'>
       <ItemCard
@@ -214,6 +228,7 @@ const MemoizedItemCard = memo(
         showRating={showRating}
         showGenres={showGenres}
         itemType={item.media_type || itemType || ''}
+        isBookmarked={isBookmarked}
       />
     </div>
   ),

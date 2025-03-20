@@ -76,7 +76,7 @@ export default function Navigation({
             <>
               <div className='mx-auto mr-4 sm:px-2 lg:px-4  '>
                 <div className='relative flex h-16 items-center justify-between '>
-                  <div className='absolute inset-y-0 -left-10 flex items-center md:hidden'>
+                  <div className='absolute inset-y-0 -left-10 flex items-center [@media(min-width:825px)]:hidden'>
                     <DisclosureButton className='relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
                       <span className='sr-only'>Open main menu</span>
                       {open ? (
@@ -93,8 +93,8 @@ export default function Navigation({
                     </DisclosureButton>
                   </div>
                   <div className='flex flex-1 items-center justify-center md:items-stretch md:justify-start'>
-                    <div className='hidden md:flex flex-1 items-center py-6 pl-2'>
-                      <div className='flex space-x-5 items-center pr-4 '>
+                    <div className='[@media(max-width:825px)]:hidden md:flex flex-1 items-center py-6 pl-2'>
+                      <div className='flex space-x-3 items-center pr-4 '>
                         <NavMovies />
                         <NavTVShow />
                         <NavMe />
@@ -105,7 +105,7 @@ export default function Navigation({
                       <DisclosureButton
                         role='search'
                         onClick={() => openSearch()}
-                        className='relative -right-2 top-0 hover:cursor-pointer h-[50px] w-[50px]  rounded-[50%] active:bg-gray-700 bg-gray-800 hover:bg-gray-700'
+                        className='relative -right-2 top-0 hover:cursor-pointer  [@media(min-width:825px)]:top-5 h-[50px] w-[50px]  rounded-[50%] active:bg-gray-700 bg-gray-800 hover:bg-gray-700'
                       >
                         <img
                           src='/mag.svg'
@@ -117,7 +117,7 @@ export default function Navigation({
                       <button
                         role='search'
                         onClick={() => openSearch()}
-                        className='relative -right-2 top-0 md:top-5 h-[50px] w-[50px] hover:cursor-pointer rounded-[50%] active:bg-gray-700 bg-gray-800 hover:bg-gray-700'
+                        className='relative -right-2  [@media(min-width:825px)]:top-5  h-[50px] w-[50px] hover:cursor-pointer rounded-[50%] active:bg-gray-700 bg-gray-800 hover:bg-gray-700'
                       >
                         <img
                           src='/mag.svg'
@@ -133,7 +133,7 @@ export default function Navigation({
               {/* Fullscreen Mobile Nav */}
               <DisclosurePanel>
                 <div
-                  className={`block md:hidden fixed inset-0 mt-16  bg-black  transition-all duration-700 ${
+                  className={`block [@media(min-width:825px)]:hidden fixed inset-0 mt-16  bg-black  transition-all duration-700 ${
                     open
                       ? 'opacity-96 h-screen'
                       : 'opacity-0 h-0 pointer-events-none'

@@ -4,12 +4,13 @@ import { useInView } from 'react-intersection-observer';
 import { useInfiniteSearchQuery } from '../hooks/useSearchAndDiscover';
 import { IItem } from '../interfaces/IItem';
 import { MemoizedItemCard } from '../components/ItemCard';
-
+import { useBookmarkStore } from '../state/store';
 // Memoized Results component
 const Results = memo(() => {
   const { query } = useParams<{ query: string }>();
   const lastResultsRef = useRef<IItem[]>([]);
   const { ref, inView } = useInView();
+  const bookmarks = useBookmarkStore((state) => state.bookmarks);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteSearchQuery(query ?? '');
@@ -37,6 +38,9 @@ const Results = memo(() => {
               key={`${item.media_type}-${item.id}`}
               item={item}
               textSize='md'
+              isBookmarked={bookmarks.some(
+                (a) => a.id === item.id && a.type === item.media_type,
+              )}
             />
           ))
         ) : (

@@ -249,13 +249,17 @@ const Slide = ({
                   <ButtonPlaceholder />
                 )}
               </div>
-              <div className='mr-6'>
+              <div className=' mr-6 rounded-[50%] cursor-pointer w-[64px] h-[64px] flex items-center bg-white text-black hover:bg-gray-200'>
                 {/* Bookmark */}
-                <BookmarkBtn
-                  id={slide.id! as string}
-                  type={slide.media_type!}
-                  isBookmarked={isBookmarked}
-                />
+                <div className='mx-auto mt-1'>
+                  <BookmarkBtn
+                    id={slide.id! as string}
+                    type={slide.media_type!}
+                    isBookmarked={isBookmarked}
+                    color='black'
+                    showTooltip={true}
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -29,16 +29,18 @@ export default function BookmarkModal() {
       role='dialog'
       aria-modal='true'
     >
-      <div className='fixed inset-0 bg-gray-900/75 flex items-center justify-center p-4'>
-        <DialogPanel className='w-full max-w-md bg-white/5 p-6 rounded-xl'>
+      <div className='fixed inset-0 bg-gray-900/90 flex items-center justify-center p-4'>
+        <DialogPanel className='w-full max-w-md bg-black p-6 rounded-xl'>
           <DialogTitle
             id='modal-title'
             as='h3'
             className='text-lg font-semibold text-white'
           >
-            {isBookmarked ? 'Remove Bookmark?' : 'Add Bookmark?'}
+            {isBookmarked
+              ? 'Remove this from your bookmarks?'
+              : 'Add this to your bookmarks?'}
           </DialogTitle>
-          <p className='mt-2 text-white/50'>{`ID: ${id} | Type: ${type}`}</p>
+          {/* <p className='mt-2 text-white/50'>{`ID: ${id} | Type: ${type}`}</p> */}
           <div className='mt-4 flex gap-4'>
             <Button
               className='bg-gray-700 text-white px-3 py-1.5 rounded-md'
