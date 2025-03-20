@@ -13,9 +13,9 @@ const TextPlaceholder = () => (
   </div>
 );
 
-const ButtonPlaceholder = () => (
-  <div className='w-28 h-10 bg-gray-700/30 rounded-full animate-pulse'></div>
-);
+// const ButtonPlaceholder = () => (
+//   <div className="w-28 h-10 bg-gray-700/30 rounded-full animate-pulse"></div>
+// );
 
 const SlideSkeleton = () => {
   return (
@@ -68,13 +68,16 @@ const SlideSkeleton = () => {
             {/* Buttons section */}
             <div
               className={clsx(
-                `flex flex-row items-center justify-center [@media(min-width:950px)]:justify-start  mt-2 h-[50px]`,
+                `flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
               )}
             >
-              <div className='mb-2 mr-10'>
-                <ButtonPlaceholder />
+              <div className='mr-6'>
+                <div className='w-12 h-12 bg-gray-700/30 rounded-full animate-pulse'></div>
               </div>
-              <div className='mb-2'>
+              <div className='mr-6'>
+                <div className='w-12 h-12 bg-gray-700/30 rounded-full animate-pulse'></div>
+              </div>
+              <div className='mr-6 mt-4 [@media(max-width:1050px)]:mt-3.5 rounded-[50%]  w-[64px] h-[64px]  '>
                 <div className='w-12 h-12 bg-gray-700/30 rounded-full animate-pulse'></div>
               </div>
             </div>

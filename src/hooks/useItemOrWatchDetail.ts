@@ -1,7 +1,7 @@
 import { TMDBClient } from '../utils/axiosConfig';
 import { useQuery } from '@tanstack/react-query';
 
-const fetchItemDetail = async (type: string, id: string) => {
+export const fetchItemDetail = async (type: string, id: string) => {
   const { data } = await TMDBClient.get(`/${type}/${id}`);
   return data;
 };
@@ -133,6 +133,31 @@ export const useTVSeasonEpisodes = (id: string, season_num: string) => {
 
       const episodes = await fetchTVSeasonEpisodes(id, season_num);
       return episodes;
+    },
+    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    gcTime: 1000 * 60 * 60 * 25, // 25 hours
+    refetchOnWindowFocus: false,
+    retry: 2,
+    enabled: !!id,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
+  });
+};
+
+export const useBookmarkDetail = (type: string, id: string) => {
+  return useQuery({
+    queryKey: ['bookmark-detail', id, type],
+    queryFn: async () => {
+      if (!(id && type)) {
+        throw new Error('ID and type are required');
+      }
+
+      if (type === 'movie') {
+        const movie = await fetchItemDetail(type, id);
+        return movie;
+      } else if (type === 'tv') {
+        const tv = await fetchItemDetail(type, id);
+        return tv;
+      }
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
     gcTime: 1000 * 60 * 60 * 25, // 25 hours
