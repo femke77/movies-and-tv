@@ -10,8 +10,6 @@ const TrendingTV = lazy(() => import('../components/main/TrendingTv'));
 const TopRatedTv = lazy(() => import('../components/main/TopRatedTv'));
 
 const Home = () => {
-
- 
   return (
     <>
       <SwiperElement />
@@ -25,10 +23,12 @@ const Home = () => {
         <PopularTv />
       </div>
 
-      <button onClick={() => useBookmarkStore.getState().openModal("1", "movie")}>
-  Open Modal
-</button>
-      <BookmarkModal/>
+      <button
+        onClick={() => useBookmarkStore.getState().openModal('1', 'movie')}
+      >
+        Open Modal
+      </button>
+      <BookmarkModal />
     </>
   );
 };

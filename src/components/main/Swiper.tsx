@@ -58,7 +58,9 @@ export default function SwiperElement() {
                   isVisible={index === currentIndex}
                   currentIndex={index}
                   movieList={items}
-                  isBookmarked={bookmarks.some(b => b.id === item.id && b.type === item.media_type)}               
+                  isBookmarked={bookmarks.some(
+                    (b) => b.id === item.id && b.type === item.media_type,
+                  )}
                 />
               </Suspense>
             </SwiperSlide>
@@ -70,7 +72,6 @@ export default function SwiperElement() {
           </svg>
           <span ref={progressContent}></span>
         </div>
-        
       </Swiper>
     </>
   );

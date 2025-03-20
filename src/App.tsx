@@ -10,8 +10,7 @@ import BookmarkModal from './components/BookmarkModal2';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
-    // const { confirm } = useBookmarkStore();
-   
+  // const { confirm } = useBookmarkStore();
 
   // maintains search query on reload
   useEffect(() => {
@@ -35,7 +34,7 @@ function App() {
         </main>
         <Footer />
       </div>
-        <BookmarkModal />
+      <BookmarkModal />
       <ReactQueryDevtools />
     </>
   );

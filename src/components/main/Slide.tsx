@@ -28,14 +28,12 @@ const Slide = ({
   currentIndex,
   movieList,
   isBookmarked,
-
 }: {
   slide: IItem;
   isVisible: boolean;
   currentIndex: number;
   movieList: IItem[];
   isBookmarked: boolean;
- 
 }) => {
   const [highResBgLoaded, setHighResBgLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false);
@@ -257,7 +255,6 @@ const Slide = ({
                   id={slide.id! as string}
                   type={slide.media_type!}
                   isBookmarked={isBookmarked}
-    
                 />
               </div>
             </div>
