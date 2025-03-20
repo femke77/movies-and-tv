@@ -7,6 +7,7 @@ interface BookmarkBtnProps {
   type: string;
   isBookmarked: boolean;
   iconSize?: number;
+  color?: string;
 }
 
 const BookmarkBtn = ({
@@ -14,19 +15,19 @@ const BookmarkBtn = ({
   type,
   isBookmarked: propIsBookmarked,
   iconSize = 40,
+  color='white'
 }: BookmarkBtnProps) => {
   const openModal = useBookmarkStore((state) => state.openModal);
 
   return (
     <Tooltip text={propIsBookmarked ? 'Remove bookmark' : 'Add bookmark'}>
       <button
-        className='rounded-[50%] cursor-pointer w-[64px] h-[64px] flex items-center bg-white text-black hover:bg-gray-200'
         onClick={() => openModal(id, type)}
       >
         {propIsBookmarked ? (
-          <BookmarkCheck className='mx-auto' size={iconSize} color='black' />
+          <BookmarkCheck className='mx-auto' size={iconSize} color={color} />
         ) : (
-          <Bookmark className='mx-auto' size={iconSize} color='black' />
+          <Bookmark className='mx-auto' size={iconSize} color={color} />
         )}
       </button>
     </Tooltip>
