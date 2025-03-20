@@ -6,6 +6,7 @@ import { IGenre } from '../../interfaces/IGenre';
 import SortByListbox from '../ListBox';
 import { useLocation } from 'react-router-dom';
 
+
 interface MediaListContainerProps {
   mediaType: 'movie' | 'tv';
   heading: string;

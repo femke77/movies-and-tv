@@ -257,6 +257,7 @@ const Slide = ({
                     type={slide.media_type!}
                     isBookmarked={isBookmarked}
                     color="black"
+                    showTooltip={true}
                   />
                 </div>
               </div>

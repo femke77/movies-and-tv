@@ -3,11 +3,12 @@ import Tooltip from '../ToolTip';
 import { useBookmarkStore } from '../../state/store';
 
 interface BookmarkBtnProps {
-  id: string;
+  id: string | number;
   type: string;
   isBookmarked: boolean;
   iconSize?: number;
   color?: string;
+  showTooltip?: boolean;
 }
 
 const BookmarkBtn = ({
@@ -15,22 +16,43 @@ const BookmarkBtn = ({
   type,
   isBookmarked: propIsBookmarked,
   iconSize = 40,
-  color='white'
+  color = 'white',
+  showTooltip = false,
 }: BookmarkBtnProps) => {
   const openModal = useBookmarkStore((state) => state.openModal);
 
+  const handleBookmarkToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openModal(id as string, type);
+  };
+
   return (
-    <Tooltip text={propIsBookmarked ? 'Remove bookmark' : 'Add bookmark'}>
-      <button
-        onClick={() => openModal(id, type)}
-      >
-        {propIsBookmarked ? (
-          <BookmarkCheck className='mx-auto' size={iconSize} color={color} />
-        ) : (
-          <Bookmark className='mx-auto' size={iconSize} color={color} />
-        )}
-      </button>
-    </Tooltip>
+    <>
+      {showTooltip ? (
+        <Tooltip text={propIsBookmarked ? 'Remove bookmark' : 'Add bookmark'}>
+          <button className="" onClick={handleBookmarkToggle}>
+            {propIsBookmarked ? (
+              <BookmarkCheck
+                className="mx-auto"
+                size={iconSize}
+                color={color}
+              />
+            ) : (
+              <Bookmark className="mx-auto" size={iconSize} color={color} />
+            )}
+          </button>
+        </Tooltip>
+      ) : (
+        <button className="" onClick={handleBookmarkToggle}>
+          {propIsBookmarked ? (
+            <BookmarkCheck className="mx-auto" size={iconSize} color={color} />
+          ) : (
+            <Bookmark className="mx-auto" size={iconSize} color={color} />
+          )}
+        </button>
+      )}
+    </>
   );
 };
 // Not sure if this is necessary yet. This will cause multiple subscriptions.
