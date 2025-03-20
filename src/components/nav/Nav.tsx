@@ -70,11 +70,11 @@ export default function Navigation({
 
   return (
     <div>
-      <nav className='bg-gray-900 h-16 relative z-40 overflow-hidden'>
+      <nav className='bg-gray-900 h-16 relative z-40 '>
         <Disclosure>
           {({ open }) => (
             <>
-              <div className='mx-auto mr-4 sm:px-2 lg:px-4 overflow-hidden '>
+              <div className='mx-auto mr-4 sm:px-2 lg:px-4  '>
                 <div className='relative flex h-16 items-center justify-between '>
                   <div className='absolute inset-y-0 -left-10 flex items-center md:hidden'>
                     <DisclosureButton className='relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>

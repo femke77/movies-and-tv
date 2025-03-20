@@ -20,7 +20,7 @@ const UserRating = ({
       <svg
         xmlns='http://www.w3.org/2000/svg'
         className={`${width} ${height}`}
-        viewBox='0 0 37 37'
+        viewBox='0 0 46 46'
       >
         <text
           x='50%'
@@ -33,7 +33,7 @@ const UserRating = ({
           textAnchor='middle'
           alignmentBaseline='middle'
         >
-          {rating === 10 ? rating : rating.toFixed(1)}
+          {rating.toFixed(1)}
         </text>
       </svg>
     </div>

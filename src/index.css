@@ -37,6 +37,7 @@ body,
   background-color: black;
   overflow-x: hidden;
 
+
 }
 
 
@@ -123,8 +124,12 @@ header {
   position: relative;
   z-index: 1000;
 
+
 }
 
+nav {
+    scrollbar-gutter: stable !important
+}
 .swiper {
   width: 100%;
   min-height: 100%;
