@@ -1,60 +1,68 @@
 import { useBookmarkStore } from "../state/store";
-import { useState, useEffect } from "react";
 import { ItemCard } from "../components/ItemCard";
-import { IItem } from "../interfaces/IItem";
+import { useQueries, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { TMDBClient } from "../utils/axiosConfig";
 
-function useBookmarksDetails() {
-  const bookmarks = useBookmarkStore((state) => state.bookmarks);
-  const [movieDetails, setMovieDetails] = useState<IItem[]>([]);
-  const [tvDetails, setTvDetails] = useState<IItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setIsLoading(true);
-    
-    const fetchItemDetails = async (type: string, id: string) => {
-      try {
-        const response = await TMDBClient.get(`/${type}/${id}`);  
-        if (response.status !== 200) throw new Error('Failed to fetch');
-        return response.data;
-      } catch (error) {
-        console.error(`Error fetching ${type} ${id}:`, error);
-        return null;
-      }
-    };
-
-    const movieBookmarks = bookmarks.filter(b => b.type === 'movie');
-    const tvBookmarks = bookmarks.filter(b => b.type === 'tv');
-    
-    Promise.all(movieBookmarks.map(movie => fetchItemDetails('movie', movie.id)))
-      .then(results => {
-        setMovieDetails(results.filter(Boolean));
-      });
-    
-    Promise.all(tvBookmarks.map(tv => fetchItemDetails('tv', tv.id)))
-      .then(results => {
-        setTvDetails(results.filter(Boolean));
-        setIsLoading(false);
-      });
-  }, [bookmarks]); 
-
-  return { movieDetails, tvDetails, isLoading };
-}
+const fetchItemDetails = async (type: string, id: string) => {
+  const response = await TMDBClient.get(`/${type}/${id}`);
+  if (!response) throw new Error(`Error fetching ${type} ${id}`);
+  return response.data;
+};
 
 const SavedItems = () => {
+  const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const queryClient = useQueryClient();
+  
 
-  const { movieDetails, tvDetails, isLoading } = useBookmarksDetails();
+  const movieBookmarks = bookmarks.filter(b => b.type === 'movie');
+  const tvBookmarks = bookmarks.filter(b => b.type === 'tv');
+  
 
-  if (isLoading) {
-    return <div className="mt-24 text-white text-center">Loading your bookmarks...</div>;
-  }
+  const movieQueries = useQueries({
+    queries: movieBookmarks.map(movie => ({
+      queryKey: ['movie', movie.id],
+      queryFn: () => fetchItemDetails('movie', movie.id),
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    }))
+  });
+  
+  const tvQueries = useQueries({
+    queries: tvBookmarks.map(tv => ({
+      queryKey: ['tv', tv.id],
+      queryFn: () => fetchItemDetails('tv', tv.id),
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    }))
+  });
+  
+  // Extract movie details and loading states
+  const movieDetails = movieQueries
+    .filter(query => query.isSuccess)
+    .map(query => query.data);
+    
+  const isLoadingMovies = movieQueries.some(query => query.isLoading);
+  
+  // Extract TV show details and loading states
+  const tvDetails = tvQueries
+    .filter(query => query.isSuccess)
+    .map(query => query.data);
+    
+  const isLoadingTv = tvQueries.some(query => query.isLoading);
+  
+  // Optional: invalidate queries when bookmarks change
+  useEffect(() => {
+    // This ensures removed bookmarks don't stay in cache
+    queryClient.invalidateQueries({ queryKey: ['movie'] });
+    queryClient.invalidateQueries({ queryKey: ['tv'] });
+  }, [bookmarks, queryClient]);
 
   return (
     <div className='mt-24 text-white'>
-      <h1 className="text-4xl text-center mx-3 mb-3">Your Bookmarked Movies & Shows</h1>
+      <h1 className="text-4xl text-center mx-3 mb-6">Your Bookmarked Movies & Shows</h1>
       
       <h2 className="text-3xl mr-3 mb-3">Saved Movies</h2>
+      {isLoadingMovies && <div className="text-center my-4">Loading movies...</div>}
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
         {movieDetails.map((item) => (
           <ItemCard 
@@ -67,6 +75,7 @@ const SavedItems = () => {
       </div>
       
       <h2 className="text-3xl mr-3 mb-3">Saved TV Shows</h2>
+      {isLoadingTv && <div className="text-center my-4">Loading TV shows...</div>}
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
         {tvDetails.map((item) => (
           <ItemCard 
