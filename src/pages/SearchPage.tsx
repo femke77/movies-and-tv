@@ -40,7 +40,7 @@ const Results = memo(() => {
               textSize='md'
               isBookmarked={bookmarks.some(
                 (a) => a.id === item.id && a.type === item.media_type,
-              )}  
+              )}
             />
           ))
         ) : (
