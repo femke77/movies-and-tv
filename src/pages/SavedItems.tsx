@@ -53,36 +53,36 @@ const SavedItems = () => {
   }, [bookmarks, queryClient]);
 
   return (
-    <div className="mt-24 text-white">
-      <h1 className="text-4xl text-center mx-3 mb-6">
+    <div className='mt-24 text-white'>
+      <h1 className='text-4xl text-center mx-3 mb-6'>
         Your Bookmarked Movies & Shows
       </h1>
 
-      <h2 className="text-2xl mr-3 mb-3">Saved Movies</h2>
+      <h2 className='text-2xl mr-3 mb-3'>Saved Movies</h2>
       {isLoadingMovies && (
-        <div className="text-center my-4">Loading movies...</div>
+        <div className='text-center my-4'>Loading movies...</div>
       )}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
         {movieDetails.map((item) => (
           <ItemCard
             key={item.id}
             item={item}
-            itemType="movie"
+            itemType='movie'
             isBookmarked={true}
           />
         ))}
       </div>
 
-      <h2 className="text-2xl mr-3 mb-3">Saved TV Shows</h2>
+      <h2 className='text-2xl mr-3 mb-3'>Saved TV Shows</h2>
       {isLoadingTv && (
-        <div className="text-center my-4">Loading TV shows...</div>
+        <div className='text-center my-4'>Loading TV shows...</div>
       )}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
         {tvDetails.map((item) => (
           <ItemCard
             key={item.id}
             item={item}
-            itemType="tv"
+            itemType='tv'
             isBookmarked={true}
           />
         ))}
