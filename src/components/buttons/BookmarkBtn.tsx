@@ -46,9 +46,9 @@ const BookmarkBtn = ({
       ) : (
         <button className='' onClick={handleBookmarkToggle}>
           {propIsBookmarked ? (
-            <BookmarkCheck className='mx-auto ' size={iconSize} color={color} />
+            <BookmarkCheck className='mx-auto ' size={iconSize} color={color} fill='rgba(10,10,10,0.5)'/>
           ) : (
-            <Bookmark className='mx-auto' size={iconSize} color={color} />
+            <Bookmark className='mx-auto' size={iconSize} color={color} fill='rgba(10,10,10,0.5)' />
           )}
         </button>
       )}
