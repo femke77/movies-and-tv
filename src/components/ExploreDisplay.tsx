@@ -45,7 +45,9 @@ const Explore = memo(
                 item={item}
                 showGenres={true}
                 showRating={true}
-                isBookmarked={bookmarks.some((a) => a.id === item.id && a.type === itemType)}
+                isBookmarked={bookmarks.some(
+                  (a) => a.id === item.id && a.type === itemType,
+                )}
               />
             ))
           ) : (

@@ -67,10 +67,10 @@ export const useBookmarkStore = create<BookmarkStore>()(
 //   bookmarks: { [key: string]: {_id: string, _type: string} };
 //   modalData: { id: string; type: string; isBookmarked: boolean } | null;
 //   showModal: boolean;
-//   toggleBookmark: (_id: string, _type: string) => void; 
+//   toggleBookmark: (_id: string, _type: string) => void;
 //   openModal: (_id: string, _type: string) => void;
 //   closeModal: () => void;
- 
+
 //   isBookmarked: (key: string) => boolean;
 // }
 
@@ -102,7 +102,6 @@ export const useBookmarkStore = create<BookmarkStore>()(
 //           return { bookmarks: updated };
 //         }),
 
-     
 //       isBookmarked: (id, type) =>
 //         get().bookmarks.some((b) => b.id === id && b.type === type),
 //     }),

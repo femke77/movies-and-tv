@@ -48,7 +48,10 @@ const SlideContainer = ({
               itemType={itemType}
               showRating={true}
               showGenres={false}
-              isBookmarked={bookmarks.some(bookmarks => bookmarks.id === item.id && bookmarks.type === itemType)} 
+              isBookmarked={bookmarks.some(
+                (bookmarks) =>
+                  bookmarks.id === item.id && bookmarks.type === itemType,
+              )}
             />
           </div>
         ))}

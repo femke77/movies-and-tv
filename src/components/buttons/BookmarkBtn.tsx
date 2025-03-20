@@ -31,24 +31,24 @@ const BookmarkBtn = ({
     <>
       {showTooltip ? (
         <Tooltip text={propIsBookmarked ? 'Remove bookmark' : 'Add bookmark'}>
-          <button className="" onClick={handleBookmarkToggle}>
+          <button className='' onClick={handleBookmarkToggle}>
             {propIsBookmarked ? (
               <BookmarkCheck
-                className="mx-auto"
+                className='mx-auto'
                 size={iconSize}
                 color={color}
               />
             ) : (
-              <Bookmark className="mx-auto" size={iconSize} color={color} />
+              <Bookmark className='mx-auto' size={iconSize} color={color} />
             )}
           </button>
         </Tooltip>
       ) : (
-        <button className="" onClick={handleBookmarkToggle}>
+        <button className='' onClick={handleBookmarkToggle}>
           {propIsBookmarked ? (
-            <BookmarkCheck className="mx-auto " size={iconSize} color={color} />
+            <BookmarkCheck className='mx-auto ' size={iconSize} color={color} />
           ) : (
-            <Bookmark className="mx-auto" size={iconSize} color={color} />
+            <Bookmark className='mx-auto' size={iconSize} color={color} />
           )}
         </button>
       )}
