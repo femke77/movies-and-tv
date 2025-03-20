@@ -141,7 +141,7 @@ const ItemCard = ({
                 id={item.id}
                 type={itemType}
                 isBookmarked={isBookmarked}
-                iconSize={30}
+                iconSize={35}
                 color="white"
               />
             </div>
