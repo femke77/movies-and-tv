@@ -30,10 +30,11 @@ export default function BookmarkModal() {
       as="div"
       className="relative z-100"
       onClose={closeModal}
+      aria-labelledby="modal-title" role="dialog" aria-modal="true"
     >
       <div className="fixed inset-0 bg-gray-900/75 flex items-center justify-center p-4">
         <DialogPanel className="w-full max-w-md bg-white/5 p-6 rounded-xl">
-          <DialogTitle as="h3" className="text-lg font-semibold text-white">
+          <DialogTitle id='modal-title' as="h3" className="text-lg font-semibold text-white">
             {isBookmarked ? 'Remove Bookmark?' : 'Add Bookmark?'}
           </DialogTitle>
           <p className="mt-2 text-white/50">{`ID: ${id} | Type: ${type}`}</p>

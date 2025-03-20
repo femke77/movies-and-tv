@@ -10,12 +10,13 @@ interface BookmarkBtnProps {
   }
   
   const BookmarkBtn = ({ id, type, isBookmarked, iconSize = 40 }: BookmarkBtnProps) => {
+    //subscribe to zustand store if checking here and not receiving `isBookmarked` from parent
     const { openModal, isBookmarked: storeIsBookmarked } = useBookmarkStore((state) => ({
       openModal: state.openModal,
       isBookmarked: state.isBookmarked(id, type),
     }));
   
-    //  Use `isBookmarked` from props if available, otherwise fallback to Zustand
+    //  Use `isBookmarked` from props if available (this is for the infinite query pages)
     const checkedBookmarkStatus = isBookmarked ?? storeIsBookmarked;
   
     return (
