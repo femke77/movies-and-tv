@@ -1,7 +1,7 @@
 import { TMDBClient } from '../utils/axiosConfig';
 import { useQuery } from '@tanstack/react-query';
 
-const fetchItemDetail = async (type: string, id: string) => {
+export const fetchItemDetail = async (type: string, id: string) => {
   const { data } = await TMDBClient.get(`/${type}/${id}`);
   return data;
 };
