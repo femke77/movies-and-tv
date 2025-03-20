@@ -5,8 +5,8 @@ import genresData from '../../utils/data/genres.json';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { useState, useEffect, lazy } from 'react';
-// import BookmarkBtn from '../buttons/BookmarkBtn';
-import { useBookmarkStore } from '../../state/store';
+import BookmarkBtn from '../buttons/BookmarkBtn';
+
 const UserRating = lazy(() => import('../UserRating'));
 const WatchButton = lazy(() => import('../buttons/WatchButtonSmall'));
 
@@ -27,15 +27,15 @@ const Slide = ({
   isVisible,
   currentIndex,
   movieList,
-  // isBookmarked,
-  // onBookmarkClick,
+  isBookmarked,
+
 }: {
   slide: IItem;
   isVisible: boolean;
   currentIndex: number;
   movieList: IItem[];
-  // isBookmarked: boolean;
-  // onBookmarkClick: (_id: string, _type: string, _isBookmarked: boolean) => void;
+  isBookmarked: boolean;
+ 
 }) => {
   const [highResBgLoaded, setHighResBgLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false);
@@ -253,12 +253,12 @@ const Slide = ({
               </div>
               <div className='mr-6'>
                 {/* Bookmark */}
-                {/* <BookmarkBtn
+                <BookmarkBtn
                   id={slide.id! as string}
                   type={slide.media_type!}
                   isBookmarked={isBookmarked}
-                  onBookmarkClick={onBookmarkClick}
-                /> */}
+    
+                />
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
 import SlideSkeleton from '../loadingSkeletons/SlideSkeleton';
-
+import { useBookmarkStore } from '../../state/store';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -13,55 +13,8 @@ const Slide = lazy(() => import('./Slide'));
 
 export default function SwiperElement() {
   const { data: items = [] } = useTrendingAll();
-  // const [modalData, setModalData] = useState({
-  //   id: '',
-  //   type: '',
-  //   isBookmarked: false,
-  // });
-  // const [bookmarks, setBookmarks] = useState<{ id: string; type: string }[]>(
-  //   [],
-  // );
-
-  // useEffect(() => {
-  //   const loadBookmarks = () => {
-  //     const bookmarksString = localStorage.getItem('bookmarks');
-  //     if (bookmarksString) {
-  //       setBookmarks(JSON.parse(bookmarksString));
-  //     }
-  //   };
-
-  //   loadBookmarks();
-  // }, []);
-
-  // const handleBookmarkClick = (
-  //   id: string,
-  //   type: string,
-  //   isBookmarked: boolean,
-  // ) => {
-  //   setModalData({ id, type, isBookmarked });
-  //   (
-  //     document.getElementById('my_modal_3') as HTMLDialogElement | null
-  //   )?.showModal();
-  // };
-
-  // const handleBookmarkChange = (
-  //   id: string,
-  //   type: string,
-  //   isBookmarked: boolean,
-  // ) => {
-  //   if (isBookmarked) {
-  //     setBookmarks((prev) => [...prev, { id, type }]);
-  //   } else {
-  //     setBookmarks((prev) =>
-  //       prev.filter((b) => !(b.id === id && b.type === type)),
-  //     );
-  //   }
-  // };
-
-  // const isItemBookmarked = (id: string, type: string) => {
-  //   return bookmarks.some((b) => b.id === id && b.type === type);
-  // };
-
+  // subscribe to bookmarks array in zustand store for reactivity
+  const bookmarks = useBookmarkStore((state) => state.bookmarks);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const progressCircle = useRef<SVGSVGElement>(null);
@@ -105,7 +58,7 @@ export default function SwiperElement() {
                   isVisible={index === currentIndex}
                   currentIndex={index}
                   movieList={items}
-                 
+                  isBookmarked={bookmarks.some(b => b.id === item.id && b.type === item.media_type)}               
                 />
               </Suspense>
             </SwiperSlide>

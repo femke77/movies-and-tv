@@ -17,7 +17,7 @@ export const useBookmarkStore = create<BookmarkStore>()(
       (set, get) => ({
         bookmarks: [],
         modalData: null, // Store the item being bookmarked
-        showModal: false, // Controls modal visibility
+        showModal: false, 
   
         openModal: (id: string, type: string) => {
           set({
@@ -34,10 +34,6 @@ export const useBookmarkStore = create<BookmarkStore>()(
         addBookmark: (id, type) =>
           set((state) => ({
             bookmarks: [...state.bookmarks, { id, type }],
-            modalData:
-              state.modalData?.id === id
-                ? { ...state.modalData, isBookmarked: true }
-                : state.modalData,
           })),
   
         removeBookmark: (id, type) =>
@@ -45,10 +41,6 @@ export const useBookmarkStore = create<BookmarkStore>()(
             bookmarks: state.bookmarks.filter(
               (b) => !(b.id === id && b.type === type)
             ),
-            modalData:
-              state.modalData?.id === id
-                ? { ...state.modalData, isBookmarked: false }
-                : state.modalData,
           })),
   
         isBookmarked: (id, type) =>
