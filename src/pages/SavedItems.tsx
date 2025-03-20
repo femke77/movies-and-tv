@@ -60,7 +60,7 @@ const SavedItems = () => {
 
       <h2 className='text-2xl mr-3 mb-3'>Saved Movies</h2>
       {isLoadingMovies && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
           {movieSkeletons.map((_, index) => (
             <ItemCardSkeleton key={`movie-skeleton-${index}`} />
           ))}
@@ -80,7 +80,7 @@ const SavedItems = () => {
 
       <h2 className='text-2xl mr-3 mb-3'>Saved TV Shows</h2>
       {isLoadingTv && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
           {tvSkeletons.map((_, index) => (
             <ItemCardSkeleton key={`movie-skeleton-${index}`} />
           ))}
