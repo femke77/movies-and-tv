@@ -55,7 +55,7 @@ const BookmarkBtn = ({
     </>
   );
 };
-// Not sure if this is necessary yet. This will cause multiple subscriptions.
+
 // Subscribe to bookmarks array for reactivity
 
 // const bookmarks = useBookmarkStore(state => state.bookmarks);

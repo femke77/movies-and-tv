@@ -7,6 +7,7 @@ import WatchButton from '../components/buttons/WatchButton';
 import { getStrokeColor } from '../utils/helpers';
 import { CastList } from '../components/CastList';
 import dayjs from 'dayjs';
+import BookmarkBtn from '../components/buttons/BookmarkBtn';
 
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -128,7 +129,7 @@ const ItemDetail = () => {
                   {item.rating}
                 </span>
               </p>
-              <div className='flex items-center mb-4 md:mb-0'>
+              <div className='[@media(max-width:380px)]:justify-center flex flex-wrap items-center justify-between space-x-5 [@media(max-width:372px)]:mb-0 mb-4 md:mb-0'>
                 <UserRating
                   rating={item.vote_average}
                   width='w-20'
@@ -136,8 +137,12 @@ const ItemDetail = () => {
                   color={strokeColor}
                   fill='rgba(255,255,255,0.9)'
                 />
-                <div className='mt-4 md:mt-2 xs:pl-4 h-20 ml-2 md:ml-0 sm:pl-8 sm:pt-1.5 '>
+                <div className=''>
                   <WatchButton itemType={item_type!} id={item.id} />
+                </div>
+                <div className=''>
+                  <div className='[@media(max-width:371px)]:mt-0 mt-[19px]'>
+                  <BookmarkBtn /></div>
                 </div>
               </div>
 
