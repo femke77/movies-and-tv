@@ -203,10 +203,11 @@ const WatchTV = () => {
                   title={
                     <div className='flex items-center'>
                       <Settings size={20} className='mr-4' color='#ffffff' />
+                      <div className='flex justify-between w-full'>
                       <p>Change Server</p>
-                      <p className='text-white/70 text-sm ml-14 truncate text-ellipsis'>
-                        Active: {selectedServer}
-                      </p>
+                      <p className='text-white/70 text-sm ml-9 truncate text-ellipsis'>
+                        {selectedServer}
+                      </p></div>
                     </div>
                   }
                   selectedOption={selectedServer}
