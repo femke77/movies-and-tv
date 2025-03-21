@@ -18,6 +18,7 @@ const SavedItems = () => {
   const movieBookmarks = bookmarks.filter((b) => b.type === 'movie');
   const tvBookmarks = bookmarks.filter((b) => b.type === 'tv');
 
+  // inline combine breaks referential integrity so useCallback will memoize the results
   const movieQueries = useQueries({
     queries: movieBookmarks.map((movie) => ({
       queryKey: ['movie', movie.id],
@@ -66,7 +67,7 @@ const SavedItems = () => {
 
   return (
     <div className="mt-24 text-white">
-      <h1 className="text-3xl text-center mx-3 mb-6">Your Saved Movies & TV</h1>
+      <h1 className="text-3xl text-center mx-3 mb-6">Watchlist</h1>
 
       <h2 className="text-2xl mx-3 mb-3">Movies</h2>
       {movieBookmarks.length === 0 && (
@@ -93,8 +94,10 @@ const SavedItems = () => {
             />
           ))}
       </div>
- <hr className="border-white/70 my-6 mx-9" />
-      <h2 className="text-2xl mx-3 mb-3">TV</h2>
+
+      <hr className="border-white/50 my-6 mx-9" />
+      
+      <h2 className="text-2xl mx-3 mb-3">TV Shows</h2>
       {tvBookmarks.length === 0 && (
         <div className="text-center text-white text-2xl my-10">
           No saved TV Shows yet!
