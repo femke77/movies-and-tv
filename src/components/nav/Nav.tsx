@@ -28,7 +28,7 @@ const tvNav = [
 ];
 
 const meNav = [
-  { title: 'Saved Movies & Tv', url: '/account/saved' },
+  { title: 'My Watchlist', url: '/account/saved' },
 ]
 
 export default function Navigation({
