@@ -37,8 +37,8 @@ export default function BookmarkModal() {
             className='text-lg font-semibold text-white'
           >
             {isBookmarked
-              ? 'Remove this from your bookmarks?'
-              : 'Add this to your bookmarks?'}
+              ? 'Remove this from your watchlist?'
+              : 'Add this to your watchlist?'}
           </DialogTitle>
           {/* <p className='mt-2 text-white/50'>{`ID: ${id} | Type: ${type}`}</p> */}
           <div className='mt-4 flex gap-4'>

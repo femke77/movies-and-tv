@@ -16,15 +16,4 @@ export const TMDBClient = axios.create({
   },
 });
 
-export const vidSrcClient = axios.create({
-  baseURL: 'https://',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
 
-// TODO - add axios interceptors
-// TODO - update env name in netlify
-
-// TODO - axios interceptors
-// TODO - update env name in netlify
