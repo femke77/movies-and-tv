@@ -27,9 +27,7 @@ const tvNav = [
   { title: 'All TV', url: '/explore/all-tv' },
 ];
 
-const meNav = [
-  { title: 'My Watchlist', url: '/account/saved' },
-]
+const meNav = [{ title: 'My Watchlist', url: '/account/saved' }];
 
 export default function Navigation({
   setSearchQuery,
@@ -186,7 +184,7 @@ export default function Navigation({
                     </div>
                     <div className='text-white'>
                       <div className='flex justify-start items-center p-4 '>
-                      <CircleUser className='text-white' />
+                        <CircleUser className='text-white' />
                         <h2 className='ml-3 text-xl font-bold bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text'>
                           My BingeBox
                         </h2>
