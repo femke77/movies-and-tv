@@ -66,58 +66,58 @@ const SavedItems = () => {
   }, [bookmarks, queryClient]);
 
   return (
-    <div className="mt-24 text-white">
-      <h1 className="text-3xl text-center mx-3 mb-6">Watchlist</h1>
+    <div className='mt-24 text-white'>
+      <h1 className='text-3xl text-center mx-3 mb-6'>Watchlist</h1>
 
-      <h2 className="text-2xl mx-3 mb-3">Movies</h2>
+      <h2 className='text-2xl mx-3 mb-3'>Movies</h2>
       {movieBookmarks.length === 0 && (
-        <div className="text-center text-white text-2xl my-10">
+        <div className='text-center text-white text-2xl my-10'>
           No saved movies yet!
         </div>
       )}
       {isLoadingMovies && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
           {movieSkeletons.map((_, index) => (
             <ItemCardSkeleton key={`movie-skeleton-${index}`} />
           ))}
         </div>
       )}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
         {movieDetails
           .filter((item): item is IItem => item !== undefined)
           .map((item) => (
             <ItemCard
               key={item.id}
               item={item}
-              itemType="movie"
+              itemType='movie'
               isBookmarked={true}
             />
           ))}
       </div>
 
-      <hr className="border-white/50 my-6 mx-9" />
-      
-      <h2 className="text-2xl mx-3 mb-3">TV Shows</h2>
+      <hr className='border-white/50 my-6 mx-9' />
+
+      <h2 className='text-2xl mx-3 mb-3'>TV Shows</h2>
       {tvBookmarks.length === 0 && (
-        <div className="text-center text-white text-2xl my-10">
+        <div className='text-center text-white text-2xl my-10'>
           No saved TV Shows yet!
         </div>
       )}
       {isLoadingTv && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
           {tvSkeletons.map((_, index) => (
             <ItemCardSkeleton key={`movie-skeleton-${index}`} />
           ))}
         </div>
       )}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
         {tvDetails
           .filter((item): item is IItem => item !== undefined)
           .map((item) => (
             <ItemCard
               key={item.id}
               item={item}
-              itemType="tv"
+              itemType='tv'
               isBookmarked={true}
             />
           ))}
