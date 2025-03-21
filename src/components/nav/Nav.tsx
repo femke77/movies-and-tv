@@ -11,7 +11,7 @@ import NavTVShow from './NavTVShow';
 import NavMe from './NavMe';
 // import NavDiscover from './NavComponents/NavDiscover';
 import Search from '../HeaderSearchBar';
-import { Clapperboard, Tv } from 'lucide-react';
+import { Clapperboard, Tv, CircleUser } from 'lucide-react';
 
 const moviesNav = [
   { title: 'Trending Movies', url: '/explore/movies' },
@@ -26,6 +26,8 @@ const tvNav = [
   { title: 'Popular TV', url: '/explore/popular-tv' },
   { title: 'All TV', url: '/explore/all-tv' },
 ];
+
+const meNav = [{ title: 'My Watchlist', url: '/account/saved' }];
 
 export default function Navigation({
   setSearchQuery,
@@ -169,6 +171,26 @@ export default function Navigation({
                       </div>
                       <div className='flex flex-col'>
                         {tvNav.map((item, index) => (
+                          <DisclosureButton
+                            className='transition-all duration-200 ease-in-out bg-white/15 w-50 p-2  rounded-lg text-sm text-white/90 text-center cursor-pointer m-2 hover:transform hover:translate-0.5 hover:text-white hover:bg-[#1B1B1B]'
+                            as={NavLink}
+                            key={index}
+                            to={item.url}
+                          >
+                            {item.title}
+                          </DisclosureButton>
+                        ))}
+                      </div>
+                    </div>
+                    <div className='text-white'>
+                      <div className='flex justify-start items-center p-4 '>
+                        <CircleUser className='text-white' />
+                        <h2 className='ml-3 text-xl font-bold bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text'>
+                          My BingeBox
+                        </h2>
+                      </div>
+                      <div className='flex flex-col'>
+                        {meNav.map((item, index) => (
                           <DisclosureButton
                             className='transition-all duration-200 ease-in-out bg-white/15 w-50 p-2  rounded-lg text-sm text-white/90 text-center cursor-pointer m-2 hover:transform hover:translate-0.5 hover:text-white hover:bg-[#1B1B1B]'
                             as={NavLink}
