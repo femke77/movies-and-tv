@@ -1,20 +1,24 @@
 import { IEpisode } from '../interfaces/IEpisode';
 import dayjs from 'dayjs';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
 const Episode = ({
   episode,
+  selectedSeason,
+  selectedEpisode,
   setSelectedSeason,
   setSelectedEpisode,
 }: {
   episode: IEpisode;
+  selectedSeason: number;
+  selectedEpisode: number;
   setSelectedEpisode: (_episode: number) => void;
   setSelectedSeason: (_season: number) => void;
 }) => {
-  const { season_number, episode_number } = useParams<{
-    season_number: string;
-    episode_number: string;
-  }>();
+  // const { season_number, episode_number } = useParams<{
+  //   season_number: string;
+  //   episode_number: string;
+  // }>();
 
   const handleEpisodeClick = (value: string) => {
     const [season_num, episode_num] = value.split('-');
@@ -27,8 +31,8 @@ const Episode = ({
       value={`${episode?.season_number}-${episode?.episode_number}`}
       onClick={(e) => handleEpisodeClick(e.currentTarget.value)}
       className={`flex flex-wrap sm:flex-nowrap text-[12px]  rounded-lg p-2 w-full border border-[#303030] mb-2 ${
-        episode?.episode_number === parseInt(episode_number!) &&
-        episode?.season_number === parseInt(season_number!)
+        episode?.episode_number === selectedEpisode &&
+        episode?.season_number === selectedSeason
           ? 'bg-[#303030]'
           : ''
       }`}

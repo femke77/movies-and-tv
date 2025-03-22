@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   useWatchDetails,
   useTVSeasonEpisodes,
@@ -46,10 +46,10 @@ const WatchTV = () => {
   });
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
   const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
-  const [serverURL, setServerURL] = useState('');
+
   const prevServerRef = useRef(selectedServer);
   
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const { data: series } = useWatchDetails('tv', series_id ?? '');
   const { data: episodes } = useTVSeasonEpisodes(
@@ -76,14 +76,13 @@ const WatchTV = () => {
       String(selectedEpisode),
     );
     
-    navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`, {replace: true});
-    console.log("History Length:", window.history.length);
+    // navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`, );
+    // console.log("History Length:", window.history.length);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [series_id, selectedSeason, selectedEpisode]);
 
 
   useEffect(() => {
-    // Get the URL based on current selections
     let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
@@ -112,7 +111,7 @@ const WatchTV = () => {
       }
 
       setTimeout(() => {
-        setServerURL(newURL);
+        iframeRef.current?.contentWindow?.location.replace(newURL);
         timeoutRef.current = setTimeout(() => {
           setIsLoading(false);
         }, 2000);
@@ -120,7 +119,7 @@ const WatchTV = () => {
 
       sessionStorage.setItem('lastSelectedServer', selectedServer);
     } else {
-      setServerURL(newURL);
+      iframeRef.current?.contentWindow?.location.replace(newURL);
     }
 
     return () => {
@@ -165,7 +164,7 @@ const WatchTV = () => {
                 // sandbox="allow-scripts allow-same-origin"
                 // src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
                 allow='encrypted-media'
-                src={serverURL || 'about:blank'}
+                src={'about:blank'}
                 allowFullScreen
               ></iframe>
               {isLoading && (
@@ -272,6 +271,8 @@ const WatchTV = () => {
               {episodes && (
                 <EpisodeList
                   episodes={episodes?.episodes}
+                  selectedSeason={selectedSeason}
+                  selectedEpisode={selectedEpisode}
                   setSelectedEpisode={setSelectedEpisode}
                   setSelectedSeason={setSelectedSeason}
                 />

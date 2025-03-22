@@ -151,7 +151,7 @@ const router = createBrowserRouter([
             element: <WatchMovie />,
           },
           {
-            path: 'tv/:series_id/:season_number/:episode_number',
+            path: 'tv/:series_id',
             element: <WatchTV />,
           },
           {

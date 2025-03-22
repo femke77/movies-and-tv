@@ -3,10 +3,14 @@ import Episode from './Episode';
 
 const EpisodeList = ({
   episodes,
+  selectedSeason,
+  selectedEpisode,
   setSelectedSeason,
   setSelectedEpisode,
 }: {
   episodes: IEpisode[];
+  selectedSeason: number;
+  selectedEpisode: number;
   setSelectedEpisode: (_episode: number) => void;
   setSelectedSeason: (_season: number) => void;
 }) => {
@@ -17,8 +21,11 @@ const EpisodeList = ({
           <Episode
             key={episode.id}
             episode={episode}
+            selectedSeason={selectedSeason}
+            selectedEpisode={selectedEpisode}
             setSelectedEpisode={setSelectedEpisode}
             setSelectedSeason={setSelectedSeason}
+
           />
         ))}
     </div>
