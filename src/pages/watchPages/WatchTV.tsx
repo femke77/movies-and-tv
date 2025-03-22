@@ -10,7 +10,7 @@ import WatchPrevBtn from '../../components/buttons/WatchPrevBtn';
 import WatchNextBtn from '../../components/buttons/WatchNextBtn';
 import ListBoxComp from '../../components/ListBox';
 import serverData from '../../utils/data/servers.json';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/buttons/SeasonNavigation';
 import { isIphoneSafari } from '../../utils/helpers';
@@ -22,8 +22,10 @@ import EpisodeList from '../../components/EpisodeList';
 
 const WatchTV = () => {
   const { servers } = serverData;
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { series_id } = useParams<{ series_id: string }>();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
     return lastSelectedServer || servers[0].value;
@@ -64,7 +66,6 @@ const WatchTV = () => {
   }, [selectedSeason, episodes]);
 
   useEffect(() => {
-    if (selectedSeason === 1 && selectedEpisode === 1) return;
     sessionStorage.setItem(
       `${series_id}-lastSelectedSeason`,
       String(selectedSeason),
@@ -75,28 +76,56 @@ const WatchTV = () => {
     );
     navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedSeason, selectedEpisode]);
+  }, [series_id, selectedSeason, selectedEpisode]);
+
+  const prevServerRef = useRef(selectedServer);
 
   useEffect(() => {
+    // Get the URL based on current selections
+    let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
-        setServerURL(
-          `https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`,
-        );
+        newURL = `https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
         break;
       case 'videasy.net':
-        setServerURL(
-          `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`,
-        );
+        newURL = `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
       case 'vidlink.pro':
-        setServerURL(
-          `https://vidlink.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`,
-        );
+        newURL = `https://vidlink.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
     }
 
-    sessionStorage.setItem('lastSelectedServer', selectedServer);
+    const serverChanged = prevServerRef.current !== selectedServer;
+    prevServerRef.current = selectedServer;
+
+    if (serverChanged) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      setIsLoading(true);
+
+      if (iframeRef.current) {
+        iframeRef.current.src = 'about:blank';
+      }
+
+      setTimeout(() => {
+        setServerURL(newURL);
+        timeoutRef.current = setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      }, 300);
+
+      sessionStorage.setItem('lastSelectedServer', selectedServer);
+    } else {
+      setServerURL(newURL);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [selectedServer, series_id, selectedSeason, selectedEpisode]);
 
   return (
@@ -126,16 +155,25 @@ const WatchTV = () => {
               className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'
             >
               <iframe
+                ref={iframeRef}
                 id='player_iframe'
-                className='absolute top-0 left-0 w-full h-full '
+                className='absolute top-0 left-0 w-full h-full bg-black'
                 width='100%'
                 height='100%'
                 // sandbox="allow-scripts allow-same-origin"
                 // src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
-
-                src={serverURL}
+                allow='encrypted-media'
+                src={serverURL || 'about:blank'}
                 allowFullScreen
               ></iframe>
+              {isLoading && (
+                <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10'>
+                  <div className='text-white text-center'>
+                    <div className='inline-block w-8 h-8 border-4 border-t-blue-500 border-r-transparent border-b-blue-500 border-l-transparent rounded-full animate-spin mb-2'></div>
+                    <p>Loading {selectedServer}... </p>
+                  </div>
+                </div>
+              )}
             </div>
             {series && (
               <div className='rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]'>

@@ -1,6 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import Tooltip from '../ToolTip';
-// TODO refactor to just have one watch page
 
 const WatchButton = ({
   itemType,
@@ -23,21 +21,19 @@ const WatchButton = ({
   };
 
   return (
-    <Tooltip text='Watch Now'>
-      <button
-        onClick={handleClick}
-        aria-describedby='tooltip-id'
-        className='rounded-[50%]  cursor-pointer w-[64px] h-[64px] flex items-center  bg-white text-black  hover:bg-gray-200'
-      >
-        <img
-          src='/play.svg'
-          alt='black play icon'
-          height='35px'
-          width='35px'
-          className='mx-auto'
-        />
-      </button>
-    </Tooltip>
+    <button
+      onClick={handleClick}
+      aria-describedby='tooltip-id'
+      className='rounded-[50%]  cursor-pointer w-[64px] h-[64px] flex items-center  bg-white text-black  hover:bg-gray-200'
+    >
+      <img
+        src='/play.svg'
+        alt='black play icon'
+        height='35px'
+        width='35px'
+        className='mx-auto'
+      />
+    </button>
   );
 };
 

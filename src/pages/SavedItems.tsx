@@ -15,6 +15,8 @@ const SavedItems = () => {
   const queryClient = useQueryClient();
 
   // TODO separate into two storage components to avoid this - do during array to object refactor.
+  // OR
+  // show them all and then just add a filter to the top of the page to filter by type
   const movieBookmarks = bookmarks.filter((b) => b.type === 'movie');
   const tvBookmarks = bookmarks.filter((b) => b.type === 'tv');
 
