@@ -10,7 +10,7 @@ import WatchPrevBtn from '../../components/buttons/WatchPrevBtn';
 import WatchNextBtn from '../../components/buttons/WatchNextBtn';
 import ListBoxComp from '../../components/ListBox';
 import serverData from '../../utils/data/servers.json';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/buttons/SeasonNavigation';
 import { isIphoneSafari } from '../../utils/helpers';
@@ -22,22 +22,24 @@ import EpisodeList from '../../components/EpisodeList';
 
 const WatchTV = () => {
   const { servers } = serverData;
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { series_id } = useParams<{ series_id: string }>();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
     return lastSelectedServer || servers[0].value;
   });
   const [selectedSeason, setSelectedSeason] = useState(() => {
     const lastSelectedSeason = sessionStorage.getItem(
-      `${series_id}-lastSelectedSeason`,
+      `${series_id}-lastSelectedSeason`
     );
     if (lastSelectedSeason) return Number(lastSelectedSeason);
     return 1;
   });
   const [selectedEpisode, setSelectedEpisode] = useState(() => {
     const lastSelectedEpisode = sessionStorage.getItem(
-      `${series_id}-lastSelectedEpisode`,
+      `${series_id}-lastSelectedEpisode`
     );
     if (lastSelectedEpisode) return Number(lastSelectedEpisode);
     return 1;
@@ -45,13 +47,14 @@ const WatchTV = () => {
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
   const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
   const [serverURL, setServerURL] = useState('');
+  console.log('serverURL', serverURL);
 
   const navigate = useNavigate();
 
   const { data: series } = useWatchDetails('tv', series_id ?? '');
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
-    String(selectedSeason),
+    String(selectedSeason)
   );
 
   useEffect(() => {
@@ -64,52 +67,79 @@ const WatchTV = () => {
   }, [selectedSeason, episodes]);
 
   useEffect(() => {
-    if (selectedSeason === 1 && selectedEpisode === 1) return;
     sessionStorage.setItem(
       `${series_id}-lastSelectedSeason`,
-      String(selectedSeason),
+      String(selectedSeason)
     );
     sessionStorage.setItem(
       `${series_id}-lastSelectedEpisode`,
-      String(selectedEpisode),
+      String(selectedEpisode)
     );
     navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedSeason, selectedEpisode]);
+  }, [series_id, selectedSeason, selectedEpisode]);
+
+  const prevServerRef = useRef(selectedServer);
 
   useEffect(() => {
+    // Get the URL based on current selections
+    let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
-        setServerURL(
-          `https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`,
-        );
+        newURL = `https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
         break;
       case 'videasy.net':
-        setServerURL(
-          `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`,
-        );
+        newURL = `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
       case 'vidlink.pro':
-        setServerURL(
-          `https://vidlink.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`,
-        );
+        newURL = `https://vidlink.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
     }
 
-    sessionStorage.setItem('lastSelectedServer', selectedServer);
+    const serverChanged = prevServerRef.current !== selectedServer;
+    prevServerRef.current = selectedServer;
+
+    if (serverChanged) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      setIsLoading(true);
+
+      if (iframeRef.current) {
+        iframeRef.current.src = 'about:blank';
+      }
+
+      setTimeout(() => {
+        setServerURL(newURL);
+        timeoutRef.current = setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      }, 300);
+
+      sessionStorage.setItem('lastSelectedServer', selectedServer);
+    } else {
+      setServerURL(newURL);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [selectedServer, series_id, selectedSeason, selectedEpisode]);
 
   return (
-    <div className='min-h-screen pt-[60px]'>
-      <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
-        <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
-          <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
+    <div className="min-h-screen pt-[60px]">
+      <div className="flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto">
+        <div className="primary flex-1 w-full lg:max-w-[calc(100%-424px)]">
+          <div className="flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]">
             <div>
               <BackButton url={`/tv/${series_id}`} />
             </div>
             {series && (
               <p
-                className='font-bold truncate text-ellipsis mx-6'
+                className="font-bold truncate text-ellipsis mx-6"
                 title={series.original_name}
               >
                 {series.original_name || ''}
@@ -117,46 +147,55 @@ const WatchTV = () => {
             )}
 
             <div className={`${isIphoneSafari() ? 'invisible' : ''}`}>
-              <FullscreenBtn elementId='video-player' />
+              <FullscreenBtn elementId="video-player" />
             </div>
           </div>
           <main>
             <div
-              id='video-player'
-              className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'
+              id="video-player"
+              className="relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]"
             >
               <iframe
-                id='player_iframe'
-                className='absolute top-0 left-0 w-full h-full '
-                width='100%'
-                height='100%'
+                ref={iframeRef}
+                id="player_iframe"
+                className="absolute top-0 left-0 w-full h-full bg-black"
+                width="100%"
+                height="100%"
                 // sandbox="allow-scripts allow-same-origin"
                 // src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
-
-                src={serverURL}
+                allow="encrypted-media"
+                src={serverURL || 'about:blank'}
                 allowFullScreen
               ></iframe>
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10">
+                  <div className="text-white text-center">
+                    <div className="inline-block w-8 h-8 border-4 border-t-blue-500 border-r-transparent border-b-blue-500 border-l-transparent rounded-full animate-spin mb-2"></div>
+                    <p>Loading {selectedServer}... </p>
+                  </div>
+                </div>
+              )}
             </div>
             {series && (
-              <div className='rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]'>
+              <div className="rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]">
                 {/* player controls (for tv) */}
-                <div className='flex flex-col gap-2 w-full py-2'>
-                  <div className='flex justify-center  sm:justify-between items-center flex-wrap'>
-                    <div className='text-[#fff9] flex  mx-5 sm:mx-0'>
-                      <div className='flex flex-col sm:flex-row'>
-                        <span className='text-white ml-3'>
+                <div className="flex flex-col gap-2 w-full py-2">
+                  <div className="flex justify-center  sm:justify-between items-center flex-wrap">
+                    <div className="text-[#fff9] flex  mx-5 sm:mx-0">
+                      <div className="flex flex-col sm:flex-row">
+                        <span className="text-white ml-3">
                           Season {selectedSeason} &#x2022; Episode{' '}
                           {selectedEpisode}
                         </span>
                         {episodes && (
-                          <span className='ml-3 text-center'>
+                          <span className="ml-3 text-center">
                             {episodes?.episodes?.[selectedEpisode - 1]?.name}
                           </span>
                         )}
                       </div>
                     </div>
                     {episodes && (
-                      <div className='flex gap-2 my-3 mx-5 sm:mx-0'>
+                      <div className="flex gap-2 my-3 mx-5 sm:mx-0">
                         <WatchPrevBtn
                           selectedEpisode={selectedEpisode}
                           setSelectedEpisode={setSelectedEpisode}
@@ -175,12 +214,12 @@ const WatchTV = () => {
                       </div>
                     )}
                   </div>
-                  <hr className='h-0.5 w-full bg-gray-800/30 text-white' />
+                  <hr className="h-0.5 w-full bg-gray-800/30 text-white" />
                 </div>
               </div>
             )}
 
-            <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]'>
+            <div className="rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]">
               {/* description */}
               {series && (
                 <WatchDescription
@@ -194,18 +233,18 @@ const WatchTV = () => {
           </main>
         </div>
         {/* Sidebar */}
-        <div className=' lg:w-[400px] lg:flex-shrink-0'>
-          <div className='sidebar bg-[#1f1f1f] max-h-[900px] flex flex-col  rounded-lg'>
-            <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
-              <div className='server-selection mb-[16px]'>
+        <div className=" lg:w-[400px] lg:flex-shrink-0">
+          <div className="sidebar bg-[#1f1f1f] max-h-[900px] flex flex-col  rounded-lg">
+            <div className="sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]">
+              <div className="server-selection mb-[16px]">
                 {/* server selection */}
                 <ListBoxComp
                   title={
-                    <div className='flex items-center'>
-                      <Settings size={20} className='mr-4' color='#ffffff' />
-                      <div className='flex justify-between w-full'>
+                    <div className="flex items-center">
+                      <Settings size={20} className="mr-4" color="#ffffff" />
+                      <div className="flex justify-between w-full">
                         <p>Change Server</p>
-                        <p className='text-white/70 text-sm ml-9 truncate text-ellipsis'>
+                        <p className="text-white/70 text-sm ml-9 truncate text-ellipsis">
                           {selectedServer}
                         </p>
                       </div>
@@ -216,7 +255,7 @@ const WatchTV = () => {
                   availableOptions={servers}
                 />
               </div>
-              <div className='season-nav mb-[16px]'>
+              <div className="season-nav mb-[16px]">
                 {/* season nav here */}
                 <SeasonNavigation
                   selectedSeason={selectedSeason}
@@ -226,7 +265,7 @@ const WatchTV = () => {
                 />
               </div>
             </div>
-            <div className='episode-list'>
+            <div className="episode-list">
               {/* episode list here */}
               {episodes && (
                 <EpisodeList

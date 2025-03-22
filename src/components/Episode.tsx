@@ -15,7 +15,7 @@ const Episode = ({
     season_number: string;
     episode_number: string;
   }>();
-
+ 
   const handleEpisodeClick = (value: string) => {
     const [season_num, episode_num] = value.split('-');
     setSelectedEpisode(parseInt(episode_num));

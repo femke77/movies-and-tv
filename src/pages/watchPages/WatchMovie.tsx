@@ -61,7 +61,7 @@ const WatchMovie = () => {
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
               <iframe
                 id='iframe'
-                className='absolute top-0 left-0 w-full h-full '
+                className='absolute top-0 left-0 w-full h-full bg-black'
                 width='100%'
                 height='100%'
                 src={serverURL}

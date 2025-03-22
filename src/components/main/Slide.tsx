@@ -12,15 +12,15 @@ const UserRating = lazy(() => import('../UserRating'));
 const WatchButton = lazy(() => import('../buttons/WatchButtonSmall'));
 
 const TextPlaceholder = () => (
-  <div className='w-full space-y-2 mb-6'>
-    <div className='h-4 bg-gray-700/30 rounded w-3/4'></div>
-    <div className='h-4 bg-gray-700/30 rounded w-full'></div>
-    <div className='h-4 bg-gray-700/30 rounded w-1/2'></div>
+  <div className="w-full space-y-2 mb-6">
+    <div className="h-4 bg-gray-700/30 rounded w-3/4"></div>
+    <div className="h-4 bg-gray-700/30 rounded w-full"></div>
+    <div className="h-4 bg-gray-700/30 rounded w-1/2"></div>
   </div>
 );
 
 const ButtonPlaceholder = () => (
-  <div className='w-28 h-10 bg-gray-700/30 rounded-full'></div>
+  <div className="w-28 h-10 bg-gray-700/30 rounded-full"></div>
 );
 
 const Slide = ({
@@ -52,7 +52,7 @@ const Slide = ({
     slide.media_type!,
     isVisible,
     currentIndex,
-    movieList,
+    movieList
   );
   const displayLogo = logoFromQuery || null;
 
@@ -127,13 +127,13 @@ const Slide = ({
         }}
       >
         {/* gradient overlays */}
-        <div className='absolute bottom-0 left-0 w-full h-1/4 sm:h-1/2 bg-gradient-to-t from-black to-transparent' />
-        <div className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
+        <div className="absolute bottom-0 left-0 w-full h-1/4 sm:h-1/2 bg-gradient-to-t from-black to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent" />
       </div>
 
       {/* card content */}
       <div
-        className='max-w-[1800px] mx-auto relative h-full'
+        className="max-w-[1800px] mx-auto relative h-full"
         style={{
           opacity: contentLoaded ? 1 : 0,
           transition: 'opacity 700ms ease-in-out',
@@ -141,17 +141,17 @@ const Slide = ({
       >
         {/* left, top - genre, release date, title logo */}
         <div
-          className='absolute w-full h-full justify-center mt-5 flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10
+          className="absolute w-full h-full justify-center mt-5 flex flex-col px-16 md:px-18 lg:px-26 xl:ml-10
           [@media(min-width:1050px)]:justify-center
           [@media(min-width:1050px)]:w-1/2
           [@media(min-width:1050px)]:top-1/2
           [@media(min-width:1050px)]:transform
-          [@media(min-width:1050px)]:-translate-y-1/2'
+          [@media(min-width:1050px)]:-translate-y-1/2"
         >
           {/* Genre and date section*/}
           <div
             className={clsx(
-              `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start`,
+              `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start`
             )}
           >
             <div className={`flex justify-start items-start mb-6 pb-6`}>
@@ -160,19 +160,19 @@ const Slide = ({
                 movieGenres.slice(0, 2).map((genre) => (
                   <span
                     key={`${genre}-${slide.id}`}
-                    className='text-white ml-0 mr-4'
+                    className="text-white ml-0 mr-4"
                   >
                     {genre}
                   </span>
                 ))}
 
               {slide.media_type === 'movie' && (
-                <p className='hidden [@media(min-width:400px)]:block text-white'>
+                <p className="hidden [@media(min-width:400px)]:block text-white">
                   &#x2022;
                 </p>
               )}
 
-              <p className='hidden [@media(min-width:400px)]:block text-white font-light ml-4'>
+              <p className="hidden [@media(min-width:400px)]:block text-white font-light ml-4">
                 {slide.media_type === 'movie'
                   ? slide.release_date !== 'Invalid Date'
                     ? formattedMovieDate
@@ -183,16 +183,16 @@ const Slide = ({
           </div>
 
           {/* Content container */}
-          <div className='flex flex-col mt-6 mb-6'>
+          <div className="flex flex-col mt-6 mb-6">
             {/* Title/logo section */}
-            <Link to={`/${slide.media_type}/${slide.id}`} className='block'>
+            <Link to={`/${slide.media_type}/${slide.id}`} className="block">
               <div
                 className={`flex flex-col items-center [@media(min-width:1050px)]:items-start`}
               >
                 {/* Logo  */}
-                <div className='h-[150px] my-6 mt-6 mb-10 flex items-center justify-center [@media(min-width:1050px)]:justify-start'>
+                <div className="h-[150px] my-6 mt-6 mb-10 flex items-center justify-center [@media(min-width:1050px)]:justify-start">
                   {displayLogo ? (
-                    <div className='relative h-[120px] flex items-center'>
+                    <div className="relative h-[120px] flex items-center">
                       {/* Safari-friendly image rendering */}
                       <img
                         className={`h-auto max-h-[250px] transition-all duration-800 ease-in-out ${
@@ -210,7 +210,7 @@ const Slide = ({
                       />
                     </div>
                   ) : (
-                    <h2 className='text-4xl font-bold text-white'>
+                    <h2 className="text-4xl font-bold text-white">
                       {slide.title || slide.name}
                     </h2>
                   )}
@@ -218,7 +218,7 @@ const Slide = ({
 
                 {/* Overview text with placeholder */}
                 {contentLoaded ? (
-                  <p className='text-white line-clamp-3 text-center [@media(min-width:1050px)]:text-left mb-10 h-[72px] px-0 sm:px-6 [@media(min-width:1050px)]:px-0'>
+                  <p className="text-white line-clamp-3 text-center [@media(min-width:1050px)]:text-left mb-10 h-[72px] px-0 sm:px-6 [@media(min-width:1050px)]:px-0">
                     {slide.overview}
                   </p>
                 ) : (
@@ -230,42 +230,42 @@ const Slide = ({
             {/* Buttons section */}
             <div
               className={clsx(
-                `flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
+                `flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`
               )}
             >
-              <div className='mr-6'>
+              <div className="mr-6">
                 {contentLoaded ? (
                   <UserRating rating={slide.vote_average ?? 0} />
                 ) : (
-                  <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
+                  <div className="w-12 h-12 bg-gray-700/30 rounded-full"></div>
                 )}
               </div>
-              <div className='mr-6'>
+              <div className="mr-6">
                 {contentLoaded ? (
-                  <Tooltip text='Watch Now'>
-                  <WatchButton
-                    itemType={slide.media_type!}
-                    id={slide.id! as string}
-                  />
+                  <Tooltip text="Watch Now">
+                    <WatchButton
+                      itemType={slide.media_type!}
+                      id={slide.id! as string}
+                    />
                   </Tooltip>
                 ) : (
                   <ButtonPlaceholder />
                 )}
               </div>
-              <div className=' mr-6 rounded-[50%] cursor-pointer w-[64px] h-[64px] flex items-center bg-[#ffffff1a] border-2 border-white/20 backdrop-blur-[5px] hover:bg-gray-700'>
-                
+              <div className=" mr-6 rounded-[50%] cursor-pointer w-[64px] h-[64px] flex items-center bg-[#ffffff1a] border-2 border-white/20 backdrop-blur-[5px] hover:bg-gray-700">
                 {/* Bookmark */}
-                <div className='mx-auto mt-1 '>
-                  <Tooltip mb='mb-5' text={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}>
-                  <BookmarkBtn
-                    id={slide.id! as string}
-                    type={slide.media_type!}
-                    isBookmarked={isBookmarked}
-                    color='white'
-               
-       
-                  />
-                 </ Tooltip>
+                <div className="mx-auto mt-1 ">
+                  <Tooltip
+                    mb="mb-5"
+                    text={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+                  >
+                    <BookmarkBtn
+                      id={slide.id! as string}
+                      type={slide.media_type!}
+                      isBookmarked={isBookmarked}
+                      color="white"
+                    />
+                  </Tooltip>
                 </div>
               </div>
             </div>
@@ -274,7 +274,7 @@ const Slide = ({
 
         {/* Poster image with placeholder */}
         {slide.poster_path && (
-          <div className='hidden [@media(min-width:1050px)]:block [@media(min-width:1050px)]:absolute [@media(min-width:1050px)]:right-0 [@media(min-width:1050px)]:top-1/2 [@media(min-width:1050px)]:transform [@media(min-width:1050px)]:-translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 [@media(min-width:1050px)]:h-[450px] [@media(min-width:1050px)]:w-[320px] z-10'>
+          <div className="hidden [@media(min-width:1050px)]:block [@media(min-width:1050px)]:absolute [@media(min-width:1050px)]:right-0 [@media(min-width:1050px)]:top-1/2 [@media(min-width:1050px)]:transform [@media(min-width:1050px)]:-translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-5 [@media(min-width:1050px)]:h-[450px] [@media(min-width:1050px)]:w-[320px] z-10">
             {/* Poster placeholder */}
             <div
               className={`w-78 h-[450px] rounded-lg bg-gray-800/50 absolute ${
@@ -290,7 +290,7 @@ const Slide = ({
               }`}
               src={`https://image.tmdb.org/t/p/w500${slide.poster_path}`}
               alt={slide.title || slide.name}
-              loading='eager'
+              loading="eager"
               width={320}
               height={450}
             />
