@@ -15,5 +15,3 @@ export const TMDBClient = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-
