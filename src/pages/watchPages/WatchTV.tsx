@@ -25,7 +25,7 @@ const WatchTV = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { series_id } = useParams<{ series_id: string }>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
     return lastSelectedServer || servers[0].value;
@@ -76,11 +76,14 @@ const WatchTV = () => {
       String(selectedEpisode),
     );
     
-    // navigate(`/watch/tv/${series_id}/${selectedSeason}/${selectedEpisode}`, );
-    // console.log("History Length:", window.history.length);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [series_id, selectedSeason, selectedEpisode]);
 
+  useEffect(() => {
+    timeoutRef.current = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+  }, []);
 
   useEffect(() => {
     let newURL = '';
@@ -114,7 +117,7 @@ const WatchTV = () => {
         iframeRef.current?.contentWindow?.location.replace(newURL);
         timeoutRef.current = setTimeout(() => {
           setIsLoading(false);
-        }, 2000);
+        }, 1500);
       }, 300);
 
       sessionStorage.setItem('lastSelectedServer', selectedServer);

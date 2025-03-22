@@ -1,6 +1,5 @@
 import { IEpisode } from '../interfaces/IEpisode';
 import dayjs from 'dayjs';
-// import { useParams } from 'react-router-dom';
 
 const Episode = ({
   episode,
@@ -15,10 +14,6 @@ const Episode = ({
   setSelectedEpisode: (_episode: number) => void;
   setSelectedSeason: (_season: number) => void;
 }) => {
-  // const { season_number, episode_number } = useParams<{
-  //   season_number: string;
-  //   episode_number: string;
-  // }>();
 
   const handleEpisodeClick = (value: string) => {
     const [season_num, episode_num] = value.split('-');
