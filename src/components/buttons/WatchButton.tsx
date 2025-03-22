@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 const WatchButton = ({
   itemType,
   id,
-  season = '1',
-  episode = '1',
 }: {
   itemType: string;
   id: string;
@@ -17,7 +15,7 @@ const WatchButton = ({
     if (itemType === 'movie') {
       navigate('/watch/movie/' + id);
     } else {
-      navigate('/watch/tv/' + id + '/' + season + '/' + episode);
+      navigate('/watch/tv/' + id);
     }
   };
 

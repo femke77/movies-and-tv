@@ -6,7 +6,7 @@ const BackButton = ({ url }: { url: string }) => {
   return (
     <button
       className='back-button flex hover:cursor-pointer'
-      onClick={() => navigate(url)}
+      onClick={() => navigate(url, { replace: true })}
     >
       <ArrowLeft size={20} color='#ffffff' />
       <p className='text-sm ml-1'> Back</p>
