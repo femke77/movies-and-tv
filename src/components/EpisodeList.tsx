@@ -25,7 +25,6 @@ const EpisodeList = ({
             selectedEpisode={selectedEpisode}
             setSelectedEpisode={setSelectedEpisode}
             setSelectedSeason={setSelectedSeason}
-
           />
         ))}
     </div>

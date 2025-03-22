@@ -8,13 +8,12 @@ import { isIphoneSafari } from '../../utils/helpers';
 import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
 
-
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie = {} } = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
-    const iframeRef = useRef<HTMLIFrameElement>(null);
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
@@ -27,10 +26,10 @@ const WatchMovie = () => {
     let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
-        newURL = `https://vidsrc.xyz/embed/movie/${movie_id}`
+        newURL = `https://vidsrc.xyz/embed/movie/${movie_id}`;
         break;
       case 'videasy.net':
-       newURL = `https://player.videasy.net/movie/${movie_id}`;
+        newURL = `https://player.videasy.net/movie/${movie_id}`;
         break;
       case 'vidlink.pro':
         newURL = `https://vidlink.pro/movie/${movie_id}`;
@@ -83,7 +82,7 @@ const WatchMovie = () => {
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
               <iframe
-              ref={iframeRef}
+                ref={iframeRef}
                 id='iframe'
                 className='absolute top-0 left-0 w-full h-full bg-black'
                 width='100%'
@@ -92,12 +91,11 @@ const WatchMovie = () => {
                 allow='encrypted-media'
                 allowFullScreen
               ></iframe>
-               {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10">
-                  <div className="text-white text-center">
-                    <div className="inline-block w-8 h-8 border-4 border-t-blue-500 border-r-transparent border-b-blue-500 border-l-transparent rounded-full animate-spin mb-2"></div>
+              {isLoading && (
+                <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10'>
+                  <div className='text-white text-center'>
+                    <div className='inline-block w-8 h-8 border-4 border-t-blue-500 border-r-transparent border-b-blue-500 border-l-transparent rounded-full animate-spin mb-2'></div>
                     <p>Loading {selectedServer}... </p>
-               
                   </div>
                 </div>
               )}

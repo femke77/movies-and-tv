@@ -48,7 +48,7 @@ const WatchTV = () => {
   const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
 
   const prevServerRef = useRef(selectedServer);
-  
+
   // const navigate = useNavigate();
 
   const { data: series } = useWatchDetails('tv', series_id ?? '');
@@ -75,8 +75,6 @@ const WatchTV = () => {
       `${series_id}-lastSelectedEpisode`,
       String(selectedEpisode),
     );
-    
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [series_id, selectedSeason, selectedEpisode]);
 
   useEffect(() => {
@@ -175,7 +173,6 @@ const WatchTV = () => {
                   <div className='text-white text-center'>
                     <div className='inline-block w-8 h-8 border-4 border-t-blue-500 border-r-transparent border-b-blue-500 border-l-transparent rounded-full animate-spin mb-2'></div>
                     <p>Loading {selectedServer}... </p>
-               
                   </div>
                 </div>
               )}

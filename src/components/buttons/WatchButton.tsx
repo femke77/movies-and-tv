@@ -15,7 +15,7 @@ const WatchButton = ({
     if (itemType === 'movie') {
       navigate('/watch/movie/' + id);
     } else {
-      navigate('/watch/tv/' + id)
+      navigate('/watch/tv/' + id);
     }
   };
 

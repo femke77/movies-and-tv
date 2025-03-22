@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 const WatchButton = ({
   itemType,
   id,
-
 }: {
   itemType: string;
   id: string;
