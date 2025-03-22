@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { useState, useEffect, lazy } from 'react';
 import BookmarkBtn from '../buttons/BookmarkBtn';
+import Tooltip from '../ToolTip';
 
 const UserRating = lazy(() => import('../UserRating'));
 const WatchButton = lazy(() => import('../buttons/WatchButtonSmall'));
@@ -241,10 +242,12 @@ const Slide = ({
               </div>
               <div className='mr-6'>
                 {contentLoaded ? (
+                  <Tooltip text='Watch Now'>
                   <WatchButton
                     itemType={slide.media_type!}
                     id={slide.id! as string}
                   />
+                  </Tooltip>
                 ) : (
                   <ButtonPlaceholder />
                 )}
@@ -253,13 +256,16 @@ const Slide = ({
                 
                 {/* Bookmark */}
                 <div className='mx-auto mt-1 '>
+                  <Tooltip mb='mb-5' text={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}>
                   <BookmarkBtn
                     id={slide.id! as string}
                     type={slide.media_type!}
                     isBookmarked={isBookmarked}
                     color='white'
-                    showTooltip={true}
+               
+       
                   />
+                 </ Tooltip>
                 </div>
               </div>
             </div>

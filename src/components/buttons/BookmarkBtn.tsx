@@ -8,7 +8,6 @@ interface BookmarkBtnProps {
   isBookmarked: boolean;
   iconSize?: number;
   color?: string;
-  showTooltip?: boolean;
 }
 
 const BookmarkBtn = ({
@@ -17,7 +16,7 @@ const BookmarkBtn = ({
   isBookmarked: propIsBookmarked,
   iconSize = 40,
   color = 'white',
-  showTooltip = false,
+
 }: BookmarkBtnProps) => {
   const openModal = useBookmarkStore((state) => state.openModal);
 
@@ -28,31 +27,13 @@ const BookmarkBtn = ({
   };
 
   return (
-    <>
-      {showTooltip ? (
-        <Tooltip text={propIsBookmarked ? 'Remove bookmark' : 'Add bookmark'}>
-          <button  className="relative z-10 " onClick={handleBookmarkToggle}>
-            {propIsBookmarked ? (
-              <BookmarkCheck
-                className="mx-auto"
-                size={iconSize}
-                color={color}
-              />
-            ) : (
-              <Bookmark   className="mx-auto" size={iconSize} color={color} />
-            )}
-          </button>
-        </Tooltip>
+    <button className="" onClick={handleBookmarkToggle}>
+      {propIsBookmarked ? (
+        <BookmarkCheck className="mx-auto" size={iconSize} color={color} />
       ) : (
-        <button className='' onClick={handleBookmarkToggle}>
-          {propIsBookmarked ? (
-            <BookmarkCheck   className="mx-auto" size={iconSize} color={color} />
-          ) : (
-            <Bookmark   className="mx-auto" size={iconSize} color={color} />
-          )}
-        </button>
+        <Bookmark className="mx-auto" size={iconSize} color={color} />
       )}
-    </>
+    </button>
   );
 };
 
