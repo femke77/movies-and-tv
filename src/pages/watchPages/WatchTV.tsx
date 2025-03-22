@@ -47,7 +47,6 @@ const WatchTV = () => {
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
   const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
   const [serverURL, setServerURL] = useState('');
-  console.log('serverURL', serverURL);
 
   const navigate = useNavigate();
 
