@@ -23,7 +23,6 @@ const ItemCard = ({
   textSize?: string;
   isBookmarked: boolean;
 }) => {
-
   const [isVisible, setIsVisible] = useState(false);
   const [lowResLoaded, setLowResLoaded] = useState(false);
   const [highResLoaded, setHighResLoaded] = useState(false);

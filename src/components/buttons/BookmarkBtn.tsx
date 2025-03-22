@@ -15,7 +15,6 @@ const BookmarkBtn = ({
   isBookmarked: propIsBookmarked,
   iconSize = 40,
   color = 'white',
-
 }: BookmarkBtnProps) => {
   const openModal = useBookmarkStore((state) => state.openModal);
 
@@ -26,15 +25,14 @@ const BookmarkBtn = ({
   };
 
   return (
-    <button className="" onClick={handleBookmarkToggle}>
+    <button className='' onClick={handleBookmarkToggle}>
       {propIsBookmarked ? (
-        <BookmarkCheck className="mx-auto" size={iconSize} color={color} />
+        <BookmarkCheck className='mx-auto' size={iconSize} color={color} />
       ) : (
-        <Bookmark className="mx-auto" size={iconSize} color={color} />
+        <Bookmark className='mx-auto' size={iconSize} color={color} />
       )}
     </button>
   );
 };
-
 
 export default BookmarkBtn;
