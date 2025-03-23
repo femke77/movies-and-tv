@@ -14,7 +14,7 @@ import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
 import WatchMovieTmp from './pages/watchPages/WatchTemp.tsx';
 
 import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
-import SavedItems from './pages/SavedItems.tsx';
+import Watchlist from './pages/Watchlist.tsx';
 
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
 const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
@@ -165,7 +165,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'saved',
-            element: <SavedItems />,
+            element: <Watchlist />,
           },
         ],
       },
