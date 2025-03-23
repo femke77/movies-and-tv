@@ -37,7 +37,6 @@ const WatchMovie = () => {
       case 'vidbinge.dev':
         newURL = `https://vidbinge.dev/embed/movie/${movie_id}`;
         break;
-     
     }
 
     if (timeoutRef.current) {
