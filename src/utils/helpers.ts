@@ -11,7 +11,7 @@ export const getStrokeColor = (rating: number) => {
 // filter weird/bad data from the API
 export const filterTMDBResults = (results: IItem[]) => {
   return results.filter((item: IItem) => {
-    // Ensure the item has either a title. 
+    // Ensure the item has either a title.
     const hasValidData = item.title || item.name;
 
     // Exclude items that have no poster and were released today (some weirdness in the API)

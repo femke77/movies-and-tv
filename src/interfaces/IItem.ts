@@ -13,6 +13,4 @@ export interface IItem {
   first_air_date?: string;
   isBookmarked?: boolean;
   original_name?: string;
-  
-
 }

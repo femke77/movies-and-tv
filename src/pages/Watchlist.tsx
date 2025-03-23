@@ -27,7 +27,7 @@ const Watchlist = () => {
             if (!result.data) return null;
             const item: IItem = {
               ...result.data,
-              media_type: result.data.name  ? 'tv' : 'movie',
+              media_type: result.data.name ? 'tv' : 'movie',
             };
 
             return item;
@@ -41,7 +41,6 @@ const Watchlist = () => {
   const itemDetails = itemQueries.data;
   const isLoading = itemQueries.pending;
 
-
   const itemSkeletons = Array(bookmarks.length || 5).fill(null);
 
   useEffect(() => {
@@ -50,22 +49,22 @@ const Watchlist = () => {
   }, [bookmarks, queryClient]);
 
   return (
-    <div className="mt-24 text-white">
-      <h1 className="text-3xl text-center mx-3 mb-6">Watchlist</h1>
+    <div className='mt-24 text-white'>
+      <h1 className='text-3xl text-center mx-3 mb-6'>Watchlist</h1>
 
       {bookmarks.length === 0 && (
-        <div className="text-center text-white text-2xl my-10">
+        <div className='text-center text-white text-2xl my-10'>
           Nothing saved yet!
         </div>
       )}
       {isLoading && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
           {itemSkeletons.map((_, index) => (
             <ItemCardSkeleton key={`item-skeleton-${index}`} />
           ))}
         </div>
       )}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
         {itemDetails.map((item) => (
           <ItemCard
             key={item.id}
@@ -80,6 +79,5 @@ const Watchlist = () => {
 };
 
 export default Watchlist;
-
 
 /* check if it's a tv show by looking for name. check if it's a movei by looking for title.  A filter further up the chain already ensures that title or name is not null or it would never have been shown to the user to be bookmarked in the first place. */
