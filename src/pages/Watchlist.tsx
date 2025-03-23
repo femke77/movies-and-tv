@@ -40,7 +40,7 @@ const Watchlist = () => {
 
   const itemDetails = itemQueries.data;
   const isLoading = itemQueries.pending;
-  console.log(itemDetails[1]);
+
 
   const itemSkeletons = Array(bookmarks.length || 5).fill(null);
 
