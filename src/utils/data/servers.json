@@ -14,6 +14,11 @@
 			"id": 3,
 			"name": "VidLink Pro",
 			"value": "vidlink.pro"
+		},
+		{
+			"id": 4,
+			"name": "VidBinge",
+			"value": "vidbinge.dev"
 		}
 		
 	]

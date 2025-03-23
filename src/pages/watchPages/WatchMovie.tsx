@@ -34,6 +34,9 @@ const WatchMovie = () => {
       case 'vidlink.pro':
         newURL = `https://vidlink.pro/movie/${movie_id}`;
         break;
+      case 'vidbinge.dev':
+        newURL = `https://vidbinge.dev/embed/movie/${movie_id}`;
+        break;
     }
 
     if (timeoutRef.current) {
@@ -47,7 +50,7 @@ const WatchMovie = () => {
       setServerURL(newURL);
       timeoutRef.current = setTimeout(() => {
         setIsLoading(false);
-      }, 2000);
+      }, 1000);
     }, 300);
 
     sessionStorage.setItem('lastSelectedServer', selectedServer);
