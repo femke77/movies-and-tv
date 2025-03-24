@@ -9,7 +9,6 @@ import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
 import dayjs from 'dayjs';
 
-
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie = {} } = useWatchDetails('movie', movie_id ?? '');
