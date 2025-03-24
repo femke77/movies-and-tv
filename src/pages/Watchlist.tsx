@@ -46,12 +46,12 @@ const Watchlist = () => {
   }, [bookmarks, queryClient]);
 
   return (
-    <div className="mt-24 text-white">
-      <h1 className="text-3xl text-center mx-3 mb-4">Watchlist</h1>
-      <hr className="border-gray-800 border-1  mb-4 mx-30" />
+    <div className='mt-24 text-white'>
+      <h1 className='text-3xl text-center mx-3 mb-4'>Watchlist</h1>
+      <hr className='border-gray-800 border-1  mb-4 mx-30' />
 
       {bookmarks.length === 0 && (
-        <div className="text-center text-white text-2xl my-10">
+        <div className='text-center text-white text-2xl my-10'>
           Nothing saved yet!
         </div>
       )}
