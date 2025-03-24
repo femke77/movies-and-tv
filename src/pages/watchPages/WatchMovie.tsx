@@ -17,7 +17,7 @@ const WatchMovie = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
-    return lastSelectedServer || servers[0].value;
+    return lastSelectedServer || servers[3].value;
   });
 
   const [serverURL, setServerURL] = useState('');
@@ -25,13 +25,16 @@ const WatchMovie = () => {
   useEffect(() => {
     const handleMessage = function (event: MessageEvent) {
       // console.log("event: ", event);
-      if (event.data){
-      console.log('Message received from the player: ', JSON.parse(event.data)); // Message received from player
-      }
-      if (typeof event.data === 'string') {
-        var messageArea = document.querySelector('#messageArea');
-        if (messageArea && messageArea instanceof HTMLElement)
-        messageArea.innerText = event.data;
+      if (event.data) {
+        console.log(
+          'Message received from the player: ',
+          JSON.parse(event.data)
+        ); // Message received from player
+        if (typeof event.data === 'string') {
+          var messageArea = document.querySelector('#messageArea');
+          if (messageArea && messageArea instanceof HTMLElement)
+            messageArea.innerText = event.data;
+        }
       }
     };
 
@@ -55,6 +58,8 @@ const WatchMovie = () => {
       case 'vidbinge.dev':
         newURL = `https://vidbinge.dev/embed/movie/${movie_id}`;
         break;
+      default:
+        newURL = `https://vidbinge.dev/embed/movie/${movie_id}`;
     }
 
     if (timeoutRef.current) {
