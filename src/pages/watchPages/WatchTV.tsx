@@ -58,13 +58,12 @@ const WatchTV = () => {
     String(selectedSeason),
   );
 
- useEffect(() => {
-
+  useEffect(() => {
     if (!series) return;
-    
+
     const continueWatching = localStorage.getItem('continueWatching');
     const watchData = continueWatching ? JSON.parse(continueWatching) : {};
-    
+
     const newWatchData = {
       ...watchData,
       [series_id!]: {
@@ -77,10 +76,9 @@ const WatchTV = () => {
         episode: selectedEpisode,
       },
     };
-    
+
     localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
   }, [series_id, series, selectedSeason, selectedEpisode]);
-    
 
   useEffect(() => {
     if (episodes) {

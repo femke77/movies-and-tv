@@ -12,7 +12,6 @@ function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   // const { confirm } = useBookmarkStore();
 
- 
   // maintains search query on reload
   useEffect(() => {
     if (searchQuery) {
