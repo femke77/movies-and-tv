@@ -51,7 +51,7 @@ const WatchTV = () => {
 
   const prevServerRef = useRef(selectedServer);
 
-  const { data: series } = useWatchDetails('tv', series_id!);  
+  const { data: series } = useWatchDetails('tv', series_id!);
   console.log(series);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
@@ -68,7 +68,7 @@ const WatchTV = () => {
       ...watchData,
       [series_id!]: {
         lastUpdated: dayjs().unix(),
-        title: series.original_name ,
+        title: series.original_name,
         posterPath: series.backdrop_path,
         media_type: 'tv',
         id: Number(series_id),
