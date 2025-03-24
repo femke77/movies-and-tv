@@ -34,7 +34,10 @@ export const useBookmarkStore = create<BookmarkStore>()(
 
       addBookmark: (id, type) =>
         set((state) => ({
-          bookmarks: [...state.bookmarks, { id, type, dateAdded: dayjs().unix() }],
+          bookmarks: [
+            ...state.bookmarks,
+            { id, type, dateAdded: dayjs().unix() },
+          ],
         })),
 
       removeBookmark: (id, type) =>
