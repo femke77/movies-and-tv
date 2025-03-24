@@ -1,11 +1,6 @@
 {
 	"servers": [
 		{
-			"id": 1,
-			"name": "VidSrc",
-			"value": "vidsrc.xyz"
-		},
-		{
 			"id": 2,
 			"name": "VidEasy",
 			"value": "videasy.net"
@@ -19,6 +14,11 @@
 			"id": 4,
 			"name": "VidBinge",
 			"value": "vidbinge.dev"
+		},
+		{
+			"id": 1,
+			"name": "VidSrc",
+			"value": "vidsrc.xyz"
 		}
 		
 	]

@@ -19,7 +19,7 @@ const WatchMovie = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
-    return lastSelectedServer || servers[3].value;
+    return lastSelectedServer || servers[2].value;
   });
 
   const [serverURL, setServerURL] = useState('');
@@ -50,7 +50,7 @@ const WatchMovie = () => {
     let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
-        newURL = `https://vidsrc.xyz/embed/movie/${movie_id}`;
+        newURL = `https://vidsrc.net/embed/movie/${movie_id}`;
         break;
       case 'videasy.net':
         newURL = `https://player.videasy.net/movie/${movie_id}`;
@@ -93,7 +93,7 @@ const WatchMovie = () => {
         <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
           <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
-              <BackButton type='Movie' url={`/movie/${movie_id}`} />
+              <BackButton url={`/movie/${movie_id}`} />
             </div>
             {movie && (
               <p

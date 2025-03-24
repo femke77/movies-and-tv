@@ -30,7 +30,7 @@ const WatchTV = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
-    return lastSelectedServer || servers[3].value;
+    return lastSelectedServer || servers[2].value;
   });
   const [selectedSeason, setSelectedSeason] = useState(() => {
     const lastSelectedSeason = localStorage.getItem(
@@ -131,7 +131,7 @@ const WatchTV = () => {
     let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
-        newURL = `https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
+        newURL = `https://vidsrc.net/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
         break;
       case 'videasy.net':
         newURL = `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
@@ -185,7 +185,7 @@ const WatchTV = () => {
         <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
           <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
-              <BackButton type='Series' url={`/tv/${series_id}`} />
+              <BackButton url={`/tv/${series_id}`} />
             </div>
             {series && (
               <p
@@ -226,9 +226,9 @@ const WatchTV = () => {
                 </div>
               )}
             </div>
+            {/* player controls (for tv) */}
             {series && (
-              <div className='rounded-lg flex items-center justify-between gap-[16px] -my-[12px] p-[16px] bg-[#1f1f1f]'>
-                {/* player controls (for tv) */}
+              <div className='min-h-[120px] rounded-lg flex items-center justify-between gap-[16px]  p-[16px] bg-[#1f1f1f]'>
                 <div className='flex flex-col gap-2 w-full py-2'>
                   <div className='flex justify-center  sm:justify-between items-center flex-wrap'>
                     <div className='text-[#fff9] flex  mx-5 sm:mx-0'>
@@ -237,15 +237,19 @@ const WatchTV = () => {
                           Season {selectedSeason} &#x2022; Episode{' '}
                           {selectedEpisode}
                         </span>
-                        {episodes && (
-                          <span className='ml-3 text-center'>
+                        {episodes ? (
+                          <span className='ml-3 text-center min-h-[20px]'>
                             {episodes?.episodes?.[selectedEpisode - 1]?.name}
+                          </span>
+                        ) : (
+                          <span className='ml-3 text-center min-h-[20px]'>
+                            Loading...
                           </span>
                         )}
                       </div>
                     </div>
-                    {episodes && (
-                      <div className='flex gap-2 my-3 mx-5 sm:mx-0 min-h-[30px]'>
+                    {episodes ? (
+                      <div className='min-h-[36px] flex gap-2 my-3 mt-5 mx-5 sm:mx-0 '>
                         <WatchPrevBtn
                           selectedEpisode={selectedEpisode}
                           setSelectedEpisode={setSelectedEpisode}
@@ -261,6 +265,49 @@ const WatchTV = () => {
                           numSeasons={series.number_of_seasons}
                           currentSeasonLength={currentSeasonLength}
                         />
+                      </div>
+                    ) : (
+                      <div className='min-h-[36px] flex gap-2 my-3 mt-5 mx-5 sm:mx-0'>
+                        <button
+                          className={`min-h-[36px] back-button flex hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] `}
+                        >
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='20'
+                            height='20'
+                            viewBox='0 0 24 24'
+                            fill='none'
+                            stroke='currentColor'
+                            strokeWidth='2'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            className='lucide lucide-arrow-left'
+                          >
+                            <path d='m12 19-7-7 7-7'></path>
+                            <path d='M19 12H5'></path>
+                          </svg>
+                          <p className='text-sm ml-1'> Prev</p>
+                        </button>
+                        <button
+                          className={`next-button flex hover:cursor-pointer mx-2 bg-gray-700/50 p-2 px-4 pl-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] `}
+                        >
+                          <p className='text-sm mr-1'> Next</p>
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='20'
+                            height='20'
+                            viewBox='0 0 24 24'
+                            fill='none'
+                            stroke='#ffffff'
+                            strokeWidth='2'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            className='lucide lucide-arrow-right'
+                          >
+                            <path d='M5 12h14' />
+                            <path d='m12 5 7 7-7 7' />
+                          </svg>
+                        </button>
                       </div>
                     )}
                   </div>
@@ -286,7 +333,7 @@ const WatchTV = () => {
         <div className=' lg:w-[400px] lg:flex-shrink-0'>
           <div className='sidebar bg-[#1f1f1f] max-h-[900px] flex flex-col  rounded-lg'>
             <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
-              <div className='server-selection mb-[16px]'>
+              <div className='server-selection mb-8 sm:mb-10 md:mb-8'>
                 {/* server selection */}
                 <ListBoxComp
                   title={
