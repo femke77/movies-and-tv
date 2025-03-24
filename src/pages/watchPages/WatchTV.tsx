@@ -15,6 +15,7 @@ import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/buttons/SeasonNavigation';
 import { isIphoneSafari } from '../../utils/helpers';
 import EpisodeList from '../../components/EpisodeList';
+import dayjs from 'dayjs';
 
 // FIXME This needs to be more componentized. iframe at least needs it's own component.
 // FIXME url params controlled instead of state controlled ??? would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management. Thinking about this.
@@ -51,10 +52,36 @@ const WatchTV = () => {
   const prevServerRef = useRef(selectedServer);
   
   const { data: series } = useWatchDetails('tv', series_id ?? '');
+  console.log(series);
+  
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
     String(selectedSeason)
   );
+
+ useEffect(() => {
+
+    if (!series) return;
+    
+    const continueWatching = localStorage.getItem('continueWatching');
+    const watchData = continueWatching ? JSON.parse(continueWatching) : {};
+    
+    const newWatchData = {
+      ...watchData,
+      [series_id!]: {
+        lastUpdated: dayjs().unix(),
+        name: series.original_name ,
+        posterPath: series.poster_path,
+        media_type: 'tv',
+        id: Number(series_id),
+        season: selectedSeason,
+        episode: selectedEpisode,
+      },
+    };
+    
+    localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
+  }, [series_id, series, selectedSeason, selectedEpisode]);
+    
 
   useEffect(() => {
     if (episodes) {

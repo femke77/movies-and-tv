@@ -7,6 +7,7 @@ import ServerList from '../../components/ServerList';
 import { isIphoneSafari } from '../../utils/helpers';
 import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
+import dayjs from 'dayjs';
 
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
@@ -23,6 +24,30 @@ const WatchMovie = () => {
   const [serverURL, setServerURL] = useState('');
 
   useEffect(() => {
+
+    if (!movie) return;
+    
+    const continueWatching = localStorage.getItem('continueWatching');
+    const watchData = continueWatching ? JSON.parse(continueWatching) : {};
+    
+    const newWatchData = {
+      ...watchData,
+      [movie_id!]: {
+        lastUpdated: dayjs().unix(),
+        title: movie.title,
+        posterPath: movie.poster_path,
+        media_type: 'movie',
+        id: Number(movie_id),
+      },
+    };
+    
+    localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
+  }, [movie_id, movie]);
+    
+
+
+  useEffect(() => {
+ 
     const handleMessage = function (event: MessageEvent) {
       // console.log("event: ", event);
       if (event.data) {
@@ -30,11 +55,7 @@ const WatchMovie = () => {
           'Message received from the player: ',
           JSON.parse(event.data)
         ); // Message received from player
-        if (typeof event.data === 'string') {
-          var messageArea = document.querySelector('#messageArea');
-          if (messageArea && messageArea instanceof HTMLElement)
-            messageArea.innerText = event.data;
-        }
+        
       }
     };
 
