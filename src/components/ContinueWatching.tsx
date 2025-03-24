@@ -37,7 +37,6 @@ const ContinueWatching = () => {
   ) => {
     e.preventDefault();
     e.stopPropagation();
-
     const newItems = { ...items };
     delete newItems[key];
     setItems(newItems);
@@ -58,21 +57,28 @@ const ContinueWatching = () => {
                   <div
                     className="text-white relative flex-shrink-0"
                     key={key}
-                    onTouchStart={(e) => {
-                      if ((e.target as HTMLElement).tagName !== 'button') {
-                        setActiveItemId(key);
-                      }
+                    onTouchStart={() => {
+                      setActiveItemId(key);
                     }}
                     onMouseEnter={() => setActiveItemId(key)}
                     onMouseLeave={() => setActiveItemId(null)}
                   >
                     <div className={`relative ${isActive ? 'active' : ''}`}>
                       {/* Image and gradient overlay */}
-                      <img
-                        className="rounded-xl mr-2"
-                        src={`https://image.tmdb.org/t/p/w300${items[key].posterPath}`}
-                        alt="poster"
-                      />
+                      {items[key].posterPath ? (
+                        <img
+                          className="rounded-xl mr-2"
+                          src={`https://image.tmdb.org/t/p/w300${items[key].posterPath}`}
+                          alt="poster"
+                        />
+                      ) : (
+                        <img
+                          className="rounded-xl mr-2 w-[308px] h-[169px] object-contain"
+                          src="/noimage2.webp"
+                          alt="no image available"
+                        />
+                      )}
+
                       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
                       <div
                         className={`absolute inset-0 bg-black/40 transition-opacity duration-200 rounded-xl ${
@@ -87,7 +93,7 @@ const ContinueWatching = () => {
                       >
                         <div className="absolute right-2 z-50 p-2 pointer-events-auto">
                           <button
-                            className="text-white font-bold rounded-full z-50 cursor-pointer bg-black/60 p-2 hover:bg-black/80 transition-colors"
+                            className="text-white font-bold rounded-full z-50 cursor-pointer bg-black/60 p-2 hover:bg-black/80 "
                             onTouchStart={(e) => {
                               handleDelete(e, key);
                             }}
@@ -132,7 +138,7 @@ const ContinueWatching = () => {
 
                       {/* Play button overlay - only appears on hover/touch */}
                       <div
-                        className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
+                        className={`absolute inset-0 flex items-center justify-center  ${
                           isActive ? 'opacity-100' : 'opacity-0'
                         }`}
                       >
