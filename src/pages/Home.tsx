@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import SwiperElement from '../components/main/Swiper';
-
+import ContinueWatching from '../components/ContinueWatching';
 const PopularMovies = lazy(() => import('../components/main/PopularMovies'));
 const TrendingMovies = lazy(() => import('../components/main/TrendingMovies'));
 const TopRatedMovies = lazy(() => import('../components/main/TopRatedMovies'));
@@ -12,6 +12,9 @@ const Home = () => {
   return (
     <>
       <SwiperElement />
+      <div className='my-46'>
+        <ContinueWatching />
+      </div>
 
       <div className='my-46'>
         <TrendingMovies />
