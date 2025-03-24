@@ -22,7 +22,7 @@ const SimpleSlider = ({ children }: { children: ReactNode }) => {
   const move = (e: React.MouseEvent) => {
     if (!isDragging.current || !sliderRef.current) return;
     e.preventDefault();
-    e.stopPropagation()
+    e.stopPropagation();
     const x = e.pageX - sliderRef.current.offsetLeft;
     const scroll = x - startX.current;
     sliderRef.current.scrollLeft = scrollLeft.current - scroll;
