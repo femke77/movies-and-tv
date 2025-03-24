@@ -47,7 +47,7 @@ const ContinueWatching = () => {
                           src={`https://image.tmdb.org/t/p/w300${items[key].posterPath}`}
                           alt="poster"
                         />
-                        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
+                        <div className="absolute bottom-0 left-0 w-full h-3/4 bg-gradient-to-t from-black/80 to-transparent" />
                         <div className="absolute bottom-0 left-0 w-full pb-4 px-5">
                           <h2 className="text-xl font-bold">
                             {items[key].title}
