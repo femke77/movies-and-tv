@@ -30,7 +30,7 @@ const WatchTV = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
-    return lastSelectedServer || servers[3].value;
+    return lastSelectedServer || servers[2].value;
   });
   const [selectedSeason, setSelectedSeason] = useState(() => {
     const lastSelectedSeason = localStorage.getItem(
