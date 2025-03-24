@@ -35,39 +35,41 @@ const ContinueWatching = () => {
           <h1 className="text-2xl font-semibold">Continue Watching</h1>
           <div className="flex">
             <SimpleSlider>
-            {Object.keys(items).map((key: string) => {
-              return (
-                <div className="text-white relative flex-shrink-0" key={key}>
-      <Link to={`/watch/${items[key].media_type}/${items[key].id}`}>
-        <div className="relative">
-          <img
-            className="rounded-xl mx-2"
-            src={`https://image.tmdb.org/t/p/w300${items[key].posterPath}`}
-            alt="poster"
-          />
-          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
-          <div className="absolute bottom-0 left-0 w-full pb-4 px-5">
-            <h2 className="text-xl font-bold">
-              {items[key].title}
-            </h2>
-            <h3 className="text-lg">
-              {items[key].media_type === 'tv' ? (
-                <p>
-                  S{items[key].season}, E{items[key].episode}
-                </p>
-              ) : (
-                <p>
-                  {dayjs(items[key].release_date).format('YYYY')}{' '}
-                  &#x2022; {items[key].runtime} min
-                </p>
-              )}
-            </h3>
-          </div>
-        </div>
-      </Link>
-    </div>
-              );
-            })}
+              {Object.keys(items).map((key: string) => {
+                return (
+                  <div className="text-white relative flex-shrink-0" key={key}>
+                    <Link
+                      to={`/watch/${items[key].media_type}/${items[key].id}`}
+                    >
+                      <div className="relative">
+                        <img
+                          className="rounded-xl mx-2"
+                          src={`https://image.tmdb.org/t/p/w300${items[key].posterPath}`}
+                          alt="poster"
+                        />
+                        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
+                        <div className="absolute bottom-0 left-0 w-full pb-4 px-5">
+                          <h2 className="text-xl font-bold">
+                            {items[key].title}
+                          </h2>
+                          <h3 className="text-lg">
+                            {items[key].media_type === 'tv' ? (
+                              <p>
+                                S{items[key].season}, E{items[key].episode}
+                              </p>
+                            ) : (
+                              <p>
+                                {dayjs(items[key].release_date).format('YYYY')}{' '}
+                                &#x2022; {items[key].runtime} min
+                              </p>
+                            )}
+                          </h3>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })}
             </SimpleSlider>
           </div>
         </>
