@@ -27,7 +27,7 @@ const Watchlist = () => {
             if (!result.data) return null;
             const item: IItem = {
               ...result.data,
-              media_type: result.data.name ? 'tv' : 'movie',
+              media_type: result.data.name ? 'tv' : 'movie', //items with name defined are tv, items with title defined are movies
             };
 
             return item;
@@ -81,4 +81,4 @@ const Watchlist = () => {
 
 export default Watchlist;
 
-/* check if it's a tv show by looking for name. check if it's a movei by looking for title.  A filter further up the chain already ensures that title or name is not null or it would never have been shown to the user to be bookmarked in the first place. */
+/* check if it's a tv show by looking for name. check if it's a movei by looking for title.  A filter further up the chain already ensures that title or name is not null or it would never have been shown to the user in the first place. */

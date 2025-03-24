@@ -6,8 +6,6 @@ const ChunkErrorHandler = () => {
   const error = useRouteError() as Error;
   const [countdown, setCountdown] = useState(5);
 
-  console.error('Router error caught:', error);
-
   // Extract the error message
   const errorMessage = error?.message || '';
 
@@ -17,8 +15,6 @@ const ChunkErrorHandler = () => {
     errorMessage.includes('Failed to load module script') ||
     (errorMessage.includes('MIME type') &&
       errorMessage.includes('module scripts'));
-
-  console.log('Is chunk error detected:', isChunkError);
 
   useEffect(() => {
     if (!isChunkError) return;
