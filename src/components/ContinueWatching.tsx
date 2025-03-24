@@ -24,18 +24,18 @@ const ContinueWatching = () => {
     <div>
       {Object.keys(items).length !== 0 && (
         <>
-          <h1 className="text-xl">Continue Watching</h1>
-          <div className="flex">
+          <h1 className='text-xl'>Continue Watching</h1>
+          <div className='flex'>
             {Object.keys(items).map((key: string) => {
               return (
-                <div className="text-white relative" key={key}>
-                  <h2 className="relative top-1/2 left-5 text-xl font-bold">
+                <div className='text-white relative' key={key}>
+                  <h2 className='relative top-1/2 left-5 text-xl font-bold'>
                     {items[key].title}
                   </h2>
                   <img
-                    className="rounded-xl mx-2"
+                    className='rounded-xl mx-2'
                     src={`https://image.tmdb.org/t/p/w300${items[key].posterPath}`}
-                    alt="poster"
+                    alt='poster'
                   />
                 </div>
               );
