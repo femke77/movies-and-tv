@@ -7,7 +7,6 @@ import {
 } from '@tanstack/react-query';
 import { useEffect, useCallback } from 'react';
 import { fetchItemDetail } from '../hooks/useItemOrWatchDetail';
-import ItemCardSkeleton from '../components/loadingSkeletons/ItemCardSkeleton';
 import { IItem } from '../interfaces/IItem';
 
 const Watchlist = () => {
@@ -39,9 +38,6 @@ const Watchlist = () => {
   });
 
   const itemDetails = itemQueries.data;
-  const isLoading = itemQueries.pending;
-
-  const itemSkeletons = Array(bookmarks.length || 5).fill(null);
 
   useEffect(() => {
     // ensure removed bookmarks don't stay in cache
@@ -58,24 +54,17 @@ const Watchlist = () => {
           Nothing saved yet!
         </div>
       )}
-      {isLoading ? (
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-          {itemSkeletons.map((_, index) => (
-            <ItemCardSkeleton key={`item-skeleton-${index}`} />
-          ))}
-        </div>
-      ) : (
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-          {itemDetails.map((item) => (
-            <ItemCard
-              key={item.id}
-              item={item}
-              itemType={item.media_type || ''}
-              isBookmarked={true}
-            />
-          ))}
-        </div>
-      )}
+
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
+        {itemDetails.map((item) => (
+          <ItemCard
+            key={item.id}
+            item={item}
+            itemType={item.media_type || ''}
+            isBookmarked={true}
+          />
+        ))}
+      </div>
     </div>
   );
 };

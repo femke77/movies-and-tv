@@ -7,6 +7,7 @@ import ServerList from '../../components/ServerList';
 import { isIphoneSafari } from '../../utils/helpers';
 import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
+import dayjs from 'dayjs';
 
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
@@ -14,13 +15,36 @@ const WatchMovie = () => {
   const { servers } = serverData;
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
-    const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
-    return lastSelectedServer || servers[0].value;
+    const lastSelectedServer = localStorage.getItem('lastSelectedServer');
+    return lastSelectedServer || servers[3].value;
   });
 
   const [serverURL, setServerURL] = useState('');
+
+  useEffect(() => {
+    if (!movie) return;
+
+    const continueWatching = localStorage.getItem('continueWatching');
+    const watchData = continueWatching ? JSON.parse(continueWatching) : {};
+
+    const newWatchData = {
+      ...watchData,
+      [movie_id!]: {
+        lastUpdated: dayjs().unix(),
+        title: movie.title,
+        posterPath: movie.backdrop_path,
+        media_type: 'movie',
+        id: Number(movie_id),
+        release_date: movie.release_date,
+        runtime: movie.runtime,
+      },
+    };
+
+    localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
+  }, [movie_id, movie]);
 
   useEffect(() => {
     let newURL = '';
@@ -37,6 +61,8 @@ const WatchMovie = () => {
       case 'vidbinge.dev':
         newURL = `https://vidbinge.dev/embed/movie/${movie_id}`;
         break;
+      default:
+        newURL = `https://vidbinge.dev/embed/movie/${movie_id}`;
     }
 
     if (timeoutRef.current) {
@@ -53,7 +79,7 @@ const WatchMovie = () => {
       }, 1000);
     }, 300);
 
-    sessionStorage.setItem('lastSelectedServer', selectedServer);
+    localStorage.setItem('lastSelectedServer', selectedServer);
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);

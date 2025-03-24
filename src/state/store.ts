@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import dayjs from 'dayjs';
 
 interface BookmarkStore {
   bookmarks: { id: string; type: string }[];
@@ -33,7 +34,10 @@ export const useBookmarkStore = create<BookmarkStore>()(
 
       addBookmark: (id, type) =>
         set((state) => ({
-          bookmarks: [...state.bookmarks, { id, type }],
+          bookmarks: [
+            ...state.bookmarks,
+            { id, type, dateAdded: dayjs().unix() },
+          ],
         })),
 
       removeBookmark: (id, type) =>

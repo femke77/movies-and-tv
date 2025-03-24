@@ -11,7 +11,7 @@ const ItemCardSkeletonGrid = () => {
               key={`skeleton-${index}`}
               className='flex w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]'
             >
-              <ItemCardSkeleton showRating={true} showGenres={true} />
+              <ItemCardSkeleton showRating={false} showGenres={false} />
             </div>
           ))}
       </div>

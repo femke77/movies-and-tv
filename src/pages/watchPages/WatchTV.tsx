@@ -15,6 +15,7 @@ import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/buttons/SeasonNavigation';
 import { isIphoneSafari } from '../../utils/helpers';
 import EpisodeList from '../../components/EpisodeList';
+import dayjs from 'dayjs';
 
 // FIXME This needs to be more componentized. iframe at least needs it's own component.
 // FIXME url params controlled instead of state controlled ??? would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management. Thinking about this.
@@ -25,21 +26,22 @@ const WatchTV = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { series_id } = useParams<{ series_id: string }>();
+
   const [isLoading, setIsLoading] = useState(true);
   const [selectedServer, setSelectedServer] = useState(() => {
-    const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
-    return lastSelectedServer || servers[0].value;
+    const lastSelectedServer = localStorage.getItem('lastSelectedServer');
+    return lastSelectedServer || servers[3].value;
   });
   const [selectedSeason, setSelectedSeason] = useState(() => {
-    const lastSelectedSeason = sessionStorage.getItem(
-      `${series_id}-lastSelectedSeason`,
+    const lastSelectedSeason = localStorage.getItem(
+      `lastSelectedSeason-${series_id}`,
     );
     if (lastSelectedSeason) return Number(lastSelectedSeason);
     return 1;
   });
   const [selectedEpisode, setSelectedEpisode] = useState(() => {
-    const lastSelectedEpisode = sessionStorage.getItem(
-      `${series_id}-lastSelectedEpisode`,
+    const lastSelectedEpisode = localStorage.getItem(
+      `lastSelectedEpisode-${series_id}`,
     );
     if (lastSelectedEpisode) return Number(lastSelectedEpisode);
     return 1;
@@ -49,13 +51,34 @@ const WatchTV = () => {
 
   const prevServerRef = useRef(selectedServer);
 
-  // const navigate = useNavigate();
-
-  const { data: series } = useWatchDetails('tv', series_id ?? '');
+  const { data: series } = useWatchDetails('tv', series_id!);
+  console.log(series);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
     String(selectedSeason),
   );
+
+  useEffect(() => {
+    if (!series) return;
+
+    const continueWatching = localStorage.getItem('continueWatching');
+    const watchData = continueWatching ? JSON.parse(continueWatching) : {};
+
+    const newWatchData = {
+      ...watchData,
+      [series_id!]: {
+        lastUpdated: dayjs().unix(),
+        title: series.original_name,
+        posterPath: series.backdrop_path,
+        media_type: 'tv',
+        id: Number(series_id),
+        season: selectedSeason,
+        episode: selectedEpisode,
+      },
+    };
+
+    localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
+  }, [series_id, series, selectedSeason, selectedEpisode]);
 
   useEffect(() => {
     if (episodes) {
@@ -67,14 +90,35 @@ const WatchTV = () => {
   }, [selectedSeason, episodes]);
 
   useEffect(() => {
-    sessionStorage.setItem(
-      `${series_id}-lastSelectedSeason`,
-      String(selectedSeason),
+    const lastSeason = localStorage.getItem(`lastSelectedSeason-${series_id}`);
+    if (lastSeason) {
+      localStorage.removeItem(`lastSelectedSeason-${series_id}`);
+      localStorage.setItem(
+        `lastSelectedSeason-${series_id}`,
+        String(selectedSeason),
+      );
+    } else {
+      localStorage.setItem(
+        `lastSelectedSeason-${series_id}`,
+        String(selectedSeason),
+      );
+    }
+
+    const lastEpisode = localStorage.getItem(
+      `lastSelectedEpisode-${series_id}`,
     );
-    sessionStorage.setItem(
-      `${series_id}-lastSelectedEpisode`,
-      String(selectedEpisode),
-    );
+    if (lastEpisode) {
+      localStorage.removeItem(`lastSelectedEpisode-${series_id}`);
+      localStorage.setItem(
+        `lastSelectedEpisode-${series_id}`,
+        String(selectedEpisode),
+      );
+    } else {
+      localStorage.setItem(
+        `lastSelectedEpisode-${series_id}`,
+        String(selectedEpisode),
+      );
+    }
   }, [series_id, selectedSeason, selectedEpisode]);
 
   useEffect(() => {
@@ -98,6 +142,8 @@ const WatchTV = () => {
       case 'vidbinge.dev':
         newURL = `https://vidbinge.dev/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
+      default:
+        newURL = `https://vidbinge.dev/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
     }
 
     const serverChanged = prevServerRef.current !== selectedServer;
@@ -121,7 +167,7 @@ const WatchTV = () => {
         }, 1500);
       }, 300);
 
-      sessionStorage.setItem('lastSelectedServer', selectedServer);
+      localStorage.setItem('lastSelectedServer', selectedServer);
     } else {
       iframeRef.current?.contentWindow?.location.replace(newURL);
     }
@@ -199,7 +245,7 @@ const WatchTV = () => {
                       </div>
                     </div>
                     {episodes && (
-                      <div className='flex gap-2 my-3 mx-5 sm:mx-0'>
+                      <div className='flex gap-2 my-3 mx-5 sm:mx-0 min-h-[30px]'>
                         <WatchPrevBtn
                           selectedEpisode={selectedEpisode}
                           setSelectedEpisode={setSelectedEpisode}
