@@ -37,18 +37,20 @@ const ContinueWatching = () => {
   ) => {
     e.preventDefault();
     e.stopPropagation();
-    const newItems = { ...items };
-    delete newItems[key];
-    setItems(newItems);
-    setActiveItemId(null);
-    localStorage.setItem('continueWatching', JSON.stringify(newItems));
+    setTimeout(() => {
+      const newItems = { ...items };
+      delete newItems[key];
+      setItems(newItems);
+      setActiveItemId(null);
+      localStorage.setItem('continueWatching', JSON.stringify(newItems));
+    }, 200);
   };
 
   return (
     <div>
       {Object.keys(items).length !== 0 && (
         <>
-          <h1 className="text-2xl font-semibold">Continue Watching</h1>
+          <h1 className="text-2xl font-semibold mb-4">Continue Watching</h1>
           <div className="flex">
             <SimpleSlider>
               {Object.keys(items).map((key: string) => {
@@ -67,19 +69,19 @@ const ContinueWatching = () => {
                       {/* Image and gradient overlay */}
                       {items[key].posterPath ? (
                         <img
-                          className="rounded-xl mr-2"
-                          src={`https://image.tmdb.org/t/p/w300${items[key].posterPath}`}
+                          className="rounded-xl mr-2 w-86 h-50"
+                          src={`https://image.tmdb.org/t/p/w780${items[key].posterPath}`}
                           alt="poster"
                         />
                       ) : (
                         <img
-                          className="rounded-xl mr-2 w-[308px] h-[169px] object-contain"
+                          className="rounded-xl mr-2  object-cover w-86 h-50"
                           src="/noimage2.webp"
                           alt="no image available"
                         />
                       )}
 
-                      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
+                      <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black to-transparent" />
                       <div
                         className={`absolute inset-0 bg-black/40 transition-opacity duration-200 rounded-xl ${
                           isActive ? 'opacity-100' : 'opacity-0'
@@ -94,9 +96,7 @@ const ContinueWatching = () => {
                         <div className="absolute right-2 z-50 p-2 pointer-events-auto">
                           <button
                             className="text-white font-bold rounded-full z-50 cursor-pointer bg-black/60 p-2 hover:bg-black/80 "
-                            onTouchStart={(e) => {
-                              handleDelete(e, key);
-                            }}
+                            onTouchStart={(e) => handleDelete(e, key)}
                             onClick={(e) => handleDelete(e, key)}
                           >
                             <svg
