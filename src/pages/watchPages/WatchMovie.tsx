@@ -50,7 +50,7 @@ const WatchMovie = () => {
     let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
-        newURL = `https://vidsrc.xyz/embed/movie/${movie_id}`;
+        newURL = `https://vidsrc.net/embed/movie/${movie_id}`;
         break;
       case 'videasy.net':
         newURL = `https://player.videasy.net/movie/${movie_id}`;

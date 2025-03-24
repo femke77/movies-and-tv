@@ -131,7 +131,7 @@ const WatchTV = () => {
     let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
-        newURL = `https://vidsrc.xyz/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
+        newURL = `https://vidsrc.net/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
         break;
       case 'videasy.net':
         newURL = `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
