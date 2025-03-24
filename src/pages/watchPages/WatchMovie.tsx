@@ -24,12 +24,11 @@ const WatchMovie = () => {
   const [serverURL, setServerURL] = useState('');
 
   useEffect(() => {
-
     if (!movie) return;
-    
+
     const continueWatching = localStorage.getItem('continueWatching');
     const watchData = continueWatching ? JSON.parse(continueWatching) : {};
-    
+
     const newWatchData = {
       ...watchData,
       [movie_id!]: {
@@ -40,14 +39,11 @@ const WatchMovie = () => {
         id: Number(movie_id),
       },
     };
-    
+
     localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
   }, [movie_id, movie]);
-    
-
 
   useEffect(() => {
- 
     const handleMessage = function (event: MessageEvent) {
       // console.log("event: ", event);
       if (event.data) {
@@ -55,7 +51,6 @@ const WatchMovie = () => {
           'Message received from the player: ',
           JSON.parse(event.data),
         ); // Message received from player
-        
       }
     };
 

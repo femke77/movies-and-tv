@@ -53,24 +53,23 @@ const WatchTV = () => {
 
   const { data: series } = useWatchDetails('tv', series_id ?? '');
   console.log(series);
-  
+
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
     String(selectedSeason),
   );
 
- useEffect(() => {
-
+  useEffect(() => {
     if (!series) return;
-    
+
     const continueWatching = localStorage.getItem('continueWatching');
     const watchData = continueWatching ? JSON.parse(continueWatching) : {};
-    
+
     const newWatchData = {
       ...watchData,
       [series_id!]: {
         lastUpdated: dayjs().unix(),
-        name: series.original_name ,
+        name: series.original_name,
         posterPath: series.poster_path,
         media_type: 'tv',
         id: Number(series_id),
@@ -78,10 +77,9 @@ const WatchTV = () => {
         episode: selectedEpisode,
       },
     };
-    
+
     localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
   }, [series_id, series, selectedSeason, selectedEpisode]);
-    
 
   useEffect(() => {
     if (episodes) {
