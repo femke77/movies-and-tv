@@ -51,7 +51,7 @@ const ContinueWatching = () => {
                     <div className="relative group">
                       {/* Image and gradient overlay */}
                       <img
-                        className="rounded-xl mx-2"
+                        className="rounded-xl mr-2"
                         src={`https://image.tmdb.org/t/p/w300${items[key].posterPath}`}
                         alt="poster"
                       />
