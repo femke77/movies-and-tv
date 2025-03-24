@@ -49,32 +49,33 @@ const Watchlist = () => {
   }, [bookmarks, queryClient]);
 
   return (
-    <div className='mt-24 text-white'>
-      <h1 className='text-3xl text-center mx-3 mb-4'>Watchlist</h1>
-      <hr className='border-gray-800 border-1  mb-4 mx-30' />
+    <div className="mt-24 text-white">
+      <h1 className="text-3xl text-center mx-3 mb-4">Watchlist</h1>
+      <hr className="border-gray-800 border-1  mb-4 mx-30" />
 
       {bookmarks.length === 0 && (
-        <div className='text-center text-white text-2xl my-10'>
+        <div className="text-center text-white text-2xl my-10">
           Nothing saved yet!
         </div>
       )}
-      {isLoading && (
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
+      {isLoading ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
           {itemSkeletons.map((_, index) => (
             <ItemCardSkeleton key={`item-skeleton-${index}`} />
           ))}
         </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          {itemDetails.map((item) => (
+            <ItemCard
+              key={item.id}
+              item={item}
+              itemType={item.media_type || ''}
+              isBookmarked={true}
+            />
+          ))}
+        </div>
       )}
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-        {itemDetails.map((item) => (
-          <ItemCard
-            key={item.id}
-            item={item}
-            itemType={item.media_type || ''}
-            isBookmarked={true}
-          />
-        ))}
-      </div>
     </div>
   );
 };
