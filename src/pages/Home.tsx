@@ -1,7 +1,6 @@
 import { lazy } from 'react';
 import SwiperElement from '../components/main/Swiper';
-import { useBookmarkStore } from '../state/store';
-import BookmarkModal from '../components/BookmarkModal2';
+
 const PopularMovies = lazy(() => import('../components/main/PopularMovies'));
 const TrendingMovies = lazy(() => import('../components/main/TrendingMovies'));
 const TopRatedMovies = lazy(() => import('../components/main/TopRatedMovies'));
@@ -22,13 +21,6 @@ const Home = () => {
         <TopRatedTv />
         <PopularTv />
       </div>
-
-      <button
-        onClick={() => useBookmarkStore.getState().openModal('1', 'movie')}
-      >
-        Open Modal
-      </button>
-      <BookmarkModal />
     </>
   );
 };
