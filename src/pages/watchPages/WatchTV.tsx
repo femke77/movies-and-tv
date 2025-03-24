@@ -32,14 +32,14 @@ const WatchTV = () => {
   });
   const [selectedSeason, setSelectedSeason] = useState(() => {
     const lastSelectedSeason = sessionStorage.getItem(
-      `${series_id}-lastSelectedSeason`,
+      `lastSelectedSeason-${series_id}`,
     );
     if (lastSelectedSeason) return Number(lastSelectedSeason);
     return 1;
   });
   const [selectedEpisode, setSelectedEpisode] = useState(() => {
     const lastSelectedEpisode = sessionStorage.getItem(
-      `${series_id}-lastSelectedEpisode`,
+      `lastSelectedEpisode-${series_id}`,
     );
     if (lastSelectedEpisode) return Number(lastSelectedEpisode);
     return 1;
@@ -67,14 +67,21 @@ const WatchTV = () => {
   }, [selectedSeason, episodes]);
 
   useEffect(() => {
-    sessionStorage.setItem(
-      `${series_id}-lastSelectedSeason`,
-      String(selectedSeason),
+    const lastSeason = sessionStorage.getItem(
+      `lastSelectedSeason-${series_id}`,
     );
-    sessionStorage.setItem(
-      `${series_id}-lastSelectedEpisode`,
-      String(selectedEpisode),
+    if (lastSeason){
+      sessionStorage.removeItem(`lastSelectedSeason-${series_id}`);
+      sessionStorage.setItem(`lastSelectedSeason-${series_id}`, String(selectedSeason));
+    }
+    const lastEpisode = sessionStorage.getItem(
+      `lastSelectedEpisode-${series_id}`,
     );
+    if (lastEpisode){
+      sessionStorage.removeItem(`lastSelectedEpisode-${series_id}`);
+      sessionStorage.setItem(`lastSelectedEpisode-${series_id}`, String(selectedEpisode));
+    }
+
   }, [series_id, selectedSeason, selectedEpisode]);
 
   useEffect(() => {
