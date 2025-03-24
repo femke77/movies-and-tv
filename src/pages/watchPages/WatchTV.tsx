@@ -28,18 +28,18 @@ const WatchTV = () => {
   
   const [isLoading, setIsLoading] = useState(true);
   const [selectedServer, setSelectedServer] = useState(() => {
-    const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
+    const lastSelectedServer = localStorage.getItem('lastSelectedServer');
     return lastSelectedServer || servers[3].value;
   });
   const [selectedSeason, setSelectedSeason] = useState(() => {
-    const lastSelectedSeason = sessionStorage.getItem(
+    const lastSelectedSeason = localStorage.getItem(
       `lastSelectedSeason-${series_id}`
     );
     if (lastSelectedSeason) return Number(lastSelectedSeason);
     return 1;
   });
   const [selectedEpisode, setSelectedEpisode] = useState(() => {
-    const lastSelectedEpisode = sessionStorage.getItem(
+    const lastSelectedEpisode = localStorage.getItem(
       `lastSelectedEpisode-${series_id}`
     );
     if (lastSelectedEpisode) return Number(lastSelectedEpisode);
@@ -66,33 +66,33 @@ const WatchTV = () => {
   }, [selectedSeason, episodes]);
 
   useEffect(() => {
-    const lastSeason = sessionStorage.getItem(
+    const lastSeason = localStorage.getItem(
       `lastSelectedSeason-${series_id}`
     );
     if (lastSeason) {
-      sessionStorage.removeItem(`lastSelectedSeason-${series_id}`);
-      sessionStorage.setItem(
+      localStorage.removeItem(`lastSelectedSeason-${series_id}`);
+      localStorage.setItem(
         `lastSelectedSeason-${series_id}`,
         String(selectedSeason)
       );
     } else {
-      sessionStorage.setItem(
+      localStorage.setItem(
         `lastSelectedSeason-${series_id}`,
         String(selectedSeason)
       );
     }
 
-    const lastEpisode = sessionStorage.getItem(
+    const lastEpisode = localStorage.getItem(
       `lastSelectedEpisode-${series_id}`
     );
     if (lastEpisode) {
-      sessionStorage.removeItem(`lastSelectedEpisode-${series_id}`);
-      sessionStorage.setItem(
+      localStorage.removeItem(`lastSelectedEpisode-${series_id}`);
+      localStorage.setItem(
         `lastSelectedEpisode-${series_id}`,
         String(selectedEpisode)
       );
     } else {
-      sessionStorage.setItem(
+      localStorage.setItem(
         `lastSelectedEpisode-${series_id}`,
         String(selectedEpisode)
       );
@@ -145,7 +145,7 @@ const WatchTV = () => {
         }, 1500);
       }, 300);
 
-      sessionStorage.setItem('lastSelectedServer', selectedServer);
+      localStorage.setItem('lastSelectedServer', selectedServer);
     } else {
       iframeRef.current?.contentWindow?.location.replace(newURL);
     }
@@ -223,7 +223,7 @@ const WatchTV = () => {
                       </div>
                     </div>
                     {episodes && (
-                      <div className="flex gap-2 my-3 mx-5 sm:mx-0">
+                      <div className="flex gap-2 my-3 mx-5 sm:mx-0 min-h-[30px]">
                         <WatchPrevBtn
                           selectedEpisode={selectedEpisode}
                           setSelectedEpisode={setSelectedEpisode}

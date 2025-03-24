@@ -16,7 +16,7 @@ const WatchMovie = () => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
-    const lastSelectedServer = sessionStorage.getItem('lastSelectedServer');
+    const lastSelectedServer = localStorage.getItem('lastSelectedServer');
     return lastSelectedServer || servers[3].value;
   });
 
@@ -76,7 +76,7 @@ const WatchMovie = () => {
       }, 1000);
     }, 300);
 
-    sessionStorage.setItem('lastSelectedServer', selectedServer);
+    localStorage.setItem('lastSelectedServer', selectedServer);
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);

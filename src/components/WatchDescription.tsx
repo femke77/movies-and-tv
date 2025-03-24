@@ -11,7 +11,7 @@ const WatchDescription = ({
   overview?: string;
 }) => {
   return (
-    <div>
+    <div className='min-h-[250px] sm:min-h-[200px] md:min-h-[175px] lg:min-h-[120px]'>
       <h1 className='text-xl mb-2'>{title || ''}</h1>
       <div className='flex items-center text-[#fff9] text-sm'>
         <div className='flex items-center'>
