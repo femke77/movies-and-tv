@@ -31,7 +31,7 @@ const Search = ({
       setSearchQuery(value);
       debounceRef.current = setTimeout(() => {
         navigate(`/search/${value}`, { replace: true });
-      }, 150);
+      }, 175);
     }
   };
   return (
