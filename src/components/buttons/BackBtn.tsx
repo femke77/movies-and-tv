@@ -1,7 +1,7 @@
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const BackButton = ({type, url }: {type:string, url: string }) => {
+const BackButton = ({ url }: { url: string }) => {
   const navigate = useNavigate();
   return (
     <button
@@ -9,7 +9,7 @@ const BackButton = ({type, url }: {type:string, url: string }) => {
       onClick={() => navigate(url, { replace: true })}
     >
       <ArrowLeft size={20} color='#ffffff' />
-      <p className='text-sm ml-1'>{type} Details</p>
+      <p className='text-sm ml-1'>Details</p>
     </button>
   );
 };

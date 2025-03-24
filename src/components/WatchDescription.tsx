@@ -11,7 +11,7 @@ const WatchDescription = ({
   overview?: string;
 }) => {
   return (
-    <div className='min-h-[250px] sm:min-h-[200px] md:min-h-[175px] lg:min-h-[120px]'>
+    <div className='h-[200px] sm:h-[200px] md:h-[175px] lg:h-[120px]'>
       <h1 className='text-xl mb-2'>{title || ''}</h1>
       <div className='flex items-center text-[#fff9] text-sm'>
         <div className='flex items-center'>
@@ -57,7 +57,7 @@ const WatchDescription = ({
           <p className='ml-2'>{rt || '0'} min</p>
         </div>
       </div>
-      <p className='my-2'>{overview || ''}</p>
+      <p className='my-2 line-clamp-6'>{overview || ''}</p>
     </div>
   );
 };
