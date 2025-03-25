@@ -9,6 +9,7 @@ import { CastList } from '../components/CastList';
 import dayjs from 'dayjs';
 import BookmarkBtn from '../components/buttons/BookmarkBtn';
 import { useBookmarkStore } from '../state/store';
+import Share from '../components/Share';
 
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -274,10 +275,16 @@ const ItemDetail = () => {
                 )}
               </div>
             </section>
+            <div className='flex justify-center w-full mt-4'>
+              <Share
+                media_type={item_type === 'tv' ? 'TV Show' : 'Movie'}
+                url={window.location.href}
+              />
+            </div>
 
             {/* Cast Section */}
             {item.cast?.length > 0 && (
-              <section className='w-full mt-24'>
+              <section className='w-full mt-14'>
                 <h3 className='text-2xl/14 text-white/70 text-center'>
                   Top Cast
                 </h3>
