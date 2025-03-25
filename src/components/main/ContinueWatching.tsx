@@ -63,7 +63,10 @@ const ContinueWatching = () => {
     closeModal();
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, key: string) => {
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    key: string,
+  ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       setActiveItemId(key);
     }
@@ -73,8 +76,10 @@ const ContinueWatching = () => {
     if (!carouselRef.current) return;
 
     const items = carouselRef.current.querySelectorAll('[data-carousel-item]');
-    const currentIndex = Array.from(items).findIndex(item => 
-      item === document.activeElement || item.contains(document.activeElement)
+    const currentIndex = Array.from(items).findIndex(
+      (item) =>
+        item === document.activeElement ||
+        item.contains(document.activeElement),
     );
 
     switch (e.key) {
@@ -112,7 +117,7 @@ const ContinueWatching = () => {
               Clear All
             </button>
           </div>
-          <div 
+          <div
             ref={carouselRef}
             className='flex'
             onKeyDown={handleCarouselKeyDown}
