@@ -20,8 +20,8 @@ const ItemDetail = () => {
   const { data: item } = useItemDetail(item_type!, id!);
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
 
-  useDocumentTitle(item?.title || item?.name || 'Item Detail');
-  
+  useDocumentTitle(item?.title || item?.name || 'Details');
+
   useEffect(() => {
     if (item?.backdrop_path) {
       const img = new Image();

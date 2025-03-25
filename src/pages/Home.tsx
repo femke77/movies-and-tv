@@ -12,9 +12,9 @@ const TopRatedTv = lazy(() => import('../components/main/TopRatedTv'));
 
 const Home = () => {
   useEffect(() => {
-    document.title = 'Home - BingeBox test';
+    document.title = 'Home - BingeBox';
   }, []);
-  
+
   return (
     <>
       <SwiperElement />

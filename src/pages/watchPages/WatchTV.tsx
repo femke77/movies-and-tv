@@ -16,6 +16,7 @@ import SeasonNavigation from '../../components/buttons/SeasonNavigation';
 import { isIphoneSafari } from '../../utils/helpers';
 import EpisodeList from '../../components/EpisodeList';
 import dayjs from 'dayjs';
+import useDocumentTitle from '../../hooks/usePageTitles';
 
 // FIXME This needs to be more componentized. iframe at least needs it's own component.
 // FIXME url params controlled instead of state controlled ??? would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management. Thinking about this.
@@ -56,7 +57,7 @@ const WatchTV = () => {
     series_id ?? '',
     String(selectedSeason),
   );
-
+useDocumentTitle(`Watch ${series?.original_name || 'TV Show'}`);
   useEffect(() => {
     if (!series) return;
 

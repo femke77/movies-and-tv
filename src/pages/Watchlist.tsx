@@ -8,9 +8,11 @@ import {
 import { useEffect, useCallback, useState, useRef } from 'react';
 import { fetchItemDetail } from '../hooks/useItemOrWatchDetail';
 import { IItem } from '../interfaces/IItem';
+import useDocumentTitle from '../hooks/usePageTitles';
 
 // TODO in filtered mode, if you remove a bookmark rerendering causes "all" to show again."
 const Watchlist = () => {
+  useDocumentTitle('Your Watchlist');
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
   const [items, setItems] = useState<IItem[]>([]);
   const [message, setMessage] = useState<string>('');

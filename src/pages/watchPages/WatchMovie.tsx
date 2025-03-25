@@ -8,6 +8,7 @@ import { isIphoneSafari } from '../../utils/helpers';
 import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
 import dayjs from 'dayjs';
+import useDocumentTitle from '../../hooks/usePageTitles';
 
 const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
@@ -15,7 +16,7 @@ const WatchMovie = () => {
   const { servers } = serverData;
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
+ useDocumentTitle(`Watch ${movie?.title || 'Movie'}`);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
