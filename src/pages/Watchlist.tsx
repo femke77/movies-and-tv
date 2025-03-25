@@ -41,7 +41,7 @@ const Watchlist = () => {
     }, []),
   });
 
-  const itemDetails = itemQueries.data;
+  const itemDetails = itemQueries.data || [];
 
   useEffect(() => {
     filterItems(filterRef.current);
