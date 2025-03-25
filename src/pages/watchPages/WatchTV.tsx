@@ -52,7 +52,6 @@ const WatchTV = () => {
   const prevServerRef = useRef(selectedServer);
 
   const { data: series } = useWatchDetails('tv', series_id!);
-  console.log(series);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
     String(selectedSeason),

@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import SimpleSlider from './containers/SimpleCarousel';
 
-
 interface WatchItem {
   title: string;
   posterPath: string;
@@ -20,14 +19,12 @@ interface WatchItems {
 }
 
 const ContinueWatching = () => {
-  const [items, setItems] = useState<WatchItems>({}); 
+  const [items, setItems] = useState<WatchItems>({});
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
-  
 
   useEffect(() => {
     const continueWatching = localStorage.getItem('continueWatching');
- 
-    
+
     if (continueWatching) {
       setItems(JSON.parse(continueWatching));
     }
@@ -85,7 +82,7 @@ const ContinueWatching = () => {
                         />
                       )}
 
-                      <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-transparent" />
+                      <div className='absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-transparent' />
                       <div
                         className={`absolute inset-0 bg-black/40 transition-opacity duration-200 rounded-xl ${
                           isActive ? 'opacity-100' : 'opacity-0'
@@ -133,7 +130,12 @@ const ContinueWatching = () => {
                             </p>
                           ) : (
                             <p>
-                              {dayjs(items[key].release_date).format('YYYY') === 'Invalid Date' ? 'Unknown Date ': dayjs(items[key].release_date).format('YYYY')}{' '}
+                              {dayjs(items[key].release_date).format('YYYY') ===
+                              'Invalid Date'
+                                ? 'Unknown Date '
+                                : dayjs(items[key].release_date).format(
+                                    'YYYY',
+                                  )}{' '}
                               &#x2022; {items[key].runtime || '0'} min
                             </p>
                           )}
