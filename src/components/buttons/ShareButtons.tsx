@@ -1,20 +1,20 @@
 import {
   EmailShareButton,
-  FacebookShareButton,
+  // FacebookShareButton,
   RedditShareButton,
-  TelegramShareButton,
-  TwitterShareButton,
+  // TelegramShareButton,
+  // TwitterShareButton,
   WhatsappShareButton,
-  BlueskyShareButton,
+  // BlueskyShareButton,
 } from 'react-share';
 import {
   EmailIcon,
-  FacebookIcon,
+  // FacebookIcon,
   RedditIcon,
-  TelegramIcon,
-  TwitterIcon,
+  // TelegramIcon,
+  // TwitterIcon,
   WhatsappIcon,
-  BlueskyIcon,
+  // BlueskyIcon,
 } from 'react-share';
 import { Copy } from 'lucide-react';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
@@ -26,24 +26,24 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
         <EmailIcon size={32} round={true} />
       </EmailShareButton>
 
-      <FacebookShareButton url={url}>
+      {/* <FacebookShareButton url={url}>
         <FacebookIcon size={32} round={true} />
       </FacebookShareButton>
       <TwitterShareButton url={url}>
         <TwitterIcon size={32} round={true} />
-      </TwitterShareButton>
+      </TwitterShareButton> */}
       <RedditShareButton url={url} title={`Check out this ${media_type}!`}>
         <RedditIcon size={32} round={true} />
       </RedditShareButton>
-      <TelegramShareButton url={url} title={`Check out this ${media_type}!`}>
+      {/* <TelegramShareButton url={url} title={`Check out this ${media_type}!`}>
         <TelegramIcon size={32} round={true} />
-      </TelegramShareButton>
+      </TelegramShareButton> */}
       <WhatsappShareButton url={url} title={`Check out this ${media_type}!`}>
         <WhatsappIcon size={32} round={true} />
       </WhatsappShareButton>
-      <BlueskyShareButton url={url} title={`Check out this ${media_type}!`}>
+      {/* <BlueskyShareButton url={url} title={`Check out this ${media_type}!`}>
         <BlueskyIcon size={32} round={true} />
-      </BlueskyShareButton>
+      </BlueskyShareButton> */}
       <button
         onClick={() => {
           navigator.clipboard.writeText(url);
