@@ -1,8 +1,16 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 
-
-export default function ConfirmModal({showModal, closeModal, handleClick, message}: {showModal: boolean, closeModal: () => void, handleClick: () => void, message: string}) {
-
+export default function ConfirmModal({
+  showModal,
+  closeModal,
+  handleClick,
+  message,
+}: {
+  showModal: boolean;
+  closeModal: () => void;
+  handleClick: () => void;
+  message: string;
+}) {
   return (
     <Dialog
       open={showModal}
@@ -20,7 +28,7 @@ export default function ConfirmModal({showModal, closeModal, handleClick, messag
             as='h3'
             className='text-lg font-semibold text-white'
           >
-          {message}
+            {message}
           </DialogTitle>
           {/* <p className='mt-2 text-white/50'>{`ID: ${id} | Type: ${type}`}</p> */}
           <div className='mt-4 flex gap-4'>

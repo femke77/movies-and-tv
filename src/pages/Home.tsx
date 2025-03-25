@@ -13,11 +13,11 @@ const Home = () => {
   return (
     <>
       <SwiperElement />
-      <div className="mt-46">
+      <div className='mt-46'>
         <ContinueWatching />
       </div>
 
-      <div className="my-40">
+      <div className='my-40'>
         <TrendingMovies />
         <PopularMovies />
         <TopRatedMovies />

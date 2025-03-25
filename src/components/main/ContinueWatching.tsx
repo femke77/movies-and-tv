@@ -36,7 +36,7 @@ const ContinueWatching = () => {
     e:
       | React.MouseEvent<HTMLButtonElement>
       | React.TouchEvent<HTMLButtonElement>,
-    key: string
+    key: string,
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -71,22 +71,22 @@ const ContinueWatching = () => {
       />
       {Object.keys(items).length !== 0 && (
         <>
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-semibold mb-4">Continue Watching</h1>
+          <div className='flex justify-between items-center'>
+            <h1 className='text-2xl font-semibold mb-4'>Continue Watching</h1>
             <button
               onClick={() => setOpenModal(true)}
-              className="bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6"
+              className='bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
             >
               Clear All
             </button>
           </div>
-          <div className="flex">
+          <div className='flex'>
             <DraggableCarousel>
               {Object.keys(items).map((key: string) => {
                 const isActive = activeItemId === key;
                 return (
                   <div
-                    className="text-white relative flex-shrink-0"
+                    className='text-white relative flex-shrink-0'
                     key={key}
                     onTouchStart={() => {
                       setActiveItemId(key);
@@ -98,19 +98,19 @@ const ContinueWatching = () => {
                       {/* Image and gradient overlay */}
                       {items[key].posterPath ? (
                         <img
-                          className="rounded-xl mr-2 w-86 h-50"
+                          className='rounded-xl mr-2 w-86 h-50'
                           src={`https://image.tmdb.org/t/p/w780${items[key].posterPath}`}
-                          alt="poster"
+                          alt='poster'
                         />
                       ) : (
                         <img
-                          className="rounded-xl mr-2  object-cover w-86 h-50"
-                          src="/noimage2.webp"
-                          alt="no image available"
+                          className='rounded-xl mr-2  object-cover w-86 h-50'
+                          src='/noimage2.webp'
+                          alt='no image available'
                         />
                       )}
 
-                      <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-transparent" />
+                      <div className='absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-transparent' />
                       <div
                         className={`absolute inset-0 bg-black/40 transition-opacity duration-200 rounded-xl ${
                           isActive ? 'opacity-100' : 'opacity-0'
@@ -122,36 +122,36 @@ const ContinueWatching = () => {
                           isActive ? 'opacity-100' : 'opacity-0'
                         }`}
                       >
-                        <div className="absolute right-2 z-50 p-2 pointer-events-auto">
+                        <div className='absolute right-2 z-50 p-2 pointer-events-auto'>
                           <button
-                            className="text-white font-bold rounded-full z-50 cursor-pointer bg-black/60 p-2 hover:bg-black/80 "
+                            className='text-white font-bold rounded-full z-50 cursor-pointer bg-black/60 p-2 hover:bg-black/80 '
                             onTouchStart={(e) => handleDelete(e, key)}
                             onClick={(e) => handleDelete(e, key)}
                           >
                             <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="white"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
+                              xmlns='http://www.w3.org/2000/svg'
+                              width='16'
+                              height='16'
+                              viewBox='0 0 24 24'
+                              fill='none'
+                              stroke='white'
+                              strokeWidth='2'
+                              strokeLinecap='round'
+                              strokeLinejoin='round'
                             >
-                              <line x1="18" y1="6" x2="6" y2="18"></line>
-                              <line x1="6" y1="6" x2="18" y2="18"></line>
+                              <line x1='18' y1='6' x2='6' y2='18'></line>
+                              <line x1='6' y1='6' x2='18' y2='18'></line>
                             </svg>
                           </button>
                         </div>
                       </div>
 
                       {/* Title and info */}
-                      <div className="absolute bottom-0 left-0 w-full px-5 pb-4">
-                        <h2 className="text-xl font-bold">
+                      <div className='absolute bottom-0 left-0 w-full px-5 pb-4'>
+                        <h2 className='text-xl font-bold'>
                           {items[key].title}
                         </h2>
-                        <h3 className="text-lg">
+                        <h3 className='text-lg'>
                           {items[key].media_type === 'tv' ? (
                             <p>
                               S{items[key].season}, E{items[key].episode}
@@ -162,7 +162,7 @@ const ContinueWatching = () => {
                               'Invalid Date'
                                 ? 'Unknown Date '
                                 : dayjs(items[key].release_date).format(
-                                    'YYYY'
+                                    'YYYY',
                                   )}{' '}
                               &#x2022; {items[key].runtime || '0'} min
                             </p>
@@ -178,20 +178,20 @@ const ContinueWatching = () => {
                       >
                         <Link
                           to={`/watch/${items[key].media_type}/${items[key].id}`}
-                          className="rounded-full bg-white/20 p-4 backdrop-blur-sm"
+                          className='rounded-full bg-white/20 p-4 backdrop-blur-sm'
                         >
                           <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="32"
-                            height="32"
-                            viewBox="0 0 24 24"
-                            fill="white"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='32'
+                            height='32'
+                            viewBox='0 0 24 24'
+                            fill='white'
+                            stroke='white'
+                            strokeWidth='2'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
                           >
-                            <polygon points="5 3 19 12 5 21 5 3" />
+                            <polygon points='5 3 19 12 5 21 5 3' />
                           </svg>
                         </Link>
                       </div>
