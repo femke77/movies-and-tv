@@ -1,24 +1,16 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
-import { useBookmarkStore } from '../state/store';
 
-export default function BookmarkModal() {
-  const { showModal, modalData, closeModal, addBookmark, removeBookmark } =
-    useBookmarkStore();
-
-  if (!modalData) return null;
-
-  const { id, type, isBookmarked } = modalData;
-
-  const handleBookmarkToggle = () => {
-    if (isBookmarked) {
-      removeBookmark(id, type);
-      closeModal();
-    } else {
-      addBookmark(id, type);
-      closeModal();
-    }
-  };
-
+export default function ConfirmModal({
+  showModal,
+  closeModal,
+  handleClick,
+  message,
+}: {
+  showModal: boolean;
+  closeModal: () => void;
+  handleClick: () => void;
+  message: string;
+}) {
   return (
     <Dialog
       open={showModal}
@@ -36,17 +28,15 @@ export default function BookmarkModal() {
             as='h3'
             className='text-lg font-semibold text-white'
           >
-            {isBookmarked
-              ? 'Remove this from your watchlist?'
-              : 'Add this to your watchlist?'}
+            {message}
           </DialogTitle>
           {/* <p className='mt-2 text-white/50'>{`ID: ${id} | Type: ${type}`}</p> */}
           <div className='mt-4 flex gap-4'>
             <Button
               className='bg-gray-700 text-white px-3 py-1.5 rounded-md'
-              onClick={handleBookmarkToggle}
+              onClick={handleClick}
             >
-              {isBookmarked ? 'Remove' : 'Add'}
+              Yes
             </Button>
             <Button
               className='bg-red-600 text-white px-3 py-1.5 rounded-md'

@@ -9,7 +9,7 @@ import { CastList } from '../components/CastList';
 import dayjs from 'dayjs';
 import BookmarkBtn from '../components/buttons/BookmarkBtn';
 import { useBookmarkStore } from '../state/store';
-import Share from '../components/Share';
+import Share from '../components/buttons/ShareButtons';
 
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);

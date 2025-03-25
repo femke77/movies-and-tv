@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
-import SimpleSlider from './containers/SimpleCarousel';
+import DraggableCarousel from '../containers/SimpleCarousel';
+import ConfirmModal from '../ConfirmModal';
 
 interface WatchItem {
   title: string;
@@ -21,6 +22,7 @@ interface WatchItems {
 const ContinueWatching = () => {
   const [items, setItems] = useState<WatchItems>({});
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const continueWatching = localStorage.getItem('continueWatching');
@@ -47,13 +49,39 @@ const ContinueWatching = () => {
     }, 200);
   };
 
+  const closeModal = () => {
+    setOpenModal(false);
+  };
+
+  const handleClearAll = () => {
+    const newItems = {};
+    setItems(newItems);
+    setActiveItemId(null);
+    localStorage.setItem('continueWatching', JSON.stringify(newItems));
+    closeModal();
+  };
+
   return (
     <div>
+      <ConfirmModal
+        showModal={openModal}
+        closeModal={closeModal}
+        handleClick={handleClearAll}
+        message={'Are you sure you want to clear all items?'}
+      />
       {Object.keys(items).length !== 0 && (
         <>
-          <h1 className='text-2xl font-semibold mb-4'>Continue Watching</h1>
+          <div className='flex justify-between items-center'>
+            <h1 className='text-2xl font-semibold mb-4'>Continue Watching</h1>
+            <button
+              onClick={() => setOpenModal(true)}
+              className='bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+            >
+              Clear All
+            </button>
+          </div>
           <div className='flex'>
-            <SimpleSlider>
+            <DraggableCarousel>
               {Object.keys(items).map((key: string) => {
                 const isActive = activeItemId === key;
                 return (
@@ -171,7 +199,7 @@ const ContinueWatching = () => {
                   </div>
                 );
               })}
-            </SimpleSlider>
+            </DraggableCarousel>
           </div>
         </>
       )}

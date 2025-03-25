@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import SwiperElement from '../components/main/Swiper';
-import ContinueWatching from '../components/ContinueWatching';
+import ContinueWatching from '../components/main/ContinueWatching';
 
 const PopularMovies = lazy(() => import('../components/main/PopularMovies'));
 const TrendingMovies = lazy(() => import('../components/main/TrendingMovies'));

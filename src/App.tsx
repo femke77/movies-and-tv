@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ScrollRestoration } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // import { useBookmarkStore } from './state/store';
-import BookmarkModal from './components/BookmarkModal';
+import BookmarkModal from './components/modals/BookmarkModal';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
