@@ -19,7 +19,7 @@ const WatchMovie = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
-    return lastSelectedServer || servers[2].value;
+    return lastSelectedServer || servers[0].value;
   });
 
   const [serverURL, setServerURL] = useState('');
@@ -61,8 +61,12 @@ const WatchMovie = () => {
       case 'vidbinge.dev':
         newURL = `https://vidbinge.dev/embed/movie/${movie_id}`;
         break;
-      default:
-        newURL = `https://vidbinge.dev/embed/movie/${movie_id}`;
+      case 'moviesapi.club':
+        newURL = `https://moviesapi.to/movie/${movie_id}`;
+        break;
+      case 'embed.su':
+        newURL = `https://embed.su/embed/movie/${movie_id}`;
+        break;
     }
 
     if (timeoutRef.current) {
@@ -88,16 +92,16 @@ const WatchMovie = () => {
   }, [selectedServer, movie_id]);
 
   return (
-    <div className='min-h-screen pt-[60px]'>
-      <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
-        <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
-          <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
+    <div className="min-h-screen pt-[60px]">
+      <div className="flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto">
+        <div className="primary flex-1 w-full lg:max-w-[calc(100%-424px)]">
+          <div className="flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]">
             <div>
               <BackButton url={`/movie/${movie_id}`} />
             </div>
             {movie && (
               <p
-                className='font-bold truncate text-ellipsis mx-6'
+                className="font-bold truncate text-ellipsis mx-6"
                 title={movie.title}
               >
                 {movie.title || ''}
@@ -105,32 +109,32 @@ const WatchMovie = () => {
             )}
             {/* iphone safari doesn't support the FS api */}
             <div className={`${isIphoneSafari() ? 'invisible' : ''}`}>
-              <FullscreenBtn elementId='iframe' />
+              <FullscreenBtn elementId="iframe" />
             </div>
           </div>
           <main>
-            <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
+            <div className="relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]">
               <iframe
                 ref={iframeRef}
-                id='iframe'
-                className='absolute top-0 left-0 w-full h-full bg-black'
-                width='100%'
-                height='100%'
+                id="iframe"
+                className="absolute top-0 left-0 w-full h-full bg-black"
+                width="100%"
+                height="100%"
                 src={serverURL}
-                allow='encrypted-media'
+                allow="encrypted-media"
                 allowFullScreen
               ></iframe>
               {isLoading && (
-                <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10'>
-                  <div className='text-white text-center'>
-                    <div className='inline-block w-8 h-8 border-4 border-t-blue-500 border-r-transparent border-b-blue-500 border-l-transparent rounded-full animate-spin mb-2'></div>
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10">
+                  <div className="text-white text-center">
+                    <div className="inline-block w-8 h-8 border-4 border-t-blue-500 border-r-transparent border-b-blue-500 border-l-transparent rounded-full animate-spin mb-2"></div>
                     <p>Loading {selectedServer}... </p>
                   </div>
                 </div>
               )}
             </div>
 
-            <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]'>
+            <div className="rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]">
               {/* description */}
               {movie && (
                 <WatchDescription
@@ -143,9 +147,9 @@ const WatchMovie = () => {
             </div>
           </main>
         </div>
-        <div className='secondary lg:w-[400px] lg:flex-shrink-0 '>
+        <div className="secondary lg:w-[400px] lg:flex-shrink-0 ">
           {/* right side with server choices and episodes for tv*/}
-          <div className='sidebar bg-[#1f1f1f] max-h-[800px] flex flex-col rounded-lg'>
+          <div className="sidebar bg-[#1f1f1f] max-h-[800px] flex flex-col rounded-lg">
             <ServerList
               serverData={servers}
               selectedServer={selectedServer}

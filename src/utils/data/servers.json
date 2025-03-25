@@ -11,14 +11,19 @@
 			"value": "vidlink.pro"
 		},
 		{
-			"id": 4,
-			"name": "VidBinge",
-			"value": "vidbinge.dev"
-		},
-		{
 			"id": 1,
 			"name": "VidSrc",
 			"value": "vidsrc.xyz"
+		},
+		{
+			"id": 4,
+			"name": "MovieClub",
+			"value": "moviesapi.club"
+		},
+		{
+			"id": 5,
+			"name": "Embed.su",
+			"value": "embed.su"
 		}
 		
 	]
