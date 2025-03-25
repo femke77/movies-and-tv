@@ -165,7 +165,7 @@ const ContinueWatching = () => {
                           <button
                             tabIndex={isActive ? 0 : -1}
                             aria-label='Remove item'
-                            className='text-white font-bold rounded-full z-50 cursor-pointer bg-black/60 p-2 hover:bg-black/80 focus:outline-2 focus:outline-white focus:outline'
+                            className='text-white font-bold rounded-full z-50 cursor-pointer bg-black/60 p-2 hover:bg-black/80 focus:outline-2 focus:outline-white '
                             onKeyDown={(e) => {
                               if (e.key === 'Enter' || e.key === ' ') {
                                 handleDelete(e, key);
@@ -225,7 +225,7 @@ const ContinueWatching = () => {
                         <Link
                           to={`/watch/${items[key].media_type}/${items[key].id}`}
                           tabIndex={isActive ? 0 : -1}
-                          className='rounded-full bg-white/20 p-4 backdrop-blur-sm focus:outline-2 focus:outline-white focus:outline'
+                          className='rounded-full bg-white/20 p-4 backdrop-blur-sm focus:outline-2 focus:outline-white '
                         >
                           <svg
                             xmlns='http://www.w3.org/2000/svg'
