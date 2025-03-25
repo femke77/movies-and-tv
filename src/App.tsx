@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ScrollRestoration } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // import { useBookmarkStore } from './state/store';
-import BookmarkModal from './components/BookmarkModal';
+import BookmarkModal from './components/modals/BookmarkModal';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -25,11 +25,11 @@ function App() {
   return (
     <>
       <ScrollRestoration />
-      <div className='bg-black text-white h-full'>
+      <div className="bg-black text-white h-full">
         <Header>
           <Nav setSearchQuery={setSearchQuery} />
         </Header>
-        <main className='min-h-screen  '>
+        <main className="min-h-screen  ">
           <Outlet context={searchQuery} />
         </main>
         <Footer />

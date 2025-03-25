@@ -5,12 +5,13 @@ import {
   useQueryClient,
   QueryObserverResult,
 } from '@tanstack/react-query';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { fetchItemDetail } from '../hooks/useItemOrWatchDetail';
 import { IItem } from '../interfaces/IItem';
 
 const Watchlist = () => {
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const [items, setItems] = useState<IItem[]>([]);
   const queryClient = useQueryClient();
 
   const itemQueries = useQueries({
@@ -40,23 +41,57 @@ const Watchlist = () => {
   const itemDetails = itemQueries.data;
 
   useEffect(() => {
+    setItems(itemDetails);
+  }, [itemDetails]);
+
+  useEffect(() => {
     // ensure removed bookmarks don't stay in cache
     queryClient.invalidateQueries({ queryKey: ['watchlist'] });
   }, [bookmarks, queryClient]);
 
-  return (
-    <div className='mt-24 text-white'>
-      <h1 className='text-3xl text-center mx-3 mb-4'>Watchlist</h1>
-      <hr className='border-gray-800 border-1  mb-4 mx-30' />
+  const filterItems = (media_type: string) => {
+    if (media_type === 'all') {
+      setItems(itemDetails);
+      return;
+    }
+    const filtered = itemDetails.filter(
+      (item) => item.media_type === media_type
+    );
+    setItems(filtered);
+  };
 
+  return (
+    <div className="mt-24 text-white">
+      <h1 className="text-4xl text-center mx-3 mb-6">Watchlist</h1>
+      {/* <hr className="border-gray-800 border-1  mb-4 mx-30" /> */}
+      <div className="flex justify-center space-x-4 mb-8">
+        <button
+          className="bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6"
+          onClick={() => filterItems('tv')}
+        >
+          TV Shows
+        </button>
+        <button
+          className="bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6"
+          onClick={() => filterItems('movie')}
+        >
+          Movies
+        </button>
+
+        <button
+          className="bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6"
+          onClick={() => filterItems('all')}
+        >
+          All
+        </button>
+      </div>
       {bookmarks.length === 0 && (
-        <div className='text-center text-white text-2xl my-10'>
+        <div className="text-center text-white text-2xl my-10">
           Nothing saved yet!
         </div>
       )}
-
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-        {itemDetails.map((item) => (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        {items.map((item) => (
           <ItemCard
             key={item.id}
             item={item}
