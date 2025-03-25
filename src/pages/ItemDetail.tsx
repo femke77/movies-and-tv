@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import BookmarkBtn from '../components/buttons/BookmarkBtn';
 import { useBookmarkStore } from '../state/store';
 import Share from '../components/buttons/ShareButtons';
+import useDocumentTitle from '../hooks/usePageTitles';
 
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,6 +19,9 @@ const ItemDetail = () => {
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
+
+  useDocumentTitle(item?.title || item?.name || 'Item Detail');
+  
   useEffect(() => {
     if (item?.backdrop_path) {
       const img = new Image();
