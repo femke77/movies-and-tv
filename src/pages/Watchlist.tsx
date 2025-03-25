@@ -5,14 +5,16 @@ import {
   useQueryClient,
   QueryObserverResult,
 } from '@tanstack/react-query';
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useRef} from 'react';
 import { fetchItemDetail } from '../hooks/useItemOrWatchDetail';
 import { IItem } from '../interfaces/IItem';
 
+// TODO in filtered mode, if you remove a bookmark rerendering causes "all" to show again."
 const Watchlist = () => {
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
   const [items, setItems] = useState<IItem[]>([]);
   const [message, setMessage] = useState<string>('');
+  const filterRef = useRef('all');
   const queryClient = useQueryClient();
 
   const itemQueries = useQueries({
@@ -42,7 +44,7 @@ const Watchlist = () => {
   const itemDetails = itemQueries.data;
 
   useEffect(() => {
-    setItems(itemDetails);
+   filterItems(filterRef.current);
   }, [itemDetails]);
 
   useEffect(() => {
@@ -53,6 +55,7 @@ const Watchlist = () => {
   const filterItems = (media_type: string) => {
     if (media_type === 'all') {
       setItems(itemDetails);
+      filterRef.current = 'all';
       itemDetails.length === 0
         ? setMessage('Nothing Saved Yet!')
         : setMessage('');
@@ -62,6 +65,7 @@ const Watchlist = () => {
       (item) => item.media_type === media_type
     );
     setItems(filtered);
+    filterRef.current = media_type;
     filtered.length === 0 && media_type !== 'all'
       ? media_type === 'tv'
         ? setMessage('No TV Shows saved yet!')
