@@ -131,6 +131,7 @@ const ItemDetail = () => {
                   {item.rating}
                 </span>
               </p>
+
               <div className='[@media(max-width:380px)]:justify-center flex flex-wrap items-center justify-between space-x-5 [@media(max-width:372px)]:mb-0 mb-4 md:mb-0'>
                 <UserRating
                   rating={item.vote_average}
@@ -142,21 +143,25 @@ const ItemDetail = () => {
                 <div className=''>
                   <WatchButton itemType={item_type!} id={item.id} />
                 </div>
-                <div className=''>
-                  <div className='[@media(max-width:371px)]:mt-0 mt-[19px]'>
-                    <BookmarkBtn
-                      isBookmarked={bookmarks.some(
-                        (bookmark) =>
-                          bookmark.id === item.id &&
-                          bookmark.type === item_type,
-                      )}
-                      id={item.id}
-                      type={item_type!}
-                    />
-                  </div>
+
+                <div className='[@media(max-width:371px)]:mt-0 mt-[19px]'>
+                  <BookmarkBtn
+                    isBookmarked={bookmarks.some(
+                      (bookmark) =>
+                        bookmark.id === item.id && bookmark.type === item_type,
+                    )}
+                    id={item.id}
+                    type={item_type!}
+                  />
                 </div>
               </div>
 
+              <div className='ml-4 flex justify-center  md:justify-start w-full mt-4'>
+                <Share
+                  media_type={item_type === 'tv' ? 'TV Show' : 'Movie'}
+                  url={window.location.href}
+                />
+              </div>
               <h3 className='text-3xl font-bold mt-4 text-center md:text-left'>
                 Overview
               </h3>
@@ -275,12 +280,6 @@ const ItemDetail = () => {
                 )}
               </div>
             </section>
-            <div className='flex justify-center w-full mt-4'>
-              <Share
-                media_type={item_type === 'tv' ? 'TV Show' : 'Movie'}
-                url={window.location.href}
-              />
-            </div>
 
             {/* Cast Section */}
             {item.cast?.length > 0 && (

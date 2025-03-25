@@ -41,7 +41,7 @@ const Watchlist = () => {
     }, []),
   });
 
-  const itemDetails = itemQueries.data;
+  const itemDetails = itemQueries.data || [];
 
   useEffect(() => {
     filterItems(filterRef.current);
@@ -80,8 +80,8 @@ const Watchlist = () => {
   };
 
   return (
-    <div className='mt-20 text-white min-h-screen'>
-      <h1 className='text-4xl text-center mx-3 mb-6'>Watchlist</h1>
+    <div className='mt-24 text-white min-h-screen'>
+      <h1 className='text-4xl text-center mx-3 mb-9'>Watchlist</h1>
       {/* <hr className="border-gray-800 border-1  mb-4 mx-30" /> */}
       <div className='flex justify-center space-x-4 mb-8'>
         <button

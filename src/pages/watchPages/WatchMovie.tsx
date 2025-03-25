@@ -19,7 +19,7 @@ const WatchMovie = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
-    return lastSelectedServer || servers[2].value;
+    return lastSelectedServer || servers[0].value;
   });
 
   const [serverURL, setServerURL] = useState('');
@@ -61,8 +61,12 @@ const WatchMovie = () => {
       case 'vidbinge.dev':
         newURL = `https://vidbinge.dev/embed/movie/${movie_id}`;
         break;
-      default:
-        newURL = `https://vidbinge.dev/embed/movie/${movie_id}`;
+      case 'moviesapi.club':
+        newURL = `https://moviesapi.to/movie/${movie_id}`;
+        break;
+      case 'embed.su':
+        newURL = `https://embed.su/embed/movie/${movie_id}`;
+        break;
     }
 
     if (timeoutRef.current) {

@@ -40,7 +40,7 @@ export default function BookmarkModal() {
               ? 'Remove this from your watchlist?'
               : 'Add this to your watchlist?'}
           </DialogTitle>
-          {/* <p className='mt-2 text-white/50'>{`ID: ${id} | Type: ${type}`}</p> */}
+
           <div className='mt-4 flex gap-4'>
             <Button
               className='bg-gray-700 text-white px-3 py-1.5 rounded-md'

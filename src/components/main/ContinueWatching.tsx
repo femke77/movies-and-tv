@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import DraggableCarousel from '../containers/SimpleCarousel';
-import ConfirmModal from '../ConfirmModal';
+import ConfirmModal from '../modals/ConfirmModal';
 
 interface WatchItem {
   title: string;
@@ -23,6 +23,7 @@ const ContinueWatching = () => {
   const [items, setItems] = useState<WatchItems>({});
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const continueWatching = localStorage.getItem('continueWatching');
@@ -35,7 +36,8 @@ const ContinueWatching = () => {
   const handleDelete = (
     e:
       | React.MouseEvent<HTMLButtonElement>
-      | React.TouchEvent<HTMLButtonElement>,
+      | React.TouchEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLButtonElement>,
     key: string,
   ) => {
     e.preventDefault();
@@ -61,6 +63,41 @@ const ContinueWatching = () => {
     closeModal();
   };
 
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    key: string,
+  ) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      setActiveItemId(key);
+    }
+  };
+
+  const handleCarouselKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!carouselRef.current) return;
+
+    const items = carouselRef.current.querySelectorAll('[data-carousel-item]');
+    const currentIndex = Array.from(items).findIndex(
+      (item) =>
+        item === document.activeElement ||
+        item.contains(document.activeElement),
+    );
+
+    switch (e.key) {
+      case 'ArrowRight':
+        e.preventDefault();
+        if (currentIndex < items.length - 1) {
+          (items[currentIndex + 1] as HTMLElement).focus();
+        }
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        if (currentIndex > 0) {
+          (items[currentIndex - 1] as HTMLElement).focus();
+        }
+        break;
+    }
+  };
+
   return (
     <div>
       <ConfirmModal
@@ -80,19 +117,26 @@ const ContinueWatching = () => {
               Clear All
             </button>
           </div>
-          <div className='flex'>
+          <div
+            ref={carouselRef}
+            className='flex'
+            onKeyDown={handleCarouselKeyDown}
+          >
             <DraggableCarousel>
               {Object.keys(items).map((key: string) => {
                 const isActive = activeItemId === key;
                 return (
                   <div
-                    className='text-white relative flex-shrink-0'
+                    data-carousel-item
+                    tabIndex={0}
+                    className='text-white relative flex-shrink-0 focus:outline-2 focus:outline-white '
                     key={key}
-                    onTouchStart={() => {
-                      setActiveItemId(key);
-                    }}
+                    onFocus={() => setActiveItemId(key)}
+                    onBlur={() => setActiveItemId(null)}
+                    onTouchStart={() => setActiveItemId(key)}
                     onMouseEnter={() => setActiveItemId(key)}
                     onMouseLeave={() => setActiveItemId(null)}
+                    onKeyDown={(e) => handleKeyDown(e, key)}
                   >
                     <div className={`relative ${isActive ? 'active' : ''}`}>
                       {/* Image and gradient overlay */}
@@ -124,7 +168,14 @@ const ContinueWatching = () => {
                       >
                         <div className='absolute right-2 z-50 p-2 pointer-events-auto'>
                           <button
-                            className='text-white font-bold rounded-full z-50 cursor-pointer bg-black/60 p-2 hover:bg-black/80 '
+                            tabIndex={isActive ? 0 : -1}
+                            aria-label='Remove item'
+                            className='text-white font-bold rounded-full z-50 cursor-pointer bg-black/60 p-2 hover:bg-black/80 focus:outline-2 focus:outline-white '
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                handleDelete(e, key);
+                              }
+                            }}
                             onTouchStart={(e) => handleDelete(e, key)}
                             onClick={(e) => handleDelete(e, key)}
                           >
@@ -178,7 +229,8 @@ const ContinueWatching = () => {
                       >
                         <Link
                           to={`/watch/${items[key].media_type}/${items[key].id}`}
-                          className='rounded-full bg-white/20 p-4 backdrop-blur-sm'
+                          tabIndex={isActive ? 0 : -1}
+                          className='rounded-full bg-white/20 p-4 backdrop-blur-sm focus:outline-2 focus:outline-white '
                         >
                           <svg
                             xmlns='http://www.w3.org/2000/svg'

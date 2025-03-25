@@ -30,7 +30,7 @@ const WatchTV = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
-    return lastSelectedServer || servers[2].value;
+    return lastSelectedServer || servers[0].value;
   });
   const [selectedSeason, setSelectedSeason] = useState(() => {
     const lastSelectedSeason = localStorage.getItem(
@@ -141,8 +141,12 @@ const WatchTV = () => {
       case 'vidbinge.dev':
         newURL = `https://vidbinge.dev/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
-      default:
-        newURL = `https://vidbinge.dev/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+      case 'moviesapi.club':
+        newURL = `https://moviesapi.to/tv/${series_id}-${selectedSeason}-${selectedEpisode}`;
+        break;
+      case 'embed.su':
+        newURL = `https://embed.su/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+        break;
     }
 
     const serverChanged = prevServerRef.current !== selectedServer;
