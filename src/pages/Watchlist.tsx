@@ -12,6 +12,7 @@ import { IItem } from '../interfaces/IItem';
 const Watchlist = () => {
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
   const [items, setItems] = useState<IItem[]>([]);
+  const [message, setMessage] = useState<string>('');
   const queryClient = useQueryClient();
 
   const itemQueries = useQueries({
@@ -52,16 +53,24 @@ const Watchlist = () => {
   const filterItems = (media_type: string) => {
     if (media_type === 'all') {
       setItems(itemDetails);
+      itemDetails.length === 0
+        ? setMessage('Nothing Saved Yet!')
+        : setMessage('');
       return;
     }
     const filtered = itemDetails.filter(
       (item) => item.media_type === media_type
     );
     setItems(filtered);
+    filtered.length === 0 && media_type !== 'all'
+      ? media_type === 'tv'
+        ? setMessage('No TV Shows saved yet!')
+        : setMessage('No Movies saved yet!')
+      : setMessage('');
   };
 
   return (
-    <div className="mt-24 text-white">
+    <div className="mt-20 text-white min-h-screen">
       <h1 className="text-4xl text-center mx-3 mb-6">Watchlist</h1>
       {/* <hr className="border-gray-800 border-1  mb-4 mx-30" /> */}
       <div className="flex justify-center space-x-4 mb-8">
@@ -86,8 +95,9 @@ const Watchlist = () => {
         </button>
       </div>
       {bookmarks.length === 0 && (
-        <div className="text-center text-white text-2xl my-10">
-          Nothing saved yet!
+        <div className="flex justify-center items-center text-white text-2xl my-10">
+          <h2>  {!message && <p>Nothing Saved Yet!</p>}</h2>
+        
         </div>
       )}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
@@ -99,6 +109,10 @@ const Watchlist = () => {
             isBookmarked={true}
           />
         ))}
+      </div>
+      <div className="flex justify-center items-center text-white text-2xl my-10 w-full">
+        <h2></h2>
+        {message}
       </div>
     </div>
   );
