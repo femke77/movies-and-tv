@@ -75,7 +75,7 @@ const ContinueWatching = () => {
             <h1 className="text-2xl font-semibold mb-4">Continue Watching</h1>
             <button
               onClick={() => setOpenModal(true)}
-              className="bg-gray-800 h-9 w-30 rounded-lg hover:bg-gray-700 hover:translate-[1px] active:translate-[1px] mr-6"
+              className="bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6"
             >
               Clear All
             </button>
