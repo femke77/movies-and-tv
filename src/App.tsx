@@ -8,11 +8,8 @@ import { useEffect, useState } from 'react';
 // import { useBookmarkStore } from './state/store';
 import BookmarkModal from './components/modals/BookmarkModal';
 
-
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
-
-
 
   // maintains search query on reload
   useEffect(() => {
