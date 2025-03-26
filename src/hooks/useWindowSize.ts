@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 
 /**
  * A custom hook that tracks and returns the current window dimensions.
@@ -19,7 +19,7 @@ export function useWindowSize() {
     height: 0,
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     function handleResize() {
       setWindowSize({
         width: window.innerWidth,
