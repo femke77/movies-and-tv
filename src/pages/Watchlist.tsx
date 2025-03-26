@@ -5,14 +5,16 @@ import {
   useQueryClient,
   QueryObserverResult,
 } from '@tanstack/react-query';
-import { useEffect, useCallback, useState, useRef } from 'react';
+import { useEffect, useCallback, useState, useRef, useTransition } from 'react';
 import { fetchItemDetail } from '../hooks/useItemOrWatchDetail';
 import { IItem } from '../interfaces/IItem';
+import useDocumentTitle from '../hooks/usePageTitles';
 
-// TODO in filtered mode, if you remove a bookmark rerendering causes "all" to show again."
 const Watchlist = () => {
+  useDocumentTitle('Your Watchlist | BingeBox');
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
   const [items, setItems] = useState<IItem[]>([]);
+  const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState<string>('');
   const filterRef = useRef('all');
   const queryClient = useQueryClient();
@@ -30,7 +32,7 @@ const Watchlist = () => {
             if (!result.data) return null;
             const item: IItem = {
               ...result.data,
-              media_type: result.data.name ? 'tv' : 'movie', //items with name defined are tv, items with title defined are movies
+              media_type: result.data.name ? 'tv' : 'movie',
             };
 
             return item;
@@ -44,12 +46,12 @@ const Watchlist = () => {
   const itemDetails = itemQueries.data || [];
 
   useEffect(() => {
-    filterItems(filterRef.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    startTransition(() => {
+      filterItems(filterRef.current);
+    });
   }, [itemDetails]);
 
   useEffect(() => {
-    // ensure removed bookmarks don't stay in cache
     queryClient.invalidateQueries({ queryKey: ['watchlist'] });
   }, [bookmarks, queryClient]);
 
@@ -59,10 +61,10 @@ const Watchlist = () => {
     if (media_type === 'all') {
       setItems(itemDetails);
       filterRef.current = 'all';
-      setMessage(itemDetails.length === 0 ? 'Nothing Saved Yet!' : '');
+      setMessage(bookmarks.length === 0 ? 'Nothing Saved Yet!' : ''); // use bookmarks here to stop flash of message during loading
     } else {
       const filtered = itemDetails.filter(
-        (item) => item.media_type === media_type,
+        (item) => item.media_type === media_type
       );
       setItems(filtered);
       filterRef.current = media_type;
@@ -71,7 +73,7 @@ const Watchlist = () => {
         setMessage(
           media_type === 'tv'
             ? 'No TV Shows saved yet!'
-            : 'No Movies saved yet!',
+            : 'No Movies saved yet!'
         );
       } else {
         setMessage('');
@@ -80,49 +82,53 @@ const Watchlist = () => {
   };
 
   return (
-    <div className='mt-24 text-white min-h-screen'>
-      <h1 className='text-4xl text-center mx-3 mb-9'>Watchlist</h1>
-      {/* <hr className="border-gray-800 border-1  mb-4 mx-30" /> */}
-      <div className='flex justify-center space-x-4 mb-8'>
+    <div className="mt-24 text-white min-h-screen">
+      <h1 className="text-4xl text-center mx-3 mb-9">Watchlist</h1>
+      <div className="flex justify-center space-x-4 mb-8">
         <button
-          className='bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-          onClick={() => filterItems('tv')}
+          className="bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6"
+          onClick={() => startTransition(() => filterItems('tv'))}
         >
           TV Shows
         </button>
         <button
-          className='bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-          onClick={() => filterItems('movie')}
+          className="bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6"
+          onClick={() => startTransition(() => filterItems('movie'))}
         >
           Movies
         </button>
-
         <button
-          className='bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-          onClick={() => filterItems('all')}
+          className="bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6"
+          onClick={() => startTransition(() => filterItems('all'))}
         >
           All
         </button>
       </div>
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-        {items.map((item) => (
-          <ItemCard
-            key={item.id}
-            item={item}
-            itemType={item.media_type || ''}
-            isBookmarked={true}
-          />
-        ))}
-      </div>
+      
+      {isPending ? (
+        <div className="flex justify-center items-center text-white text-2xl my-10 w-full">
+          <p>Loading...</p>
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {items.map((item) => (
+              <ItemCard
+                key={item.id}
+                item={item}
+                itemType={item.media_type || ''}
+                isBookmarked={true}
+              />
+            ))}
+          </div>
 
-      <div className='flex justify-center items-center text-white text-2xl my-10 w-full'>
-        <h2></h2>
-        {message}
-      </div>
+          <div className="flex justify-center items-center text-white text-2xl my-10 w-full">
+            <h2>{message}</h2>
+          </div>
+        </>
+      )}
     </div>
   );
 };
 
 export default Watchlist;
-
-/* check if it's a tv show by looking for name. check if it's a movei by looking for title.  A filter further up the chain already ensures that title or name is not null or it would never have been shown to the user in the first place. */

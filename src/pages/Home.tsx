@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, useEffect } from 'react';
 import SwiperElement from '../components/main/Swiper';
 import ContinueWatching from '../components/main/ContinueWatching';
 
@@ -9,7 +9,12 @@ const PopularTv = lazy(() => import('../components/main/PopularTv'));
 const TrendingTV = lazy(() => import('../components/main/TrendingTv'));
 const TopRatedTv = lazy(() => import('../components/main/TopRatedTv'));
 
+
 const Home = () => {
+  useEffect(() => {
+    document.title = 'Home | BingeBox';
+  }, []);
+
   return (
     <>
       <SwiperElement />

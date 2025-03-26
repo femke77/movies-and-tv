@@ -5,9 +5,11 @@ import { useInfiniteSearchQuery } from '../hooks/useSearchAndDiscover';
 import { IItem } from '../interfaces/IItem';
 import { MemoizedItemCard } from '../components/ItemCard';
 import { useBookmarkStore } from '../state/store';
+import useDocumentTitle from '../hooks/usePageTitles';
 // Memoized Results component
 const Results = memo(() => {
   const { query } = useParams<{ query: string }>();
+  useDocumentTitle(`Search results for '${query}' | BingeBox`);
   const lastResultsRef = useRef<IItem[]>([]);
   const { ref, inView } = useInView();
   const bookmarks = useBookmarkStore((state) => state.bookmarks);

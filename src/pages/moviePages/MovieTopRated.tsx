@@ -1,11 +1,12 @@
 import genreData from '../../utils/data/movieGenres.json';
 import MediaListContainer from '../../components/containers/MediaListContainer';
 import sortOptionsData from '../../utils/data/sortOptions.json';
+import useDocumentTitle from '../../hooks/usePageTitles';
 
 const MovieTopRated = () => {
   const { genres } = genreData;
   const { sortOptions } = sortOptionsData;
-
+useDocumentTitle('Discover Top Rated Movies | BingeBox');
   if (!genres) return null;
   if (!sortOptions) return null;
 

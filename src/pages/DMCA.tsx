@@ -1,4 +1,7 @@
+import useDocumentTitle from "../hooks/usePageTitles";
+
 const DMCA = () => {
+  useDocumentTitle('DMCA Declaration | BingeBox');
   return (
     <div className='text-white/70 text-md mt-40 text-center mx-10'>
       <h1 className='text-3xl mb-6'>DMCA</h1>
