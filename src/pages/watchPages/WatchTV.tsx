@@ -139,9 +139,7 @@ useDocumentTitle(`Watch ${series?.original_name || 'TV Show'} | BingeBox`);
       case 'vidlink.pro':
         newURL = `https://vidlink.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
-      case 'vidbinge.dev':
-        newURL = `https://vidbinge.dev/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
-        break;
+    
       case 'moviesapi.club':
         newURL = `https://moviesapi.to/tv/${series_id}-${selectedSeason}-${selectedEpisode}`;
         break;
