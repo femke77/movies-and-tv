@@ -205,7 +205,7 @@ const ContinueWatching = () => {
                         <h3 className='text-lg'>
                           {items[key].media_type === 'tv' ? (
                             <p>
-                              S{items[key].season}, E{items[key].episode}
+                              S{items[key].season}:E{items[key].episode}
                             </p>
                           ) : (
                             <p>
