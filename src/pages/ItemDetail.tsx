@@ -20,7 +20,7 @@ const ItemDetail = () => {
   const { data: item } = useItemDetail(item_type!, id!);
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
 
-  useDocumentTitle(item?.title || item?.name || 'Details');
+  useDocumentTitle(`${item?.title || item?.name} | BingeBox`);
 
   useEffect(() => {
     if (item?.backdrop_path) {

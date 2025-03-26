@@ -57,7 +57,7 @@ const WatchTV = () => {
     series_id ?? '',
     String(selectedSeason),
   );
-useDocumentTitle(`Watch ${series?.original_name || 'TV Show'}`);
+useDocumentTitle(`Watch ${series?.original_name || 'TV Show'} | BingeBox`);
   useEffect(() => {
     if (!series) return;
 

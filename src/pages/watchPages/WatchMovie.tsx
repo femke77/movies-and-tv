@@ -16,7 +16,7 @@ const WatchMovie = () => {
   const { servers } = serverData;
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
- useDocumentTitle(`Watch ${movie?.title || 'Movie'}`);
+ useDocumentTitle(`Watch ${movie?.title || 'Movie'}  | BingeBox`);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');

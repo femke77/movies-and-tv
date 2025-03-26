@@ -12,7 +12,7 @@ import useDocumentTitle from '../hooks/usePageTitles';
 
 // TODO in filtered mode, if you remove a bookmark rerendering causes "all" to show again."
 const Watchlist = () => {
-  useDocumentTitle('Your Watchlist');
+  useDocumentTitle('Your Watchlist | BingeBox');
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
   const [items, setItems] = useState<IItem[]>([]);
   const [message, setMessage] = useState<string>('');

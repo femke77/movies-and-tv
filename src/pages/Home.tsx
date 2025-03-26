@@ -12,7 +12,7 @@ const TopRatedTv = lazy(() => import('../components/main/TopRatedTv'));
 
 const Home = () => {
   useEffect(() => {
-    document.title = 'Home - BingeBox';
+    document.title = 'Home | BingeBox';
   }, []);
 
   return (

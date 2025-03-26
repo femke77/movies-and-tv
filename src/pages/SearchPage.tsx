@@ -9,7 +9,7 @@ import useDocumentTitle from '../hooks/usePageTitles';
 // Memoized Results component
 const Results = memo(() => {
   const { query } = useParams<{ query: string }>();
-  useDocumentTitle(`Search results for '${query}'`);
+  useDocumentTitle(`Search results for '${query}' | BingeBox`);
   const lastResultsRef = useRef<IItem[]>([]);
   const { ref, inView } = useInView();
   const bookmarks = useBookmarkStore((state) => state.bookmarks);

@@ -5,7 +5,7 @@ import useDocumentTitle from '../../hooks/usePageTitles';
 const MovieAll = () => {
   const { genres } = genreData;
   const { sortOptions } = sortOptionsData;
-  useDocumentTitle('Explore All Movies');
+  useDocumentTitle('Explore All Movies | BingeBox');
   if (!genres) return null;
   if (!sortOptions) return null;
 
