@@ -83,9 +83,10 @@ const Watchlist = () => {
   };
 
   return (
-    <div className='mt-24 text-white min-h-screen'>
-      <h1 className='text-4xl text-center mx-3 mb-9'>Watchlist</h1>
-      <div className='flex justify-center space-x-4 mb-8'>
+    <div className='mt-24 mx-3  text-white min-h-screen'>
+      <h1 className='relative z-1 text-4xl text-center mx-3 mb-9'>Watchlist</h1>
+      <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'></div>
+      <div className='relative flex justify-center space-x-4 mb-8 z-1'>
         <button
           className='bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
           onClick={() => startTransition(() => filterItems('tv'))}
@@ -123,7 +124,7 @@ const Watchlist = () => {
             ))}
           </div>
 
-          <div className='flex justify-center items-center text-white text-2xl my-10 w-full'>
+          <div className='relative z-1 flex justify-center items-center text-white text-2xl my-10 w-full'>
             <h2>{message}</h2>
           </div>
         </>

@@ -160,7 +160,7 @@ const ItemDetail = () => {
                 </div>
               </div>
 
-              <div className='ml-4 flex justify-center  md:justify-start w-full mt-4'>
+              <div className='ml-4 flex justify-center  md:justify-start mt-4'>
                 <Share
                   media_type={item_type === 'tv' ? 'TV Show' : 'Movie'}
                   url={window.location.href}
