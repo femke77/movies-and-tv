@@ -90,7 +90,7 @@ const ItemCard = ({
   return (
     <>
       <div
-        className={`relative flex flex-col items-center justify-between w-full bg-black rounded-xl shadow-lg  
+        className={`relative mb-10 flex flex-col items-center justify-between w-full bg-black rounded-xl shadow-lg  
         transition-opacity duration-500 ease-linear ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
@@ -145,7 +145,7 @@ const ItemCard = ({
               />
             </div>
           </div>
-          <div className='flex flex-col h-[80px] mb-6 flex-grow items-start justify-start w-full pt-4 bg-black'>
+          <div className='flex flex-col h-[40px] mb-6 flex-grow items-start justify-start w-full pt-4 bg-black'>
             <div
               className={`relative -top-15  w-full ${!showRating && 'pt-3'}`}
             >

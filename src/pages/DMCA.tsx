@@ -1,4 +1,4 @@
-import useDocumentTitle from "../hooks/usePageTitles";
+import useDocumentTitle from '../hooks/usePageTitles';
 
 const DMCA = () => {
   useDocumentTitle('DMCA Declaration | BingeBox');

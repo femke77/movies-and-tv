@@ -5,7 +5,7 @@ import useDocumentTitle from '../../hooks/usePageTitles';
 const TvTopRated = () => {
   const { genres } = genreData;
   const { sortOptions } = sortOptionsData;
-useDocumentTitle('Discover Top TV Series | BingeBox');
+  useDocumentTitle('Discover Top TV Series | BingeBox');
   if (!genres) return null;
   if (!sortOptions) return null;
 

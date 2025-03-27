@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@plugin "daisyui";
+
 
 @font-face {
   font-family: 'FakeID';
@@ -16,6 +16,7 @@
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-fakeId: FakeID, sans-serif;
   --font-kyrilla: KyrillaSansSerif, sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
 
 
 }

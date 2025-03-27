@@ -57,7 +57,7 @@ const WatchTV = () => {
     series_id ?? '',
     String(selectedSeason),
   );
-useDocumentTitle(`Watch ${series?.original_name || 'TV Show'} | BingeBox`);
+  useDocumentTitle(`Watch ${series?.original_name || 'TV Show'} | BingeBox`);
   useEffect(() => {
     if (!series) return;
 
@@ -139,7 +139,7 @@ useDocumentTitle(`Watch ${series?.original_name || 'TV Show'} | BingeBox`);
       case 'vidlink.pro':
         newURL = `https://vidlink.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
-    
+
       case 'moviesapi.club':
         newURL = `https://moviesapi.to/tv/${series_id}-${selectedSeason}-${selectedEpisode}`;
         break;

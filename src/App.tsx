@@ -8,11 +8,8 @@ import { useEffect, useState } from 'react';
 // import { useBookmarkStore } from './state/store';
 import BookmarkModal from './components/modals/BookmarkModal';
 
-
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
-
-
 
   // maintains search query on reload
   useEffect(() => {
@@ -27,7 +24,7 @@ function App() {
   return (
     <>
       <ScrollRestoration />
-      <div className='bg-black text-white h-full'>
+      <div className='bg-black text-white h-full '>
         <Header>
           <Nav setSearchQuery={setSearchQuery} />
         </Header>
