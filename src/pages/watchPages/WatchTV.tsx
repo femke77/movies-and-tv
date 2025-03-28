@@ -34,10 +34,10 @@ const WatchTV = () => {
     return lastSelectedServer || servers[0].value;
   });
   const [selectedSeason, setSelectedSeason] = useState(() => {
-    const lastSelectedSeason = localStorage.getItem(
-      `lastSelectedSeason-${series_id}`,
-    );
-    if (lastSelectedSeason) return Number(lastSelectedSeason);
+    // const lastSelectedSeason = localStorage.getItem(
+    //   `lastSelectedSeason-${series_id}`,
+    // );
+    // if (lastSelectedSeason) return Number(lastSelectedSeason);
     return 1;
   });
   const [selectedEpisode, setSelectedEpisode] = useState(() => {
@@ -78,7 +78,7 @@ const WatchTV = () => {
       };
 
       localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
-    }, 120000);
+    }, 60000);
   }, [series_id, series, selectedSeason, selectedEpisode]);
 
   useEffect(() => {
@@ -187,7 +187,7 @@ const WatchTV = () => {
 
   return (
     <div className='min-h-screen pt-[60px]'>
-      <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
+      <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] mb-6 lg:mx-auto'>
         <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
           <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
