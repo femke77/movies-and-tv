@@ -52,7 +52,7 @@ const Slide = ({
     slide.media_type!,
     isVisible,
     currentIndex,
-    movieList,
+    movieList
   );
   const displayLogo = logoFromQuery || null;
 
@@ -151,7 +151,7 @@ const Slide = ({
           {/* Genre and date section*/}
           <div
             className={clsx(
-              `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start`,
+              `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start`
             )}
           >
             <div className={`flex justify-start items-start mb-6 pb-6`}>
@@ -165,14 +165,8 @@ const Slide = ({
                     {genre}
                   </span>
                 ))}
-
-              {slide.media_type === 'movie' && (
-                <p className='hidden [@media(min-width:400px)]:block text-white'>
-                  &#x2022;
-                </p>
-              )}
-
-              <p className='hidden [@media(min-width:400px)]:block text-white font-light ml-4'>
+              <p className='text-white'>&#x2022;</p>
+              <p className='text-white font-light ml-4'>
                 {slide.media_type === 'movie'
                   ? slide.release_date !== 'Invalid Date'
                     ? formattedMovieDate
@@ -232,7 +226,7 @@ const Slide = ({
             {/* Buttons section */}
             <div
               className={clsx(
-                `flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
+                `flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`
               )}
             >
               <div className='mr-6'>

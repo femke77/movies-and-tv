@@ -61,24 +61,24 @@ const WatchTV = () => {
   useEffect(() => {
     if (!series) return;
     setTimeout(() => {
-    const continueWatching = localStorage.getItem('continueWatching');
-    const watchData = continueWatching ? JSON.parse(continueWatching) : {};
+      const continueWatching = localStorage.getItem('continueWatching');
+      const watchData = continueWatching ? JSON.parse(continueWatching) : {};
 
-    const newWatchData = {
-      ...watchData,
-      [series_id!]: {
-        lastUpdated: dayjs().unix(),
-        title: series.original_name,
-        posterPath: series.backdrop_path,
-        media_type: 'tv',
-        id: Number(series_id),
-        season: selectedSeason,
-        episode: selectedEpisode,
-      },
-    };
+      const newWatchData = {
+        ...watchData,
+        [series_id!]: {
+          lastUpdated: dayjs().unix(),
+          title: series.original_name,
+          posterPath: series.backdrop_path,
+          media_type: 'tv',
+          id: Number(series_id),
+          season: selectedSeason,
+          episode: selectedEpisode,
+        },
+      };
 
-    localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
-  }, 120000);
+      localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
+    }, 120000);
   }, [series_id, series, selectedSeason, selectedEpisode]);
 
   useEffect(() => {
@@ -345,7 +345,10 @@ const WatchTV = () => {
                       <div className='flex justify-between w-full'>
                         <p>Change Server</p>
                         <p className='text-white/70 text-sm ml-9 truncate text-ellipsis'>
-                          {servers.find(selectedServer => selectedServer)?.name}
+                          {
+                            servers.find((selectedServer) => selectedServer)
+                              ?.name
+                          }
                         </p>
                       </div>
                     </div>
