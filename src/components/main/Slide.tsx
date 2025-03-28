@@ -157,7 +157,7 @@ const Slide = ({
             <div className={`flex justify-start items-start mb-6 pb-6`}>
               {movieGenres &&
                 movieGenres.length >= 1 &&
-                movieGenres.slice(0, 2).map((genre) => (
+                movieGenres.slice(0, 1).map((genre) => (
                   <span
                     key={`${genre}-${slide.id}`}
                     className='text-white ml-0 mr-4'
@@ -177,6 +177,8 @@ const Slide = ({
                   ? slide.release_date !== 'Invalid Date'
                     ? formattedMovieDate
                     : null
+                  : slide.first_air_date !== 'Invalid Date'
+                  ? dayjs(slide.first_air_date).format('MMM D, YYYY')
                   : null}
               </p>
             </div>
