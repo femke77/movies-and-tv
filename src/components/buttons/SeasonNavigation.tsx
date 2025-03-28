@@ -15,7 +15,6 @@ const SeasonNavigation = ({
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleNextSeasonRequest = () => {
- 
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
@@ -25,7 +24,6 @@ const SeasonNavigation = ({
     }, 150);
   };
   const handlePrevSeasonRequest = () => {
-
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
@@ -38,7 +36,6 @@ const SeasonNavigation = ({
     <div className='w-full flex items-center justify-around'>
       <button
         className={`hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] opacity-100`}
-   
         onClick={handlePrevSeasonRequest}
       >
         <ArrowLeft size={20} color='#ffffff' />
@@ -48,7 +45,6 @@ const SeasonNavigation = ({
       </p>
       <button
         className={`hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] opacity-100`}
-    
         onClick={handleNextSeasonRequest}
       >
         <ArrowRight size={20} color='#ffffff' />

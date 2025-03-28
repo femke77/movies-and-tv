@@ -12,37 +12,33 @@ import { registerSW } from 'virtual:pwa-register';
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-   useEffect(() => {
-      console.log('Setting up SW registration...');
-  
-      const updateSW = registerSW({
-        immediate: true,
-        // using autoUpdate so the below code, onNeedRefresh, isn't running. Might switch to prompt.
-        onNeedRefresh() {
-          console.log('Need refresh callback triggered!');
-          if (
-            confirm('A new version is available. Do you want to reload the page?')
-          ) {
-            console.log('User confirmed update');
-            updateSW(true).catch(console.error);
-          }
-        },
-        onOfflineReady() {
-          console.log('SW - Offline ready');
-        },
-        onRegistered(registration) {
-          console.log('SW Registration successful:', registration);
-          setInterval(() => {
-            console.log('Checking for SW updates...');
-            registration?.update().catch(console.error);
-          }, 300000);
-        },
-        onRegisterError(error) {
-          console.error('SW registration failed:', error);
-        },
-      });
-    }, []);
-  
+  useEffect(() => {
+    const updateSW = registerSW({
+      immediate: true,
+      // using autoUpdate so the below code, onNeedRefresh, isn't running. Might switch to prompt.
+      onNeedRefresh() {
+        if (
+          confirm('A new version is available. Do you want to reload the page?')
+        ) {
+          updateSW(true).catch(console.error);
+        }
+      },
+      onOfflineReady() {
+        console.log('SW - Offline ready');
+      },
+      onRegistered(registration) {
+        console.log('SW Registration successful:', registration);
+        setInterval(() => {
+          console.log('Checking for SW updates...');
+          registration?.update().catch(console.error);
+        }, 300000);
+      },
+      onRegisterError(error) {
+        console.error('SW registration failed:', error);
+      },
+    });
+  }, []);
+
   // maintains search query on reload
   useEffect(() => {
     if (searchQuery) {
