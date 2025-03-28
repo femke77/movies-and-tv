@@ -29,7 +29,20 @@
 			"id": 6,
 			"name": "Server 6",
 			"value": "nontongo.win"
+		},
+		{
+			"id": 7,
+			"name": "Server 7",
+			"value": "vidsrc.wtf"
+		},
+		
+		{
+			"id": 8,
+			"name": "Server 8",
+			"value": "111movies.com"
 		}
+		
+		
 		
 	]
 }
