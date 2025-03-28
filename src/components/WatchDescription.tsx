@@ -57,7 +57,7 @@ const WatchDescription = ({
           <p className='ml-2'>{rt || '0'} min</p>
         </div>
       </div>
-      <p className='my-2 line-clamp-4 lg:line-clamp-10'>{overview || ''}</p>
+      <p className='my-2 line-clamp-6 lg:line-clamp-10'>{overview || ''}</p>
     </div>
   );
 };

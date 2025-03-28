@@ -147,6 +147,9 @@ const WatchTV = () => {
       case 'embed.su':
         newURL = `https://embed.su/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
+      case 'nontongo.win':
+        newURL = `https://www.nontongo.win/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+        break;
     }
 
     const serverChanged = prevServerRef.current !== selectedServer;
@@ -224,7 +227,7 @@ const WatchTV = () => {
                 <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10'>
                   <div className='text-white text-center'>
                     <div className='inline-block w-8 h-8 border-4 border-t-blue-500 border-r-transparent border-b-blue-500 border-l-transparent rounded-full animate-spin mb-2'></div>
-                    <p>Loading {selectedServer}... </p>
+                    <p>Loading {servers.find(server => server.value === selectedServer)?.name}... </p>
                   </div>
                 </div>
               )}
@@ -233,7 +236,7 @@ const WatchTV = () => {
             {series && (
               <div className='min-h-[100px] rounded-lg flex items-center justify-between gap-[16px]  p-[16px] bg-[#1f1f1f]'>
                 <div className='flex flex-col gap-2 w-full '>
-                  <div className='flex justify-center  sm:justify-between items-center flex-wrap'>
+                  <div className='flex justify-center sm:justify-between items-center flex-wrap'>
                     <div className='text-[#fff9] flex  mx-5 sm:mx-0'>
                       <div className='flex flex-col mt-[15px] sm:flex-row'>
                         <span className='text-white ml-3'>
@@ -336,7 +339,7 @@ const WatchTV = () => {
         <div className=' lg:w-[400px] lg:flex-shrink-0'>
           <div className='sidebar bg-[#1f1f1f] max-h-[900px] flex flex-col  rounded-lg'>
             <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
-              <div className='server-selection mb-8 sm:mb-10 md:mb-8'>
+              <div className='server-selection mb-8 sm:mb-10 md:mb-8 pt-1'>
                 {/* server selection */}
                 <ListBoxComp
                   title={
@@ -345,10 +348,11 @@ const WatchTV = () => {
                       <div className='flex justify-between w-full'>
                         <p>Change Server</p>
                         <p className='text-white/70 text-sm ml-9 truncate text-ellipsis'>
-                          {
-                            servers.find((selectedServer) => selectedServer)
-                              ?.name
-                          }
+                          {servers.find(
+                            (server) => server.value === selectedServer,
+                          )?.name}
+                            
+                          
                         </p>
                       </div>
                     </div>
