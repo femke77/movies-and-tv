@@ -60,12 +60,14 @@ const WatchMovie = () => {
       case 'vidlink.pro':
         newURL = `https://vidlink.pro/movie/${movie_id}`;
         break;
-
       case 'moviesapi.club':
         newURL = `https://moviesapi.to/movie/${movie_id}`;
         break;
       case 'embed.su':
         newURL = `https://embed.su/embed/movie/${movie_id}`;
+        break;
+      case 'nontongo.win':
+        newURL = `https://www.nontongo.win/embed/movie/${movie_id}`;
         break;
     }
 
@@ -128,7 +130,15 @@ const WatchMovie = () => {
                 <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10'>
                   <div className='text-white text-center'>
                     <div className='inline-block w-8 h-8 border-4 border-t-blue-500 border-r-transparent border-b-blue-500 border-l-transparent rounded-full animate-spin mb-2'></div>
-                    <p>Loading {selectedServer}... </p>
+                    <p>
+                      Loading{' '}
+                      {
+                        servers.find(
+                          (server) => server.value === selectedServer,
+                        )?.name
+                      }
+                      ...{' '}
+                    </p>
                   </div>
                 </div>
               )}

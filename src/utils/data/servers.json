@@ -24,6 +24,11 @@
 			"id": 5,
 			"name": "Server 5",
 			"value": "embed.su"
+		},
+		{
+			"id": 6,
+			"name": "Server 6",
+			"value": "nontongo.win"
 		}
 		
 	]
