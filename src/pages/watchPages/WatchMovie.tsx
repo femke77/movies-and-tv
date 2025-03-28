@@ -78,6 +78,9 @@ const WatchMovie = () => {
       case '111movies.com':
         newURL = ` https://111movies.com/movie/${movie_id}`;
         break;
+   case 'vidfast.pro':
+    newURL = `https://vidfast.pro/movie/${movie_id}`;
+    break
     }
 
     if (timeoutRef.current) {

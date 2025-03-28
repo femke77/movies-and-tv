@@ -159,6 +159,9 @@ const WatchTV = () => {
         case '111movies.com':
         newURL = `https://111movies.com/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
+        case 'vidfast.pro':
+        newURL = `https://vidfast.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+        break;
        
      
     }
