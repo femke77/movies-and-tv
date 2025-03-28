@@ -24,7 +24,6 @@ const WatchMovie = () => {
     return lastSelectedServer || servers[0].value;
   });
 
-
   useEffect(() => {
     if (!movie) return;
     setTimeout(() => {
@@ -129,7 +128,6 @@ const WatchMovie = () => {
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
               <iframe
-           
                 ref={iframeRef}
                 id='iframe'
                 className='absolute top-0 left-0 w-full h-full bg-black'
