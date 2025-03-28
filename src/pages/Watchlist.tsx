@@ -13,6 +13,7 @@ import useDocumentTitle from '../hooks/usePageTitles';
 const Watchlist = () => {
   useDocumentTitle('Your Watchlist | BingeBox');
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const [contentLoaded, setContentLoaded] = useState(false);
   const [items, setItems] = useState<IItem[]>([]);
   const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState<string>('');
@@ -48,6 +49,7 @@ const Watchlist = () => {
   useEffect(() => {
     startTransition(() => {
       filterItems(filterRef.current);
+      setContentLoaded(true);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemDetails]);
@@ -114,7 +116,7 @@ const Watchlist = () => {
       ) : (
         <>
           <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-            {items.map((item) => (
+            {contentLoaded && items.map((item) => (
               <ItemCard
                 key={item.id}
                 item={item}
