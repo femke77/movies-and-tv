@@ -205,7 +205,7 @@ const WatchTV = () => {
           <main>
             <div
               id='video-player'
-              className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'
+              className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'
             >
               <iframe
                 ref={iframeRef}
@@ -230,17 +230,17 @@ const WatchTV = () => {
             </div>
             {/* player controls (for tv) */}
             {series && (
-              <div className='min-h-[120px] rounded-lg flex items-center justify-between gap-[16px]  p-[16px] bg-[#1f1f1f]'>
-                <div className='flex flex-col gap-2 w-full py-2'>
+              <div className='min-h-[100px] rounded-lg flex items-center justify-between gap-[16px]  p-[16px] bg-[#1f1f1f]'>
+                <div className='flex flex-col gap-2 w-full '>
                   <div className='flex justify-center  sm:justify-between items-center flex-wrap'>
                     <div className='text-[#fff9] flex  mx-5 sm:mx-0'>
-                      <div className='flex flex-col sm:flex-row'>
+                      <div className='flex flex-col mt-[15px] sm:flex-row'>
                         <span className='text-white ml-3'>
                           Season {selectedSeason} &#x2022; Episode{' '}
                           {selectedEpisode}
                         </span>
                         {episodes ? (
-                          <span className='ml-3 text-center min-h-[20px]'>
+                          <span className='ml-3 text-center min-h-[30px]'>
                             {episodes?.episodes?.[selectedEpisode - 1]?.name}
                           </span>
                         ) : (
