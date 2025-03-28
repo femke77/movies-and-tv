@@ -159,6 +159,9 @@ const WatchTV = () => {
       case '111movies.com':
         newURL = `https://111movies.com/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
+      case 'vidfast.pro':
+        newURL = `https://vidfast.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+        break;
     }
 
     const serverChanged = prevServerRef.current !== selectedServer;
@@ -172,7 +175,7 @@ const WatchTV = () => {
       setIsLoading(true);
 
       if (iframeRef.current) {
-        iframeRef.current.src = 'about:blank';
+        iframeRef.current.contentWindow?.location.replace('about:blank');
       }
 
       setTimeout(() => {

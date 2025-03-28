@@ -14,6 +14,7 @@ const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie = {} } = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
+
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   useDocumentTitle(`Watch ${movie?.title || 'Movie'}  | BingeBox`);
@@ -22,8 +23,6 @@ const WatchMovie = () => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
     return lastSelectedServer || servers[0].value;
   });
-
-  const [serverURL, setServerURL] = useState('');
 
   useEffect(() => {
     if (!movie) return;
@@ -78,6 +77,9 @@ const WatchMovie = () => {
       case '111movies.com':
         newURL = ` https://111movies.com/movie/${movie_id}`;
         break;
+      case 'vidfast.pro':
+        newURL = `https://vidfast.pro/movie/${movie_id}`;
+        break;
     }
 
     if (timeoutRef.current) {
@@ -85,10 +87,10 @@ const WatchMovie = () => {
     }
     setIsLoading(true);
     if (iframeRef.current) {
-      iframeRef.current.src = 'about:blank';
+      iframeRef.current.contentWindow?.location.replace('about:blank');
     }
     setTimeout(() => {
-      setServerURL(newURL);
+      iframeRef.current?.contentWindow?.location.replace(newURL);
       timeoutRef.current = setTimeout(() => {
         setIsLoading(false);
       }, 1000);
@@ -131,7 +133,7 @@ const WatchMovie = () => {
                 className='absolute top-0 left-0 w-full h-full bg-black'
                 width='100%'
                 height='100%'
-                src={serverURL}
+                src={'about:blank'}
                 allow='encrypted-media'
                 allowFullScreen
               ></iframe>
