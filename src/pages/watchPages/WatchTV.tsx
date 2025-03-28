@@ -175,7 +175,7 @@ const WatchTV = () => {
       setIsLoading(true);
 
       if (iframeRef.current) {
-        iframeRef.current.src = 'about:blank';
+        iframeRef.current.contentWindow?.location.replace('about:blank');
       }
 
       setTimeout(() => {
