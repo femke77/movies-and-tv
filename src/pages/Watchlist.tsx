@@ -5,7 +5,7 @@ import {
   useQueryClient,
   QueryObserverResult,
 } from '@tanstack/react-query';
-import { useEffect, useCallback, useState, useRef, useTransition } from 'react';
+import { useEffect, useCallback, useMemo, useState } from 'react';
 import { fetchItemDetail } from '../hooks/useItemOrWatchDetail';
 import { IItem } from '../interfaces/IItem';
 import useDocumentTitle from '../hooks/usePageTitles';
@@ -13,11 +13,7 @@ import useDocumentTitle from '../hooks/usePageTitles';
 const Watchlist = () => {
   useDocumentTitle('Your Watchlist | BingeBox');
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
-  const [contentLoaded, setContentLoaded] = useState(false);
-  const [items, setItems] = useState<IItem[]>([]);
-  const [isPending, startTransition] = useTransition();
-  const [message, setMessage] = useState<string>('');
-  const filterRef = useRef('all');
+  const [filterType, setFilterType] = useState<string>('all');
   const queryClient = useQueryClient();
 
   const itemQueries = useQueries({
@@ -35,7 +31,6 @@ const Watchlist = () => {
               ...result.data,
               media_type: result.data.name ? 'tv' : 'movie',
             };
-
             return item;
           })
           .filter((item): item is IItem => item !== null),
@@ -44,87 +39,72 @@ const Watchlist = () => {
     }, []),
   });
 
-  const itemDetails = itemQueries.data || [];
-
-  useEffect(() => {
-    startTransition(() => {
-      filterItems(filterRef.current);
-      setContentLoaded(true);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemDetails]);
+  // Memoized filtered items to prevent unnecessary re-renders
+  const filteredItems = useMemo(() => {
+    const itemDetails = itemQueries.data || [];
+    
+    if (filterType === 'all') return itemDetails;
+    
+    return itemDetails.filter(
+      (item) => item.media_type === filterType
+    );
+  }, [filterType, itemQueries.data]);
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ['watchlist'] });
   }, [bookmarks, queryClient]);
 
-  const filterItems = (media_type: string): void => {
-    if (!itemDetails) return;
-
-    if (media_type === 'all') {
-      setItems(itemDetails);
-      filterRef.current = 'all';
-      setMessage(bookmarks.length === 0 ? 'Nothing Saved Yet!' : ''); // use bookmarks here to stop flash of message during loading
-    } else {
-      const filtered = itemDetails.filter(
-        (item) => item.media_type === media_type,
-      );
-      setItems(filtered);
-      filterRef.current = media_type;
-
-      if (filtered.length === 0) {
-        setMessage(
-          media_type === 'tv'
-            ? 'No TV Shows saved yet!'
-            : 'No Movies saved yet!',
-        );
-      } else {
-        setMessage('');
-      }
+  // Determine message:
+  const message = useMemo(() => {
+    if (filteredItems.length === 0) {
+      if (filterType === 'tv') return 'No TV Shows saved yet!';
+      if (filterType === 'movie') return 'No Movies saved yet!';
+      return 'Nothing Saved Yet!';
     }
-  };
+    return '';
+  }, [filteredItems, filterType]);
 
   return (
-    <div className='mt-24 mx-3  text-white min-h-screen'>
+    <div className='mt-24 mx-3 text-white min-h-screen'>
       <h1 className='relative z-1 text-4xl text-center mx-3 mb-9'>Watchlist</h1>
       <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'></div>
+      
       <div className='relative flex justify-center space-x-4 mb-8 z-1'>
         <button
           className='bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-          onClick={() => startTransition(() => filterItems('tv'))}
+          onClick={() => setFilterType('tv')}
         >
           TV Shows
         </button>
         <button
           className='bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-          onClick={() => startTransition(() => filterItems('movie'))}
+          onClick={() => setFilterType('movie')}
         >
           Movies
         </button>
         <button
           className='bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-          onClick={() => startTransition(() => filterItems('all'))}
+          onClick={() => setFilterType('all')}
         >
           All
         </button>
       </div>
 
-      {isPending ? (
+      {itemQueries.pending ? (
         <div className='flex justify-center items-center text-white text-2xl my-10 w-full'>
-          {/* <p>Loading...</p> */}
+          Loading...
         </div>
       ) : (
         <>
           <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-            {contentLoaded &&
-              items.map((item) => (
-                <ItemCard
-                  key={item.id}
-                  item={item}
-                  itemType={item.media_type || ''}
-                  isBookmarked={true}
-                />
-              ))}
+            {filteredItems.map((item) => (
+              <ItemCard
+                key={item.id}
+                item={item}
+                itemType={item.media_type || ''}
+                isBookmarked={true}
+              />
+            ))}
           </div>
 
           <div className='relative z-1 flex justify-center items-center text-white text-2xl my-10 w-full'>
