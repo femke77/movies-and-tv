@@ -227,7 +227,15 @@ const WatchTV = () => {
                 <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10'>
                   <div className='text-white text-center'>
                     <div className='inline-block w-8 h-8 border-4 border-t-blue-500 border-r-transparent border-b-blue-500 border-l-transparent rounded-full animate-spin mb-2'></div>
-                    <p>Loading {servers.find(server => server.value === selectedServer)?.name}... </p>
+                    <p>
+                      Loading{' '}
+                      {
+                        servers.find(
+                          (server) => server.value === selectedServer,
+                        )?.name
+                      }
+                      ...{' '}
+                    </p>
                   </div>
                 </div>
               )}
@@ -348,11 +356,11 @@ const WatchTV = () => {
                       <div className='flex justify-between w-full'>
                         <p>Change Server</p>
                         <p className='text-white/70 text-sm ml-9 truncate text-ellipsis'>
-                          {servers.find(
-                            (server) => server.value === selectedServer,
-                          )?.name}
-                            
-                          
+                          {
+                            servers.find(
+                              (server) => server.value === selectedServer,
+                            )?.name
+                          }
                         </p>
                       </div>
                     </div>
