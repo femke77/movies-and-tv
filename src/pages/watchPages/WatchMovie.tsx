@@ -27,7 +27,7 @@ const WatchMovie = () => {
 
   useEffect(() => {
     if (!movie) return;
-
+    setTimeout(() => {
     const continueWatching = localStorage.getItem('continueWatching');
     const watchData = continueWatching ? JSON.parse(continueWatching) : {};
 
@@ -43,8 +43,9 @@ const WatchMovie = () => {
         runtime: movie.runtime,
       },
     };
-
+    
     localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
+  }, 120000);
   }, [movie_id, movie]);
 
   useEffect(() => {
