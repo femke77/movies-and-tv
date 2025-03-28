@@ -16,7 +16,7 @@ import {
   WhatsappIcon,
   // BlueskyIcon,
 } from 'react-share';
-import { Copy } from 'lucide-react';
+import { Link } from 'lucide-react';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 const Share = ({ media_type, url }: { media_type: string; url: string }) => {
@@ -61,11 +61,11 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
         }}
         className='cursor-pointer'
       >
-        <Copy color='#ffffff' />
+        <Link color='#ffffff' />
       </button>
       <ToastContainer
-        position='top-center'
-        autoClose={3000}
+        position='bottom-left'
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick={true}
