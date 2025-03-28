@@ -116,14 +116,15 @@ const Watchlist = () => {
       ) : (
         <>
           <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-            {contentLoaded && items.map((item) => (
-              <ItemCard
-                key={item.id}
-                item={item}
-                itemType={item.media_type || ''}
-                isBookmarked={true}
-              />
-            ))}
+            {contentLoaded &&
+              items.map((item) => (
+                <ItemCard
+                  key={item.id}
+                  item={item}
+                  itemType={item.media_type || ''}
+                  isBookmarked={true}
+                />
+              ))}
           </div>
 
           <div className='relative z-1 flex justify-center items-center text-white text-2xl my-10 w-full'>

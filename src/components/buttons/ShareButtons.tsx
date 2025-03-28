@@ -16,7 +16,7 @@ import {
   WhatsappIcon,
   // BlueskyIcon,
 } from 'react-share';
-import { Link} from 'lucide-react';
+import { Link } from 'lucide-react';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 const Share = ({ media_type, url }: { media_type: string; url: string }) => {
