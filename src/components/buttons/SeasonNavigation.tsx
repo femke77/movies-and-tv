@@ -15,32 +15,27 @@ const SeasonNavigation = ({
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleNextSeasonRequest = () => {
-    if (selectedSeason === numSeasons) return;
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
     debounceRef.current = setTimeout(() => {
-      setSelectedSeason(selectedSeason + 1);
+      setSelectedSeason(selectedSeason === numSeasons ? 1 : selectedSeason + 1);
       setSelectedEpisode(1);
     }, 150);
   };
   const handlePrevSeasonRequest = () => {
-    if (selectedSeason === 1) return;
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
     debounceRef.current = setTimeout(() => {
-      setSelectedSeason(selectedSeason - 1);
+      setSelectedSeason(selectedSeason === 1 ? numSeasons : selectedSeason - 1);
       setSelectedEpisode(1);
-    }, 200);
+    }, 150);
   };
   return (
     <div className='w-full flex items-center justify-around'>
       <button
-        className={`hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] ${
-          selectedSeason === 1 ? 'opacity-50' : 'opacity-100'
-        }`}
-        disabled={selectedSeason === 1}
+        className={`hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] opacity-100`}
         onClick={handlePrevSeasonRequest}
       >
         <ArrowLeft size={20} color='#ffffff' />
@@ -49,10 +44,7 @@ const SeasonNavigation = ({
         Season {selectedSeason} of {numSeasons}
       </p>
       <button
-        className={`hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] ${
-          selectedSeason === numSeasons ? 'opacity-50' : 'opacity-100'
-        }`}
-        disabled={selectedSeason === numSeasons}
+        className={`hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] opacity-100`}
         onClick={handleNextSeasonRequest}
       >
         <ArrowRight size={20} color='#ffffff' />

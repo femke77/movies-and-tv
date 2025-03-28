@@ -7,9 +7,37 @@ import { ScrollRestoration } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // import { useBookmarkStore } from './state/store';
 import BookmarkModal from './components/modals/BookmarkModal';
+import { registerSW } from 'virtual:pwa-register';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  useEffect(() => {
+    const updateSW = registerSW({
+      immediate: true,
+      // using autoUpdate so the below code, onNeedRefresh, isn't running. Might switch to prompt.
+      onNeedRefresh() {
+        if (
+          confirm('A new version is available. Do you want to reload the page?')
+        ) {
+          updateSW(true).catch(console.error);
+        }
+      },
+      onOfflineReady() {
+        console.log('SW - Offline ready');
+      },
+      onRegistered(registration) {
+        console.log('SW Registration successful:', registration);
+        setInterval(() => {
+          console.log('Checking for SW updates...');
+          registration?.update().catch(console.error);
+        }, 300000);
+      },
+      onRegisterError(error) {
+        console.error('SW registration failed:', error);
+      },
+    });
+  }, []);
 
   // maintains search query on reload
   useEffect(() => {

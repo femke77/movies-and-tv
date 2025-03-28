@@ -118,7 +118,7 @@ const Slide = ({
       }`}
     >
       <div
-        className={clsx(`mt-10 absolute inset-0 w-full h-full bg-cover bg-center md:bg-top transition-opacity 
+        className={clsx(`mt-10 absolute inset-0 bg-cover bg-center md:bg-top transition-opacity 
          duration-1500 ease-in-out ${
            highResBgLoaded && isVisible ? 'opacity-100' : 'opacity-0'
          } z-0`)}

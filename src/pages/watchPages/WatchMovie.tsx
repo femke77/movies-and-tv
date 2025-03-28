@@ -45,7 +45,7 @@ const WatchMovie = () => {
       };
 
       localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
-    }, 120000);
+    }, 60000);
   }, [movie_id, movie]);
 
   useEffect(() => {
