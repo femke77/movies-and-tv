@@ -14,7 +14,7 @@ const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie = {} } = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
-  const [key, setKey] = useState(dayjs().unix());
+
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   useDocumentTitle(`Watch ${movie?.title || 'Movie'}  | BingeBox`);
@@ -24,7 +24,6 @@ const WatchMovie = () => {
     return lastSelectedServer || servers[0].value;
   });
 
-  const [serverURL, setServerURL] = useState('');
 
   useEffect(() => {
     if (!movie) return;
@@ -50,7 +49,6 @@ const WatchMovie = () => {
   }, [movie_id, movie]);
 
   useEffect(() => {
-    setKey(dayjs().unix());
     let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
@@ -131,13 +129,13 @@ const WatchMovie = () => {
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
               <iframe
-              key={key}
+           
                 ref={iframeRef}
                 id='iframe'
                 className='absolute top-0 left-0 w-full h-full bg-black'
                 width='100%'
                 height='100%'
-                src={serverURL}
+                src={'about:blank'}
                 allow='encrypted-media'
                 allowFullScreen
               ></iframe>
