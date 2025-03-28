@@ -40,9 +40,9 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
         </RedditShareButton>
       </div>
       <div title={'Share via Telegram'}>
-      <TelegramShareButton url={url} title={`Check out this ${media_type}!`}>
-        <TelegramIcon size={32} round={true} />
-      </TelegramShareButton>
+        <TelegramShareButton url={url} title={`Check out this ${media_type}!`}>
+          <TelegramIcon size={32} round={true} />
+        </TelegramShareButton>
       </div>
 
       <div title={'Share via WhatsApp'}>

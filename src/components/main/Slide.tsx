@@ -52,7 +52,7 @@ const Slide = ({
     slide.media_type!,
     isVisible,
     currentIndex,
-    movieList
+    movieList,
   );
   const displayLogo = logoFromQuery || null;
 
@@ -151,7 +151,7 @@ const Slide = ({
           {/* Genre and date section*/}
           <div
             className={clsx(
-              `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start`
+              `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start`,
             )}
           >
             <div className={`flex justify-start items-start mb-6 pb-6`}>
@@ -172,8 +172,8 @@ const Slide = ({
                     ? formattedMovieDate
                     : null
                   : slide.first_air_date !== 'Invalid Date'
-                  ? dayjs(slide.first_air_date).format('MMM D, YYYY')
-                  : null}
+                    ? dayjs(slide.first_air_date).format('MMM D, YYYY')
+                    : null}
               </p>
             </div>
           </div>
@@ -226,7 +226,7 @@ const Slide = ({
             {/* Buttons section */}
             <div
               className={clsx(
-                `flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`
+                `flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
               )}
             >
               <div className='mr-6'>
