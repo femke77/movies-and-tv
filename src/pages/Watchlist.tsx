@@ -52,7 +52,7 @@ const Watchlist = () => {
     queryClient.invalidateQueries({ queryKey: ['watchlist'] });
   }, [bookmarks, queryClient]);
 
-  // Determine message:
+  // message:
   const message = useMemo(() => {
     if (filteredItems.length === 0) {
       if (filterType === 'tv') return 'No TV Shows saved yet!';

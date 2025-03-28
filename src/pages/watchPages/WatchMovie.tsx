@@ -69,6 +69,15 @@ const WatchMovie = () => {
       case 'nontongo.win':
         newURL = `https://www.nontongo.win/embed/movie/${movie_id}`;
         break;
+      case 'vidsrc.wtf':
+        newURL = `https://vidsrc.wtf/api/3/movie/?id=${movie_id}`;
+        break;
+      // case 'vidsrc.wtf-ml':
+      //   newURL = `https://vidsrc.wtf/api/2/movie/?id=${movie_id}`;
+      //   break;
+      case '111movies.com':
+        newURL = ` https://111movies.com/movie/${movie_id}`;
+        break;
     }
 
     if (timeoutRef.current) {
