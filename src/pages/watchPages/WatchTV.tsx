@@ -150,13 +150,13 @@ const WatchTV = () => {
       case 'nontongo.win':
         newURL = `https://www.nontongo.win/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
-        case 'vidsrc.wtf':
+      case 'vidsrc.wtf':
         newURL = `https://vidsrc.wtf/api/3/tv/?id=${series_id}&s=${selectedSeason}&e=${selectedEpisode}`;
         break;
-        // case 'vidsrc.wtf-ml':
-        // newURL = `https://vidsrc.wtf/api/2/tv/?id=${series_id}&s=${selectedSeason}&e=${selectedEpisode}`;
-        // break;
-        case '111movies.com':
+      // case 'vidsrc.wtf-ml':
+      // newURL = `https://vidsrc.wtf/api/2/tv/?id=${series_id}&s=${selectedSeason}&e=${selectedEpisode}`;
+      // break;
+      case '111movies.com':
         newURL = `https://111movies.com/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
         case 'vidfast.pro':
