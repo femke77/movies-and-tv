@@ -45,10 +45,10 @@ export default defineConfig({
         navigateFallback: 'index.html',
       },
       manifest: {
-        name: 'BingeBox247 Unlimited Streaming',
+        name: 'BingeBox247 - Unlimited Streaming for Movies and TV',
         short_name: 'BingeBox',
         description:
-          'Keep track of and stream your favorite movies and TV shows with BingeBox247.',
+          'Stream and collect your favorite movies and TV shows with BingeBox247.',
         theme_color: '#111',
         icons: icons,
       },
