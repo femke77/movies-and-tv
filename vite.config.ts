@@ -1,44 +1,70 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import tailwindcss from '@tailwindcss/vite';
-import { VitePWA } from "vite-plugin-pwa";
-import analyze from "rollup-plugin-analyzer";
-import iconsData from './public/icons.json'
-
-const {icons} = iconsData;
+import { VitePWA } from 'vite-plugin-pwa';
+// import analyze from "rollup-plugin-analyzer";
+import iconsData from './public/icons.json';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
+const { icons } = iconsData;
 
 // https://vite.dev/config/
 export default defineConfig({
   build: {
-      minify: "terser",
-      rollupOptions: {
-        plugins: [process.env.NODE_ENV === 'production' ? null : analyze()].filter(Boolean),
-      },
+    rollupOptions: {
+      plugins: [
+        terser({
+          compress: {
+            dead_code: true,
+            drop_console: true,
+            drop_debugger: true,
+          },
+        }),
+      ],
+      // Checking vendor size - 585kb was the result
+      // output: {
+      //   // Split chunks more aggressively
+      //   manualChunks(id) {
+      //     if (id.includes('node_modules')) {
+      //       return 'vendor'
+      //     }
+      //   }
+      // }
     },
-  plugins: [react(), tailwindcss(),
+  },
+  plugins: [
+    react(),
+    tailwindcss(),
     VitePWA({
-      registerType: "autoUpdate",
-      injectRegister: "auto",
+      registerType: 'autoUpdate',
+      injectRegister: 'auto',
       devOptions: {
         enabled: true,
-        type: "module",
-        navigateFallback: "index.html",
+        type: 'module',
+        navigateFallback: 'index.html',
       },
       manifest: {
-        name: "BingeBox247 Unlimited Streaming",
-        short_name: "BingeBox",
-        description: "Keep track of and stream your favorite movies and TV shows with BingeBox247.",
-        theme_color: "#111",
-        icons: icons
+        name: 'BingeBox247 Unlimited Streaming',
+        short_name: 'BingeBox',
+        description:
+          'Keep track of and stream your favorite movies and TV shows with BingeBox247.',
+        theme_color: '#111',
+        icons: icons,
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,jsx}"],
+        globPatterns: ['**/*.{js,css,html,svg,jsx,png,jpg,webp,jpeg}'],
         skipWaiting: true,
         clientsClaim: true,
         cleanupOutdatedCaches: true,
-        navigateFallback: "/index.html",
-      }
+        navigateFallback: '/index.html',
+      },
     }),
+    visualizer({
+      filename: './stats.html',
+      open: true,
+    }),
+    nodeResolve(),
   ],
   server: {
     port: 3003,
