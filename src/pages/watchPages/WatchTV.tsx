@@ -344,7 +344,7 @@ const WatchTV = () => {
                       <div className='flex justify-between w-full'>
                         <p>Change Server</p>
                         <p className='text-white/70 text-sm ml-9 truncate text-ellipsis'>
-                          {selectedServer}
+                          {servers.find(selectedServer => selectedServer)?.name}
                         </p>
                       </div>
                     </div>
