@@ -14,6 +14,7 @@ const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie = {} } = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
+  const [key, setKey] = useState(dayjs().unix());
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   useDocumentTitle(`Watch ${movie?.title || 'Movie'}  | BingeBox`);
@@ -49,6 +50,7 @@ const WatchMovie = () => {
   }, [movie_id, movie]);
 
   useEffect(() => {
+    setKey(dayjs().unix());
     let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
@@ -78,9 +80,9 @@ const WatchMovie = () => {
       case '111movies.com':
         newURL = ` https://111movies.com/movie/${movie_id}`;
         break;
-   case 'vidfast.pro':
-    newURL = `https://vidfast.pro/movie/${movie_id}`;
-    break
+      case 'vidfast.pro':
+        newURL = `https://vidfast.pro/movie/${movie_id}`;
+        break;
     }
 
     if (timeoutRef.current) {
@@ -88,10 +90,10 @@ const WatchMovie = () => {
     }
     setIsLoading(true);
     if (iframeRef.current) {
-      iframeRef.current.src = 'about:blank';
+      iframeRef.current.contentWindow?.location.replace('about:blank');
     }
     setTimeout(() => {
-      setServerURL(newURL);
+      iframeRef.current?.contentWindow?.location.replace(newURL);
       timeoutRef.current = setTimeout(() => {
         setIsLoading(false);
       }, 1000);
@@ -129,6 +131,7 @@ const WatchMovie = () => {
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
               <iframe
+              key={key}
                 ref={iframeRef}
                 id='iframe'
                 className='absolute top-0 left-0 w-full h-full bg-black'
