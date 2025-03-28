@@ -32,7 +32,7 @@ const SeasonNavigation = ({
     debounceRef.current = setTimeout(() => {
       setSelectedSeason(selectedSeason === 1 ? numSeasons : selectedSeason - 1);
       setSelectedEpisode(1);
-    }, 200);
+    }, 150);
   };
   return (
     <div className='w-full flex items-center justify-around'>
