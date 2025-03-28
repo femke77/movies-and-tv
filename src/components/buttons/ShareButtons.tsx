@@ -2,7 +2,7 @@ import {
   EmailShareButton,
   // FacebookShareButton,
   RedditShareButton,
-  // TelegramShareButton,
+  TelegramShareButton,
   // TwitterShareButton,
   WhatsappShareButton,
   // BlueskyShareButton,
@@ -11,7 +11,7 @@ import {
   EmailIcon,
   // FacebookIcon,
   RedditIcon,
-  // TelegramIcon,
+  TelegramIcon,
   // TwitterIcon,
   WhatsappIcon,
   // BlueskyIcon,
@@ -39,9 +39,12 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
           <RedditIcon size={32} round={true} />
         </RedditShareButton>
       </div>
-      {/* <TelegramShareButton url={url} title={`Check out this ${media_type}!`}>
+      <div title={'Share via Telegram'}>
+      <TelegramShareButton url={url} title={`Check out this ${media_type}!`}>
         <TelegramIcon size={32} round={true} />
-      </TelegramShareButton> */}
+      </TelegramShareButton>
+      </div>
+
       <div title={'Share via WhatsApp'}>
         <WhatsappShareButton url={url} title={`Check out this ${media_type}!`}>
           <WhatsappIcon size={32} round={true} />
