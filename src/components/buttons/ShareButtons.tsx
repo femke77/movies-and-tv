@@ -22,10 +22,11 @@ import { ToastContainer, Zoom, toast } from 'react-toastify';
 const Share = ({ media_type, url }: { media_type: string; url: string }) => {
   return (
     <div className='flex justify-center space-x-4'>
-       <div title={'Share via Email'}>
-      <EmailShareButton url={url} subject={`Check out this ${media_type}!`}>
-        <EmailIcon size={32} round={true} />
-      </EmailShareButton></div>
+      <div title={'Share via Email'}>
+        <EmailShareButton url={url} subject={`Check out this ${media_type}!`}>
+          <EmailIcon size={32} round={true} />
+        </EmailShareButton>
+      </div>
 
       {/* <FacebookShareButton url={url}>
         <FacebookIcon size={32} round={true} />
@@ -34,21 +35,23 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
         <TwitterIcon size={32} round={true} />
       </TwitterShareButton> */}
       <div title={'Share via Reddit'}>
-      <RedditShareButton url={url} title={`Check out this ${media_type}!`}>
-        <RedditIcon size={32} round={true} />
-      </RedditShareButton></div>
+        <RedditShareButton url={url} title={`Check out this ${media_type}!`}>
+          <RedditIcon size={32} round={true} />
+        </RedditShareButton>
+      </div>
       {/* <TelegramShareButton url={url} title={`Check out this ${media_type}!`}>
         <TelegramIcon size={32} round={true} />
       </TelegramShareButton> */}
-       <div title={'Share via WhatsApp'}>
-      <WhatsappShareButton url={url} title={`Check out this ${media_type}!`}>
-        <WhatsappIcon size={32} round={true} />
-      </WhatsappShareButton></div>
+      <div title={'Share via WhatsApp'}>
+        <WhatsappShareButton url={url} title={`Check out this ${media_type}!`}>
+          <WhatsappIcon size={32} round={true} />
+        </WhatsappShareButton>
+      </div>
       {/* <BlueskyShareButton url={url} title={`Check out this ${media_type}!`}>
         <BlueskyIcon size={32} round={true} />
       </BlueskyShareButton> */}
       <button
-      title={'Copy Link'}
+        title={'Copy Link'}
         onClick={() => {
           navigator.clipboard.writeText(url);
           toast.success('Link copied to clipboard!');
