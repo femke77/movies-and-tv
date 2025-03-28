@@ -27,24 +27,25 @@ const WatchMovie = () => {
 
   useEffect(() => {
     if (!movie) return;
+    setTimeout(() => {
+      const continueWatching = localStorage.getItem('continueWatching');
+      const watchData = continueWatching ? JSON.parse(continueWatching) : {};
 
-    const continueWatching = localStorage.getItem('continueWatching');
-    const watchData = continueWatching ? JSON.parse(continueWatching) : {};
+      const newWatchData = {
+        ...watchData,
+        [movie_id!]: {
+          lastUpdated: dayjs().unix(),
+          title: movie.title,
+          posterPath: movie.backdrop_path,
+          media_type: 'movie',
+          id: Number(movie_id),
+          release_date: movie.release_date,
+          runtime: movie.runtime,
+        },
+      };
 
-    const newWatchData = {
-      ...watchData,
-      [movie_id!]: {
-        lastUpdated: dayjs().unix(),
-        title: movie.title,
-        posterPath: movie.backdrop_path,
-        media_type: 'movie',
-        id: Number(movie_id),
-        release_date: movie.release_date,
-        runtime: movie.runtime,
-      },
-    };
-
-    localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
+      localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
+    }, 120000);
   }, [movie_id, movie]);
 
   useEffect(() => {

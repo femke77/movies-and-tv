@@ -60,24 +60,25 @@ const WatchTV = () => {
   useDocumentTitle(`Watch ${series?.original_name || 'TV Show'} | BingeBox`);
   useEffect(() => {
     if (!series) return;
+    setTimeout(() => {
+      const continueWatching = localStorage.getItem('continueWatching');
+      const watchData = continueWatching ? JSON.parse(continueWatching) : {};
 
-    const continueWatching = localStorage.getItem('continueWatching');
-    const watchData = continueWatching ? JSON.parse(continueWatching) : {};
+      const newWatchData = {
+        ...watchData,
+        [series_id!]: {
+          lastUpdated: dayjs().unix(),
+          title: series.original_name,
+          posterPath: series.backdrop_path,
+          media_type: 'tv',
+          id: Number(series_id),
+          season: selectedSeason,
+          episode: selectedEpisode,
+        },
+      };
 
-    const newWatchData = {
-      ...watchData,
-      [series_id!]: {
-        lastUpdated: dayjs().unix(),
-        title: series.original_name,
-        posterPath: series.backdrop_path,
-        media_type: 'tv',
-        id: Number(series_id),
-        season: selectedSeason,
-        episode: selectedEpisode,
-      },
-    };
-
-    localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
+      localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
+    }, 120000);
   }, [series_id, series, selectedSeason, selectedEpisode]);
 
   useEffect(() => {
@@ -205,7 +206,7 @@ const WatchTV = () => {
           <main>
             <div
               id='video-player'
-              className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'
+              className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'
             >
               <iframe
                 ref={iframeRef}
@@ -230,17 +231,17 @@ const WatchTV = () => {
             </div>
             {/* player controls (for tv) */}
             {series && (
-              <div className='min-h-[120px] rounded-lg flex items-center justify-between gap-[16px]  p-[16px] bg-[#1f1f1f]'>
-                <div className='flex flex-col gap-2 w-full py-2'>
+              <div className='min-h-[100px] rounded-lg flex items-center justify-between gap-[16px]  p-[16px] bg-[#1f1f1f]'>
+                <div className='flex flex-col gap-2 w-full '>
                   <div className='flex justify-center  sm:justify-between items-center flex-wrap'>
                     <div className='text-[#fff9] flex  mx-5 sm:mx-0'>
-                      <div className='flex flex-col sm:flex-row'>
+                      <div className='flex flex-col mt-[15px] sm:flex-row'>
                         <span className='text-white ml-3'>
                           Season {selectedSeason} &#x2022; Episode{' '}
                           {selectedEpisode}
                         </span>
                         {episodes ? (
-                          <span className='ml-3 text-center min-h-[20px]'>
+                          <span className='ml-3 text-center min-h-[30px]'>
                             {episodes?.episodes?.[selectedEpisode - 1]?.name}
                           </span>
                         ) : (
@@ -344,7 +345,10 @@ const WatchTV = () => {
                       <div className='flex justify-between w-full'>
                         <p>Change Server</p>
                         <p className='text-white/70 text-sm ml-9 truncate text-ellipsis'>
-                          {selectedServer}
+                          {
+                            servers.find((selectedServer) => selectedServer)
+                              ?.name
+                          }
                         </p>
                       </div>
                     </div>

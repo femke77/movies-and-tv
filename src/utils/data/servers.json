@@ -2,27 +2,27 @@
 	"servers": [
 		{
 			"id": 2,
-			"name": "VidEasy",
+			"name": "Server 1",
 			"value": "videasy.net"
 		},
 		{
 			"id": 3,
-			"name": "VidLink Pro",
+			"name": "Server 2",
 			"value": "vidlink.pro"
 		},
 		{
 			"id": 1,
-			"name": "VidSrc",
+			"name": "Server 3",
 			"value": "vidsrc.xyz"
 		},
 		{
 			"id": 4,
-			"name": "MovieClub",
+			"name": "Server 4",
 			"value": "moviesapi.club"
 		},
 		{
 			"id": 5,
-			"name": "Embed.su",
+			"name": "Server 5",
 			"value": "embed.su"
 		}
 		
