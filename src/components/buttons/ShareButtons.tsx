@@ -1,10 +1,10 @@
 import {
   EmailShareButton,
-  RedditShareButton,
+
   TelegramShareButton,
   WhatsappShareButton,
 } from 'react-share';
-import { EmailIcon, RedditIcon, TelegramIcon, WhatsappIcon } from 'react-share';
+import { EmailIcon,  TelegramIcon, WhatsappIcon } from 'react-share';
 import { Link } from 'lucide-react';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
 
@@ -21,7 +21,7 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
         </EmailShareButton>
       </div>
 
-      <div title={'Share via Reddit'}>
+      {/* <div title={'Share via Reddit'}>
         <RedditShareButton
           url={url}
           title={`Check out this ${media_type}!`}
@@ -30,7 +30,7 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
         >
           <RedditIcon size={32} round={true} />
         </RedditShareButton>
-      </div>
+      </div> */}
       <div title={'Share via Telegram'}>
         <TelegramShareButton
           url={url}
@@ -54,7 +54,7 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
       </div>
 
       <button
-        title={'Copy Link'}
+        title={'Copy Link to Clipboard'}
         onClick={() => {
           navigator.clipboard.writeText(url);
           toast.success('Link copied to clipboard!');

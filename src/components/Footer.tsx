@@ -18,7 +18,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className='border-t-gray-500 max-w-[1800px] border-t-1 mt-8 pt-6 text-center py-4 bg-black relative z-50 text-[#726c6c] text-lg'>
+    <footer className='border-t-gray-500 max-w-[1800px] border-t-1 leading-3 mt-8 pt-6 text-center py-4 bg-black relative z-50 text-[#726c6c] text-lg'>
       <div className='flex mx-10 flex-col md:flex-row md:justify-between items-top md:mx-10 md:pr-4 lg:pr-12 pb-10 lg:mx-30'>
         {/* About Section */}
         <div className='flex flex-col items-left text-left md:w-1/5 mb-3'>
@@ -36,11 +36,13 @@ const Footer = () => {
               openSection === 'about' ? 'block' : 'hidden'
             } md:block`}
           >
-            <p className='text-white/70 text-sm text-left flex items-center mt-2'>
-              Stream movies & tv shows on demand. More features to come. Stay
-              tuned.
+            <p className='text-white/70 text-sm text-left flex items-center my-2'>
+              Stream movies & tv shows on demand. BingeBox24/7 wants to be your go-to site to stream movies & tv. We are hard at work planning new features for your viewing pleasure!
             </p>
           </div>
+          <Link to='/faqs' className='text-white/70 text-md mt-2 font-bold'>
+            FAQs
+          </Link>
         </div>
 
         {/* Discover Section */}

@@ -14,6 +14,7 @@ import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
 import WatchMovieTmp from './pages/watchPages/WatchTemp.tsx';
 
 import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
+import FAQPage from './pages/FAQ.tsx';
 
 const Watchlist = lazy(() => import('./pages/Watchlist.tsx'));
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: 'dmca',
         element: <DMCA />,
+      },
+      {
+        path: 'faqs',
+        element: <FAQPage />,
       },
 
       {

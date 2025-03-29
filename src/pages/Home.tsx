@@ -21,7 +21,7 @@ const Home = () => {
         <ContinueWatching />
       </div>
 
-      <div className='my-40'>
+      <div className='my-28'>
         <TrendingMovies />
         <PopularMovies />
         <TopRatedMovies />
