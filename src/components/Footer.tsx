@@ -18,7 +18,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className='border-t-gray-500 max-w-[1800px] border-t-1 leading-3 mt-8 pt-6 text-center py-4 bg-black relative z-50 text-[#726c6c] text-lg'>
+    <footer className='border-t-gray-500 max-w-[1800px] border-t-1 leading-5 mt-8 pt-6 text-center py-4 bg-black relative z-50 text-[#726c6c] text-lg'>
       <div className='flex mx-10 flex-col md:flex-row md:justify-between items-top md:mx-10 md:pr-4 lg:pr-12 pb-10 lg:mx-30'>
         {/* About Section */}
         <div className='flex flex-col items-left text-left md:w-1/5 mb-3'>

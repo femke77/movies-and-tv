@@ -44,7 +44,7 @@ const FAQPage = () => {
         },
         {
             question: "Sometimes I can't find what I am looking for, what do I do?",
-            answer: "BingeBox is not responsible for the content of the servers we link to, therefore we can't help you if you don't find something you are looking for. However, this is often a temporary problem and we encourage you to check back later. We provide multiple servers including multi-server embeds, so please make sure you are checking all possible resources. Look for a cloud icon or a gearbox icon to see additional servers not listed in the main list."
+            answer: "BingeBox is not responsible for the content of the servers we link to, therefore we can't help you if you don't find something you are looking for. However, this is often a temporary problem and we encourage you to check back later. We provide multiple servers including multi-server embeds, so please make sure you are checking all possible resources. Look for a cloud icon, a gearbox icon, or a dropdown menu to see additional servers not listed in the main list."
         },
         // {
         //     question: "",
