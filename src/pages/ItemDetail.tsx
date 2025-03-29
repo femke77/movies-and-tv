@@ -136,19 +136,29 @@ const ItemDetail = () => {
                 </span>
               </p>
 
-              <div className='[@media(max-width:380px)]:justify-center flex flex-wrap items-center justify-between space-x-5 [@media(max-width:372px)]:mb-0 mb-4 md:mb-0'>
-                <UserRating
-                  rating={item.vote_average}
-                  width='w-20'
-                  height='h-20'
-                  color={strokeColor}
-                  fill='rgba(255,255,255,0.9)'
-                />
-                <div className=''>
+              <div className='justify-center flex flex-wrap items-center md:justify-start gap-x-2  mb-3'>
+                {item.networks?.length > 0 && (
+                  <div className='mt-1 flex items-center justify-center bg-white/30 backdrop-blur-lg rounded-lg'>
+                    <img
+                      className='max-w-23 max-h-23 object-contain p-2'
+                      src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
+                      alt={`${item.networks?.[0]?.name}'s official logo`}
+                    />
+                  </div>
+                )}
+                <div className='min-w-20 h-20 flex items-center justify-center pl-2'>
+                  <UserRating
+                    rating={item.vote_average}
+                    width='w-20'
+                    height='h-20'
+                    color={strokeColor}
+                    fill='rgba(255,255,255,0.9)'
+                  />
+                </div>
+                <div className='min-w-10 h-20 flex items-center justify-center'>
                   <WatchButton itemType={item_type!} id={item.id} />
                 </div>
-
-                <div className='[@media(max-width:371px)]:mt-0 mt-[19px]'>
+                <div className='min-w-10 h-10 flex items-center justify-center pl-2'>
                   <BookmarkBtn
                     isBookmarked={bookmarks.some(
                       (bookmark) =>
@@ -159,7 +169,6 @@ const ItemDetail = () => {
                   />
                 </div>
               </div>
-
               <div className='ml-4 flex justify-center  md:justify-start mt-4'>
                 <Share
                   media_type={item_type === 'tv' ? 'TV Show' : 'Movie'}
