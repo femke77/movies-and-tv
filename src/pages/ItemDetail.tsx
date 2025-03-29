@@ -51,12 +51,12 @@ const ItemDetail = () => {
 
   const strokeColor = getStrokeColor(item?.vote_average);
   const directorData = item?.crew?.find(
-    (member: { job: string }) => member.job === 'Director',
+    (member: { job: string }) => member.job === 'Director'
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = item?.crew?.find(
     (member: { job: string }) =>
-      member.job === 'Screenplay' || member.job === 'Writer',
+      member.job === 'Screenplay' || member.job === 'Writer'
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -136,7 +136,17 @@ const ItemDetail = () => {
                 </span>
               </p>
 
-              <div className='[@media(max-width:380px)]:justify-center flex flex-wrap items-center justify-between space-x-5 [@media(max-width:372px)]:mb-0 mb-4 md:mb-0'>
+              <div className='justify-center flex flex-wrap items-center md:justify-start gap-x-2  mb-3'>
+                {item.networks?.length > 0 && (
+                  <div className='mt-1 flex items-center justify-center bg-white/30 backdrop-blur-lg rounded-lg'>
+                    <img
+                      className='max-w-23 max-h-23 object-contain p-2'
+                      src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
+                      alt={`${item.networks?.[0]?.name}'s official logo`}
+                    />
+                  </div>
+                )}
+                <div className='min-w-20 h-20 flex items-center justify-center pl-2' >
                 <UserRating
                   rating={item.vote_average}
                   width='w-20'
@@ -144,22 +154,21 @@ const ItemDetail = () => {
                   color={strokeColor}
                   fill='rgba(255,255,255,0.9)'
                 />
-                <div className=''>
+                </div>
+                <div className='min-w-10 h-20 flex items-center justify-center'>
                   <WatchButton itemType={item_type!} id={item.id} />
                 </div>
-
-                <div className='[@media(max-width:371px)]:mt-0 mt-[19px]'>
+                <div className='min-w-10 h-10 flex items-center justify-center pl-2'>
                   <BookmarkBtn
                     isBookmarked={bookmarks.some(
                       (bookmark) =>
-                        bookmark.id === item.id && bookmark.type === item_type,
+                        bookmark.id === item.id && bookmark.type === item_type
                     )}
                     id={item.id}
                     type={item_type!}
                   />
                 </div>
               </div>
-
               <div className='ml-4 flex justify-center  md:justify-start mt-4'>
                 <Share
                   media_type={item_type === 'tv' ? 'TV Show' : 'Movie'}
@@ -195,8 +204,8 @@ const ItemDetail = () => {
                     {item.runtime
                       ? `${item.runtime} min`
                       : item.episode_run_time?.[0]
-                        ? `${item.episode_run_time[0]} min`
-                        : 'Unknown'}
+                      ? `${item.episode_run_time[0]} min`
+                      : 'Unknown'}
                   </span>
                 </p>
               </div>
@@ -260,7 +269,7 @@ const ItemDetail = () => {
                           {item.created_by.map(
                             (
                               creator: { id: string; name: string },
-                              index: number,
+                              index: number
                             ) => (
                               <span
                                 key={creator.id}
@@ -269,7 +278,7 @@ const ItemDetail = () => {
                                 {creator.name}
                                 {index < item.created_by.length - 1 ? ', ' : ''}
                               </span>
-                            ),
+                            )
                           )}
                         </p>
                         <p className='text-xl font-bold'>
