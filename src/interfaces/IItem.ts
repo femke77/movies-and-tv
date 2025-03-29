@@ -13,4 +13,10 @@ export interface IItem {
   first_air_date?: string;
   isBookmarked?: boolean;
   original_name?: string;
+  network?: {
+    name: string;
+    id: number;
+    logo_path: string;
+    origin_country: string;
+  };
 }
