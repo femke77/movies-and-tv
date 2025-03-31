@@ -23,7 +23,7 @@ export default defineConfig({
         }),
       ],
       // Checking vendor size - 585kb was the result
-      // output: {  
+      // output: {
       //   manualChunks(id) {
       //     if (id.includes('node_modules')) {
       //       return 'vendor'

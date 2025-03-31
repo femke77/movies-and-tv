@@ -11,13 +11,9 @@ const Carousel = ({
   items: IItem[];
   itemType?: string;
 }) => {
-  
-
-  
   const scrollRef = useRef<HTMLDivElement>(null);
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
 
-  
   const scrollLeft = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
@@ -47,7 +43,10 @@ const Carousel = ({
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {items.map((item) => (
-          <div key={`item-${item.id}-${itemType || item.media_type}`} className='w-[180px] flex-shrink-0'>
+          <div
+            key={`item-${item.id}-${itemType || item.media_type}`}
+            className='w-[180px] flex-shrink-0'
+          >
             <ItemCard
               textSize={'md'}
               item={item}
@@ -56,7 +55,9 @@ const Carousel = ({
               showGenres={false}
               isBookmarked={bookmarks.some(
                 (bookmarks) =>
-                  bookmarks.id === item.id && (bookmarks.type === itemType || bookmarks.type === item.media_type),
+                  bookmarks.id === item.id &&
+                  (bookmarks.type === itemType ||
+                    bookmarks.type === item.media_type),
               )}
             />
           </div>

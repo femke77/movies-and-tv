@@ -13,7 +13,6 @@ const CastMemberDetail = () => {
   const [hiResImageLoaded, setHiResImageLoaded] = useState(false);
   const [showBio, setShowBio] = useState(false);
 
-
   useEffect(() => {
     if (castData?.profile_path) {
       const lowResImage = new Image();

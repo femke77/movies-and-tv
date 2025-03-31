@@ -1,10 +1,9 @@
 import {
   EmailShareButton,
-
   TelegramShareButton,
   WhatsappShareButton,
 } from 'react-share';
-import { EmailIcon,  TelegramIcon, WhatsappIcon } from 'react-share';
+import { EmailIcon, TelegramIcon, WhatsappIcon } from 'react-share';
 import { Link } from 'lucide-react';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
 

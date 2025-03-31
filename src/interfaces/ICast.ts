@@ -19,6 +19,6 @@ export interface ICast {
       overview: string;
       media_type: string;
       name?: string;
-    }
+    },
   ];
 }

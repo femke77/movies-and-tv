@@ -21,12 +21,12 @@ const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
 const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
 const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
 const Results = lazy(() => import('./pages/SearchPage.tsx'));
-const MovieTopRated = lazy(() =>
-  import('./pages/moviePages/MovieTopRated.tsx')
+const MovieTopRated = lazy(
+  () => import('./pages/moviePages/MovieTopRated.tsx'),
 );
 const MoviePopular = lazy(() => import('./pages/moviePages/MoviePopular.tsx'));
-const MovieTrending = lazy(() =>
-  import('./pages/moviePages/MovieTrending.tsx')
+const MovieTrending = lazy(
+  () => import('./pages/moviePages/MovieTrending.tsx'),
 );
 const TvTrending = lazy(() => import('./pages/tvPages/TvTrending.tsx'));
 const TvTopRated = lazy(() => import('./pages/tvPages/TvTopRated.tsx'));
@@ -199,5 +199,5 @@ createRoot(document.getElementById('root')!).render(
       <RouterProvider router={router} />
       {/* </ChunkLoadErrorBoundary> */}
     </QueryClientProvider>
-  </StrictMode>
+  </StrictMode>,
 );
