@@ -3,15 +3,17 @@ import { ItemCard } from '../ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../../interfaces/IItem';
 import { useBookmarkStore } from '../../state/store';
-const SlideContainer = ({
+
+const Carousel = ({
   items,
   itemType,
 }: {
   items: IItem[];
-  itemType: string;
+  itemType?: string;
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
+
   const scrollLeft = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
@@ -41,16 +43,21 @@ const SlideContainer = ({
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {items.map((item) => (
-          <div key={`item-${item.id}`} className='w-[180px] flex-shrink-0'>
+          <div
+            key={`item-${item.id}-${itemType || item.media_type}`}
+            className='w-[180px] flex-shrink-0'
+          >
             <ItemCard
               textSize={'md'}
               item={item}
-              itemType={itemType}
+              itemType={itemType || item.media_type || 'Unknown'}
               showRating={true}
               showGenres={false}
               isBookmarked={bookmarks.some(
                 (bookmarks) =>
-                  bookmarks.id === item.id && bookmarks.type === itemType,
+                  bookmarks.id === item.id &&
+                  (bookmarks.type === itemType ||
+                    bookmarks.type === item.media_type),
               )}
             />
           </div>
@@ -68,4 +75,4 @@ const SlideContainer = ({
   );
 };
 
-export default SlideContainer;
+export default Carousel;

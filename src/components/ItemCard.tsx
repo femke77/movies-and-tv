@@ -191,10 +191,10 @@ const ItemCard = ({
                 {itemType === 'tv'
                   ? formattedAirDate !== 'Invalid Date'
                     ? formattedAirDate
-                    : 'Unknown'
+                    : 'TBD'
                   : formattedReleaseDate !== 'Invalid Date'
                     ? formattedReleaseDate
-                    : 'Unknown'}{' '}
+                    : 'TBD'}{' '}
                 &#x2022; {itemType === 'tv' ? 'TV' : 'Movie'}
               </p>
             </div>

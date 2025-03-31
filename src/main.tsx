@@ -10,11 +10,12 @@ import ItemDetailSkeleton from './components/loadingSkeletons/ItemDetailSkeleton
 import NotFound from './pages/404.tsx';
 import ItemCardSkeletonGrid from './components/loadingSkeletons/ItemCardSkeletonGrid.tsx';
 import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
-
 import WatchMovieTmp from './pages/watchPages/WatchTemp.tsx';
-
 import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
+import FAQPage from './pages/FAQ.tsx';
+import CastDetailSkeleton from './components/loadingSkeletons/CastDetailSkeleton.tsx';
 
+const CastMemberDetail = lazy(() => import('./pages/CastMemberDetail.tsx'));
 const Watchlist = lazy(() => import('./pages/Watchlist.tsx'));
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
 const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
@@ -59,9 +60,14 @@ const router = createBrowserRouter([
         path: 'search/:query?',
         element: <Results />,
       },
+
       {
         path: 'dmca',
         element: <DMCA />,
+      },
+      {
+        path: 'faqs',
+        element: <FAQPage />,
       },
 
       {
@@ -138,6 +144,14 @@ const router = createBrowserRouter([
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <TvAll />
+              </DelayedSuspense>
+            ),
+          },
+          {
+            path: 'cast/:id',
+            element: (
+              <DelayedSuspense fallback={<CastDetailSkeleton />}>
+                <CastMemberDetail />
               </DelayedSuspense>
             ),
           },

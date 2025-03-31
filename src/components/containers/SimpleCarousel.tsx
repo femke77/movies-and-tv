@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useRef } from 'react';
 
-const SimpleSlider = ({ children }: { children: ReactNode }) => {
+const SimpleCarousel = ({ children }: { children: ReactNode }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const startX = useRef(0);
@@ -43,4 +43,4 @@ const SimpleSlider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default SimpleSlider;
+export default SimpleCarousel;

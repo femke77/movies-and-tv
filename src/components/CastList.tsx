@@ -1,10 +1,10 @@
 import type { ICast } from '../interfaces/ICast';
 import { CastCard } from './CastCard';
-import SimpleSlider from './containers/SimpleCarousel';
+import SimpleCarousel from './containers/SimpleCarousel';
 
 export const CastList = ({ cast }: { cast: ICast[] }) => {
   return (
-    <SimpleSlider>
+    <SimpleCarousel>
       {cast.map((actor) => (
         <div
           key={`${actor.id}-${actor.character}`}
@@ -13,6 +13,6 @@ export const CastList = ({ cast }: { cast: ICast[] }) => {
           <CastCard cast={actor} />
         </div>
       ))}
-    </SimpleSlider>
+    </SimpleCarousel>
   );
 };

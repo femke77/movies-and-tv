@@ -1,15 +1,15 @@
 import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
-const BackButton = ({ url }: { url: string }) => {
-  const navigate = useNavigate();
+const BackButton = ({ text }: { text?: string }) => {
   return (
     <button
       className='back-button flex hover:cursor-pointer'
-      onClick={() => navigate(url, { replace: true })}
+      onClick={() => history.back()}
+      tabIndex={0}
+      aria-label='Back'
     >
       <ArrowLeft size={20} color='#ffffff' />
-      <p className='text-sm ml-1'>Details</p>
+      <p className='text-sm ml-1'>{text || 'Back'}</p>
     </button>
   );
 };
