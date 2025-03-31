@@ -23,17 +23,11 @@ export const filterTMDBResults = (results: IItem[]) => {
 };
 
 export const filterCastResults = (results: IItem[]) => {
-  const seen: { [key: string]: boolean } = {};
-  const result = [];
-
-  for (const item of results) {
-    const keyValue = `item-${item.id}-${item.media_type}`;
-    if (!seen[keyValue]) {
-      seen[keyValue] = true;
-      result.push(item);
-    }
-  }
-  return result;
+  const seen = new Set();
+  return results.filter(item => {
+    const k = `item-${item.id}-${item.media_type}`;
+    return seen.has(k) ? false : seen.add(k);
+  });
 }
 
 export const isIphoneSafari = () => {
