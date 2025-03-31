@@ -39,10 +39,10 @@ const Footer = () => {
             <p className='text-white/70 text-sm text-left flex items-center my-2'>
               Stream movies & tv shows on demand. BingeBox24/7 wants to be your go-to site to stream movies & tv. We are hard at work planning new features for your viewing pleasure!
             </p>
-          </div>
           <Link to='/faqs' className='text-white/70 text-md mt-2 font-bold'>
             FAQs
           </Link>
+          </div>
         </div>
 
         {/* Discover Section */}

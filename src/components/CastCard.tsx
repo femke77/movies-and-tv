@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export const CastCard = ({ cast }: { cast: ICast }) => {
   return (
     <div className='flex flex-col items-center text-center mb-24 w-42'>
-      <Link to={`/cast/${cast.id}`} className='relative'>
+      <Link to={`/explore/cast/${cast.id}`} className='relative'>
       <img
         src={
           cast.profile_path

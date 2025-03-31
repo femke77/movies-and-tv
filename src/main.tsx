@@ -10,24 +10,23 @@ import ItemDetailSkeleton from './components/loadingSkeletons/ItemDetailSkeleton
 import NotFound from './pages/404.tsx';
 import ItemCardSkeletonGrid from './components/loadingSkeletons/ItemCardSkeletonGrid.tsx';
 import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
-
 import WatchMovieTmp from './pages/watchPages/WatchTemp.tsx';
-
 import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
 import FAQPage from './pages/FAQ.tsx';
-import CastMemberDetail from './pages/CastMemberDetail.tsx';
+import CastDetailSkeleton from './components/loadingSkeletons/CastDetailSkeleton.tsx';
 
+const CastMemberDetail = lazy(() => import('./pages/CastMemberDetail.tsx'));
 const Watchlist = lazy(() => import('./pages/Watchlist.tsx'));
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
 const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
 const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
 const Results = lazy(() => import('./pages/SearchPage.tsx'));
-const MovieTopRated = lazy(
-  () => import('./pages/moviePages/MovieTopRated.tsx'),
+const MovieTopRated = lazy(() =>
+  import('./pages/moviePages/MovieTopRated.tsx')
 );
 const MoviePopular = lazy(() => import('./pages/moviePages/MoviePopular.tsx'));
-const MovieTrending = lazy(
-  () => import('./pages/moviePages/MovieTrending.tsx'),
+const MovieTrending = lazy(() =>
+  import('./pages/moviePages/MovieTrending.tsx')
 );
 const TvTrending = lazy(() => import('./pages/tvPages/TvTrending.tsx'));
 const TvTopRated = lazy(() => import('./pages/tvPages/TvTopRated.tsx'));
@@ -61,11 +60,7 @@ const router = createBrowserRouter([
         path: 'search/:query?',
         element: <Results />,
       },
-      {
-        path: 'cast/:id',
-        element: <CastMemberDetail />,
-    
-      },
+
       {
         path: 'dmca',
         element: <DMCA />,
@@ -152,6 +147,14 @@ const router = createBrowserRouter([
               </DelayedSuspense>
             ),
           },
+          {
+            path: 'cast/:id',
+            element: (
+              <DelayedSuspense fallback={<CastDetailSkeleton />}>
+                <CastMemberDetail />
+              </DelayedSuspense>
+            ),
+          },
         ],
       },
       {
@@ -196,5 +199,5 @@ createRoot(document.getElementById('root')!).render(
       <RouterProvider router={router} />
       {/* </ChunkLoadErrorBoundary> */}
     </QueryClientProvider>
-  </StrictMode>,
+  </StrictMode>
 );
