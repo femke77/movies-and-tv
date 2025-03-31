@@ -23,8 +23,7 @@ export default defineConfig({
         }),
       ],
       // Checking vendor size - 585kb was the result
-      // output: {
-      //   // Split chunks more aggressively
+      // output: {  
       //   manualChunks(id) {
       //     if (id.includes('node_modules')) {
       //       return 'vendor'
@@ -45,7 +44,7 @@ export default defineConfig({
         navigateFallback: 'index.html',
       },
       manifest: {
-        name: 'BingeBox247 - Unlimited Streaming for Movies and TV',
+        name: 'BingeBox24/7 - Unlimited Streaming for Movies and TV',
         short_name: 'BingeBox',
         description:
           'Stream and collect your favorite movies and TV shows with BingeBox247.',

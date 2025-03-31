@@ -15,6 +15,7 @@ import WatchMovieTmp from './pages/watchPages/WatchTemp.tsx';
 
 import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
 import FAQPage from './pages/FAQ.tsx';
+import CastMemberDetail from './pages/CastMemberDetail.tsx';
 
 const Watchlist = lazy(() => import('./pages/Watchlist.tsx'));
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
@@ -59,6 +60,11 @@ const router = createBrowserRouter([
       {
         path: 'search/:query?',
         element: <Results />,
+      },
+      {
+        path: 'cast/:id',
+        element: <CastMemberDetail />,
+    
       },
       {
         path: 'dmca',
