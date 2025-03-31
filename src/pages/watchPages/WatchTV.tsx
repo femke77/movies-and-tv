@@ -13,7 +13,7 @@ import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/buttons/SeasonNavigation';
-import { isIphoneSafari } from '../../utils/helpers';
+import { isIPad, isIphoneSafari } from '../../utils/helpers';
 import EpisodeList from '../../components/EpisodeList';
 import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
@@ -214,7 +214,9 @@ const WatchTV = () => {
               </p>
             )}
 
-            <div className={`${isIphoneSafari() ? 'invisible' : ''}`}>
+            <div
+              className={`${isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''}`}
+            >
               <FullscreenBtn elementId='video-player' />
             </div>
           </div>

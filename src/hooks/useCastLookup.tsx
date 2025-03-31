@@ -1,5 +1,6 @@
 import { TMDBClient } from '../utils/axiosConfig';
 import { useQuery } from '@tanstack/react-query';
+import { filterCastResults } from '../utils/helpers';
 
 const getCastMemberData = async (id: number) => {
   const { data } = await TMDBClient.get(`/person/${id}`);
@@ -24,7 +25,7 @@ export const useCastLookupWithWork = (id: number) => {
       ]);
       return {
         ...castMember,
-        ...castWork,
+        cast: filterCastResults(castWork.cast),
       };
     },
   });

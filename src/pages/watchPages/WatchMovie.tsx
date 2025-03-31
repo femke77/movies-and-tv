@@ -4,7 +4,7 @@ import WatchDescription from '../../components/WatchDescription';
 import BackButton from '../../components/buttons/BackBtn';
 import FullscreenBtn from '../../components/buttons/FullScreenBtn';
 import ServerList from '../../components/ServerList';
-import { isIphoneSafari } from '../../utils/helpers';
+import { isIphoneSafari, isIPad } from '../../utils/helpers';
 import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
 import dayjs from 'dayjs';
@@ -121,7 +121,9 @@ const WatchMovie = () => {
               </p>
             )}
             {/* iphone safari doesn't support the FS api */}
-            <div className={`${isIphoneSafari() ? 'invisible' : ''}`}>
+            <div
+              className={`${isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''}`}
+            >
               <FullscreenBtn elementId='iframe' />
             </div>
           </div>
