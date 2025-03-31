@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import Chip from '../components/Chip';
-import { useItemDetail } from '../hooks/useItemOrWatchDetail';
+import Chip from '../../components/Chip';
+import { useItemDetail } from '../../hooks/useItemOrWatchDetail';
 import { useParams } from 'react-router-dom';
-import UserRating from '../components/NewUserRating';
-import WatchButton from '../components/buttons/WatchButton';
-import { getStrokeColor } from '../utils/helpers';
-import { CastList } from '../components/CastList';
+import UserRating from '../../components/NewUserRating';
+import WatchButton from '../../components/buttons/WatchButton';
+import { getStrokeColor } from '../../utils/helpers';
+import { CastList } from '../../components/lists/CastList';
 import dayjs from 'dayjs';
-import BookmarkBtn from '../components/buttons/BookmarkBtn';
-import { useBookmarkStore } from '../state/store';
-import Share from '../components/buttons/ShareButtons';
-import useDocumentTitle from '../hooks/usePageTitles';
+import BookmarkBtn from '../../components/buttons/BookmarkBtn';
+import { useBookmarkStore } from '../../state/store';
+import Share from '../../components/buttons/ShareButtons';
+import useDocumentTitle from '../../hooks/usePageTitles';
 
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -51,12 +51,12 @@ const ItemDetail = () => {
 
   const strokeColor = getStrokeColor(item?.vote_average);
   const directorData = item?.crew?.find(
-    (member: { job: string }) => member.job === 'Director',
+    (member: { job: string }) => member.job === 'Director'
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = item?.crew?.find(
     (member: { job: string }) =>
-      member.job === 'Screenplay' || member.job === 'Writer',
+      member.job === 'Screenplay' || member.job === 'Writer'
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -162,7 +162,7 @@ const ItemDetail = () => {
                   <BookmarkBtn
                     isBookmarked={bookmarks.some(
                       (bookmark) =>
-                        bookmark.id === item.id && bookmark.type === item_type,
+                        bookmark.id === item.id && bookmark.type === item_type
                     )}
                     id={item.id}
                     type={item_type!}
@@ -206,8 +206,8 @@ const ItemDetail = () => {
                     {item.runtime
                       ? `${item.runtime} min`
                       : item.episode_run_time?.[0]
-                        ? `${item.episode_run_time[0]} min`
-                        : 'Unknown'}
+                      ? `${item.episode_run_time[0]} min`
+                      : 'Unknown'}
                   </span>
                 </p>
               </div>
@@ -271,7 +271,7 @@ const ItemDetail = () => {
                           {item.created_by.map(
                             (
                               creator: { id: string; name: string },
-                              index: number,
+                              index: number
                             ) => (
                               <span
                                 key={creator.id}
@@ -280,7 +280,7 @@ const ItemDetail = () => {
                                 {creator.name}
                                 {index < item.created_by.length - 1 ? ', ' : ''}
                               </span>
-                            ),
+                            )
                           )}
                         </p>
                         <p className='text-xl font-bold'>

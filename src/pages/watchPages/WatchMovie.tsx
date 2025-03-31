@@ -3,7 +3,7 @@ import { useWatchDetails } from '../../hooks/useItemOrWatchDetail';
 import WatchDescription from '../../components/WatchDescription';
 import BackButton from '../../components/buttons/BackBtn';
 import FullscreenBtn from '../../components/buttons/FullScreenBtn';
-import ServerList from '../../components/ServerList';
+import ServerList from '../../components/lists/ServerList';
 import { isIphoneSafari, isIPad } from '../../utils/helpers';
 import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';

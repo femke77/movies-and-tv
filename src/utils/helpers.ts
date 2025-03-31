@@ -8,7 +8,7 @@ export const getStrokeColor = (rating: number) => {
   return 'red';
 };
 
-// filter weird/bad data from the API
+// filter weird/bad data from the TMDB API
 export const filterTMDBResults = (results: IItem[]) => {
   return results.filter((item: IItem) => {
     // Ensure the item has either a title.
@@ -22,6 +22,7 @@ export const filterTMDBResults = (results: IItem[]) => {
   });
 };
 
+// filter out duplicate items from the TMDB API's combined works of a cast member
 export const filterCastResults = (results: IItem[]) => {
   const seen = new Set();
   return results.filter((item) => {

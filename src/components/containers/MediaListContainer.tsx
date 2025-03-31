@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
 import { useInfiniteDiscoverQuery } from '../../hooks/useSearchAndDiscover';
-import GenreSelector from '../GenreSelector';
+import GenreSelector from '../selectors/GenreSelector';
 import Explore from '../ExploreDisplay';
 import { IGenre } from '../../interfaces/IGenre';
-import SortByListbox from '../ListBox';
+import SortByListbox from '../selectors/ListBox';
 import { useLocation } from 'react-router-dom';
 
 interface MediaListContainerProps {
@@ -56,11 +56,11 @@ const MediaListContainer = ({
 
     sessionStorage.setItem(
       `${mediaType}-selectedGenres`,
-      JSON.stringify(selectedGenres),
+      JSON.stringify(selectedGenres)
     );
     sessionStorage.setItem(
       `${mediaType}-deSelectedGenres`,
-      JSON.stringify(deSelectedGenres),
+      JSON.stringify(deSelectedGenres)
     );
     sessionStorage.setItem(`${mediaType}-sortBy`, sortByOption);
   }, [
@@ -77,7 +77,7 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setDeSelectedGenres((deselected) =>
-          deselected.filter((genre) => genre !== genreId),
+          deselected.filter((genre) => genre !== genreId)
         );
 
         return [...prev, genreId];
@@ -91,23 +91,28 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setSelectedGenres((selected) =>
-          selected.filter((genre) => genre !== genreId),
+          selected.filter((genre) => genre !== genreId)
         );
         return [...prev, genreId];
       }
     });
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteDiscoverQuery(
-      mediaType,
-      selectedGenres?.join(','),
-      sortByOption,
-      '',
-      voteAverage,
-      voteCount,
-      deSelectedGenres.join(','),
-    );
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteDiscoverQuery(
+    mediaType,
+    selectedGenres?.join(','),
+    sortByOption,
+    '',
+    voteAverage,
+    voteCount,
+    deSelectedGenres.join(',')
+  );
 
   return (
     <div className='mt-24'>

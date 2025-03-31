@@ -1,5 +1,5 @@
 import { useBookmarkStore } from '../state/store';
-import { ItemCard } from '../components/ItemCard';
+import { ItemCard } from '../components/cards/ItemCard';
 import {
   useQueries,
   useQueryClient,

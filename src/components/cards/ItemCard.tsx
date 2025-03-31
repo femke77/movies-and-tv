@@ -1,12 +1,12 @@
-import { IItem } from '../interfaces/IItem';
+import { IItem } from '../../interfaces/IItem';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
-import UserRating from './NewUserRating';
+import UserRating from '../NewUserRating';
 import { useEffect, useState, memo } from 'react';
-import genreData from '../utils/data/genres.json';
-import Chip from './Chip';
-import { useWindowSize } from '../hooks/useWindowSize';
-import BookmarkBtn from './buttons/BookmarkBtn';
+import genreData from '../../utils/data/genres.json';
+import Chip from '../Chip';
+import { useWindowSize } from '../../hooks/useWindowSize';
+import BookmarkBtn from '../buttons/BookmarkBtn';
 
 const ItemCard = ({
   item,
@@ -164,16 +164,14 @@ const ItemCard = ({
                   <div className='flex justify-end flex-wrap gap-1 relative -top-8 sm:right-2 w-full z-10'>
                     {width > 400 ? (
                       <>
-                        {movieGenres
-                          ?.slice(0, 2)
-                          .map((genre) => (
-                            <Chip
-                              label={genre!}
-                              key={genre}
-                              bg='bg-black/70'
-                              fontSize={`text-xs sm:text-sm md:text-md `}
-                            />
-                          ))}
+                        {movieGenres?.slice(0, 2).map((genre) => (
+                          <Chip
+                            label={genre!}
+                            key={genre}
+                            bg='bg-black/70'
+                            fontSize={`text-xs sm:text-sm md:text-md `}
+                          />
+                        ))}
                       </>
                     ) : null}
                   </div>
@@ -193,8 +191,8 @@ const ItemCard = ({
                     ? formattedAirDate
                     : 'TBD'
                   : formattedReleaseDate !== 'Invalid Date'
-                    ? formattedReleaseDate
-                    : 'TBD'}{' '}
+                  ? formattedReleaseDate
+                  : 'TBD'}{' '}
                 &#x2022; {itemType === 'tv' ? 'TV' : 'Movie'}
               </p>
             </div>
@@ -231,7 +229,7 @@ const MemoizedItemCard = memo(
         isBookmarked={isBookmarked}
       />
     </div>
-  ),
+  )
 );
 
 MemoizedItemCard.displayName = 'MemoizedItemCard';

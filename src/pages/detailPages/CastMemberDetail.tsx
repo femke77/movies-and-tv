@@ -1,9 +1,9 @@
-import { useCastLookupWithWork } from '../hooks/useCastLookup';
+import { useCastLookupWithWork } from '../../hooks/useCastLookup';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import Carousel from '../components/containers/CarouselContainer';
-import { IItem } from '../interfaces/IItem';
+import Carousel from '../../components/containers/CarouselContainer';
+import { IItem } from '../../interfaces/IItem';
 
 const CastMemberDetail = () => {
   const { id } = useParams<{ id: string }>();

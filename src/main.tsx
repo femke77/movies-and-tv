@@ -15,18 +15,20 @@ import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
 import FAQPage from './pages/FAQ.tsx';
 import CastDetailSkeleton from './components/loadingSkeletons/CastDetailSkeleton.tsx';
 
-const CastMemberDetail = lazy(() => import('./pages/CastMemberDetail.tsx'));
+const CastMemberDetail = lazy(() =>
+  import('./pages/detailPages/CastMemberDetail.tsx')
+);
 const Watchlist = lazy(() => import('./pages/Watchlist.tsx'));
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
 const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
-const ItemDetail = lazy(() => import('./pages/ItemDetail.tsx'));
+const ItemDetail = lazy(() => import('./pages/detailPages/ItemDetail.tsx'));
 const Results = lazy(() => import('./pages/SearchPage.tsx'));
-const MovieTopRated = lazy(
-  () => import('./pages/moviePages/MovieTopRated.tsx'),
+const MovieTopRated = lazy(() =>
+  import('./pages/moviePages/MovieTopRated.tsx')
 );
 const MoviePopular = lazy(() => import('./pages/moviePages/MoviePopular.tsx'));
-const MovieTrending = lazy(
-  () => import('./pages/moviePages/MovieTrending.tsx'),
+const MovieTrending = lazy(() =>
+  import('./pages/moviePages/MovieTrending.tsx')
 );
 const TvTrending = lazy(() => import('./pages/tvPages/TvTrending.tsx'));
 const TvTopRated = lazy(() => import('./pages/tvPages/TvTopRated.tsx'));
@@ -199,5 +201,5 @@ createRoot(document.getElementById('root')!).render(
       <RouterProvider router={router} />
       {/* </ChunkLoadErrorBoundary> */}
     </QueryClientProvider>
-  </StrictMode>,
+  </StrictMode>
 );

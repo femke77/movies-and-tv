@@ -1,4 +1,4 @@
-import { IEpisode } from '../interfaces/IEpisode';
+import { IEpisode } from '../../interfaces/IEpisode';
 import dayjs from 'dayjs';
 
 const Episode = ({

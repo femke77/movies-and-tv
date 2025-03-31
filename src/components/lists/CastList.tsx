@@ -1,6 +1,6 @@
-import type { ICast } from '../interfaces/ICast';
-import { CastCard } from './CastCard';
-import SimpleCarousel from './containers/SimpleCarousel';
+import type { ICast } from '../../interfaces/ICast';
+import { CastCard } from '../cards/CastCard';
+import SimpleCarousel from '../containers/SimpleCarousel';
 
 export const CastList = ({ cast }: { cast: ICast[] }) => {
   return (

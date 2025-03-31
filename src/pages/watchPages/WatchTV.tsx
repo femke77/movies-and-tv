@@ -8,13 +8,13 @@ import BackButton from '../../components/buttons/BackBtn';
 import FullscreenBtn from '../../components/buttons/FullScreenBtn';
 import WatchPrevBtn from '../../components/buttons/WatchPrevBtn';
 import WatchNextBtn from '../../components/buttons/WatchNextBtn';
-import ListBoxComp from '../../components/ListBox';
+import ListBoxComp from '../../components/selectors/ListBox';
 import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/buttons/SeasonNavigation';
 import { isIPad, isIphoneSafari } from '../../utils/helpers';
-import EpisodeList from '../../components/EpisodeList';
+import EpisodeList from '../../components/lists/EpisodeList';
 import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
 
@@ -35,14 +35,14 @@ const WatchTV = () => {
   });
   const [selectedSeason, setSelectedSeason] = useState(() => {
     const lastSelectedSeason = localStorage.getItem(
-      `lastSelectedSeason-${series_id}`,
+      `lastSelectedSeason-${series_id}`
     );
     if (lastSelectedSeason) return Number(lastSelectedSeason);
     return 1;
   });
   const [selectedEpisode, setSelectedEpisode] = useState(() => {
     const lastSelectedEpisode = localStorage.getItem(
-      `lastSelectedEpisode-${series_id}`,
+      `lastSelectedEpisode-${series_id}`
     );
     if (lastSelectedEpisode) return Number(lastSelectedEpisode);
     return 1;
@@ -55,7 +55,7 @@ const WatchTV = () => {
   const { data: series } = useWatchDetails('tv', series_id!);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
-    String(selectedSeason),
+    String(selectedSeason)
   );
   useDocumentTitle(`Watch ${series?.original_name || 'TV Show'} | BingeBox`);
   useEffect(() => {
@@ -96,28 +96,28 @@ const WatchTV = () => {
       localStorage.removeItem(`lastSelectedSeason-${series_id}`);
       localStorage.setItem(
         `lastSelectedSeason-${series_id}`,
-        String(selectedSeason),
+        String(selectedSeason)
       );
     } else {
       localStorage.setItem(
         `lastSelectedSeason-${series_id}`,
-        String(selectedSeason),
+        String(selectedSeason)
       );
     }
 
     const lastEpisode = localStorage.getItem(
-      `lastSelectedEpisode-${series_id}`,
+      `lastSelectedEpisode-${series_id}`
     );
     if (lastEpisode) {
       localStorage.removeItem(`lastSelectedEpisode-${series_id}`);
       localStorage.setItem(
         `lastSelectedEpisode-${series_id}`,
-        String(selectedEpisode),
+        String(selectedEpisode)
       );
     } else {
       localStorage.setItem(
         `lastSelectedEpisode-${series_id}`,
-        String(selectedEpisode),
+        String(selectedEpisode)
       );
     }
   }, [series_id, selectedSeason, selectedEpisode]);
@@ -215,7 +215,9 @@ const WatchTV = () => {
             )}
 
             <div
-              className={`${isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''}`}
+              className={`${
+                isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''
+              }`}
             >
               <FullscreenBtn elementId='video-player' />
             </div>
@@ -245,7 +247,7 @@ const WatchTV = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer,
+                          (server) => server.value === selectedServer
                         )?.name
                       }
                       ...{' '}
@@ -372,7 +374,7 @@ const WatchTV = () => {
                         <p className='text-white/70 text-sm ml-9 truncate text-ellipsis'>
                           {
                             servers.find(
-                              (server) => server.value === selectedServer,
+                              (server) => server.value === selectedServer
                             )?.name
                           }
                         </p>

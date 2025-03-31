@@ -1,7 +1,7 @@
 import { useEffect, memo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { IItem } from '../interfaces/IItem';
-import { MemoizedItemCard } from './ItemCard';
+import { MemoizedItemCard } from './cards/ItemCard';
 import { useBookmarkStore } from '../state/store';
 
 interface IExploreProps {
@@ -46,7 +46,7 @@ const Explore = memo(
                 showGenres={true}
                 showRating={true}
                 isBookmarked={bookmarks.some(
-                  (a) => a.id === item.id && a.type === itemType,
+                  (a) => a.id === item.id && a.type === itemType
                 )}
               />
             ))
@@ -59,7 +59,7 @@ const Explore = memo(
         </div>
       </div>
     );
-  },
+  }
 );
 
 Explore.displayName = 'Explore';
