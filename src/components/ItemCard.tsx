@@ -23,6 +23,9 @@ const ItemCard = ({
   textSize?: string;
   isBookmarked: boolean;
 }) => {
+ 
+
+  
   const [isVisible, setIsVisible] = useState(false);
   const [lowResLoaded, setLowResLoaded] = useState(false);
   const [highResLoaded, setHighResLoaded] = useState(false);
@@ -191,10 +194,10 @@ const ItemCard = ({
                 {itemType === 'tv'
                   ? formattedAirDate !== 'Invalid Date'
                     ? formattedAirDate
-                    : 'Unknown'
+                    : 'TBD'
                   : formattedReleaseDate !== 'Invalid Date'
                     ? formattedReleaseDate
-                    : 'Unknown'}{' '}
+                    : 'TBD'}{' '}
                 &#x2022; {itemType === 'tv' ? 'TV' : 'Movie'}
               </p>
             </div>

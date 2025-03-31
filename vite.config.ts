@@ -58,6 +58,7 @@ export default defineConfig({
         clientsClaim: true,
         cleanupOutdatedCaches: true,
         navigateFallback: '/index.html',
+        disableDevLogs: true,
       },
     }),
     visualizer({
