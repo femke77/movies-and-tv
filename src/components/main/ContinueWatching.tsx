@@ -20,11 +20,12 @@ interface WatchItems {
 }
 
 const ContinueWatching = () => {
+ 
   const [items, setItems] = useState<WatchItems>({});
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
-
+  
   useEffect(() => {
     const continueWatching = localStorage.getItem('continueWatching');
 
@@ -247,6 +248,7 @@ const ContinueWatching = () => {
                           </svg>
                         </Link>
                       </div>
+                    {/* <div className ={`bg-white absolute bottom-0 left-0 w-20 h-[4px] rounded-xl z-5`}></div> */}
                     </div>
                   </div>
                 );

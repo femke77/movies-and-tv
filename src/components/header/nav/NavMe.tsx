@@ -36,6 +36,7 @@ const NavMe = () => {
           <h3 className='text-md font-bold ml-3'>Account</h3>
         </div>
         <MenuItemLink to='/account/saved' name='My Watchlist' />
+
       </MenuItems>
     </Menu>
   );
