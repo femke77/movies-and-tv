@@ -192,10 +192,10 @@ const ItemDetail = () => {
                 <p className='text-xl font-bold'>
                   Release Date:{' '}
                   <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
-                    {(item.release_date &&
-                      dayjs(item.release_date).format('MMM DD, YYYY')) ||
-                      (item.first_air_date &&
-                        dayjs(item.first_air_date).format('MMM DD, YYYY'))}
+                    {(item.release_date ? 
+                      (dayjs(item.release_date).format('MMM DD, YYYY')): ('TBD')) ||
+                      (item.first_air_date ?
+                       ( dayjs(item.first_air_date).format('MMM DD, YYYY')) : ('TBD'))}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
