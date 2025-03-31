@@ -3,6 +3,7 @@ import { ItemCard } from '../ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../../interfaces/IItem';
 import { useBookmarkStore } from '../../state/store';
+
 const Carousel = ({
   items,
   itemType,

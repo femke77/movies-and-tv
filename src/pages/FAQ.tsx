@@ -36,7 +36,7 @@ const FAQPage = () => {
         },    
         {
             question: "Do you have a browser recommendation?",
-            answer: "BingeBox strongly recommends the Brave browser for safety and to avoid annoying pop-up, click-jack adverts."
+            answer: "BingeBox strongly recommends the Brave browser in 'Shields Up' mode for safety and to avoid annoying pop-up, clickjack adverts."
         },
         {
             question: "Is this site illegal for me to use? Will my ISP know I am using it?",
