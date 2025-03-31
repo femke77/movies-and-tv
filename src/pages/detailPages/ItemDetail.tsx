@@ -214,7 +214,7 @@ const ItemDetail = () => {
               </div>
 
               <div className='flex flex-wrap justify-center md:justify-start space-x-5 md:space-x-10 mb-4'>
-                {item.budget > 0 && (
+                {/* {item.budget > 0 && (
                   <p className='text-xl font-bold'>
                     Budget:{' '}
                     <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
@@ -224,7 +224,7 @@ const ItemDetail = () => {
                       })}
                     </span>
                   </p>
-                )}
+                )} */}
                 {item.revenue > 0 && (
                   <p className='text-xl font-bold'>
                     Revenue:{' '}
