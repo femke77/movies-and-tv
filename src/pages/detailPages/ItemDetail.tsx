@@ -238,7 +238,7 @@ const ItemDetail = () => {
                 )}
                 {ROI !== '0' && (
                   <p className='text-xl font-bold'>
-                    ROI:{' '}
+                    Profit:{' '}
                     <span className='text-lg text-gray-100/50 my-3 ml-1 font-bold'>
                       {ROI}%
                     </span>
