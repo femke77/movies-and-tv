@@ -2,10 +2,9 @@ import { useCastLookupWithWork } from '../hooks/useCastLookup';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-
 import Carousel from '../components/containers/CarouselContainer';
 import { IItem } from '../interfaces/IItem';
-import { useBookmarkStore } from '../state/store';
+
 const CastMemberDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { data: castData } = useCastLookupWithWork(Number(id));
@@ -13,7 +12,7 @@ const CastMemberDetail = () => {
   const [lowResImageLoaded, setLowResImageLoaded] = useState(false);
   const [hiResImageLoaded, setHiResImageLoaded] = useState(false);
   const [showBio, setShowBio] = useState(false);
-  console.log('castData', castData);
+
 
   useEffect(() => {
     if (castData?.profile_path) {
@@ -43,7 +42,7 @@ const CastMemberDetail = () => {
   return (
     <>
       {castData ? (
-        <div className='text-white mt-30 flex items-center  flex-col'>
+        <div className='text-white my-24 flex items-center  flex-col'>
           <h1 className='text-3xl font-semibold mb-6'>{castData.name}</h1>
           {castData && castData.profile_path ? (
             <>
@@ -84,7 +83,7 @@ const CastMemberDetail = () => {
             </div>
           )}
 
-          <div className='mx-30 text-center'>
+          <div className='mx-30 text-center mt-3'>
             <Link
               to={castData.homepage}
               target='_blank'
@@ -93,7 +92,7 @@ const CastMemberDetail = () => {
               {castData.homepage}
             </Link>
 
-            <p className='text-md  text-gray-400'>
+            <p className='text-md mt-3 text-gray-400'>
               Born: {dayjs(castData.birthday).format('MMM DD, YYYY')}
             </p>
             <p className='text-md  text-gray-400'>
@@ -107,18 +106,21 @@ const CastMemberDetail = () => {
                 Died: {dayjs(castData.deathday).format('MMM DD, YYYY')}
               </p>
             )}
-            <h2>Biography</h2>
-            
-            <div className='mt-6 mb-19'>
-                <p className='text-md  text-gray-400'>
-                    {showBio ? castData.biography : `${castData.biography.slice(0, 200)}...`}
-                    <button
-                    className='text-blue-500 hover:underline'
-                    onClick={() => setShowBio(!showBio)}
-                    >
-                    {showBio ? 'Show Less' : 'Read More'}
-                    </button>
-                </p>
+            <h2 className='mt-3 text-gray-300 font-semibold'>Biography</h2>
+
+            <div className='mt-3 mb-19'>
+              <p className='text-md  text-gray-400'>
+                {showBio
+                  ? castData.biography
+                  : `${castData.biography.slice(0, 400)}...`}
+                <button
+                  className='text-blue-500 hover:underline ml-1'
+                  onClick={() => setShowBio(!showBio)}
+                  tabIndex={0}
+                >
+                  {showBio ? 'Show Less' : 'Read More'}
+                </button>
+              </p>
             </div>
           </div>
           <h2 className='text-2xl mb-4'>{castData.name}'s Work</h2>
