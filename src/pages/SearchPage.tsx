@@ -7,7 +7,7 @@ import { MemoizedItemCard } from '../components/cards/ItemCard';
 import { useBookmarkStore } from '../state/store';
 import useDocumentTitle from '../hooks/usePageTitles';
 import BackButton from '../components/buttons/BackBtn';
-// Memoized Results component
+
 const Results = memo(() => {
   const { query } = useParams<{ query: string }>();
   useDocumentTitle(`Search results for '${query}' | BingeBox`);
@@ -59,7 +59,9 @@ const Results = memo(() => {
         )}
       </div>
       <div ref={ref} className='h-10 mt-4'>
-        {isFetchingNextPage && <div className='loader'></div>}
+        {isFetchingNextPage &&  <div className='flex justify-center my-10'>
+      <div className='loader'></div>
+      </div>}
       </div>
     </div>
   );
