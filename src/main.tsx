@@ -10,7 +10,6 @@ import ItemDetailSkeleton from './components/loadingSkeletons/ItemDetailSkeleton
 import NotFound from './pages/404.tsx';
 import ItemCardSkeletonGrid from './components/loadingSkeletons/ItemCardSkeletonGrid.tsx';
 import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
-import WatchMovieTmp from './pages/watchPages/WatchTemp.tsx';
 import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
 import FAQPage from './pages/FAQ.tsx';
 import CastDetailSkeleton from './components/loadingSkeletons/CastDetailSkeleton.tsx';
@@ -170,10 +169,7 @@ const router = createBrowserRouter([
             path: 'tv/:series_id',
             element: <WatchTV />,
           },
-          {
-            path: 'temp/:movie_id',
-            element: <WatchMovieTmp />,
-          },
+        
         ],
       },
       {

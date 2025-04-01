@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import BackButton from '../components/buttons/BackBtn';
 interface FAQItemProps {
   question: string;
   answer: string;
@@ -10,6 +10,9 @@ interface FAQItemProps {
 const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
   return (
     <div className='faq-item mb-4'>
+       <div className='absolute top-20 left-3 z-1'>
+      <BackButton  />
+      </div>
       <div
         className='question p-4 bg-gray-800 rounded cursor-pointer flex justify-between items-center'
         onClick={onClick}

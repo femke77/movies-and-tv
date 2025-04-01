@@ -11,6 +11,7 @@ import BookmarkBtn from '../../components/buttons/BookmarkBtn';
 import { useBookmarkStore } from '../../state/store';
 import Share from '../../components/buttons/ShareButtons';
 import useDocumentTitle from '../../hooks/usePageTitles';
+import BackButton from '../../components/buttons/BackBtn';
 
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -75,6 +76,9 @@ const ItemDetail = () => {
           id='item-detail'
           className='max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto xs:px-2 sm:px-4 lg:px-8 xl:px-12 mr-2 md:mr-0'
         >
+           <div className='absolute top-20 left-3 z-1'>
+      <BackButton  />
+      </div>
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-all duration-800 ease-in ${
               isVisible && backgroundLoaded ? 'opacity-40' : 'opacity-0'

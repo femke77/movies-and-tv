@@ -55,7 +55,7 @@ const Explore = memo(
           )}
         </div>
         <div ref={ref} className='h-10 mt-4'>
-          {isFetchingNextPage && <div>Getting more results...</div>}
+          {isFetchingNextPage && <div className='loader'></div>}
         </div>
       </div>
     );

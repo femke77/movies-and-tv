@@ -1,9 +1,13 @@
 import useDocumentTitle from '../hooks/usePageTitles';
+import BackButton from '../components/buttons/BackBtn';
 
 const DMCA = () => {
   useDocumentTitle('DMCA Declaration | BingeBox');
   return (
     <div className='text-white/70 text-md mt-40 text-center mx-10'>
+       <div className='absolute top-20 left-3 z-1'>
+      <BackButton  />
+      </div>
       <h1 className='text-3xl mb-6'>DMCA</h1>
       <p className='mb-4'>
         This website is in full compliance with the Digital Millennium Copyright

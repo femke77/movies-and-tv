@@ -9,6 +9,7 @@ import { useEffect, useCallback, useMemo, useState } from 'react';
 import { fetchItemDetail } from '../hooks/useItemOrWatchDetail';
 import { IItem } from '../interfaces/IItem';
 import useDocumentTitle from '../hooks/usePageTitles';
+import BackButton from '../components/buttons/BackBtn';
 
 const Watchlist = () => {
   useDocumentTitle('Your Watchlist | BingeBox');
@@ -64,6 +65,9 @@ const Watchlist = () => {
 
   return (
     <div className='mt-24 mx-3 text-white min-h-screen'>
+      <div className='absolute top-20 left-3 z-1'>
+      <BackButton  />
+      </div>
       <h1 className='relative z-1 text-4xl text-center mx-3 mb-9'>Watchlist</h1>
       <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'></div>
 
