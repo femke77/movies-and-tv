@@ -1,10 +1,12 @@
 import { TMDBClient } from '../utils/axiosConfig';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { filterTMDBResults } from '../utils/helpers';
+import { IItem } from '../interfaces/IItem';
+import { ICast } from '../interfaces/ICast';
 
 // All queries are paginated and return a nextPage and totalPages for infinite scroll
 
-// Search items by query
+// Search items by query -includes person search by default
 const searchResults = async ({ query = '', pageParam = 1 }) => {
   const { data } = await TMDBClient.get(
     `/search/multi?query=${query}&include_adult=false&language=en&page=${pageParam}`,
@@ -15,6 +17,7 @@ const searchResults = async ({ query = '', pageParam = 1 }) => {
     totalPages: data.total_pages,
   };
 };
+
 
 export const useInfiniteSearchQuery = (query: string) => {
   return useInfiniteQuery({
@@ -30,7 +33,8 @@ export const useInfiniteSearchQuery = (query: string) => {
     select: (data) => ({
       pages: data.pages.map((page) => ({
         ...page,
-        results: filterTMDBResults(page.results),
+        results: page.results.filter((item: IItem) => item.media_type !== 'person'), 
+        persons: page.results.filter((item: ICast) => item.media_type === 'person'),
       })),
       pageParams: data.pageParams,
     }),
@@ -150,11 +154,3 @@ export const useInfiniteTrendingQuery = (
   });
 };
 
-// search for people
-
-export const searchPerson = async ({ query = '' }) => {
-  const { data } = await TMDBClient.get(
-    `/search/person?query=${query}&include_adult=false&language=en`,
-  );
-  return data?.results || [];
-};

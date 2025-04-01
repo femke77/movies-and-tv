@@ -1,7 +1,7 @@
 export interface IItem {
   id: number | string;
   title: string;
-  poster_path: string;
+  poster_path?: string;
   vote_average: number | null;
   backdrop_path: string;
   overview: string;

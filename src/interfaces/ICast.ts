@@ -3,6 +3,7 @@ export interface ICast {
   name: string;
   character: string;
   profile_path: string;
+  media_type: string;
   biography: string;
   birthday: string;
   deathday: string | null;
