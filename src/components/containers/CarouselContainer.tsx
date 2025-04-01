@@ -57,7 +57,7 @@ const Carousel = ({
                 (bookmarks) =>
                   bookmarks.id === item.id &&
                   (bookmarks.type === itemType ||
-                    bookmarks.type === item.media_type)
+                    bookmarks.type === item.media_type),
               )}
             />
           </div>

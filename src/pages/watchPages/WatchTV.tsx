@@ -35,14 +35,14 @@ const WatchTV = () => {
   });
   const [selectedSeason, setSelectedSeason] = useState(() => {
     const lastSelectedSeason = localStorage.getItem(
-      `lastSelectedSeason-${series_id}`
+      `lastSelectedSeason-${series_id}`,
     );
     if (lastSelectedSeason) return Number(lastSelectedSeason);
     return 1;
   });
   const [selectedEpisode, setSelectedEpisode] = useState(() => {
     const lastSelectedEpisode = localStorage.getItem(
-      `lastSelectedEpisode-${series_id}`
+      `lastSelectedEpisode-${series_id}`,
     );
     if (lastSelectedEpisode) return Number(lastSelectedEpisode);
     return 1;
@@ -55,7 +55,7 @@ const WatchTV = () => {
   const { data: series } = useWatchDetails('tv', series_id!);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
-    String(selectedSeason)
+    String(selectedSeason),
   );
   useDocumentTitle(`Watch ${series?.original_name || 'TV Show'} | BingeBox`);
   useEffect(() => {
@@ -96,28 +96,28 @@ const WatchTV = () => {
       localStorage.removeItem(`lastSelectedSeason-${series_id}`);
       localStorage.setItem(
         `lastSelectedSeason-${series_id}`,
-        String(selectedSeason)
+        String(selectedSeason),
       );
     } else {
       localStorage.setItem(
         `lastSelectedSeason-${series_id}`,
-        String(selectedSeason)
+        String(selectedSeason),
       );
     }
 
     const lastEpisode = localStorage.getItem(
-      `lastSelectedEpisode-${series_id}`
+      `lastSelectedEpisode-${series_id}`,
     );
     if (lastEpisode) {
       localStorage.removeItem(`lastSelectedEpisode-${series_id}`);
       localStorage.setItem(
         `lastSelectedEpisode-${series_id}`,
-        String(selectedEpisode)
+        String(selectedEpisode),
       );
     } else {
       localStorage.setItem(
         `lastSelectedEpisode-${series_id}`,
-        String(selectedEpisode)
+        String(selectedEpisode),
       );
     }
   }, [series_id, selectedSeason, selectedEpisode]);
@@ -203,7 +203,7 @@ const WatchTV = () => {
         <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
           <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
-              <BackButton color='text-white'/>
+              <BackButton color='text-white' />
             </div>
             {series && (
               <p
@@ -247,7 +247,7 @@ const WatchTV = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer
+                          (server) => server.value === selectedServer,
                         )?.name
                       }
                       ...{' '}
@@ -374,7 +374,7 @@ const WatchTV = () => {
                         <p className='text-white/70 text-sm ml-9 truncate text-ellipsis'>
                           {
                             servers.find(
-                              (server) => server.value === selectedServer
+                              (server) => server.value === selectedServer,
                             )?.name
                           }
                         </p>

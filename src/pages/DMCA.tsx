@@ -5,8 +5,8 @@ const DMCA = () => {
   useDocumentTitle('DMCA Declaration | BingeBox');
   return (
     <div className='text-white/70 text-md mt-40 text-center mx-10'>
-       <div className='absolute top-20 left-3 z-1'>
-      <BackButton  />
+      <div className='absolute top-20 left-3 z-1'>
+        <BackButton />
       </div>
       <h1 className='text-3xl mb-6'>DMCA</h1>
       <p className='mb-4'>

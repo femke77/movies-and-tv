@@ -43,10 +43,10 @@ const CastMemberDetail = () => {
     <>
       {castData ? (
         <div className='text-white my-24 flex items-center  flex-col'>
-           <div className='absolute top-20 left-3 z-1'>
-      <BackButton  />
-      </div>
-                <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'></div>
+          <div className='absolute top-20 left-3 z-1'>
+            <BackButton />
+          </div>
+          <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'></div>
 
           <h1 className='z-1 text-3xl font-semibold mb-6'>{castData.name}</h1>
           {castData && castData.profile_path ? (

@@ -15,13 +15,8 @@ const Results = memo(() => {
   const { ref, inView } = useInView();
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteSearchQuery(query ?? '');
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteSearchQuery(query ?? '');
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -39,8 +34,8 @@ const Results = memo(() => {
   const allItems = data?.pages.flatMap((page) => page.results) ?? [];
   return (
     <div className='ml-2 mt-8'>
-       <div className='absolute top-20 left-3 z-1'>
-      <BackButton  />
+      <div className='absolute top-20 left-3 z-1'>
+        <BackButton />
       </div>
       <div className='flex flex-wrap flex-1 gap-4 items-start'>
         {allItems.length > 0 ? (
@@ -50,7 +45,7 @@ const Results = memo(() => {
               item={item}
               textSize='md'
               isBookmarked={bookmarks.some(
-                (a) => a.id === item.id && a.type === item.media_type
+                (a) => a.id === item.id && a.type === item.media_type,
               )}
             />
           ))
@@ -83,7 +78,7 @@ const SearchContainer = memo(() => {
   // Memoize the heading text
   const headingText = useMemo(
     () => `Search results for '${searchQuery || lastLetterRef.current}'`,
-    [searchQuery]
+    [searchQuery],
   );
 
   return (

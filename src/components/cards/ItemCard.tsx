@@ -164,14 +164,16 @@ const ItemCard = ({
                   <div className='flex justify-end flex-wrap gap-1 relative -top-8 sm:right-2 w-full z-10'>
                     {width > 400 ? (
                       <>
-                        {movieGenres?.slice(0, 2).map((genre) => (
-                          <Chip
-                            label={genre!}
-                            key={genre}
-                            bg='bg-black/70'
-                            fontSize={`text-xs sm:text-sm md:text-md `}
-                          />
-                        ))}
+                        {movieGenres
+                          ?.slice(0, 2)
+                          .map((genre) => (
+                            <Chip
+                              label={genre!}
+                              key={genre}
+                              bg='bg-black/70'
+                              fontSize={`text-xs sm:text-sm md:text-md `}
+                            />
+                          ))}
                       </>
                     ) : null}
                   </div>
@@ -191,8 +193,8 @@ const ItemCard = ({
                     ? formattedAirDate
                     : 'TBD'
                   : formattedReleaseDate !== 'Invalid Date'
-                  ? formattedReleaseDate
-                  : 'TBD'}{' '}
+                    ? formattedReleaseDate
+                    : 'TBD'}{' '}
                 &#x2022; {itemType === 'tv' ? 'TV' : 'Movie'}
               </p>
             </div>
@@ -229,7 +231,7 @@ const MemoizedItemCard = memo(
         isBookmarked={isBookmarked}
       />
     </div>
-  )
+  ),
 );
 
 MemoizedItemCard.displayName = 'MemoizedItemCard';
