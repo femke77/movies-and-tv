@@ -1,6 +1,6 @@
 import { ArrowLeft } from 'lucide-react';
 
-const BackButton = ({ text, color='text-gray-300/80' }: { text?: string, color?:string }) => {
+const BackButton = ({ text, color='text-white/60' }: { text?: string, color?:string }) => {
   return (
     <button
       className='back-button flex hover:cursor-pointer'
