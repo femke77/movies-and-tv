@@ -122,7 +122,7 @@ const ItemDetail = () => {
               id='item-info'
               className='md:pl-4 flex-grow md:max-h-[525px] basis-full md:basis-2/5 ml-12 pr-10 overflow-auto flex flex-col items-center md:items-start'
             >
-              <h2 className='text-4xl mb-4 font-bold md:pr-16 text-center md:text-left'>
+              <h2 className='text-4xl mb-2 font-bold md:pr-16 text-center md:text-left'>
                 {item.title || item.name} ({releaseYearMovie || releaseYearTV})
               </h2>
               <p className='text-center md:text-left italic text-gray-200/50 text-light text-xl mb-3'>
