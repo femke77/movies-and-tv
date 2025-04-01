@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { useState, useEffect, lazy } from 'react';
 import BookmarkBtn from '../buttons/BookmarkBtn';
-import Tooltip from '../ToolTip';
+import Tooltip from '../modals/ToolTip';
 
 const UserRating = lazy(() => import('../UserRating'));
 const WatchButton = lazy(() => import('../buttons/WatchButtonSmall'));

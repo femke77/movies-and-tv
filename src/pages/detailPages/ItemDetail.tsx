@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Chip from '../../components/Chip';
 import { useItemDetail } from '../../hooks/useItemOrWatchDetail';
 import { useParams } from 'react-router-dom';
-import UserRating from '../../components/NewUserRating';
+import UserRating from '../../components/UserRatingV2';
 import WatchButton from '../../components/buttons/WatchButton';
 import { getStrokeColor } from '../../utils/helpers';
 import { CastList } from '../../components/lists/CastList';
@@ -193,12 +193,12 @@ const ItemDetail = () => {
                   Release Date:{' '}
                   <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
                     {item_type === 'movie'
-                      ? (item.release_date
-                          ? dayjs(item.release_date).format('MMM DD, YYYY')
-                          : 'TBD')
-                      : (item.first_air_date
-                          ? dayjs(item.first_air_date).format('MMM DD, YYYY')
-                          : 'TBD')}
+                      ? item.release_date
+                        ? dayjs(item.release_date).format('MMM DD, YYYY')
+                        : 'TBD'
+                      : item.first_air_date
+                      ? dayjs(item.first_air_date).format('MMM DD, YYYY')
+                      : 'TBD'}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
