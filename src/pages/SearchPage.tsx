@@ -10,11 +10,16 @@ import BackButton from '../components/buttons/BackBtn';
 import { CastCard } from '../components/cards/CastCard';
 import { ICast } from '../interfaces/ICast';
 
-const Results = memo(() => {
+interface ResultsProps {
+  personOnly: boolean;
+  setPersonOnly: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Results = memo(({personOnly, setPersonOnly}: ResultsProps) => {
   const { query } = useParams<{ query: string }>();
-  useDocumentTitle(`Search results for '${query}' | BingeBox`);
+
   const lastResultsRef = useRef<IItem[]>([]);
-  const [personOnly, setPersonOnly] = useState(false);
+
   const { ref, inView } = useInView();
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
 
@@ -26,9 +31,7 @@ const Results = memo(() => {
     isLoading,
   } = useInfiniteSearchQuery(query ?? '');
 
-  const handlePersonOnly = () => {
-    setPersonOnly((prev) => !prev);
-  };
+ 
   console.log('data', data);
 
   useEffect(() => {
@@ -49,19 +52,14 @@ const Results = memo(() => {
   
   return (
     <div className='ml-2 mt-8'>
-      <button
-        className='absolute top-36 right-4 z-1 bg-gray-700 h-9 w-40 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-        onClick={handlePersonOnly}
-      >
-       {personOnly ? 'Movies & Shows' : 'View People Only'}
-      </button>
+     
       <div className='absolute top-20 left-3 z-1'>
         <BackButton />
       </div>
 
       {personOnly ? (
         <>
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4'>
+        <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
         {allPersons.length > 0 ? (
           allPersons.map((item: ICast) => (
             <CastCard
@@ -85,7 +83,7 @@ const Results = memo(() => {
         </>
       ) : (
         <>
-          <div className='flex flex-wrap flex-1 gap-4 items-start'>
+          <div className='max-w-[1800px] mx-auto flex flex-wrap flex-1 gap-4 items-start'>
             {allItems.length > 0 ? (
               allItems.map((item: IItem) => (
                 <MemoizedItemCard
@@ -120,7 +118,8 @@ Results.displayName = 'Results';
 const SearchContainer = memo(() => {
   const searchQuery = useOutletContext<string>();
   const lastLetterRef = useRef<string | null>(null);
-
+  useDocumentTitle(`Search results for '${searchQuery}' | BingeBox`);
+  const [personOnly, setPersonOnly] = useState(false);
   useEffect(() => {
     if (searchQuery.length === 1) {
       lastLetterRef.current = searchQuery;
@@ -133,11 +132,21 @@ const SearchContainer = memo(() => {
     [searchQuery]
   );
 
+  const handlePersonOnly = () => {
+    setPersonOnly((prev) => !prev);
+  };
   return (
-    <div className='mt-36 mx-4'>
-      <h1 className='text-3xl font-bold mt-10 mb-8 relative'>{headingText}</h1>
-
-      <Results />
+    <div className='mt-30 mx-4'>
+      <div className='flex flex-row flex-wrap justify-between items-center'>
+      <h1 className='text-3xl font-bold mt-2 mb-2 relative mr-6'>{headingText}</h1>
+      <button
+        className='min-w-40 bg-gray-700 h-9 w-40 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+        onClick={handlePersonOnly}
+      >
+       {personOnly ? 'Movies & Shows' : 'View People Only'}
+      </button>
+      </div>
+      <Results personOnly={personOnly} setPersonOnly={setPersonOnly}/>
     </div>
   );
 });
