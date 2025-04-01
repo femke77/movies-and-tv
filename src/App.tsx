@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     const updateSW = registerSW({
-      immediate: true,
+      immediate: false,  // allow prompt to take over.
       // using autoUpdate so the below code, onNeedRefresh, isn't running. Might switch to prompt.
       onNeedRefresh() {
         if (
