@@ -42,7 +42,9 @@ const CastMemberDetail = () => {
     <>
       {castData ? (
         <div className='text-white my-24 flex items-center  flex-col'>
-          <h1 className='text-3xl font-semibold mb-6'>{castData.name}</h1>
+                <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'></div>
+
+          <h1 className='z-1 text-3xl font-semibold mb-6'>{castData.name}</h1>
           {castData && castData.profile_path ? (
             <>
               {/* Placeholder */}
@@ -82,7 +84,7 @@ const CastMemberDetail = () => {
             </div>
           )}
 
-          <div className='mx-30 text-center mt-3'>
+          <div className='z-1 mx-30 text-center mt-3'>
             <Link
               to={castData.homepage}
               target='_blank'
