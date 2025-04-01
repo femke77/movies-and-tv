@@ -57,11 +57,11 @@ const MediaListContainer = ({
 
     sessionStorage.setItem(
       `${mediaType}-selectedGenres`,
-      JSON.stringify(selectedGenres)
+      JSON.stringify(selectedGenres),
     );
     sessionStorage.setItem(
       `${mediaType}-deSelectedGenres`,
-      JSON.stringify(deSelectedGenres)
+      JSON.stringify(deSelectedGenres),
     );
     sessionStorage.setItem(`${mediaType}-sortBy`, sortByOption);
   }, [
@@ -78,7 +78,7 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setDeSelectedGenres((deselected) =>
-          deselected.filter((genre) => genre !== genreId)
+          deselected.filter((genre) => genre !== genreId),
         );
 
         return [...prev, genreId];
@@ -92,33 +92,28 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setSelectedGenres((selected) =>
-          selected.filter((genre) => genre !== genreId)
+          selected.filter((genre) => genre !== genreId),
         );
         return [...prev, genreId];
       }
     });
   };
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteDiscoverQuery(
-    mediaType,
-    selectedGenres?.join(','),
-    sortByOption,
-    '',
-    voteAverage,
-    voteCount,
-    deSelectedGenres.join(',')
-  );
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteDiscoverQuery(
+      mediaType,
+      selectedGenres?.join(','),
+      sortByOption,
+      '',
+      voteAverage,
+      voteCount,
+      deSelectedGenres.join(','),
+    );
 
   return (
     <div className='mt-24'>
-       <div className='absolute top-20 left-3 z-1'>
-      <BackButton  />
+      <div className='absolute top-20 left-3 z-1'>
+        <BackButton />
       </div>
       <div className='mx-3 flex flex-wrap justify-between items-start w-full'>
         <h2 className='chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text mb-2 mt-4 lg:mb-6 mr-4'>

@@ -16,7 +16,6 @@ const searchResults = async ({ query = '', pageParam = 1 }) => {
   };
 };
 
-
 export const useInfiniteSearchQuery = (query: string) => {
   return useInfiniteQuery({
     queryKey: ['infinite-search', query],
@@ -27,7 +26,7 @@ export const useInfiniteSearchQuery = (query: string) => {
     staleTime: 1000 * 60 * 60 * 1, // 1 hour
     gcTime: 1000 * 60 * 60 * 65, // 65min
     refetchOnWindowFocus: false,
-     placeholderData: (previousData) => previousData,
+    placeholderData: (previousData) => previousData,
     select: (data) => ({
       pages: data.pages.map((page) => ({
         ...page,
@@ -153,9 +152,9 @@ export const useInfiniteTrendingQuery = (
 
 // search for people
 
-export const searchPerson = async ({ query = ''}) => {
+export const searchPerson = async ({ query = '' }) => {
   const { data } = await TMDBClient.get(
     `/search/person?query=${query}&include_adult=false&language=en`,
   );
- return data?.results || [];
-}
+  return data?.results || [];
+};

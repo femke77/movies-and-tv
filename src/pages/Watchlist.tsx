@@ -66,7 +66,7 @@ const Watchlist = () => {
   return (
     <div className='mt-24 mx-3 text-white min-h-screen'>
       <div className='absolute top-20 left-3 z-1'>
-      <BackButton  />
+        <BackButton />
       </div>
       <h1 className='relative z-1 text-4xl text-center mx-3 mb-9'>Watchlist</h1>
       <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'></div>

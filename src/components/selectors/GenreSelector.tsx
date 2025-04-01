@@ -98,7 +98,7 @@ const GenreSelector = ({
                 width < 400
                   ? `grid-cols-1`
                   : `grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-1`
-              }`
+              }`,
             )}
           >
             {genres.map((genre) => (
@@ -141,8 +141,8 @@ const GenreSelector = ({
                 selectedGenres.includes(String(genre.id))
                   ? 'bg-blue-800 border-blue-900'
                   : deselectedGenres.includes(String(genre.id))
-                  ? 'bg-red-800/50 border-red-900 line-through'
-                  : 'bg-gray-800/50'
+                    ? 'bg-red-800/50 border-red-900 line-through'
+                    : 'bg-gray-800/50'
               }
             `)}
               >

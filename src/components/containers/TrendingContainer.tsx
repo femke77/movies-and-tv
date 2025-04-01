@@ -17,8 +17,8 @@ const TrendingContainer = ({
 
   return (
     <div className='mt-24'>
-       <div className='absolute top-20 left-3 z-1'>
-      <BackButton  />
+      <div className='absolute top-20 left-3 z-1'>
+        <BackButton />
       </div>
       <div className='flex flex-col sm:flex-row items-center justify-between mx-3 mb-6'>
         <h2 className='mx-1 px-1 chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text mt-4'>

@@ -52,12 +52,12 @@ const ItemDetail = () => {
 
   const strokeColor = getStrokeColor(item?.vote_average);
   const directorData = item?.crew?.find(
-    (member: { job: string }) => member.job === 'Director'
+    (member: { job: string }) => member.job === 'Director',
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = item?.crew?.find(
     (member: { job: string }) =>
-      member.job === 'Screenplay' || member.job === 'Writer'
+      member.job === 'Screenplay' || member.job === 'Writer',
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -76,9 +76,9 @@ const ItemDetail = () => {
           id='item-detail'
           className='max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto xs:px-2 sm:px-4 lg:px-8 xl:px-12 mr-2 md:mr-0'
         >
-           <div className='absolute top-20 left-3 z-1'>
-      <BackButton  />
-      </div>
+          <div className='absolute top-20 left-3 z-1'>
+            <BackButton />
+          </div>
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-all duration-800 ease-in ${
               isVisible && backgroundLoaded ? 'opacity-40' : 'opacity-0'
@@ -166,7 +166,7 @@ const ItemDetail = () => {
                   <BookmarkBtn
                     isBookmarked={bookmarks.some(
                       (bookmark) =>
-                        bookmark.id === item.id && bookmark.type === item_type
+                        bookmark.id === item.id && bookmark.type === item_type,
                     )}
                     id={item.id}
                     type={item_type!}
@@ -201,8 +201,8 @@ const ItemDetail = () => {
                         ? dayjs(item.release_date).format('MMM DD, YYYY')
                         : 'TBD'
                       : item.first_air_date
-                      ? dayjs(item.first_air_date).format('MMM DD, YYYY')
-                      : 'TBD'}
+                        ? dayjs(item.first_air_date).format('MMM DD, YYYY')
+                        : 'TBD'}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
@@ -211,8 +211,8 @@ const ItemDetail = () => {
                     {item.runtime
                       ? `${item.runtime} min`
                       : item.episode_run_time?.[0]
-                      ? `${item.episode_run_time[0]} min`
-                      : 'Unknown'}
+                        ? `${item.episode_run_time[0]} min`
+                        : 'Unknown'}
                   </span>
                 </p>
               </div>
@@ -276,7 +276,7 @@ const ItemDetail = () => {
                           {item.created_by.map(
                             (
                               creator: { id: string; name: string },
-                              index: number
+                              index: number,
                             ) => (
                               <span
                                 key={creator.id}
@@ -285,7 +285,7 @@ const ItemDetail = () => {
                                 {creator.name}
                                 {index < item.created_by.length - 1 ? ', ' : ''}
                               </span>
-                            )
+                            ),
                           )}
                         </p>
                         <p className='text-xl font-bold'>
