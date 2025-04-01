@@ -147,15 +147,15 @@ const ItemDetail = () => {
                 (item_type === 'movie' &&
                   item.production_companies?.length > 0 &&
                   item.production_companies?.[0]?.logo_path) ? (
-                  <div className='min-h-[23px] min-w-[92px] mr-2 flex-shrink-0 flex items-center justify-center'>
+                  <div className='min-h-[23px] min-w-[92px] pt-2 mr-2 flex-shrink-0 flex items-center justify-center'>
                  
                     {/* tv network logo */}
                     {item_type === 'tv' &&
                       item.networks?.length > 0 &&
                       item.networks?.[0]?.logo_path && (
-                        <div className='mt-1 flex items-center justify-center bg-white/50 backdrop-blur-xl rounded-md'>
+                        <div className='mt-1 flex items-center justify-center bg-white/60 backdrop-blur-xl rounded-md'>
                           <img
-                            className='max-w-[92px] h-auto object-contain p-2 opacity-0 transition-opacity duration-500'
+                            className='max-w-[92px] h-auto object-contain p-2 opacity-0'
                             src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
                             alt={`${item.networks?.[0]?.name}'s official logo`}
                             onLoad={(e) =>
@@ -171,7 +171,7 @@ const ItemDetail = () => {
                     {item_type === 'movie' &&
                       item.production_companies?.length > 0 &&
                       item.production_companies?.[0]?.logo_path && (
-                        <div className='mt-1 flex items-center justify-center bg-white/80 backdrop-blur-[15px] rounded-md'>
+                        <div className='mt-1 flex items-center justify-center bg-white/60 backdrop-blur-[15px] rounded-md'>
                           <img
                             src={`https://image.tmdb.org/t/p/w92${item.production_companies?.[0]?.logo_path}`}
                             alt={`${item.production_companies?.[0]?.name}'s official logo`}
@@ -180,7 +180,7 @@ const ItemDetail = () => {
                                 'opacity-0'
                               )
                             }
-                            className='max-w-[92px] h-auto object-contain p-2 opacity-0 transition-opacity duration-500'
+                            className='max-w-[92px] h-auto object-contain p-2 opacity-0 '
                           />
                         </div>
                       )}
