@@ -50,10 +50,10 @@ const Results = memo(() => {
   return (
     <div className='ml-2 mt-8'>
       <button
-        className='absolute top-20 right-6 z-1 bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+        className=' absolute top-24 right-4 z-1 bg-gray-700 h-9 w-40 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
         onClick={handlePersonOnly}
       >
-        Person Only
+       {personOnly ? 'Movies & Shows' : 'View People Only'}
       </button>
       <div className='absolute top-20 left-3 z-1'>
         <BackButton />
@@ -61,7 +61,7 @@ const Results = memo(() => {
 
       {personOnly ? (
         <>
-        <div className='flex flex-wrap flex-1 gap-4 items-start'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4'>
         {allPersons.length > 0 ? (
           allPersons.map((item: ICast) => (
             <CastCard

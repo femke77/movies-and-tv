@@ -7,10 +7,11 @@ export const CastList = ({ cast }: { cast: ICast[] }) => {
     <SimpleCarousel>
       {cast.map((actor) => (
         <div
+      
           key={`${actor.id}-${actor.character}`}
           onMouseDown={(e) => e.preventDefault()}
         >
-          <CastCard cast={actor} />
+          <CastCard cast={actor} cardWidth='w-42' />
         </div>
       ))}
     </SimpleCarousel>
