@@ -203,7 +203,7 @@ const WatchTV = () => {
         <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
           <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
-              <BackButton />
+              <BackButton color='text-white'/>
             </div>
             {series && (
               <p

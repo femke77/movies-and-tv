@@ -1,6 +1,6 @@
 import { ArrowLeft } from 'lucide-react';
 
-const BackButton = ({ text }: { text?: string }) => {
+const BackButton = ({ text, color='text-gray-300/80' }: { text?: string, color?:string }) => {
   return (
     <button
       className='back-button flex hover:cursor-pointer'
@@ -9,7 +9,7 @@ const BackButton = ({ text }: { text?: string }) => {
       aria-label='Back'
     >
       <ArrowLeft size={20} color='#ffffff' />
-      <p className='text-sm ml-1'>{text || 'Back'}</p>
+      <p className={`  text-sm ml-1 ${color}`}>{text || 'Back'}</p>
     </button>
   );
 };
