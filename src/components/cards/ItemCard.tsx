@@ -223,11 +223,11 @@ const MemoizedItemCard = memo(
   }) => (
     <div className='w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]'>
       <ItemCard
-        textSize={textSize}
         item={item}
+        itemType={item.media_type || itemType || ''}
         showRating={showRating}
         showGenres={showGenres}
-        itemType={item.media_type || itemType || ''}
+        textSize={textSize}
         isBookmarked={isBookmarked}
       />
     </div>

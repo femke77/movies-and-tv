@@ -17,6 +17,7 @@ export const useCastLookupWithWork = (id: number) => {
     queryKey: ['cast-member-work', id],
     staleTime: 1000 * 60 * 60 * 24,
     gcTime: 1000 * 60 * 60 * 25,
+    enabled: !!id,
     queryFn: async () => {
       if (!id) {
         throw new Error('ID is required');

@@ -3,11 +3,13 @@ export interface ICast {
   name: string;
   character: string;
   profile_path: string;
+  media_type: string;
   biography: string;
   birthday: string;
   deathday: string | null;
   place_of_birth: string;
   homepage: string;
+  known_for_department: string;
   cast?: [
     {
       id: number;
