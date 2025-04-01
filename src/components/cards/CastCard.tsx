@@ -2,6 +2,8 @@ import type { ICast } from '../../interfaces/ICast';
 import { Link } from 'react-router-dom';
 
 export const CastCard = ({ cast, cardWidth='w-full' }: { cast: ICast, cardWidth?: string }) => {
+
+  
   return (
     <div className={`flex flex-col flex-1 items-center text-center mb-10 ${cardWidth}`}>
       <Link to={`/explore/cast/${cast.id}`} className='relative'>
@@ -17,8 +19,8 @@ export const CastCard = ({ cast, cardWidth='w-full' }: { cast: ICast, cardWidth?
           height={300}
           className='w-full h-auto rounded-lg'
         />
-        <h3 className='text-lg font-semibold mt-4 w-[150px]'>{cast.name}</h3>
-        <p className='text-md w-[150px] text-gray-400'>{cast.character}</p>
+        <h3 className='text-lg font-semibold mt-4'>{cast.name}</h3>
+        <p className='text-md  text-gray-400 '>{cast.character || cast.known_for_department}</p>
       </Link>
     </div>
   );

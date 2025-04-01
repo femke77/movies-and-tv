@@ -34,7 +34,7 @@ export const useInfiniteSearchQuery = (query: string) => {
       pages: data.pages.map((page) => ({
         ...page,
         results: page.results.filter((item: IItem) => item.media_type !== 'person'), 
-        persons: page.results.filter((item: ICast) => item.media_type === 'person'),
+        persons: page.results.filter((item: ICast) => item.media_type === 'person' && item.known_for_department === 'Acting' || item.known_for_department === 'Directing'), // Filter out persons from the results
       })),
       pageParams: data.pageParams,
     }),

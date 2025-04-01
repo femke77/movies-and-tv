@@ -50,7 +50,7 @@ const Results = memo(() => {
   return (
     <div className='ml-2 mt-8'>
       <button
-        className=' absolute top-24 right-4 z-1 bg-gray-700 h-9 w-40 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+        className='absolute top-36 right-4 z-1 bg-gray-700 h-9 w-40 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
         onClick={handlePersonOnly}
       >
        {personOnly ? 'Movies & Shows' : 'View People Only'}

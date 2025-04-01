@@ -9,6 +9,7 @@ export interface ICast {
   deathday: string | null;
   place_of_birth: string;
   homepage: string;
+  known_for_department: string;
   cast?: [
     {
       id: number;
