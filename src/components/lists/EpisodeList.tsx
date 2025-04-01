@@ -1,5 +1,5 @@
-import { IEpisode } from '../interfaces/IEpisode';
-import Episode from './Episode';
+import { IEpisode } from '../../interfaces/IEpisode';
+import Episode from '../cards/EpisodeCard';
 
 const EpisodeList = ({
   episodes,

@@ -153,6 +153,7 @@ const ContinueWatching = () => {
                           alt='no image available'
                         />
                       )}
+                      {/* <div className ={`bg-white absolute bottom-0 left-0 w-20 h-[4px] rounded-xl z-5`}></div> */}
 
                       <div className='absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-transparent' />
                       <div

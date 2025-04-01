@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { ItemCard } from '../ItemCard';
+import { ItemCard } from '../cards/ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../../interfaces/IItem';
 import { useBookmarkStore } from '../../state/store';

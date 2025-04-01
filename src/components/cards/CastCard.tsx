@@ -1,4 +1,4 @@
-import type { ICast } from '../interfaces/ICast';
+import type { ICast } from '../../interfaces/ICast';
 import { Link } from 'react-router-dom';
 
 export const CastCard = ({ cast }: { cast: ICast }) => {

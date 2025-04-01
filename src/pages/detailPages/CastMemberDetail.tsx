@@ -1,9 +1,10 @@
-import { useCastLookupWithWork } from '../hooks/useCastLookup';
+import { useCastLookupWithWork } from '../../hooks/useCastLookup';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import Carousel from '../components/containers/CarouselContainer';
-import { IItem } from '../interfaces/IItem';
+import Carousel from '../../components/containers/CarouselContainer';
+import { IItem } from '../../interfaces/IItem';
+import BackButton from '../../components/buttons/BackBtn';
 
 const CastMemberDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -42,7 +43,12 @@ const CastMemberDetail = () => {
     <>
       {castData ? (
         <div className='text-white my-24 flex items-center  flex-col'>
-          <h1 className='text-3xl font-semibold mb-6'>{castData.name}</h1>
+          <div className='absolute top-20 left-3 z-1'>
+            <BackButton />
+          </div>
+          <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'></div>
+
+          <h1 className='z-1 text-3xl font-semibold mb-6'>{castData.name}</h1>
           {castData && castData.profile_path ? (
             <>
               {/* Placeholder */}
@@ -82,7 +88,7 @@ const CastMemberDetail = () => {
             </div>
           )}
 
-          <div className='mx-30 text-center mt-3'>
+          <div className='z-1 mx-30 text-center mt-3'>
             <Link
               to={castData.homepage}
               target='_blank'

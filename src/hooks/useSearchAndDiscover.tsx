@@ -149,3 +149,12 @@ export const useInfiniteTrendingQuery = (
     }),
   });
 };
+
+// search for people
+
+export const searchPerson = async ({ query = '' }) => {
+  const { data } = await TMDBClient.get(
+    `/search/person?query=${query}&include_adult=false&language=en`,
+  );
+  return data?.results || [];
+};

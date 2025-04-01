@@ -8,13 +8,13 @@ import BackButton from '../../components/buttons/BackBtn';
 import FullscreenBtn from '../../components/buttons/FullScreenBtn';
 import WatchPrevBtn from '../../components/buttons/WatchPrevBtn';
 import WatchNextBtn from '../../components/buttons/WatchNextBtn';
-import ListBoxComp from '../../components/ListBox';
+import ListBoxComp from '../../components/selectors/ListBox';
 import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/buttons/SeasonNavigation';
 import { isIPad, isIphoneSafari } from '../../utils/helpers';
-import EpisodeList from '../../components/EpisodeList';
+import EpisodeList from '../../components/lists/EpisodeList';
 import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
 
@@ -203,7 +203,7 @@ const WatchTV = () => {
         <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
           <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
-              <BackButton />
+              <BackButton color='text-white' />
             </div>
             {series && (
               <p
@@ -215,7 +215,9 @@ const WatchTV = () => {
             )}
 
             <div
-              className={`${isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''}`}
+              className={`${
+                isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''
+              }`}
             >
               <FullscreenBtn elementId='video-player' />
             </div>

@@ -1,7 +1,7 @@
 import { useEffect, memo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { IItem } from '../interfaces/IItem';
-import { MemoizedItemCard } from './ItemCard';
+import { MemoizedItemCard } from './cards/ItemCard';
 import { useBookmarkStore } from '../state/store';
 
 interface IExploreProps {
@@ -55,7 +55,11 @@ const Explore = memo(
           )}
         </div>
         <div ref={ref} className='h-10 mt-4'>
-          {isFetchingNextPage && <div>Getting more results...</div>}
+          {isFetchingNextPage && (
+            <div className='flex justify-center my-10'>
+              <div className='loader'></div>
+            </div>
+          )}
         </div>
       </div>
     );

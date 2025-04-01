@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import { useInfiniteDiscoverQuery } from '../../hooks/useSearchAndDiscover';
-import GenreSelector from '../GenreSelector';
+import GenreSelector from '../selectors/GenreSelector';
 import Explore from '../ExploreDisplay';
 import { IGenre } from '../../interfaces/IGenre';
-import SortByListbox from '../ListBox';
+import SortByListbox from '../selectors/ListBox';
 import { useLocation } from 'react-router-dom';
+import BackButton from '../buttons/BackBtn';
 
 interface MediaListContainerProps {
   mediaType: 'movie' | 'tv';
@@ -111,8 +112,11 @@ const MediaListContainer = ({
 
   return (
     <div className='mt-24'>
+      <div className='absolute top-20 left-3 z-1'>
+        <BackButton />
+      </div>
       <div className='mx-3 flex flex-wrap justify-between items-start w-full'>
-        <h2 className='chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text mb-2 lg:mb-6 mr-4'>
+        <h2 className='chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text mb-2 mt-4 lg:mb-6 mr-4'>
           {heading}
         </h2>
         <div className={`mr-[50px] h-[50px] w-[300px] mb-6 lg:mb-0 pt-2 `}>

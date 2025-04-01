@@ -3,10 +3,11 @@ import { useParams, useOutletContext } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteSearchQuery } from '../hooks/useSearchAndDiscover';
 import { IItem } from '../interfaces/IItem';
-import { MemoizedItemCard } from '../components/ItemCard';
+import { MemoizedItemCard } from '../components/cards/ItemCard';
 import { useBookmarkStore } from '../state/store';
 import useDocumentTitle from '../hooks/usePageTitles';
-// Memoized Results component
+import BackButton from '../components/buttons/BackBtn';
+
 const Results = memo(() => {
   const { query } = useParams<{ query: string }>();
   useDocumentTitle(`Search results for '${query}' | BingeBox`);
@@ -33,6 +34,9 @@ const Results = memo(() => {
   const allItems = data?.pages.flatMap((page) => page.results) ?? [];
   return (
     <div className='ml-2 mt-8'>
+      <div className='absolute top-20 left-3 z-1'>
+        <BackButton />
+      </div>
       <div className='flex flex-wrap flex-1 gap-4 items-start'>
         {allItems.length > 0 ? (
           allItems.map((item: IItem) => (
@@ -50,7 +54,11 @@ const Results = memo(() => {
         )}
       </div>
       <div ref={ref} className='h-10 mt-4'>
-        {isFetchingNextPage && <div>Getting more results...</div>}
+        {isFetchingNextPage && (
+          <div className='flex justify-center my-10'>
+            <div className='loader'></div>
+          </div>
+        )}
       </div>
     </div>
   );

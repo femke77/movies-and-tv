@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
-import Chip from '../components/Chip';
-import { useItemDetail } from '../hooks/useItemOrWatchDetail';
+import Chip from '../../components/Chip';
+import { useItemDetail } from '../../hooks/useItemOrWatchDetail';
 import { useParams } from 'react-router-dom';
-import UserRating from '../components/NewUserRating';
-import WatchButton from '../components/buttons/WatchButton';
-import { getStrokeColor } from '../utils/helpers';
-import { CastList } from '../components/CastList';
+import UserRating from '../../components/UserRatingV2';
+import WatchButton from '../../components/buttons/WatchButton';
+import { getStrokeColor } from '../../utils/helpers';
+import { CastList } from '../../components/lists/CastList';
 import dayjs from 'dayjs';
-import BookmarkBtn from '../components/buttons/BookmarkBtn';
-import { useBookmarkStore } from '../state/store';
-import Share from '../components/buttons/ShareButtons';
-import useDocumentTitle from '../hooks/usePageTitles';
+import BookmarkBtn from '../../components/buttons/BookmarkBtn';
+import { useBookmarkStore } from '../../state/store';
+import Share from '../../components/buttons/ShareButtons';
+import useDocumentTitle from '../../hooks/usePageTitles';
+import BackButton from '../../components/buttons/BackBtn';
 
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -75,6 +76,9 @@ const ItemDetail = () => {
           id='item-detail'
           className='max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto xs:px-2 sm:px-4 lg:px-8 xl:px-12 mr-2 md:mr-0'
         >
+          <div className='absolute top-20 left-3 z-1'>
+            <BackButton />
+          </div>
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-all duration-800 ease-in ${
               isVisible && backgroundLoaded ? 'opacity-40' : 'opacity-0'
@@ -192,12 +196,13 @@ const ItemDetail = () => {
                 <p className='text-xl font-bold'>
                   Release Date:{' '}
                   <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
-                    {(item.release_date
-                      ? dayjs(item.release_date).format('MMM DD, YYYY')
-                      : 'TBD') ||
-                      (item.first_air_date
+                    {item_type === 'movie'
+                      ? item.release_date
+                        ? dayjs(item.release_date).format('MMM DD, YYYY')
+                        : 'TBD'
+                      : item.first_air_date
                         ? dayjs(item.first_air_date).format('MMM DD, YYYY')
-                        : 'TBD')}
+                        : 'TBD'}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
@@ -213,7 +218,7 @@ const ItemDetail = () => {
               </div>
 
               <div className='flex flex-wrap justify-center md:justify-start space-x-5 md:space-x-10 mb-4'>
-                {item.budget > 0 && (
+                {/* {item.budget > 0 && (
                   <p className='text-xl font-bold'>
                     Budget:{' '}
                     <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
@@ -223,7 +228,7 @@ const ItemDetail = () => {
                       })}
                     </span>
                   </p>
-                )}
+                )} */}
                 {item.revenue > 0 && (
                   <p className='text-xl font-bold'>
                     Revenue:{' '}
@@ -237,7 +242,7 @@ const ItemDetail = () => {
                 )}
                 {ROI !== '0' && (
                   <p className='text-xl font-bold'>
-                    ROI:{' '}
+                    Profit:{' '}
                     <span className='text-lg text-gray-100/50 my-3 ml-1 font-bold'>
                       {ROI}%
                     </span>

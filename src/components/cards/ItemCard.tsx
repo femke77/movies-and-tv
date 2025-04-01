@@ -1,12 +1,12 @@
-import { IItem } from '../interfaces/IItem';
+import { IItem } from '../../interfaces/IItem';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
-import UserRating from './NewUserRating';
+import UserRating from '../UserRatingV2';
 import { useEffect, useState, memo } from 'react';
-import genreData from '../utils/data/genres.json';
-import Chip from './Chip';
-import { useWindowSize } from '../hooks/useWindowSize';
-import BookmarkBtn from './buttons/BookmarkBtn';
+import genreData from '../../utils/data/genres.json';
+import Chip from '../Chip';
+import { useWindowSize } from '../../hooks/useWindowSize';
+import BookmarkBtn from '../buttons/BookmarkBtn';
 
 const ItemCard = ({
   item,

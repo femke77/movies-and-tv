@@ -1,5 +1,5 @@
-import { IGenre } from '../interfaces/IGenre';
-import { useWindowSize } from '../hooks/useWindowSize';
+import { IGenre } from '../../interfaces/IGenre';
+import { useWindowSize } from '../../hooks/useWindowSize';
 import { useState, useRef } from 'react';
 import clsx from 'clsx';
 
