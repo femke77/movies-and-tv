@@ -9,20 +9,19 @@ import BackButton from '../../components/buttons/BackBtn';
 const CastMemberDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { data: castData, isLoading } = useCastLookupWithWork(Number(id));
-  console.log('castData', castData);
-  
+
   const [lowResImageLoaded, setLowResImageLoaded] = useState(false);
   const [hiResImageLoaded, setHiResImageLoaded] = useState(false);
   const [showBio, setShowBio] = useState(false);
-  
+
   useEffect(() => {
     if (castData && castData.profile_path) {
       const lowResImage = new Image();
       const hiResImage = new Image();
-      
+
       lowResImage.src = `https://image.tmdb.org/t/p/w185${castData.profile_path}`;
       hiResImage.src = `https://image.tmdb.org/t/p/original${castData.profile_path}`;
-      
+
       lowResImage.onload = () => setLowResImageLoaded(true);
       hiResImage.onload = () => setHiResImageLoaded(true);
     }
@@ -31,9 +30,9 @@ const CastMemberDetail = () => {
       setHiResImageLoaded(false);
     };
   }, [castData]);
-  
+
   if (isLoading) return <div>Loading...</div>;
- 
+
   const ImagePlaceHolder = () => (
     <div className='w-full h-full bg-gray-900 absolute inset-0 z-[1]' />
   );
@@ -46,9 +45,9 @@ const CastMemberDetail = () => {
             <BackButton />
           </div>
           <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'></div>
-  
+
           <h1 className='z-1 text-3xl font-semibold mb-6'>{castData.name}</h1>
-          
+
           {/* Image section - conditionally render based on profile_path */}
           {castData.profile_path ? (
             <>
@@ -84,11 +83,15 @@ const CastMemberDetail = () => {
               </div>
             </>
           ) : (
-            <div className="w-50 h-80 flex items-center justify-center z-5">
-              <img src='/no_cast_photo.jpeg' alt={'No image available'} className="w-full h-full object-contain" />
+            <div className='w-50 h-80 flex items-center justify-center z-5'>
+              <img
+                src='/no_cast_photo.jpeg'
+                alt={'No image available'}
+                className='w-full h-full object-contain'
+              />
             </div>
           )}
-  
+
           {/* Biography and info section - this now renders regardless of profile_path */}
           <div className='z-1 mx-30 text-center mt-3'>
             {castData.homepage && (
@@ -100,7 +103,7 @@ const CastMemberDetail = () => {
                 {castData.homepage}
               </Link>
             )}
-  
+
             {castData.birthday && (
               <>
                 <p className='text-md mt-3 text-gray-400'>
@@ -111,19 +114,19 @@ const CastMemberDetail = () => {
                 </p>
               </>
             )}
-            
+
             {castData.place_of_birth && (
               <p className='text-md text-gray-400'>
                 Place of Birth: {castData.place_of_birth}
               </p>
             )}
-            
+
             {castData.deathday && (
               <p className='text-md text-gray-400'>
                 Died: {dayjs(castData.deathday).format('MMM DD, YYYY')}
               </p>
             )}
-            
+
             {castData.biography && (
               <>
                 <h2 className='mt-3 text-gray-300 font-semibold'>Biography</h2>
@@ -144,7 +147,7 @@ const CastMemberDetail = () => {
               </>
             )}
           </div>
-          
+
           <h2 className='text-2xl mb-4'>{castData.name}'s Work</h2>
           {castData.cast && castData.cast.length > 0 && (
             <Carousel items={castData.cast as IItem[]} />

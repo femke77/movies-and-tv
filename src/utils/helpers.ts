@@ -23,7 +23,7 @@ export const filterTMDBResults = (results: IItem[]) => {
 };
 
 // filter out duplicate items from the TMDB API's combined works of a cast member
-export const filterCastResults = (results: IItem[]) => { 
+export const filterCastResults = (results: IItem[]) => {
   const seen = new Set();
   return results.filter((item) => {
     const k = `item-${item.id}-${item.media_type}`;

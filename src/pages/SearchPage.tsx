@@ -12,10 +12,9 @@ import { ICast } from '../interfaces/ICast';
 
 interface ResultsProps {
   personOnly: boolean;
-  setPersonOnly: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Results = memo(({personOnly, setPersonOnly}: ResultsProps) => {
+const Results = memo(({ personOnly }: ResultsProps) => {
   const { query } = useParams<{ query: string }>();
 
   const lastResultsRef = useRef<IItem[]>([]);
@@ -23,16 +22,8 @@ const Results = memo(({personOnly, setPersonOnly}: ResultsProps) => {
   const { ref, inView } = useInView();
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteSearchQuery(query ?? '');
-
- 
-  console.log('data', data);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteSearchQuery(query ?? '');
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -49,37 +40,31 @@ const Results = memo(({personOnly, setPersonOnly}: ResultsProps) => {
   if (isLoading) return null;
   const allItems = data?.pages.flatMap((page) => page.results) ?? [];
   const allPersons = data?.pages.flatMap((page) => page.persons) ?? [];
-  
+
   return (
     <div className='ml-2 mt-8'>
-     
       <div className='absolute top-20 left-3 z-1'>
         <BackButton />
       </div>
 
       {personOnly ? (
         <>
-        <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-        {allPersons.length > 0 ? (
-          allPersons.map((item: ICast) => (
-            <CastCard
-              key={`person-${item.id}`}
-              cast={item}
-             
-            />
-          ))
-        ) : (
-          <p className='text-lg text-gray-400'>No results found.</p>
-        )}
-      </div>
-      <div ref={ref} className='h-30 mt-4'>
-        {isFetchingNextPage && (
-          <div className='flex justify-center my-10'>
-            <div className='loader'></div>
+          <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
+            {allPersons.length > 0 ? (
+              allPersons.map((item: ICast) => (
+                <CastCard key={`person-${item.id}`} cast={item} />
+              ))
+            ) : (
+              <p className='text-lg text-gray-400'>No results found.</p>
+            )}
           </div>
-        )}
-      </div>
-
+          <div ref={ref} className='h-30 mt-4'>
+            {isFetchingNextPage && (
+              <div className='flex justify-center my-10'>
+                <div className='loader'></div>
+              </div>
+            )}
+          </div>
         </>
       ) : (
         <>
@@ -91,7 +76,7 @@ const Results = memo(({personOnly, setPersonOnly}: ResultsProps) => {
                   item={item}
                   textSize='md'
                   isBookmarked={bookmarks.some(
-                    (a) => a.id === item.id && a.type === item.media_type
+                    (a) => a.id === item.id && a.type === item.media_type,
                   )}
                 />
               ))
@@ -129,7 +114,7 @@ const SearchContainer = memo(() => {
   // Memoize the heading text
   const headingText = useMemo(
     () => `Search results for '${searchQuery || lastLetterRef.current}'`,
-    [searchQuery]
+    [searchQuery],
   );
 
   const handlePersonOnly = () => {
@@ -138,15 +123,17 @@ const SearchContainer = memo(() => {
   return (
     <div className='mt-30 mx-4'>
       <div className='flex flex-row flex-wrap justify-between items-center'>
-      <h1 className='text-3xl font-bold mt-2 mb-2 relative mr-6'>{headingText}</h1>
-      <button
-        className='min-w-40 bg-gray-700 h-9 w-40 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-        onClick={handlePersonOnly}
-      >
-       {personOnly ? 'Movies & Shows' : 'View People Only'}
-      </button>
+        <h1 className='text-3xl font-bold mt-2 mb-2 relative mr-6'>
+          {headingText}
+        </h1>
+        <button
+          className='min-w-40 bg-gray-700 h-9 w-40 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+          onClick={handlePersonOnly}
+        >
+          {personOnly ? 'Movies & Shows' : 'View People Only'}
+        </button>
       </div>
-      <Results personOnly={personOnly} setPersonOnly={setPersonOnly}/>
+      <Results personOnly={personOnly} />
     </div>
   );
 });
