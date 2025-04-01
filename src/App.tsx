@@ -28,10 +28,11 @@ function App() {
       },
       onRegistered(registration) {
         console.log('SW Registration successful:', registration);
-        setInterval(() => {
+        const intervalId = setInterval(() => {
           console.log('Checking for SW updates...');
           registration?.update().catch(console.error);
         }, 300000);
+        return () => clearInterval(intervalId);
       },
       onRegisterError(error) {
         console.error('SW registration failed:', error);
