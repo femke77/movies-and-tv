@@ -54,9 +54,11 @@ const Results = memo(() => {
         )}
       </div>
       <div ref={ref} className='h-10 mt-4'>
-        {isFetchingNextPage &&  <div className='flex justify-center my-10'>
-      <div className='loader'></div>
-      </div>}
+        {isFetchingNextPage && (
+          <div className='flex justify-center my-10'>
+            <div className='loader'></div>
+          </div>
+        )}
       </div>
     </div>
   );
