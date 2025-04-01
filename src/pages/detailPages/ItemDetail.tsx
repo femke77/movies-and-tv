@@ -52,12 +52,12 @@ const ItemDetail = () => {
 
   const strokeColor = getStrokeColor(item?.vote_average);
   const directorData = item?.crew?.find(
-    (member: { job: string }) => member.job === 'Director',
+    (member: { job: string }) => member.job === 'Director'
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = item?.crew?.find(
     (member: { job: string }) =>
-      member.job === 'Screenplay' || member.job === 'Writer',
+      member.job === 'Screenplay' || member.job === 'Writer'
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -141,35 +141,54 @@ const ItemDetail = () => {
               </p>
 
               <div className='justify-center flex flex-wrap items-center md:justify-start gap-x-2  mb-3'>
-              {(item_type === 'tv' && item.networks?.length > 0 && item.networks?.[0]?.logo_path) || 
-   (item_type === 'movie' && item.production_companies?.length > 0 && item.production_companies?.[0]?.logo_path) ? (
-    <div className='min-h-[23px] min-w-[92px] flex-shrink-0 flex items-center justify-center'>
-      {/* TV Network Logo */}
-      {item_type === 'tv' && item.networks?.length > 0 && item.networks?.[0]?.logo_path && (
-        <div className='mt-1 flex items-center justify-center bg-white/50 backdrop-blur-xl rounded-md'>
-          <img
-            className='max-w-[92px] h-auto object-contain p-2 opacity-0 transition-opacity duration-500'
-            src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
-            alt={`${item.networks?.[0]?.name}'s official logo`}
-            onLoad={(e) => (e.target as HTMLImageElement).classList.remove('opacity-0')}
-          />
-        </div>
-      )}
-      
-      {/* Movie Production Company Logo */}
-      {item_type === 'movie' && item.production_companies?.length > 0 && item.production_companies?.[0]?.logo_path && (
-        <div className='mt-1 flex items-center justify-center bg-white/80 backdrop-blur-[15px] rounded-md'>
-          <img
-            src={`https://image.tmdb.org/t/p/w92${item.production_companies?.[0]?.logo_path}`}
-            alt={`${item.production_companies?.[0]?.name}'s official logo`}
-            onLoad={(e) => (e.target as HTMLImageElement).classList.remove('opacity-0')}
-            className='max-w-[92px] h-auto object-contain p-2 opacity-0 transition-opacity duration-500'
-          />
-        </div>
-      )}
-    </div>
-  ) : null}
-                <div className='min-w-20 h-20 flex items-center justify-center pl-2'>
+                {(item_type === 'tv' &&
+                  item.networks?.length > 0 &&
+                  item.networks?.[0]?.logo_path) ||
+                (item_type === 'movie' &&
+                  item.production_companies?.length > 0 &&
+                  item.production_companies?.[0]?.logo_path) ? (
+                  <div className='min-h-[23px] min-w-[92px] mr-2 flex-shrink-0 flex items-center justify-center'>
+                 
+                    {/* tv network logo */}
+                    {item_type === 'tv' &&
+                      item.networks?.length > 0 &&
+                      item.networks?.[0]?.logo_path && (
+                        <div className='mt-1 flex items-center justify-center bg-white/50 backdrop-blur-xl rounded-md'>
+                          <img
+                            className='max-w-[92px] h-auto object-contain p-2 opacity-0 transition-opacity duration-500'
+                            src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
+                            alt={`${item.networks?.[0]?.name}'s official logo`}
+                            onLoad={(e) =>
+                              (e.target as HTMLImageElement).classList.remove(
+                                'opacity-0'
+                              )
+                            }
+                          />
+                        </div>
+                      )}
+
+                    {/* production company logo */}
+                    {item_type === 'movie' &&
+                      item.production_companies?.length > 0 &&
+                      item.production_companies?.[0]?.logo_path && (
+                        <div className='mt-1 flex items-center justify-center bg-white/80 backdrop-blur-[15px] rounded-md'>
+                          <img
+                            src={`https://image.tmdb.org/t/p/w92${item.production_companies?.[0]?.logo_path}`}
+                            alt={`${item.production_companies?.[0]?.name}'s official logo`}
+                            onLoad={(e) =>
+                              (e.target as HTMLImageElement).classList.remove(
+                                'opacity-0'
+                              )
+                            }
+                            className='max-w-[92px] h-auto object-contain p-2 opacity-0 transition-opacity duration-500'
+                          />
+                        </div>
+                      )}
+                  </div>
+                ) : null}
+
+
+                <div className='min-w-20 h-20 flex items-center justify-center '>
                   <UserRating
                     rating={item.vote_average}
                     width='w-20'
@@ -178,14 +197,14 @@ const ItemDetail = () => {
                     fill='rgba(255,255,255,0.9)'
                   />
                 </div>
-                <div className='min-w-10 h-20 flex items-center justify-center'>
+                <div className='min-w-10 h-20 pt-3 flex items-center justify-center'>
                   <WatchButton itemType={item_type!} id={item.id} />
                 </div>
-                <div className='min-w-10 h-10 flex items-center justify-center pl-2'>
+                <div className='min-w-10 h-10 pt-3 flex items-center justify-center pl-2'>
                   <BookmarkBtn
                     isBookmarked={bookmarks.some(
                       (bookmark) =>
-                        bookmark.id === item.id && bookmark.type === item_type,
+                        bookmark.id === item.id && bookmark.type === item_type
                     )}
                     id={item.id}
                     type={item_type!}
@@ -220,8 +239,8 @@ const ItemDetail = () => {
                         ? dayjs(item.release_date).format('MMM DD, YYYY')
                         : 'TBD'
                       : item.first_air_date
-                        ? dayjs(item.first_air_date).format('MMM DD, YYYY')
-                        : 'TBD'}
+                      ? dayjs(item.first_air_date).format('MMM DD, YYYY')
+                      : 'TBD'}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
@@ -230,8 +249,8 @@ const ItemDetail = () => {
                     {item.runtime
                       ? `${item.runtime} min`
                       : item.episode_run_time?.[0]
-                        ? `${item.episode_run_time[0]} min`
-                        : 'Unknown'}
+                      ? `${item.episode_run_time[0]} min`
+                      : 'Unknown'}
                   </span>
                 </p>
               </div>
@@ -295,7 +314,7 @@ const ItemDetail = () => {
                           {item.created_by.map(
                             (
                               creator: { id: string; name: string },
-                              index: number,
+                              index: number
                             ) => (
                               <span
                                 key={creator.id}
@@ -304,7 +323,7 @@ const ItemDetail = () => {
                                 {creator.name}
                                 {index < item.created_by.length - 1 ? ', ' : ''}
                               </span>
-                            ),
+                            )
                           )}
                         </p>
                         <p className='text-xl font-bold'>
