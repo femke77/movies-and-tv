@@ -10,7 +10,7 @@ const BackButton = ({
   return (
     <button
       className='back-button flex hover:cursor-pointer'
-      onClick={() => history.back()}
+      onClick={() => history.go(-1)}
       tabIndex={0}
       aria-label='Back'
     >

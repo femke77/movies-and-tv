@@ -38,6 +38,10 @@ const Episode = ({
               ? `https://image.tmdb.org/t/p/w300${episode?.still_path}`
               : '/noimage2.webp'
           }
+          loading='lazy'
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = '/noimage2.webp';
+          }}
           alt={episode?.name}
           className={`h-full w-full object-cover ${
             episode?.still_path ? '' : 'filter grayscale-50'

@@ -147,7 +147,7 @@ const ItemDetail = () => {
                 (item_type === 'movie' &&
                   item.production_companies?.length > 0 &&
                   item.production_companies?.[0]?.logo_path) ? (
-                  <div className='min-h-[23px] min-w-[92px] pt-2 mr-2 flex-shrink-0 flex items-center justify-center'>
+                  <div className='min-h-[23px] min-w-[92px] max-h-23 pt-2 mr-2 flex-shrink-0 flex items-center justify-center'>
                  
                     {/* tv network logo */}
                     {item_type === 'tv' &&

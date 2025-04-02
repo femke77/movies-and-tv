@@ -203,6 +203,7 @@ const Slide = ({
                         onLoad={() =>
                           setLogoStatus((prev) => ({ ...prev, loaded: true }))
                         }
+                        
                       />
                     </div>
                   ) : (
@@ -289,6 +290,10 @@ const Slide = ({
               loading='eager'
               width={320}
               height={450}
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = '/no_poster_available.svg';
+              }}
+              
             />
           </div>
         )}
