@@ -20,27 +20,27 @@ const Search = ({
   const handleClear = () => {
     if (inputRef?.current) inputRef.current.value = '';
   };
- const hasNavigated = useRef(false);
+  const hasNavigated = useRef(false);
 
-const handleNavigate = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const value = e.target.value.trim();
-  
-  if (debounceRef.current) {
-    clearTimeout(debounceRef.current);
-  }
+  const handleNavigate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
 
-  if (value) {
-    setSearchQuery(value);
-    debounceRef.current = setTimeout(() => {
-      if (!hasNavigated.current) {
-        navigate(`/search/${value}`); 
-        hasNavigated.current = true;
-      } else {
-        navigate(`/search/${value}`, {replace: true}); 
-      }
-    }, 175);
-  }
-};
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+
+    if (value) {
+      setSearchQuery(value);
+      debounceRef.current = setTimeout(() => {
+        if (!hasNavigated.current) {
+          navigate(`/search/${value}`);
+          hasNavigated.current = true;
+        } else {
+          navigate(`/search/${value}`, { replace: true });
+        }
+      }, 175);
+    }
+  };
   return (
     <form
       onSubmit={(e) => {

@@ -3,7 +3,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import type { IItem } from '../interfaces/IItem';
 
-
 /**
  * Fetches and attaches English logo paths for the first two movies in the provided array.
  * Makes parallel API requests to TMDB for movie images and extracts English logos.

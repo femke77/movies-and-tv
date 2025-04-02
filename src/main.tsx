@@ -221,5 +221,3 @@ createRoot(document.getElementById('root')!).render(
 );
 
 // https://tanstack.com/query/latest/docs/framework/react/plugins/persistQueryClient
-
-

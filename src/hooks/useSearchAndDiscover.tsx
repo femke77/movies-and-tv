@@ -32,19 +32,21 @@ export const useInfiniteSearchQuery = (query: string) => {
     select: (data) => {
       const filteredPages = data.pages.map((page) => ({
         ...page,
-        results: page.results.filter((item: IItem) => item.media_type !== 'person'),
+        results: page.results.filter(
+          (item: IItem) => item.media_type !== 'person',
+        ),
         persons: page.results.filter(
           (item: ICast) =>
-            (item.media_type === 'person' &&
-              (item.known_for_department === 'Acting' ||
-                item.known_for_department === 'Directing'))
+            item.media_type === 'person' &&
+            (item.known_for_department === 'Acting' ||
+              item.known_for_department === 'Directing'),
         ),
       }));
 
       // make sure at least one item exists per page for pagination
       return {
         pages: filteredPages.filter(
-          (page) => page.results.length > 0 || page.persons.length > 0
+          (page) => page.results.length > 0 || page.persons.length > 0,
         ),
         pageParams: data.pageParams,
       };

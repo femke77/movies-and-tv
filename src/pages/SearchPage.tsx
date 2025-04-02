@@ -17,7 +17,7 @@ interface ResultsProps {
 
 const Results = memo(({ personOnly }: ResultsProps) => {
   const { query } = useParams<{ query: string }>();
- const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const lastResultsRef = useRef<IItem[]>([]);
 
   const { ref, inView } = useInView();
@@ -33,7 +33,7 @@ const Results = memo(({ personOnly }: ResultsProps) => {
   }, [inView, hasNextPage, fetchNextPage]);
 
   useEffect(() => {
-    queryClient.invalidateQueries({queryKey: ['infinite-search', query]});
+    queryClient.invalidateQueries({ queryKey: ['infinite-search', query] });
   }, [personOnly]);
 
   useEffect(() => {

@@ -57,8 +57,8 @@ export default defineConfig({
           '**/node_modules/**/*',
           'sw.js',
           'workbox-*.js',
-          '**/icons/**/*', 
-          '**/apple-touch-icon.png' 
+          '**/icons/**/*',
+          '**/apple-touch-icon.png',
         ],
         runtimeCaching: [
           {
@@ -67,7 +67,7 @@ export default defineConfig({
             options: {
               cacheName: 'tmdb-images',
               expiration: {
-                maxEntries: 100, 
+                maxEntries: 100,
                 maxAgeSeconds: 60 * 60 * 24 * 30, //  30 days limit
               },
               cacheableResponse: {
