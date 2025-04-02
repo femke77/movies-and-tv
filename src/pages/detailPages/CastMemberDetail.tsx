@@ -79,7 +79,8 @@ const CastMemberDetail = () => {
                     alt={`${castData.name}'s headshot`}
                     onLoad={() => setHiResImageLoaded(true)}
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/no_cast_photo.jpeg';
+                      (e.target as HTMLImageElement).src =
+                        '/no_cast_photo.jpeg';
                     }}
                   />
                 </div>

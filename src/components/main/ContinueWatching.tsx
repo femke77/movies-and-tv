@@ -147,7 +147,8 @@ const ContinueWatching = () => {
                           alt={`${items[key].title}'s backdrop`}
                           loading='lazy'
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = '/noimage2.webp';
+                            (e.target as HTMLImageElement).src =
+                              '/noimage2.webp';
                           }}
                         />
                       ) : (

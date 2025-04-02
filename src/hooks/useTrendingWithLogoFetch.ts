@@ -78,9 +78,9 @@ export const useTrendingAll = () => {
       });
       return fetchFirstTwoLogos(filteredItems);
     },
-    staleTime: 1000 * 60 * 60* 24, 
-    gcTime: 1000 * 60 *60 * 25,
-    refetchInterval: 1000 * 60 * 60, 
+    staleTime: 1000 * 60 * 60 * 24,
+    gcTime: 1000 * 60 * 60 * 25,
+    refetchInterval: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
   });
 };
@@ -127,9 +127,9 @@ export const useItemLogos = (
       return images?.logos?.[0].file_path || null;
     },
     enabled: isVisible,
-    staleTime: 1000 * 60 * 60* 24, 
-    gcTime: 1000 * 60 *60 * 25,
-    refetchInterval: 1000 * 60 * 60, 
+    staleTime: 1000 * 60 * 60 * 24,
+    gcTime: 1000 * 60 * 60 * 25,
+    refetchInterval: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
   });
 

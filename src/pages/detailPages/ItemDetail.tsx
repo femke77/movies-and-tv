@@ -52,12 +52,12 @@ const ItemDetail = () => {
 
   const strokeColor = getStrokeColor(item?.vote_average);
   const directorData = item?.crew?.find(
-    (member: { job: string }) => member.job === 'Director'
+    (member: { job: string }) => member.job === 'Director',
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = item?.crew?.find(
     (member: { job: string }) =>
-      member.job === 'Screenplay' || member.job === 'Writer'
+      member.job === 'Screenplay' || member.job === 'Writer',
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -148,7 +148,6 @@ const ItemDetail = () => {
                   item.production_companies?.length > 0 &&
                   item.production_companies?.[0]?.logo_path) ? (
                   <div className='min-h-[23px] min-w-[92px] max-h-23 pt-2 mr-2 flex-shrink-0 flex items-center justify-center'>
-                 
                     {/* tv network logo */}
                     {item_type === 'tv' &&
                       item.networks?.length > 0 &&
@@ -160,13 +159,14 @@ const ItemDetail = () => {
                             alt={`${item.networks?.[0]?.name}'s official logo`}
                             onLoad={(e) =>
                               (e.target as HTMLImageElement).classList.remove(
-                                'opacity-0'
+                                'opacity-0',
                               )
                             }
                             onError={(e) =>
-                              ((e.target as HTMLElement).parentElement as HTMLDivElement).classList.add(
-                                'hidden')
-                            
+                              (
+                                (e.target as HTMLElement)
+                                  .parentElement as HTMLDivElement
+                              ).classList.add('hidden')
                             }
                           />
                         </div>
@@ -182,21 +182,21 @@ const ItemDetail = () => {
                             alt={`${item.production_companies?.[0]?.name}'s official logo`}
                             onLoad={(e) =>
                               (e.target as HTMLImageElement).classList.remove(
-                                'opacity-0'
+                                'opacity-0',
                               )
                             }
                             className='max-w-[92px] h-auto object-contain p-2 opacity-0 '
                             onError={(e) =>
-                              ((e.target as HTMLElement).parentElement as HTMLDivElement).classList.add(
-                                'hidden')
-                            
+                              (
+                                (e.target as HTMLElement)
+                                  .parentElement as HTMLDivElement
+                              ).classList.add('hidden')
                             }
                           />
                         </div>
                       )}
                   </div>
                 ) : null}
-
 
                 <div className='min-w-20 h-20 flex items-center justify-center '>
                   <UserRating
@@ -214,7 +214,7 @@ const ItemDetail = () => {
                   <BookmarkBtn
                     isBookmarked={bookmarks.some(
                       (bookmark) =>
-                        bookmark.id === item.id && bookmark.type === item_type
+                        bookmark.id === item.id && bookmark.type === item_type,
                     )}
                     id={item.id}
                     type={item_type!}
@@ -249,8 +249,8 @@ const ItemDetail = () => {
                         ? dayjs(item.release_date).format('MMM DD, YYYY')
                         : 'TBD'
                       : item.first_air_date
-                      ? dayjs(item.first_air_date).format('MMM DD, YYYY')
-                      : 'TBD'}
+                        ? dayjs(item.first_air_date).format('MMM DD, YYYY')
+                        : 'TBD'}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
@@ -259,8 +259,8 @@ const ItemDetail = () => {
                     {item.runtime
                       ? `${item.runtime} min`
                       : item.episode_run_time?.[0]
-                      ? `${item.episode_run_time[0]} min`
-                      : 'Unknown'}
+                        ? `${item.episode_run_time[0]} min`
+                        : 'Unknown'}
                   </span>
                 </p>
               </div>
@@ -324,7 +324,7 @@ const ItemDetail = () => {
                           {item.created_by.map(
                             (
                               creator: { id: string; name: string },
-                              index: number
+                              index: number,
                             ) => (
                               <span
                                 key={creator.id}
@@ -333,7 +333,7 @@ const ItemDetail = () => {
                                 {creator.name}
                                 {index < item.created_by.length - 1 ? ', ' : ''}
                               </span>
-                            )
+                            ),
                           )}
                         </p>
                         <p className='text-xl font-bold'>

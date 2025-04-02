@@ -112,7 +112,6 @@ const ItemCard = ({
                     src={`https://image.tmdb.org/t/p/w92${item.poster_path}`}
                     alt=''
                     onLoad={() => setLowResLoaded(true)}
-                   
                   />
                 </div>
                 {/* High-res image */}
@@ -125,7 +124,8 @@ const ItemCard = ({
                     alt={item.name || item.title}
                     onLoad={() => setHighResLoaded(true)}
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/no_poster_available.svg';
+                      (e.target as HTMLImageElement).src =
+                        '/no_poster_available.svg';
                     }}
                   />
                 </div>
