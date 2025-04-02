@@ -3,8 +3,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import type { IItem } from '../interfaces/IItem';
 
-
-
 // TODO refactor to use trending/all instead of now_playing to include tv
 
 // interface ILogo {
