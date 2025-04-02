@@ -9,6 +9,7 @@ import useDocumentTitle from '../hooks/usePageTitles';
 import BackButton from '../components/buttons/BackBtn';
 import { CastCard } from '../components/cards/CastCard';
 import { ICast } from '../interfaces/ICast';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface ResultsProps {
   personOnly: boolean;
@@ -16,7 +17,7 @@ interface ResultsProps {
 
 const Results = memo(({ personOnly }: ResultsProps) => {
   const { query } = useParams<{ query: string }>();
-
+ const queryClient = useQueryClient();
   const lastResultsRef = useRef<IItem[]>([]);
 
   const { ref, inView } = useInView();
@@ -30,6 +31,10 @@ const Results = memo(({ personOnly }: ResultsProps) => {
       fetchNextPage();
     }
   }, [inView, hasNextPage, fetchNextPage]);
+
+  useEffect(() => {
+    queryClient.invalidateQueries({queryKey: ['infinite-search', query]});
+  }, [personOnly]);
 
   useEffect(() => {
     if (query?.length === 1) {
