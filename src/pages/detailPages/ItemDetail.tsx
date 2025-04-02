@@ -163,6 +163,11 @@ const ItemDetail = () => {
                                 'opacity-0'
                               )
                             }
+                            onError={(e) =>
+                              ((e.target as HTMLElement).parentElement as HTMLDivElement).classList.add(
+                                'hidden')
+                            
+                            }
                           />
                         </div>
                       )}
@@ -181,6 +186,11 @@ const ItemDetail = () => {
                               )
                             }
                             className='max-w-[92px] h-auto object-contain p-2 opacity-0 '
+                            onError={(e) =>
+                              ((e.target as HTMLElement).parentElement as HTMLDivElement).classList.add(
+                                'hidden')
+                            
+                            }
                           />
                         </div>
                       )}
