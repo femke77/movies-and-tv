@@ -112,6 +112,9 @@ const ItemDetail = () => {
                         : 'opacity-0'
                     }`}
                     onLoad={() => setHighResPosterLoaded(true)}
+                    onError={(e)=>
+                      
+                      (e.target as HTMLImageElement).src = '/no_poster_available.svg'}
                   />
                 </div>
               </section>

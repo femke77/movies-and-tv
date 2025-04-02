@@ -1,8 +1,9 @@
 import { TMDBClient } from '../utils/axiosConfig';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-// import { persistQueryClient } from '@tanstack/react-query-persist-client'
 import { useEffect } from 'react';
 import type { IItem } from '../interfaces/IItem';
+
+
 
 // TODO refactor to use trending/all instead of now_playing to include tv
 

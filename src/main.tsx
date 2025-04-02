@@ -13,6 +13,8 @@ import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
 import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
 import FAQPage from './pages/FAQ.tsx';
 import CastDetailSkeleton from './components/loadingSkeletons/CastDetailSkeleton.tsx';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 
 const CastMemberDetail = lazy(
   () => import('./pages/detailPages/CastMemberDetail.tsx'),
@@ -44,6 +46,11 @@ const queryClient = new QueryClient({
       retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
     },
   },
+});
+const persister = createSyncStoragePersister({
+  storage: window.localStorage,
+  // Use include to specify which queries to persist
+  
 });
 
 const router = createBrowserRouter([
@@ -191,10 +198,25 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      {/* <ChunkLoadErrorBoundary> */}
+
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{
+        persister,
+        dehydrateOptions: {
+          shouldDehydrateQuery: query => {
+            // Only persist specific query types
+            const queryKey = query.queryKey;
+            return (
+              queryKey[0] === 'logo' || 
+              queryKey[0] === 'all_trending_items'
+            );
+          }
+        }
+      }}
+    >
       <RouterProvider router={router} />
-      {/* </ChunkLoadErrorBoundary> */}
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
+
   </StrictMode>,
 );
