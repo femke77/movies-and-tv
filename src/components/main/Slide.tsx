@@ -206,7 +206,7 @@ const Slide = ({
                       />
                     </div>
                   ) : (
-                    <h2 className='text-4xl font-bold text-white'>
+                    <h2 className='text-5xl font-bold text-white'>
                       {slide.title || slide.name}
                     </h2>
                   )}

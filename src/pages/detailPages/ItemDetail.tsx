@@ -160,6 +160,7 @@ const ItemDetail = () => {
                           <img
                             className='max-w-[92px] h-auto object-contain p-2 opacity-0'
                             src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
+                            title={`${item.networks?.[0]?.name}`}
                             alt={`${item.networks?.[0]?.name}'s official logo`}
                             onLoad={(e) =>
                               (e.target as HTMLImageElement).classList.remove(
@@ -190,6 +191,7 @@ const ItemDetail = () => {
                               )
                             }
                             className='max-w-[92px] h-auto object-contain p-2 opacity-0 '
+                            title={`${item.production_companies?.[0]?.name}`}
                             onError={(e) =>
                               (
                                 (e.target as HTMLElement)

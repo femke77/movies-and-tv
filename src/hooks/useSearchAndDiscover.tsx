@@ -43,7 +43,7 @@ export const useInfiniteSearchQuery = (query: string) => {
         ),
       }));
 
-      // make sure at least one item exists per page for pagination
+      // make sure at least one item exists per page for pagination (no empty pages or Inf Query will stop)
       return {
         pages: filteredPages.filter(
           (page) => page.results.length > 0 || page.persons.length > 0,
