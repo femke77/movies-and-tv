@@ -141,16 +141,64 @@ const ItemDetail = () => {
               </p>
 
               <div className='justify-center flex flex-wrap items-center md:justify-start gap-x-2  mb-3'>
-                {item.networks?.length > 0 && (
-                  <div className='mt-1 flex items-center justify-center bg-white/30 backdrop-blur-lg rounded-lg'>
-                    <img
-                      className='max-w-23 max-h-23 object-contain p-2'
-                      src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
-                      alt={`${item.networks?.[0]?.name}'s official logo`}
-                    />
+                {(item_type === 'tv' &&
+                  item.networks?.length > 0 &&
+                  item.networks?.[0]?.logo_path) ||
+                (item_type === 'movie' &&
+                  item.production_companies?.length > 0 &&
+                  item.production_companies?.[0]?.logo_path) ? (
+                  <div className='min-h-[23px] min-w-[92px] max-h-23 pt-2 mr-2 flex-shrink-0 flex items-center justify-center'>
+                    {/* tv network logo */}
+                    {item_type === 'tv' &&
+                      item.networks?.length > 0 &&
+                      item.networks?.[0]?.logo_path && (
+                        <div className='mt-1 flex items-center justify-center bg-white/60 backdrop-blur-xl rounded-md'>
+                          <img
+                            className='max-w-[92px] h-auto object-contain p-2 opacity-0'
+                            src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
+                            alt={`${item.networks?.[0]?.name}'s official logo`}
+                            onLoad={(e) =>
+                              (e.target as HTMLImageElement).classList.remove(
+                                'opacity-0',
+                              )
+                            }
+                            onError={(e) =>
+                              (
+                                (e.target as HTMLElement)
+                                  .parentElement as HTMLDivElement
+                              ).classList.add('hidden')
+                            }
+                          />
+                        </div>
+                      )}
+
+                    {/* production company logo */}
+                    {item_type === 'movie' &&
+                      item.production_companies?.length > 0 &&
+                      item.production_companies?.[0]?.logo_path && (
+                        <div className='mt-1 flex items-center justify-center bg-white/60 backdrop-blur-[15px] rounded-md'>
+                          <img
+                            src={`https://image.tmdb.org/t/p/w92${item.production_companies?.[0]?.logo_path}`}
+                            alt={`${item.production_companies?.[0]?.name}'s official logo`}
+                            onLoad={(e) =>
+                              (e.target as HTMLImageElement).classList.remove(
+                                'opacity-0',
+                              )
+                            }
+                            className='max-w-[92px] h-auto object-contain p-2 opacity-0 '
+                            onError={(e) =>
+                              (
+                                (e.target as HTMLElement)
+                                  .parentElement as HTMLDivElement
+                              ).classList.add('hidden')
+                            }
+                          />
+                        </div>
+                      )}
                   </div>
-                )}
-                <div className='min-w-20 h-20 flex items-center justify-center pl-2'>
+                ) : null}
+
+                <div className='min-w-20 h-20 flex items-center justify-center '>
                   <UserRating
                     rating={item.vote_average}
                     width='w-20'
@@ -159,10 +207,10 @@ const ItemDetail = () => {
                     fill='rgba(255,255,255,0.9)'
                   />
                 </div>
-                <div className='min-w-10 h-20 flex items-center justify-center'>
+                <div className='min-w-10 h-20 pt-3 flex items-center justify-center'>
                   <WatchButton itemType={item_type!} id={item.id} />
                 </div>
-                <div className='min-w-10 h-10 flex items-center justify-center pl-2'>
+                <div className='min-w-10 h-10 pt-3 flex items-center justify-center pl-2'>
                   <BookmarkBtn
                     isBookmarked={bookmarks.some(
                       (bookmark) =>

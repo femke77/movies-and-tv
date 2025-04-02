@@ -78,6 +78,10 @@ const CastMemberDetail = () => {
                     src={`https://image.tmdb.org/t/p/original${castData.profile_path}`}
                     alt={`${castData.name}'s headshot`}
                     onLoad={() => setHiResImageLoaded(true)}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        '/no_cast_photo.jpeg';
+                    }}
                   />
                 </div>
               </div>

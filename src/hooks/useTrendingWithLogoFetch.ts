@@ -1,5 +1,6 @@
 import { TMDBClient } from '../utils/axiosConfig';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+// import { persistQueryClient } from '@tanstack/react-query-persist-client'
 import { useEffect } from 'react';
 import type { IItem } from '../interfaces/IItem';
 
@@ -77,8 +78,9 @@ export const useTrendingAll = () => {
       });
       return fetchFirstTwoLogos(filteredItems);
     },
-    staleTime: 1000 * 60 * 360,
-    gcTime: 1000 * 60 * 370,
+    staleTime: 1000 * 60 * 60 * 24,
+    gcTime: 1000 * 60 * 60 * 25,
+    refetchInterval: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
   });
 };
@@ -125,8 +127,9 @@ export const useItemLogos = (
       return images?.logos?.[0].file_path || null;
     },
     enabled: isVisible,
-    staleTime: 1000 * 60 * 360,
-    gcTime: 1000 * 60 * 370,
+    staleTime: 1000 * 60 * 60 * 24,
+    gcTime: 1000 * 60 * 60 * 25,
+    refetchInterval: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
   });
 

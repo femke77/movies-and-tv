@@ -144,7 +144,12 @@ const ContinueWatching = () => {
                         <img
                           className='rounded-xl mr-2 w-86 h-50'
                           src={`https://image.tmdb.org/t/p/w780${items[key].posterPath}`}
-                          alt='poster'
+                          alt={`${items[key].title}'s backdrop`}
+                          loading='lazy'
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src =
+                              '/noimage2.webp';
+                          }}
                         />
                       ) : (
                         <img

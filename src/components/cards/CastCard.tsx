@@ -24,6 +24,9 @@ export const CastCard = ({
           width={200}
           height={300}
           className='w-full h-auto rounded-lg'
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = '/no_cast_photo.jpeg';
+          }}
         />
         <h3 className='text-lg font-semibold mt-4'>{cast.name}</h3>
         <p className='text-md  text-gray-400 '>

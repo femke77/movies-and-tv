@@ -69,7 +69,11 @@ if (!self.define) {
 }
 define(['./workbox-54d0af47'], (function (workbox) { 'use strict';
 
-  self.skipWaiting();
+  self.addEventListener('message', event => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+      self.skipWaiting();
+    }
+  });
   workbox.clientsClaim();
 
   /**
@@ -78,8 +82,11 @@ define(['./workbox-54d0af47'], (function (workbox) { 'use strict';
    * See https://goo.gl/S9QRab
    */
   workbox.precacheAndRoute([{
+    "url": "registerSW.js",
+    "revision": "3ca0b8505b4bec776b69afdba2768812"
+  }, {
     "url": "/index.html",
-    "revision": "0.qbgnikcqf2"
+    "revision": "0.1fpdac5veh"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("/index.html"), {
