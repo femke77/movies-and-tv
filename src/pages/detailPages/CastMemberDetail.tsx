@@ -20,7 +20,7 @@ const CastMemberDetail = () => {
       const hiResImage = new Image();
 
       lowResImage.src = `https://image.tmdb.org/t/p/w185${castData.profile_path}`;
-      hiResImage.src = `https://image.tmdb.org/t/p/original${castData.profile_path}`;
+      hiResImage.src = `https://image.tmdb.org/t/p/h632${castData.profile_path}`;
 
       lowResImage.onload = () => setLowResImageLoaded(true);
       hiResImage.onload = () => setHiResImageLoaded(true);

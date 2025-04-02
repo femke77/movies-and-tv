@@ -54,6 +54,22 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,jsx,png,jpg,webp,jpeg}'],
         globIgnores: ['**/node_modules/**/*', 'sw.js', 'workbox-*.js'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/image\.tmdb\.org\/t\/p\/(w\d+|h\d+)\/.*$/,
+            handler: 'CacheFirst', // Use cached images first, fetch only if missing (reduces api calls)
+            options: {
+              cacheName: 'tmdb-images',
+              expiration: {
+                maxEntries: 100, // 100 images limit
+                maxAgeSeconds: 60 * 60 * 24 * 30, //  30 days limit
+              },
+              cacheableResponse: {
+                statuses: [0, 200], // Successful responses only!
+              },
+            },
+          },
+        ],
         skipWaiting: false,
         clientsClaim: true,
         cleanupOutdatedCaches: true,
