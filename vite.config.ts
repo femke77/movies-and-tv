@@ -53,7 +53,13 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,jsx,png,jpg,webp,jpeg}'],
-        globIgnores: ['**/node_modules/**/*', 'sw.js', 'workbox-*.js'],
+        globIgnores: [
+          '**/node_modules/**/*',
+          'sw.js',
+          'workbox-*.js',
+          '**/icons/**/*', 
+          '**/apple-touch-icon.png' 
+        ],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/image\.tmdb\.org\/t\/p\/(w\d+|h\d+)\/.*$/,
@@ -61,7 +67,7 @@ export default defineConfig({
             options: {
               cacheName: 'tmdb-images',
               expiration: {
-                maxEntries: 150, // 100 images limit
+                maxEntries: 100, 
                 maxAgeSeconds: 60 * 60 * 24 * 30, //  30 days limit
               },
               cacheableResponse: {
