@@ -4,7 +4,7 @@ import './index.css';
 import App from './App.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.tsx';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import ScrollToTop from './components/helpers/ScrollToTop.tsx';
 import ItemDetailSkeleton from './components/loadingSkeletons/ItemDetailSkeleton.tsx';
 import NotFound from './pages/404.tsx';
@@ -13,6 +13,8 @@ import DelayedSuspense from './components/helpers/DelayedSuspense.tsx';
 import ChunkErrorHandler from './components/helpers/ChunkErrorHandler.tsx';
 import FAQPage from './pages/FAQ.tsx';
 import CastDetailSkeleton from './components/loadingSkeletons/CastDetailSkeleton.tsx';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 
 const CastMemberDetail = lazy(
   () => import('./pages/detailPages/CastMemberDetail.tsx'),
@@ -39,11 +41,15 @@ const DMCA = lazy(() => import('./pages/DMCA.tsx'));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      gcTime: 1000 * 60 * 60 * 24, // added this here for persistance requirementts of gcTime >= maxAge (below)
       refetchOnWindowFocus: false,
       retry: 2,
       retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
     },
   },
+});
+const persister = createSyncStoragePersister({
+  storage: window.localStorage,
 });
 
 const router = createBrowserRouter([
@@ -191,10 +197,27 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      {/* <ChunkLoadErrorBoundary> */}
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{
+        persister,
+        maxAge: 1000 * 60 * 60 * 24,
+        // uncomment the next line and add something to the string text to bust the cache if needed
+        // buster:'',
+        dehydrateOptions: {
+          shouldDehydrateQuery: (query) => {
+            // Only persist specific query types
+            const queryKey = query.queryKey;
+            return (
+              queryKey[0] === 'logo' || queryKey[0] === 'all_trending_items'
+            );
+          },
+        },
+      }}
+    >
       <RouterProvider router={router} />
-      {/* </ChunkLoadErrorBoundary> */}
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   </StrictMode>,
 );
+
+// https://tanstack.com/query/latest/docs/framework/react/plugins/persistQueryClient
