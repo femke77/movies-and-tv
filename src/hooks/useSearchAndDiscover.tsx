@@ -26,24 +26,31 @@ export const useInfiniteSearchQuery = (query: string) => {
     getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: !!query,
     staleTime: 1000 * 60 * 60 * 1, // 1 hour
-    gcTime: 1000 * 60 * 60 * 65, // 65min
+    gcTime: 1000 * 60 * 60 * 65, // 65 minutes
     refetchOnWindowFocus: false,
     placeholderData: (previousData) => previousData,
-    select: (data) => ({
-      pages: data.pages.map((page) => ({
+    select: (data) => {
+      const filteredPages = data.pages.map((page) => ({
         ...page,
         results: page.results.filter(
           (item: IItem) => item.media_type !== 'person',
         ),
         persons: page.results.filter(
           (item: ICast) =>
-            (item.media_type === 'person' &&
-              item.known_for_department === 'Acting') ||
-            item.known_for_department === 'Directing',
-        ), // Filter out persons from the results
-      })),
-      pageParams: data.pageParams,
-    }),
+            item.media_type === 'person' &&
+            (item.known_for_department === 'Acting' ||
+              item.known_for_department === 'Directing'),
+        ),
+      }));
+
+      // make sure at least one item exists per page for pagination
+      return {
+        pages: filteredPages.filter(
+          (page) => page.results.length > 0 || page.persons.length > 0,
+        ),
+        pageParams: data.pageParams,
+      };
+    },
   });
 };
 

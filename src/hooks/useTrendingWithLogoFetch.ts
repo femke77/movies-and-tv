@@ -3,14 +3,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import type { IItem } from '../interfaces/IItem';
 
-// TODO refactor to use trending/all instead of now_playing to include tv
-
-// interface ILogo {
-//   iso_639_1: string;
-//   file_path: string;
-//   vote_average: number;
-// }
-
 /**
  * Fetches and attaches English logo paths for the first two movies in the provided array.
  * Makes parallel API requests to TMDB for movie images and extracts English logos.
@@ -123,7 +115,7 @@ export const useItemLogos = (
       const { data: images } = await TMDBClient.get(
         `/${type}/${itemId}/images?language=en`,
       );
-      return images?.logos?.[0].file_path || null;
+      return images?.logos?.[0]?.file_path || null;
     },
     enabled: isVisible,
     staleTime: 1000 * 60 * 60 * 24,
@@ -132,7 +124,7 @@ export const useItemLogos = (
     refetchOnWindowFocus: false,
   });
 
-  // prefetching for the next logo
+  // prefetching for the next slide's logo while the current one is visible
   useEffect(() => {
     if (isVisible && itemList.length > 0) {
       const nextIndex = currentIndex + 1;
