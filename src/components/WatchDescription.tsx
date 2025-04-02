@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import { useState} from 'react';
+
 const WatchDescription = ({
   title,
   rt,
@@ -10,8 +12,16 @@ const WatchDescription = ({
   date?: string;
   overview?: string;
 }) => {
+
+
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+
+  };
   return (
-    <div className='h-[200px] sm:h-[200px] md:h-[11rem] '>
+    <div >
       <h1 className='text-xl mb-2'>{title || ''}</h1>
       <div className='flex items-center text-[#fff9] text-sm'>
         <div className='flex items-center'>
@@ -57,7 +67,15 @@ const WatchDescription = ({
           <p className='ml-2'>{rt || '0'} min</p>
         </div>
       </div>
-      <p className='my-2 line-clamp-5 lg:line-clamp-10'>{overview || ''}</p>
+      <div className={`my-2  ${open ? 'h-fit' :'h-[100px]' }`}>{`${open ? overview : overview?.slice(0,200)}` || ''}
+
+        <span
+          className={`${open ? 'hidden' : 'inline-block'} text-[#fff9] cursor-pointer`}
+          onClick={handleClick}
+        >
+          ...more
+        </span>
+      </div>
     </div>
   );
 };
