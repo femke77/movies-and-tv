@@ -35,7 +35,7 @@ const Explore = memo(
     if (isLoading) return null; //suspense will take care of this
     const allItems = data?.pages?.flatMap((page) => page.results) ?? [];
     return (
-      <div className='mt-8'>
+      <div className='mt-8 mx-3'>
         <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
           {allItems?.length > 0 ? (
             allItems.map((item: IItem) => (

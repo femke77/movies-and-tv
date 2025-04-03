@@ -47,7 +47,7 @@ const Results = memo(({ personOnly }: ResultsProps) => {
   const allPersons = data?.pages.flatMap((page) => page.persons) ?? [];
 
   return (
-    <div className='mt-8'>
+    <div className='mt-8 mx-3'>
       <div className='absolute top-20 left-3 z-1'>
         <BackButton />
       </div>
