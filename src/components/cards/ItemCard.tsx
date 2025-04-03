@@ -225,16 +225,14 @@ const MemoizedItemCard = memo(
     textSize?: string;
     isBookmarked: boolean;
   }) => (
-   
-      <ItemCard
-        item={item}
-        itemType={item.media_type || itemType || ''}
-        showRating={showRating}
-        showGenres={showGenres}
-        textSize={textSize}
-        isBookmarked={isBookmarked}
-      />
- 
+    <ItemCard
+      item={item}
+      itemType={item.media_type || itemType || ''}
+      showRating={showRating}
+      showGenres={showGenres}
+      textSize={textSize}
+      isBookmarked={isBookmarked}
+    />
   ),
 );
 
