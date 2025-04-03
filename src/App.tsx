@@ -13,12 +13,12 @@ function App() {
 
   const updateSW = registerSW({
     onNeedRefresh() {
-      const confirmed = window.confirm(
-        'A new update is available. Reload now?',
-      );
-      if (confirmed) {
-        updateSW();
+      if (window.confirm('A new update is available. Reload now?')) {
+        updateSW(true); 
       }
+    },
+    onOfflineReady() {
+      console.log('App is ready to work offline.');
     },
   });
 
