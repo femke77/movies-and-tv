@@ -26,11 +26,19 @@ export const filterTMDBResults = (results: IItem[]) => {
 export const filterMainPageResults = (results: IItem[]) => {
   return results.filter((item: IItem) => {
     const hasValidData = item.title || item.name;
-    const isInvalidDueToDate = item.release_date &&  dayjs(item.release_date).isSame(dayjs(), 'day')
-    || item.first_air_date && dayjs(item.first_air_date).isSame(dayjs(), 'day');
+    const isInvalidDueToDate =
+      (item.release_date && dayjs(item.release_date).isSame(dayjs(), 'day')) ||
+      (item.first_air_date &&
+        dayjs(item.first_air_date).isSame(dayjs(), 'day'));
     const isValidVoteAverage = item.vote_average && item.vote_average > 0;
     const validDate = item.release_date || item.first_air_date;
-    return hasValidData && !isInvalidDueToDate && item.poster_path && isValidVoteAverage && validDate
+    return (
+      hasValidData &&
+      !isInvalidDueToDate &&
+      item.poster_path &&
+      isValidVoteAverage &&
+      validDate
+    );
   });
 };
 

@@ -13,7 +13,7 @@ export const useIntersectionObserver = (targetId: string) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.0, rootMargin: '100px 0px' }
+      { threshold: 0.0, rootMargin: '100px 0px' },
     );
 
     const target = document.getElementById(targetId);
@@ -30,7 +30,7 @@ export const useIntersectionObserver = (targetId: string) => {
 export const useQueryConfig = (
   queryKey: string,
   queryFn: () => Promise<IItem[]>,
-  enabled: boolean
+  enabled: boolean,
 ) => ({
   queryKey: [queryKey],
   queryFn,
