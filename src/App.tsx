@@ -18,36 +18,7 @@ function App() {
         updateSW();
       }
     },
-  
   });
-
-  // useEffect(() => {
-  //   const updateSW = registerSW({
-  //     immediate: false,  // allow prompt to take over, true if you want to use autoUpdate
-  //     // using autoUpdate so the below code, onNeedRefresh, isn't running. Might switch to prompt.
-  //     onNeedRefresh() {
-  //       if (
-  //         confirm('A new version is available. Do you want to reload the page?')
-  //       ) {
-  //         updateSW(true).catch(console.error);
-  //       }
-  //     },
-  //     onOfflineReady() {
-  //       console.log('SW - Offline ready');
-  //     },
-  //     onRegistered(registration) {
-  //       console.log('SW Registration successful:', registration);
-  //       const intervalId = setInterval(() => {
-  //         console.log('Checking for SW updates...');
-  //         registration?.update().catch(console.error);
-  //       }, 300000);
-  //       return () => clearInterval(intervalId);
-  //     },
-  //     onRegisterError(error) {
-  //       console.error('SW registration failed:', error);
-  //     },
-  //   });
-  // }, []);
 
   // maintains search query on reload
   useEffect(() => {
