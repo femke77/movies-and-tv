@@ -13,7 +13,6 @@ export const filterTMDBResults = (results: IItem[]) => {
   return results.filter((item: IItem) => {
     // Ensure the item has either a title.
     const hasValidData = item.title || item.name;
-
     // Exclude items that have no poster and were released today (some weirdness in the API)
     const isInvalidDueToDate =
       !item.poster_path && dayjs(item.release_date).isSame(dayjs(), 'day');
@@ -22,21 +21,19 @@ export const filterTMDBResults = (results: IItem[]) => {
   });
 };
 
-// main page filtering is much stricter
+// main page filtering is much stricter due to showcasing items
 export const filterMainPageResults = (results: IItem[]) => {
   return results.filter((item: IItem) => {
     const hasValidData = item.title || item.name;
-    const isInvalidDueToDate =
-      (item.release_date && dayjs(item.release_date).isSame(dayjs(), 'day')) ||
-      (item.first_air_date &&
+    const isInvalidDueToMissingPosterDateToday =
+      (!item.poster_path && item.release_date && dayjs(item.release_date).isSame(dayjs(), 'day')) ||
+      (!item.poster_path && item.first_air_date &&
         dayjs(item.first_air_date).isSame(dayjs(), 'day'));
-    const isValidVoteAverage = item.vote_average && item.vote_average > 0;
     const validDate = item.release_date || item.first_air_date;
     return (
       hasValidData &&
-      !isInvalidDueToDate &&
+      !isInvalidDueToMissingPosterDateToday &&
       item.poster_path &&
-      isValidVoteAverage &&
       validDate
     );
   });
