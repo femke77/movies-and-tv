@@ -80,6 +80,9 @@ const WatchMovie = () => {
       case 'vidfast.pro':
         newURL = `https://vidfast.pro/movie/${movie_id}`;
         break;
+      case 'superembed.stream':
+        newURL = ` https://multiembed.mov/directstream.php?video_id=${movie_id}&tmdb=1`;
+        break;
     }
 
     if (timeoutRef.current) {

@@ -161,6 +161,9 @@ const WatchTV = () => {
       case 'vidfast.pro':
         newURL = `https://vidfast.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
+      case 'superembed.stream':
+        newURL = `https://multiembed.mov/directstream.php?video_id=${series_id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`;
+        break;
     }
 
     const serverChanged = prevServerRef.current !== selectedServer;
