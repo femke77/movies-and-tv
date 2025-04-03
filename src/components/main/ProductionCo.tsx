@@ -18,7 +18,7 @@ const ProductionCo = ({
 
   return (
     <div className=' mt-20  min-h-[350px]' id={`${company_name}-section`}>
-      <Link to='/explore/top-series'>
+      <Link to='/explore/movies'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>{company_name}</h2>
       </Link>
       {isLoading ? (

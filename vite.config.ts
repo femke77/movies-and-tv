@@ -57,7 +57,9 @@ export default defineConfig({
           '**/node_modules/**/*',
           'sw.js',
           'workbox-*.js',
-          '**/icons/**/*',
+          '**/android/**/*',
+          '**/ios/**/*',
+          '**/windows11/**/*',
           '**/apple-touch-icon.png',
         ],
         runtimeCaching: [
