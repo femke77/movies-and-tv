@@ -13,7 +13,7 @@ const Network = ({network_name, network_id}: {
     <div className=' mt-20  min-h-[350px]' id={`${network_name}-section`}>
       <Link to='/explore/top-series'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>
-         {network_name} 
+         Popular on {network_name} 
         </h2>
       </Link>
       {isLoading ? (
