@@ -43,7 +43,7 @@ export const useInfiniteSearchQuery = (query: string) => {
         ),
       }));
 
-      // make sure at least one item exists per page for pagination
+      // make sure at least one item exists per page for pagination (no empty pages or Inf Query will stop)
       return {
         pages: filteredPages.filter(
           (page) => page.results.length > 0 || page.persons.length > 0,
@@ -65,9 +65,11 @@ const discoverResults = async (
   voteAverage = 1,
   voteCount = 150,
   deselectedGenres = '',
+  with_companies = '',
+  with_networks = '',
 ) => {
   const { data } = await TMDBClient.get(
-    `/discover/${type}?vote_average.gte=${voteAverage}&include_adult=false&vote_count.gte=${voteCount}&language=${lang}&sort_by=${sort}&page=${pageParam}&with_genres=${genres}&without_genres=${deselectedGenres}`,
+    `/discover/${type}?vote_average.gte=${voteAverage}&include_adult=false&vote_count.gte=${voteCount}&language=${lang}&sort_by=${sort}&page=${pageParam}&with_genres=${genres}&without_genres=${deselectedGenres}&with_companies=${with_companies}&with_networks=${with_networks}`,
   );
   return {
     results: data.results,
@@ -84,6 +86,8 @@ export const useInfiniteDiscoverQuery = (
   voteAverage?: number,
   voteCount?: number,
   deselectedGenres?: string,
+  with_companies?: string,
+  with_networks?: string,
 ) => {
   return useInfiniteQuery({
     queryKey: [
@@ -95,6 +99,8 @@ export const useInfiniteDiscoverQuery = (
       voteAverage,
       voteCount,
       lang,
+      with_companies,
+      with_networks,
     ],
     queryFn: ({ pageParam }) =>
       discoverResults(
@@ -106,6 +112,8 @@ export const useInfiniteDiscoverQuery = (
         voteAverage,
         voteCount,
         deselectedGenres,
+        with_companies,
+        with_networks,
       ),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,

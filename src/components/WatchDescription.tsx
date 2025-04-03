@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import { useState } from 'react';
+
 const WatchDescription = ({
   title,
   rt,
@@ -10,8 +12,14 @@ const WatchDescription = ({
   date?: string;
   overview?: string;
 }) => {
+  const [open, setOpen] = useState(false);
+
+  const getTextLength = () => {
+    return overview && overview?.length > 200;
+  };
+
   return (
-    <div className='h-[200px] sm:h-[200px] md:h-[11rem] '>
+    <div>
       <h1 className='text-xl mb-2'>{title || ''}</h1>
       <div className='flex items-center text-[#fff9] text-sm'>
         <div className='flex items-center'>
@@ -54,10 +62,25 @@ const WatchDescription = ({
             <circle cx='12' cy='12' r='10' />
             <polyline points='12 6 12 12 16.5 12' />
           </svg>
-          <p className='ml-2'>{rt || '0'} min</p>
+          <p className='ml-2'>{rt || 'unk'} min</p>
         </div>
       </div>
-      <p className='my-2 line-clamp-5 lg:line-clamp-10'>{overview || ''}</p>
+      {getTextLength() ? (
+        <div
+          className={`my-2  ${open ? 'h-fit' : 'h-[150px] sm:h-[55px] md:h-[100px]'} `}
+        >
+          {`${open ? overview : overview?.slice(0, 200)}` || ''}
+
+          <span
+            className={`inline-block text-[#fff9] cursor-pointer ml-1`}
+            onClick={() => setOpen(!open)}
+          >
+            {open ? 'Show less' : '...Show more'}
+          </span>
+        </div>
+      ) : (
+        <div className={`my-2 h-[100px] `}>{overview || ''}</div>
+      )}
     </div>
   );
 };

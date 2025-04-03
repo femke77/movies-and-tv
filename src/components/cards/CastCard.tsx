@@ -30,7 +30,8 @@ export const CastCard = ({
         />
         <h3 className='text-lg font-semibold mt-4'>{cast.name}</h3>
         <p className='text-md  text-gray-400 '>
-          {cast.character || cast.known_for_department}
+          {cast.character ||
+            (cast.known_for_department === 'Acting' ? 'Actor' : 'Director')}
         </p>
       </Link>
     </div>

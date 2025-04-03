@@ -156,10 +156,11 @@ const ItemDetail = () => {
                     {item_type === 'tv' &&
                       item.networks?.length > 0 &&
                       item.networks?.[0]?.logo_path && (
-                        <div className='mt-1 flex items-center justify-center bg-white/60 backdrop-blur-xl rounded-md'>
+                        <div className='mt-1 flex items-center justify-center bg-white/70 rounded-md'>
                           <img
                             className='max-w-[92px] h-auto object-contain p-2 opacity-0'
                             src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
+                            title={`${item.networks?.[0]?.name}`}
                             alt={`${item.networks?.[0]?.name}'s official logo`}
                             onLoad={(e) =>
                               (e.target as HTMLImageElement).classList.remove(
@@ -180,7 +181,7 @@ const ItemDetail = () => {
                     {item_type === 'movie' &&
                       item.production_companies?.length > 0 &&
                       item.production_companies?.[0]?.logo_path && (
-                        <div className='mt-1 flex items-center justify-center bg-white/60 backdrop-blur-[15px] rounded-md'>
+                        <div className='mt-1 flex items-center justify-center bg-white/70  rounded-md'>
                           <img
                             src={`https://image.tmdb.org/t/p/w92${item.production_companies?.[0]?.logo_path}`}
                             alt={`${item.production_companies?.[0]?.name}'s official logo`}
@@ -190,6 +191,7 @@ const ItemDetail = () => {
                               )
                             }
                             className='max-w-[92px] h-auto object-contain p-2 opacity-0 '
+                            title={`${item.production_companies?.[0]?.name}`}
                             onError={(e) =>
                               (
                                 (e.target as HTMLElement)

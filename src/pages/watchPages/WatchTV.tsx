@@ -27,7 +27,6 @@ const WatchTV = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { series_id } = useParams<{ series_id: string }>();
-
   const [isLoading, setIsLoading] = useState(true);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
@@ -125,7 +124,7 @@ const WatchTV = () => {
   useEffect(() => {
     timeoutRef.current = setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 1250);
   }, []);
 
   useEffect(() => {
@@ -153,9 +152,9 @@ const WatchTV = () => {
       case 'vidsrc.wtf':
         newURL = `https://vidsrc.wtf/api/3/tv/?id=${series_id}&s=${selectedSeason}&e=${selectedEpisode}`;
         break;
-      // case 'vidsrc.wtf-ml':
-      // newURL = `https://vidsrc.wtf/api/2/tv/?id=${series_id}&s=${selectedSeason}&e=${selectedEpisode}`;
-      // break;
+      case 'vidsrc.wtf-ml':
+        newURL = `https://vidsrc.wtf/api/2/tv/?id=${series_id}&s=${selectedSeason}&e=${selectedEpisode}`;
+        break;
       case '111movies.com':
         newURL = `https://111movies.com/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
