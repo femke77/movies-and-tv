@@ -165,7 +165,7 @@ const ItemCard = ({
                 )}
                 {/* Genres*/}
                 {showGenres && movieGenres?.length >= 1 && (
-                  <div className='flex justify-end flex-wrap gap-1 relative -top-8 sm:right-2 w-full z-10'>
+                  <div className='flex justify-end flex-wrap gap-1 relative -top-8 sm:right-5 w-full z-10'>
                     {width > 400 ? (
                       <>
                         {movieGenres
@@ -225,7 +225,7 @@ const MemoizedItemCard = memo(
     textSize?: string;
     isBookmarked: boolean;
   }) => (
-    <div className='w-[calc(50%-15px)] sm:w-[calc(33%-10px)] md:w-[calc(25%-17px)] lg:w-[calc(26%-25px)] xl:max-w-[calc(19%-1px)]'>
+   
       <ItemCard
         item={item}
         itemType={item.media_type || itemType || ''}
@@ -234,7 +234,7 @@ const MemoizedItemCard = memo(
         textSize={textSize}
         isBookmarked={isBookmarked}
       />
-    </div>
+ 
   ),
 );
 
