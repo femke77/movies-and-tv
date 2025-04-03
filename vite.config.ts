@@ -47,7 +47,7 @@ export default defineConfig({
         name: 'BingeBox24/7 - Unlimited Streaming for Movies and TV',
         short_name: 'BingeBox',
         description:
-          'Stream and collect your favorite movies and TV shows with BingeBox247.',
+          'Stream and collect your favorite movies and TV shows with BingeBox24/7.',
         theme_color: '#111',
         icons: icons,
       },
@@ -78,6 +78,7 @@ export default defineConfig({
             },
           },
         ],
+        // these should be set automatically by the plugin
         // skipWaiting: false,
         // clientsClaim: true,
         // cleanupOutdatedCaches: true,

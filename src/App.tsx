@@ -11,14 +11,11 @@ import { registerSW } from 'virtual:pwa-register';
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+
   const updateSW = registerSW({
     onNeedRefresh() {
-      if (window.confirm('A new update is available. Reload now?')) {
-        updateSW(true); 
-      }
-    },
-    onOfflineReady() {
-      console.log('App is ready to work offline.');
+      setUpdateAvailable(true);
     },
   });
 
@@ -34,6 +31,20 @@ function App() {
 
   return (
     <>
+      {updateAvailable && (
+        <div className='z-100 fixed h-10 bottom-0 left-0 right-0 bg-blue-600 text-white p-4 flex justify-between items-center'>
+          <span>A new update is available!</span>
+          <button
+            className='bg-white text-blue-800 text-sm h-6 p-3 rounded flex items-center justify-center'
+            onClick={() => {
+              updateSW();
+              setUpdateAvailable(false);
+            }}
+          >
+            Reload
+          </button>
+        </div>
+      )}
       <ScrollRestoration />
       <div className='bg-black text-white h-full '>
         <Header>
