@@ -14,7 +14,7 @@ function App() {
   const updateSW = registerSW({
     onNeedRefresh() {
       if (window.confirm('A new update is available. Reload now?')) {
-        updateSW(true); 
+        updateSW(true);
       }
     },
     onOfflineReady() {
