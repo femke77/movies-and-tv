@@ -1,6 +1,7 @@
 import { lazy, useEffect } from 'react';
 import SwiperElement from '../components/main/Swiper';
 import ContinueWatching from '../components/main/ContinueWatching';
+import Network from '../components/main/Network';
 
 const PopularMovies = lazy(() => import('../components/main/PopularMovies'));
 const TrendingMovies = lazy(() => import('../components/main/TrendingMovies'));
@@ -27,7 +28,9 @@ const Home = () => {
         <TopRatedMovies />
         <TrendingTV />
         <TopRatedTv />
-        <PopularTv />
+       <Network network_name='Netflix' network_id={213} />
+       <Network network_name='Hulu' network_id={453} />
+       <Network network_name='Paramount' network_id={2076} />
       </div>
     </>
   );
