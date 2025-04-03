@@ -13,7 +13,9 @@ function App() {
 
   const updateSW = registerSW({
     onNeedRefresh() {
-      const confirmed = window.confirm('A new update is available. Reload now?');
+      const confirmed = window.confirm(
+        'A new update is available. Reload now?',
+      );
       if (confirmed) {
         updateSW();
       }
