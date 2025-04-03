@@ -99,7 +99,7 @@ const ContinueWatching = () => {
   };
 
   return (
-    <div>
+    <div className='ml-6'>
       <ConfirmModal
         showModal={openModal}
         closeModal={closeModal}
@@ -108,7 +108,7 @@ const ContinueWatching = () => {
       />
       {Object.keys(items).length !== 0 && (
         <>
-          <div className='flex justify-between items-center'>
+          <div className=' flex justify-between items-center'>
             <h1 className='text-2xl font-semibold mb-4'>Continue Watching</h1>
             <button
               onClick={() => setOpenModal(true)}

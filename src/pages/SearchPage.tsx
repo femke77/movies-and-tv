@@ -47,7 +47,7 @@ const Results = memo(({ personOnly }: ResultsProps) => {
   const allPersons = data?.pages.flatMap((page) => page.persons) ?? [];
 
   return (
-    <div className='ml-2 mt-8'>
+    <div className='mt-8 mx-3'>
       <div className='absolute top-20 left-3 z-1'>
         <BackButton />
       </div>
@@ -73,7 +73,7 @@ const Results = memo(({ personOnly }: ResultsProps) => {
         </>
       ) : (
         <>
-          <div className='max-w-[1800px] mx-auto flex flex-wrap flex-1 gap-4 items-start'>
+          <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
             {allItems.length > 0 ? (
               allItems.map((item: IItem) => (
                 <MemoizedItemCard
@@ -126,7 +126,7 @@ const SearchContainer = memo(() => {
     setPersonOnly((prev) => !prev);
   };
   return (
-    <div className='mt-30 mx-4'>
+    <div className='mt-30'>
       <div className='flex flex-row flex-wrap justify-between items-center'>
         <h1 className='text-3xl font-bold mt-2 mb-2 relative mr-6'>
           {headingText}

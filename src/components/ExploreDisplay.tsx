@@ -33,11 +33,11 @@ const Explore = memo(
     }, [inView, hasNextPage, fetchNextPage]);
 
     if (isLoading) return null; //suspense will take care of this
-    const allItems = data?.pages.flatMap((page) => page.results) ?? [];
+    const allItems = data?.pages?.flatMap((page) => page.results) ?? [];
     return (
-      <div className='ml-2 mt-8'>
-        <div className='flex flex-wrap flex-1 gap-4 items-start '>
-          {allItems.length > 0 ? (
+      <div className='mt-8 mx-3'>
+        <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
+          {allItems?.length > 0 ? (
             allItems.map((item: IItem) => (
               <MemoizedItemCard
                 itemType={itemType}
@@ -54,7 +54,7 @@ const Explore = memo(
             <p className='text-lg text-gray-400'>No results found.</p>
           )}
         </div>
-        <div ref={ref} className='h-10 mt-4'>
+        <div ref={ref} className='h-10 mt-4 mb-20'>
           {isFetchingNextPage && (
             <div className='flex justify-center my-10'>
               <div className='loader'></div>

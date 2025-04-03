@@ -36,7 +36,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       injectRegister: 'auto',
       devOptions: {
         enabled: true,
@@ -57,7 +57,9 @@ export default defineConfig({
           '**/node_modules/**/*',
           'sw.js',
           'workbox-*.js',
-          '**/icons/**/*',
+          '**/android/**/*',
+          '**/ios/**/*',
+          '**/windows11/**/*',
           '**/apple-touch-icon.png',
         ],
         runtimeCaching: [
@@ -76,7 +78,7 @@ export default defineConfig({
             },
           },
         ],
-        skipWaiting: true,
+        skipWaiting: false,
         clientsClaim: true,
         cleanupOutdatedCaches: true,
         navigateFallback: '/index.html',
@@ -85,7 +87,7 @@ export default defineConfig({
     }),
     visualizer({
       filename: './stats.html',
-      open: true,
+      open: false,
     }),
     nodeResolve(),
   ],
