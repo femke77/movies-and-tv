@@ -26,8 +26,11 @@ export const filterMainPageResults = (results: IItem[]) => {
   return results.filter((item: IItem) => {
     const hasValidData = item.title || item.name;
     const isInvalidDueToMissingPosterDateToday =
-      (!item.poster_path && item.release_date && dayjs(item.release_date).isSame(dayjs(), 'day')) ||
-      (!item.poster_path && item.first_air_date &&
+      (!item.poster_path &&
+        item.release_date &&
+        dayjs(item.release_date).isSame(dayjs(), 'day')) ||
+      (!item.poster_path &&
+        item.first_air_date &&
         dayjs(item.first_air_date).isSame(dayjs(), 'day'));
     const validDate = item.release_date || item.first_air_date;
     return (
