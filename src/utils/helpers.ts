@@ -22,6 +22,18 @@ export const filterTMDBResults = (results: IItem[]) => {
   });
 };
 
+// main page filtering is much stricter
+export const filterMainPageResults = (results: IItem[]) => {
+  return results.filter((item: IItem) => {
+    const hasValidData = item.title || item.name;
+    const isInvalidDueToDate = item.release_date &&  dayjs(item.release_date).isSame(dayjs(), 'day')
+    || item.first_air_date && dayjs(item.first_air_date).isSame(dayjs(), 'day');
+    const isValidVoteAverage = item.vote_average && item.vote_average > 0;
+    const validDate = item.release_date || item.first_air_date;
+    return hasValidData && !isInvalidDueToDate && item.poster_path && isValidVoteAverage && validDate
+  });
+};
+
 // filter out duplicate items from the TMDB API's combined works of a cast member
 export const filterCastResults = (results: IItem[]) => {
   const seen = new Set();

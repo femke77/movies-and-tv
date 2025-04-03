@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IItem } from '../interfaces/IItem';
+import { filterMainPageResults } from '../utils/helpers';
 
 export const useIntersectionObserver = (targetId: string) => {
   const [shouldFetch, setShouldFetch] = useState(false);
@@ -12,7 +13,7 @@ export const useIntersectionObserver = (targetId: string) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.0, rootMargin: '100px 0px' },
+      { threshold: 0.0, rootMargin: '100px 0px' }
     );
 
     const target = document.getElementById(targetId);
@@ -29,7 +30,7 @@ export const useIntersectionObserver = (targetId: string) => {
 export const useQueryConfig = (
   queryKey: string,
   queryFn: () => Promise<IItem[]>,
-  enabled: boolean,
+  enabled: boolean
 ) => ({
   queryKey: [queryKey],
   queryFn,
@@ -40,5 +41,7 @@ export const useQueryConfig = (
   enabled,
   retry: 2,
   retryDelay: (attempt: number) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
-  // placeholderData: (previousData: IItem[] | undefined) => previousData ?? [],
+  select: (data: IItem[]) => {
+    return filterMainPageResults(data);
+  },
 });
