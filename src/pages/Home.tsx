@@ -1,9 +1,9 @@
 import { lazy, useEffect } from 'react';
 import SwiperElement from '../components/main/Swiper';
 import ContinueWatching from '../components/main/ContinueWatching';
-import Network from '../components/main/Network';
-import ProductionCo from '../components/main/ProductionCo';
 
+const Network = lazy(() => import('../components/main/Network'));
+const ProductionCo = lazy(() => import('../components/main/ProductionCo'));
 const PopularMovies = lazy(() => import('../components/main/PopularMovies'));
 const TrendingMovies = lazy(() => import('../components/main/TrendingMovies'));
 const TopRatedMovies = lazy(() => import('../components/main/TopRatedMovies'));

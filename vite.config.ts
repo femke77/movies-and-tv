@@ -36,7 +36,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: 'prompt',
+      registerType: 'autoUpdate',
       injectRegister: 'auto',
       devOptions: {
         enabled: true,
@@ -76,7 +76,7 @@ export default defineConfig({
             },
           },
         ],
-        skipWaiting: false,
+        skipWaiting: true,
         clientsClaim: true,
         cleanupOutdatedCaches: true,
         navigateFallback: '/index.html',
