@@ -38,6 +38,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'prompt',
       injectRegister: 'auto',
+      includeManifestIcons: false,
       devOptions: {
         enabled: true,
         type: 'module',
@@ -52,15 +53,15 @@ export default defineConfig({
         icons: icons,
       },
       workbox: {
+        
         globPatterns: ['**/*.{js,css,html,svg,jsx,png,jpg,webp,jpeg}'],
         globIgnores: [
-          '**/node_modules/**/*',
+          'node_modules/**/*',
           'sw.js',
           'workbox-*.js',
-          '**/android/**/*',
-          '**/ios/**/*',
-          '**/windows11/**/*',
-          '**/apple-touch-icon.png',
+          'android/**/*',
+          'ios/**/*',
+          'windows11/**/*',
         ],
         runtimeCaching: [
           {
