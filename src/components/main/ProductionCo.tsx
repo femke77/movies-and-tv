@@ -1,16 +1,19 @@
-import { useNetflix } from '../../hooks/useNetflix';
+import { useProductionCo } from '../../hooks/useCompany';
 import CarouselContainer from '../containers/CarouselContainer';
 import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
 import { Link } from 'react-router-dom';
 
-const Netflix = () => {
-  const { data: items = [], isLoading } = useNetflix();
+const ProductionCo = ({company_name, company_id}: {
+  company_name: string;
+  company_id: number;
+}) => {
+  const { data: items = [], isLoading } = useProductionCo('movie', company_name, company_id);
 
   return (
-    <div className=' mt-20  min-h-[350px]' id='netflix-section'>
+    <div className=' mt-20  min-h-[350px]' id={`${company_name}-section`}>
       <Link to='/explore/top-series'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>
-          Netflix Series{' '}
+         {company_name} 
         </h2>
       </Link>
       {isLoading ? (
@@ -22,10 +25,10 @@ const Netflix = () => {
           ))}
         </div>
       ) : (
-        <CarouselContainer items={items} itemType='tv'  />
+        <CarouselContainer items={items} itemType='movie'  />
       )}
     </div>
   );
 };
 
-export default Netflix;
+export default ProductionCo;
