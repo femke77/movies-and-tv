@@ -82,7 +82,7 @@ const WatchTV = () => {
 
   useEffect(() => {
     if (episodes) {
-      // Shift previous season length when moving to a new season 
+      // Shift previous season length when moving to a new season
       setPreviousSeasonLength(currentSeasonLength);
       setCurrentSeasonLength(episodes?.episodes?.length);
     }
@@ -153,8 +153,8 @@ const WatchTV = () => {
         newURL = `https://vidsrc.wtf/api/3/tv/?id=${series_id}&s=${selectedSeason}&e=${selectedEpisode}`;
         break;
       case 'vidsrc.wtf-ml':
-      newURL = `https://vidsrc.wtf/api/2/tv/?id=${series_id}&s=${selectedSeason}&e=${selectedEpisode}`;
-      break;
+        newURL = `https://vidsrc.wtf/api/2/tv/?id=${series_id}&s=${selectedSeason}&e=${selectedEpisode}`;
+        break;
       case '111movies.com':
         newURL = `https://111movies.com/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;

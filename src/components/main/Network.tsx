@@ -3,17 +3,24 @@ import CarouselContainer from '../containers/CarouselContainer';
 import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
 import { Link } from 'react-router-dom';
 
-const Network = ({network_name, network_id}: {
+const Network = ({
+  network_name,
+  network_id,
+}: {
   network_name: string;
   network_id: number;
 }) => {
-  const { data: items = [], isLoading } = useNetwork('tv', network_name, network_id);
+  const { data: items = [], isLoading } = useNetwork(
+    'tv',
+    network_name,
+    network_id,
+  );
 
   return (
     <div className=' mt-20  min-h-[350px]' id={`${network_name}-section`}>
       <Link to='/explore/top-series'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>
-         Popular on {network_name} 
+          Popular on {network_name}
         </h2>
       </Link>
       {isLoading ? (
@@ -25,7 +32,7 @@ const Network = ({network_name, network_id}: {
           ))}
         </div>
       ) : (
-        <CarouselContainer items={items} itemType='tv'  />
+        <CarouselContainer items={items} itemType='tv' />
       )}
     </div>
   );

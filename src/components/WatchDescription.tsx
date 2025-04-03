@@ -14,7 +14,6 @@ const WatchDescription = ({
 }) => {
   const [open, setOpen] = useState(false);
 
-
   const getTextLength = () => {
     return overview && overview?.length > 200;
   };
@@ -67,14 +66,16 @@ const WatchDescription = ({
         </div>
       </div>
       {getTextLength() ? (
-        <div className={`my-2  ${open ? 'h-fit' : 'h-[150px] sm:h-[55px] md:h-[100px]'} `}>
+        <div
+          className={`my-2  ${open ? 'h-fit' : 'h-[150px] sm:h-[55px] md:h-[100px]'} `}
+        >
           {`${open ? overview : overview?.slice(0, 200)}` || ''}
 
           <span
             className={`inline-block text-[#fff9] cursor-pointer ml-1`}
-            onClick={()=> setOpen(!open)}
+            onClick={() => setOpen(!open)}
           >
-           {open ? 'Show less' : '...Show more'}
+            {open ? 'Show less' : '...Show more'}
           </span>
         </div>
       ) : (

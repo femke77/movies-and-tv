@@ -27,20 +27,17 @@ const Home = () => {
         <PopularMovies />
         <TopRatedMovies />
         <TrendingTV />
-       <Network network_name='Netflix' network_id={213} />
-       <Network network_name='Hulu' network_id={453} />
-       <Network network_name='Apple TV+' network_id={2552} />
-       <Network network_name='Paramount' network_id={2076} />
-       <ProductionCo company_name='Neon Movies' company_id={90733} />
-       <ProductionCo company_name='Marvel Movies' company_id={420} />
+        <Network network_name='Netflix' network_id={213} />
+        <Network network_name='Hulu' network_id={453} />
+        <Network network_name='Apple TV+' network_id={2552} />
+        <Network network_name='Paramount' network_id={2076} />
+        <ProductionCo company_name='Neon Movies' company_id={90733} />
+        <ProductionCo company_name='Marvel Movies' company_id={420} />
 
-     
- 
- 
         <TopRatedTv />
       </div>
     </>
-  ); 
+  );
 };
 
 export default Home;
