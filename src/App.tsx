@@ -5,16 +5,25 @@ import Footer from './components/Footer';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ScrollRestoration } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-// import { useBookmarkStore } from './state/store';
 import BookmarkModal from './components/modals/BookmarkModal';
-// import { registerSW } from 'virtual:pwa-register';
+import { registerSW } from 'virtual:pwa-register';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
+  const updateSW = registerSW({
+    onNeedRefresh() {
+      const confirmed = window.confirm('A new update is available. Reload now?');
+      if (confirmed) {
+        updateSW();
+      }
+    },
+  
+  });
+
   // useEffect(() => {
   //   const updateSW = registerSW({
-  //     immediate: false,  // allow prompt to take over.
+  //     immediate: false,  // allow prompt to take over, true if you want to use autoUpdate
   //     // using autoUpdate so the below code, onNeedRefresh, isn't running. Might switch to prompt.
   //     onNeedRefresh() {
   //       if (
