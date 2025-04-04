@@ -26,6 +26,17 @@
   
   **Solution:**: An educated guess was that the delay came from React unmounting and remounting the slide and all the carousel components on every navigation and back navigation respectively. KeepAlive from react-activation was employed to stop the unmounting of the page and indeed, back button response is now instant - in line with user expectations. A state hook in App.js was removed and refactored to use zustand due to a warning about the hook and timing of mounting. StrictMode in dev mode will throw a warning about state continuously, but that is not a problem in production or if StrictMode is removed in dev.  
 
+  **Problem:** Image loading is janky if internet speeds are down or general resources are compromised (processing, memory). Images attempt to load immediately by default but paint in blurry, ugly pieces instead of the entire image coming in nicely all at once. 
+
+  **Solution:**  Preloading of important images and progressive loading of images. Placeholder -> lowres -> hiRes. Hold the image for paint until it is ready. transition-opacity makes the image appearance look controlled and smooth. 
+
+  ### Metrics as of 4/4/2025
+  - 75K memory usage according to Chrome task manager
+  - 99% performance according to Lighthouse
+  - 0.0 CLS 
+  - 192kb compressed size after build
+  - All paint metrics in the green, including INP with page navigation
+
   ## Table of Contents 📖
   
   [Installation](#installation)
@@ -61,7 +72,8 @@
   You will need a TMDB api key in an env.
 
   ### Deployed Link
-  Temporary deploy link: https://movies-unlimited.netlify.app/  
+  Temporary staging deploy link: https://movies-unlimited.netlify.app/  <br/>
+  Final deploy link TBD.
 
 ### Screenshots
 ![movies-unlimited](src/assets/images/movies-unlimited.png)
