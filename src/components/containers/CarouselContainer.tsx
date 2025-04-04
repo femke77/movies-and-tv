@@ -29,7 +29,7 @@ const Carousel = ({
   };
 
   return (
-    <div className='pl-6 relative w-full'>
+    <div className='pl-6 relative w-full h-[350px]'>
       {/* Left Arrow */}
       <button
         onClick={scrollLeft}

@@ -1,14 +1,15 @@
-import { lazy, useEffect } from 'react';
+import { useEffect } from 'react';
 import SwiperElement from '../components/main/Swiper';
 import ContinueWatching from '../components/main/ContinueWatching';
+import Network from '../components/main/Network';
+import ProductionCo from '../components/main/ProductionCo';
+import PopularMovies from '../components/main/PopularMovies';
+import TrendingMovies from '../components/main/TrendingMovies';
+import TopRatedMovies from '../components/main/TopRatedMovies';
+import TrendingTV from '../components/main/TrendingTv';
+import TopRatedTv from '../components/main/TopRatedTv';
 
-const Network = lazy(() => import('../components/main/Network'));
-const ProductionCo = lazy(() => import('../components/main/ProductionCo'));
-const PopularMovies = lazy(() => import('../components/main/PopularMovies'));
-const TrendingMovies = lazy(() => import('../components/main/TrendingMovies'));
-const TopRatedMovies = lazy(() => import('../components/main/TopRatedMovies'));
-const TrendingTV = lazy(() => import('../components/main/TrendingTv'));
-const TopRatedTv = lazy(() => import('../components/main/TopRatedTv'));
+
 
 const Home = () => {
   useEffect(() => {

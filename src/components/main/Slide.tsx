@@ -4,7 +4,7 @@ import { useItemLogos } from '../../hooks/useTrendingWithLogoFetch';
 import genresData from '../../utils/data/genres.json';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { useState, useEffect, lazy } from 'react';
+import { useState, useLayoutEffect, lazy } from 'react';
 import BookmarkBtn from '../buttons/BookmarkBtn';
 import Tooltip from '../modals/ToolTip';
 
@@ -62,7 +62,7 @@ const Slide = ({
   });
 
   // image preloading
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isVisible || currentIndex === 0) {
       // Set content as loaded after a brief delay
     
@@ -89,7 +89,7 @@ const Slide = ({
   }, [isVisible, currentIndex, slide]);
 
   // Separate effect for logo loading to avoid race conditions
-  useEffect(() => {
+  useLayoutEffect(() => {
     if ((isVisible || currentIndex === 0) && displayLogo) {
       const logoImg = new Image();
       logoImg.onload = () => {
@@ -100,7 +100,7 @@ const Slide = ({
   }, [isVisible, currentIndex, displayLogo]);
 
   // Show logo after it's loaded and other content is ready
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (logoStatus.loaded && isVisible) {
       const logoTimer = setTimeout(() => {
         setLogoStatus((prev) => ({ ...prev, visible: true }));
@@ -119,10 +119,10 @@ const Slide = ({
       <div
         className={clsx(`mt-10 absolute inset-0 bg-cover bg-center md:bg-top transition-opacity 
          duration-1500 ease-in-out ${
-           highResBgLoaded && isVisible ? 'opacity-100' : 'opacity-0'
+           isVisible && highResBgLoaded? 'opacity-100' : 'opacity-0'
          } z-0`)}
         style={{
-          backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
+          backgroundImage: `url('https://image.tmdb.org/t/p/w780${slide.backdrop_path}')`,
         }}
       >
         {/* gradient overlays */}

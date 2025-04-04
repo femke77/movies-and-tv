@@ -34,7 +34,7 @@ export const useQueryConfig = (
 ) => ({
   queryKey: [queryKey],
   queryFn,
-  staleTime: 1000 * 60 * 60 * 24,
+  cacheTime: 1000 * 60 * 60 * 24, // 24 hours
   gcTime: 1000 * 60 * 60 * 25,
   refetchOnWindowFocus: false,
   refetchInterval: 1000 * 60 * 30, // 30 minutes
