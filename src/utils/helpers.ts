@@ -42,19 +42,23 @@ export const filterMainPageResults = (results: IItem[]) => {
   });
 };
 
-// filter out duplicate items from the TMDB API's combined works of a cast member
+// filter out duplicate items from the TMDB API's combined works of a cast member and sort most recent to oldest
 export const filterCastResults = (results: IItem[]) => {
   const seen = new Set();
-  return results
-    .filter((item) => {
-      const k = `item-${item.id}-${item.media_type}`;
-      return seen.has(k) ? false : seen.add(k);
-    })
-    .sort((a, b) => {
-      const aDate = a.release_date || a.first_air_date || '0000-00-00';
-      const bDate = b.release_date || b.first_air_date || '0000-00-00';
-      return dayjs(bDate).isAfter(dayjs(aDate)) ? 1 : -1;
-    });
+  const uniqueItems = results.filter((item) => {
+    const k = `item-${item.id}-${item.media_type}`;
+    return seen.has(k) ? false : seen.add(k);
+  });
+  const itemsWithDates = uniqueItems.map(item => {
+    const dateStr = item.release_date || item.first_air_date || '0000-00-00';
+    return {
+      item,
+      dateObj: dayjs(dateStr)
+    };
+  });
+  return itemsWithDates
+    .sort((a, b) => b.dateObj.isAfter(a.dateObj) ? 1 : -1)
+    .map(wrapper => wrapper.item);
 };
 
 export const isIphoneSafari = () => {

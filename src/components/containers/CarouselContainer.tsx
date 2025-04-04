@@ -7,9 +7,11 @@ import { useBookmarkStore } from '../../state/store';
 const Carousel = ({
   items,
   itemType,
+  showRating = true,
 }: {
   items: IItem[];
   itemType?: string;
+  showRating?: boolean;
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const bookmarks = useBookmarkStore((state) => state.bookmarks);
@@ -51,7 +53,7 @@ const Carousel = ({
               textSize={'md'}
               item={item}
               itemType={itemType || item.media_type || 'Unknown'}
-              showRating={true}
+              showRating={showRating}
               showGenres={false}
               isBookmarked={bookmarks.some(
                 (bookmarks) =>

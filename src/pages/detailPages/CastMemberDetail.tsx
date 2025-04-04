@@ -154,7 +154,7 @@ const CastMemberDetail = () => {
 
           <h2 className='text-2xl mb-4'>{castData.name}'s Work</h2>
           {castData.cast && castData.cast.length > 0 && (
-            <Carousel items={castData.cast as IItem[]} />
+            <Carousel showRating={false} items={castData.cast as IItem[]} />
           )}
         </div>
       ) : (
