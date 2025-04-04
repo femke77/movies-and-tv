@@ -65,7 +65,7 @@ const Slide = ({
   useLayoutEffect(() => {
     if (isVisible || currentIndex === 0) {
       // Set content as loaded after a brief delay
-    
+
       // Preload background image
       if (slide.backdrop_path) {
         const bgImg = new Image();
@@ -80,11 +80,11 @@ const Slide = ({
         posterImg.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}`;
       }
 
-     return () => {
+      return () => {
         // Cleanup function to reset loading states
         setHighResBgLoaded(false);
         setPosterLoaded(false);
-      }
+      };
     }
   }, [isVisible, currentIndex, slide]);
 
@@ -119,7 +119,7 @@ const Slide = ({
       <div
         className={clsx(`mt-10 absolute inset-0 bg-cover bg-center md:bg-top transition-opacity 
          duration-1500 ease-in-out ${
-           isVisible && highResBgLoaded? 'opacity-100' : 'opacity-0'
+           isVisible && highResBgLoaded ? 'opacity-100' : 'opacity-0'
          } z-0`)}
         style={{
           backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,

@@ -14,7 +14,9 @@ const Home = () => {
     // fixes the scroll position on page reload
     const isPageReload = !window.performance
       .getEntriesByType('navigation')
-      .some((nav) => (nav as PerformanceNavigationTiming).type === 'back_forward');
+      .some(
+        (nav) => (nav as PerformanceNavigationTiming).type === 'back_forward',
+      );
 
     if (isPageReload) {
       window.scrollTo(0, 0);

@@ -6,13 +6,11 @@ import { useStore } from '../../state/store';
 const Search = ({
   searchOpen,
   closeSearch,
-
 }: {
   searchOpen: boolean;
   closeSearch: () => void;
-
 }) => {
-  const {setSearchQuery} = useStore()
+  const { setSearchQuery } = useStore();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);

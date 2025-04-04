@@ -24,7 +24,7 @@ export default function SwiperElement() {
     if (progressCircle.current && progressContent.current) {
       progressCircle.current.style.setProperty(
         '--progress',
-        (1 - progress).toString()
+        (1 - progress).toString(),
       );
       progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
     }
@@ -59,7 +59,7 @@ export default function SwiperElement() {
                   currentIndex={index}
                   movieList={items}
                   isBookmarked={bookmarks.some(
-                    (b) => b.id === item.id && b.type === item.media_type
+                    (b) => b.id === item.id && b.type === item.media_type,
                   )}
                 />
               </Suspense>

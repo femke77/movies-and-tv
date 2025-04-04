@@ -46,7 +46,7 @@ export const useStore = create<BookmarkStore>()(
       removeBookmark: (id, type) =>
         set((state) => ({
           bookmarks: state.bookmarks.filter(
-            (b) => !(b.id === id && b.type === type)
+            (b) => !(b.id === id && b.type === type),
           ),
         })),
 
@@ -60,8 +60,8 @@ export const useStore = create<BookmarkStore>()(
         bookmarks: state.bookmarks,
         searchQuery: state.searchQuery,
       }),
-    }
-  )
+    },
+  ),
 );
 
 //////////////////////////////////////////////

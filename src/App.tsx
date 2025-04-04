@@ -7,20 +7,16 @@ import { ScrollRestoration } from 'react-router-dom';
 
 import BookmarkModal from './components/modals/BookmarkModal';
 
-
 function App() {
-
-
   return (
     <>
-
       <ScrollRestoration />
       <div className='bg-black text-white h-full '>
         <Header>
           <Nav />
         </Header>
         <main className='min-h-screen  '>
-          <Outlet  />
+          <Outlet />
         </main>
         <Footer />
       </div>

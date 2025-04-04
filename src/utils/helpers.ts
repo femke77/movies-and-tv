@@ -49,16 +49,16 @@ export const filterCastResults = (results: IItem[]) => {
     const k = `item-${item.id}-${item.media_type}`;
     return seen.has(k) ? false : seen.add(k);
   });
-  const itemsWithDates = uniqueItems.map(item => {
+  const itemsWithDates = uniqueItems.map((item) => {
     const dateStr = item.release_date || item.first_air_date || '0000-00-00';
     return {
       item,
-      dateObj: dayjs(dateStr)
+      dateObj: dayjs(dateStr),
     };
   });
   return itemsWithDates
-    .sort((a, b) => b.dateObj.isAfter(a.dateObj) ? 1 : -1)
-    .map(wrapper => wrapper.item);
+    .sort((a, b) => (b.dateObj.isAfter(a.dateObj) ? 1 : -1))
+    .map((wrapper) => wrapper.item);
 };
 
 export const isIphoneSafari = () => {

@@ -45,5 +45,4 @@ export const useQueryConfig = (
   select: (data: IItem[]) => {
     return filterMainPageResults(data);
   },
- 
 });

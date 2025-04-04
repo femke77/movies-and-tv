@@ -23,13 +23,8 @@ const Results = memo(({ personOnly }: ResultsProps) => {
   const { ref, inView } = useInView();
   const bookmarks = useStore((state) => state.bookmarks);
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteSearchQuery(query ?? '');
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteSearchQuery(query ?? '');
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -86,7 +81,7 @@ const Results = memo(({ personOnly }: ResultsProps) => {
                   item={item}
                   textSize='md'
                   isBookmarked={bookmarks.some(
-                    (a) => a.id === item.id && a.type === item.media_type
+                    (a) => a.id === item.id && a.type === item.media_type,
                   )}
                 />
               ))
@@ -111,7 +106,7 @@ Results.displayName = 'Results';
 
 // container component
 const SearchContainer = memo(() => {
-  const {searchQuery} = useStore()
+  const { searchQuery } = useStore();
   const lastLetterRef = useRef<string | null>(null);
   useDocumentTitle(`Search results for '${searchQuery}' | BingeBox`);
   const [personOnly, setPersonOnly] = useState(false);
@@ -125,7 +120,7 @@ const SearchContainer = memo(() => {
   // Memoize the heading text
   const headingText = useMemo(
     () => `Search results for '${searchQuery || lastLetterRef.current}'`,
-    [searchQuery]
+    [searchQuery],
   );
 
   const handlePersonOnly = () => {

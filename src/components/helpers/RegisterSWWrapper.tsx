@@ -10,8 +10,7 @@ export function RegisterSWWrapper() {
     },
   });
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   if (!updateAvailable) return null;
 

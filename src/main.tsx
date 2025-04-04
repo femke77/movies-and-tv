@@ -1,4 +1,4 @@
-import { StrictMode, lazy} from 'react';
+import { lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
@@ -63,7 +63,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <KeepAlive saveScrollPosition="screen" name="home"><Home /></KeepAlive>,
+        element: (
+          <KeepAlive saveScrollPosition='screen' name='home'>
+            <Home />
+          </KeepAlive>
+        ),
       },
       {
         path: 'search/:query?',
@@ -198,30 +202,27 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')!).render(
-
-    <PersistQueryClientProvider
-      client={queryClient}
-      persistOptions={{
-        persister,
-        maxAge: 1000 * 60 * 60 * 24,
-        // uncomment the next line and add something to the string text to bust the cache if needed
-        // buster:'',
-        dehydrateOptions: {
-          shouldDehydrateQuery: (query) => {
-            // Only persist specific query types
-            const queryKey = query.queryKey;
-            return (
-              queryKey[0] === 'logo' || queryKey[0] === 'all_trending_items'
-            );
-          },
+  <PersistQueryClientProvider
+    client={queryClient}
+    persistOptions={{
+      persister,
+      maxAge: 1000 * 60 * 60 * 24,
+      // uncomment the next line and add something to the string text to bust the cache if needed
+      // buster:'',
+      dehydrateOptions: {
+        shouldDehydrateQuery: (query) => {
+          // Only persist specific query types
+          const queryKey = query.queryKey;
+          return queryKey[0] === 'logo' || queryKey[0] === 'all_trending_items';
         },
-      }}
-      ><RegisterSWWrapper/>
-      <AliveScope>
+      },
+    }}
+  >
+    <RegisterSWWrapper />
+    <AliveScope>
       <RouterProvider router={router} />
-      </AliveScope>
-    </PersistQueryClientProvider>
-
+    </AliveScope>
+  </PersistQueryClientProvider>,
 );
 
 // https://tanstack.com/query/latest/docs/framework/react/plugins/persistQueryClient
