@@ -14,13 +14,17 @@
 
   **Problem:** On page load, for the main page slide show, it is necessary to make 21 api calls due to the information required and the way the TMDB api is set up. This brings me to my first interesting problem with this application. I don't want any performance issues due to this amount of calls.  
 
-  **Solution:** After weighing pros & cons of various approaches, and keeping React Query's power at the forefront of my thinking, I am making only 3 api calls on page load - the 20 movies, and the title logos for only two movies (the title logos require a separate hit by movie id to an images endpoint, this is where 20 extra fetches come into play). Then, as the slideshow goes on, or as the user hits the next button, I am prefetching the next logo that will be needed while filling up the React Query cache and then relying on the cache from that point forward. 
+  **Solution:** After weighing pros & cons of various approaches, and keeping React Query's power at the forefront of my thinking, I am making only 3 api calls on page load - the 20 movies, and the title logos for only two movies (the title logos require a separate hit by movie id to an images endpoint, this is where 20 extra fetches come into play). Then, as the slideshow goes on, or as the user hits the next button, I am prefetching the next logo that will be needed while filling up the React Query cache and then relying on the cache from that point forward. Addition of persistance of slide data to local storage with React Query persistance provider and runtime caching of the actual images reduces future page loads even further (exact reduction time to follow)
   Initial load  850-1000ms  
   New load time = 400-560ms  Roughly 50% improvement. 
 
-  **Problem:** The addition of three sliding movie components below the slide increased loading time for three additional api calls. 
+  **Problem:** The addition of three carousel item components below the slideshow increased initial page loading time for three additional api calls. 
 
-  **Solution:** Created a fetch on demand only when the user scrolls down, as caught by the react intersection observer. This prevents any fetching if the user never scrolls down, and fetches when the slider component is at a threshold of 0.1. 
+  **Solution:** Created a fetch on demand only when the user scrolls down, as caught by the react intersection observer. This prevents any fetching if the user never scrolls down, but fetches each carousel component at a threshold of 0.0 and a rootMargin of 100px, 0px when the user continues scrolling down on the page. 
+
+  **Problem:** The addition of more carousel item components on the main page to feature shows from Netflix or movies from Hulu, for example, was causing a increasing drag on the back button responsiveness to get back to that page from the item detail page. The user is encouraged to click on a card to find out more about a show or a movie on a detail page, and the detail page is preloaded on hover with that intent, however when the user hits the back button to resume looking at more items back navigation was experiencing delays of up to 275ms. This was noticeable and ultimatley discouraging use of the detail page. 
+  
+  **Solution:**: An educated guess was that the delay came from React unmounting and remounting the slide and all the carousel components on every navigation and back navigation respectively. KeepAlive from react-activation was employed to stop the unmounting of the page and indeed, back button response is now instant - in line with user expectations. A state hook in App.js was removed and refactored to use zustand due to a warning about the hook and timing of mounting. StrictMode in dev mode will throw a warning about state continuously, but that is not a problem in production or if StrictMode is removed in dev.  
 
   ## Table of Contents 📖
   
