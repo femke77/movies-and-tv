@@ -16,7 +16,7 @@ import CastDetailSkeleton from './components/loadingSkeletons/CastDetailSkeleton
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { RegisterSWWrapper } from './components/helpers/RegisterSWWrapper.tsx';
-
+import { AliveScope, KeepAlive } from 'react-activation';
 
 const CastMemberDetail = lazy(
   () => import('./pages/detailPages/CastMemberDetail.tsx'),
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <KeepAlive saveScrollPosition="screen" name="home"><Home /></KeepAlive>,
       },
       {
         path: 'search/:query?',
@@ -198,7 +198,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+
     <PersistQueryClientProvider
       client={queryClient}
       persistOptions={{
@@ -216,10 +216,12 @@ createRoot(document.getElementById('root')!).render(
           },
         },
       }}
-    ><RegisterSWWrapper/>
+      ><RegisterSWWrapper/>
+      <AliveScope>
       <RouterProvider router={router} />
+      </AliveScope>
     </PersistQueryClientProvider>
-  </StrictMode>,
+
 );
 
 // https://tanstack.com/query/latest/docs/framework/react/plugins/persistQueryClient

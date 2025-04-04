@@ -9,9 +9,17 @@ import TopRatedMovies from '../components/main/TopRatedMovies';
 import TrendingTV from '../components/main/TrendingTv';
 import TopRatedTv from '../components/main/TopRatedTv';
 
-
-
 const Home = () => {
+  useEffect(() => {
+    // fixes the scroll position on page reload
+    const isPageReload = !window.performance
+      .getEntriesByType('navigation')
+      .some((nav) => (nav as PerformanceNavigationTiming).type === 'back_forward');
+
+    if (isPageReload) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
   useEffect(() => {
     document.title = 'Home | BingeBox';
   }, []);
@@ -41,5 +49,5 @@ const Home = () => {
     </>
   );
 };
-
+Home.displayName = 'home';
 export default Home;

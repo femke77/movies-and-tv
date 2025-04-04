@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
 import SlideSkeleton from '../loadingSkeletons/SlideSkeleton';
-import { useBookmarkStore } from '../../state/store';
+import { useStore } from '../../state/store';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -14,7 +14,7 @@ const Slide = lazy(() => import('./Slide'));
 export default function SwiperElement() {
   const { data: items = [] } = useTrendingAll();
   // subscribe to bookmarks array in zustand store for reactivity
-  const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const bookmarks = useStore((state) => state.bookmarks);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const progressCircle = useRef<SVGSVGElement>(null);
@@ -24,7 +24,7 @@ export default function SwiperElement() {
     if (progressCircle.current && progressContent.current) {
       progressCircle.current.style.setProperty(
         '--progress',
-        (1 - progress).toString(),
+        (1 - progress).toString()
       );
       progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
     }
@@ -59,7 +59,7 @@ export default function SwiperElement() {
                   currentIndex={index}
                   movieList={items}
                   isBookmarked={bookmarks.some(
-                    (b) => b.id === item.id && b.type === item.media_type,
+                    (b) => b.id === item.id && b.type === item.media_type
                   )}
                 />
               </Suspense>

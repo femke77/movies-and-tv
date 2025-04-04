@@ -8,7 +8,7 @@ import { getStrokeColor } from '../../utils/helpers';
 import { CastList } from '../../components/lists/CastList';
 import dayjs from 'dayjs';
 import BookmarkBtn from '../../components/buttons/BookmarkBtn';
-import { useBookmarkStore } from '../../state/store';
+import { useStore } from '../../state/store';
 import Share from '../../components/buttons/ShareButtons';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import BackButton from '../../components/buttons/BackBtn';
@@ -20,7 +20,7 @@ const ItemDetail = () => {
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
-  const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const bookmarks = useStore((state) => state.bookmarks);
 
   useDocumentTitle(
     item?.title || item?.name
@@ -52,7 +52,10 @@ const ItemDetail = () => {
       item?.production_companies?.[0]?.logo_path
     ) {
       const img = new Image();
-      img.src = `https://image.tmdb.org/t/p/w92${item?.networks?.[0]?.logo_path || item?.production_companies?.[0]?.logo_path}`;
+      img.src = `https://image.tmdb.org/t/p/w92${
+        item?.networks?.[0]?.logo_path ||
+        item?.production_companies?.[0]?.logo_path
+      }`;
       img.onload = () => {
         setLogoLoaded(true);
       };
@@ -73,12 +76,12 @@ const ItemDetail = () => {
 
   const strokeColor = getStrokeColor(item?.vote_average);
   const directorData = item?.crew?.find(
-    (member: { job: string }) => member.job === 'Director',
+    (member: { job: string }) => member.job === 'Director'
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = item?.crew?.find(
     (member: { job: string }) =>
-      member.job === 'Screenplay' || member.job === 'Writer',
+      member.job === 'Screenplay' || member.job === 'Writer'
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -174,14 +177,20 @@ const ItemDetail = () => {
                   item.production_companies?.length > 0 &&
                   item.production_companies?.[0]?.logo_path) ? (
                   <div
-                    className={`'min-h-[23px] min-w-[92px] max-h-23 pt-2 mr-2 flex-shrink-0 flex items-center justify-center  opacity-0 ${isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                    className={`'min-h-[23px] min-w-[92px] max-h-23 pt-2 mr-2 flex-shrink-0 flex items-center justify-center  opacity-0 ${
+                      isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'
+                    }`}
                   >
                     {/* tv network logo */}
                     {item_type === 'tv' &&
                       item.networks?.length > 0 &&
                       item.networks?.[0]?.logo_path && (
                         <div
-                          className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                          className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${
+                            isVisible && logoLoaded
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          }`}
                         >
                           <img
                             className='max-w-[92px] h-auto object-contain p-1'
@@ -191,10 +200,10 @@ const ItemDetail = () => {
                             onLoad={() => setLogoLoaded(true)}
                             loading='lazy'
                             onError={(e) =>
-                              (
-                                (e.target as HTMLElement)
-                                  .parentElement as HTMLDivElement
-                              ).classList.add('hidden')
+                              ((e.target as HTMLElement)
+                                .parentElement as HTMLDivElement).classList.add(
+                                'hidden'
+                              )
                             }
                           />
                         </div>
@@ -205,7 +214,11 @@ const ItemDetail = () => {
                       item.production_companies?.length > 0 &&
                       item.production_companies?.[0]?.logo_path && (
                         <div
-                          className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                          className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${
+                            isVisible && logoLoaded
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          }`}
                         >
                           <img
                             className='max-w-[92px] h-auto object-contain p-1'
@@ -215,10 +228,10 @@ const ItemDetail = () => {
                             title={`${item.production_companies?.[0]?.name}`}
                             loading='lazy'
                             onError={(e) =>
-                              (
-                                (e.target as HTMLElement)
-                                  .parentElement as HTMLDivElement
-                              ).classList.add('hidden')
+                              ((e.target as HTMLElement)
+                                .parentElement as HTMLDivElement).classList.add(
+                                'hidden'
+                              )
                             }
                           />
                         </div>
@@ -242,7 +255,7 @@ const ItemDetail = () => {
                   <BookmarkBtn
                     isBookmarked={bookmarks.some(
                       (bookmark) =>
-                        bookmark.id === item.id && bookmark.type === item_type,
+                        bookmark.id === item.id && bookmark.type === item_type
                     )}
                     id={item.id}
                     type={item_type!}
@@ -277,8 +290,8 @@ const ItemDetail = () => {
                         ? dayjs(item.release_date).format('MMM DD, YYYY')
                         : 'TBD'
                       : item.first_air_date
-                        ? dayjs(item.first_air_date).format('MMM DD, YYYY')
-                        : 'TBD'}
+                      ? dayjs(item.first_air_date).format('MMM DD, YYYY')
+                      : 'TBD'}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
@@ -287,8 +300,8 @@ const ItemDetail = () => {
                     {item.runtime
                       ? `${item.runtime} min`
                       : item.episode_run_time?.[0]
-                        ? `${item.episode_run_time[0]} min`
-                        : 'Unknown'}
+                      ? `${item.episode_run_time[0]} min`
+                      : 'Unknown'}
                   </span>
                 </p>
               </div>
@@ -352,7 +365,7 @@ const ItemDetail = () => {
                           {item.created_by.map(
                             (
                               creator: { id: string; name: string },
-                              index: number,
+                              index: number
                             ) => (
                               <span
                                 key={creator.id}
@@ -361,7 +374,7 @@ const ItemDetail = () => {
                                 {creator.name}
                                 {index < item.created_by.length - 1 ? ', ' : ''}
                               </span>
-                            ),
+                            )
                           )}
                         </p>
                         <p className='text-xl font-bold'>

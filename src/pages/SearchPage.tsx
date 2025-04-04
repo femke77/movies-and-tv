@@ -1,10 +1,10 @@
 import { useRef, useEffect, useMemo, memo, useState } from 'react';
-import { useParams, useOutletContext } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteSearchQuery } from '../hooks/useSearchAndDiscover';
 import { IItem } from '../interfaces/IItem';
 import { MemoizedItemCard } from '../components/cards/ItemCard';
-import { useBookmarkStore } from '../state/store';
+import { useStore } from '../state/store';
 import useDocumentTitle from '../hooks/usePageTitles';
 import BackButton from '../components/buttons/BackBtn';
 import { CastCard } from '../components/cards/CastCard';
@@ -21,10 +21,15 @@ const Results = memo(({ personOnly }: ResultsProps) => {
   const lastResultsRef = useRef<IItem[]>([]);
 
   const { ref, inView } = useInView();
-  const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const bookmarks = useStore((state) => state.bookmarks);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteSearchQuery(query ?? '');
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteSearchQuery(query ?? '');
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -55,7 +60,7 @@ const Results = memo(({ personOnly }: ResultsProps) => {
       {personOnly ? (
         <>
           <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-            {allPersons.length > 0 ? (
+            {allPersons?.length > 0 ? (
               allPersons.map((item: ICast) => (
                 <CastCard key={`person-${item.id}`} cast={item} />
               ))
@@ -74,14 +79,14 @@ const Results = memo(({ personOnly }: ResultsProps) => {
       ) : (
         <>
           <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-            {allItems.length > 0 ? (
+            {allItems?.length > 0 ? (
               allItems.map((item: IItem) => (
                 <MemoizedItemCard
                   key={`${item.media_type}-${item.id}`}
                   item={item}
                   textSize='md'
                   isBookmarked={bookmarks.some(
-                    (a) => a.id === item.id && a.type === item.media_type,
+                    (a) => a.id === item.id && a.type === item.media_type
                   )}
                 />
               ))
@@ -106,12 +111,13 @@ Results.displayName = 'Results';
 
 // container component
 const SearchContainer = memo(() => {
-  const searchQuery = useOutletContext<string>();
+  const {searchQuery} = useStore()
   const lastLetterRef = useRef<string | null>(null);
   useDocumentTitle(`Search results for '${searchQuery}' | BingeBox`);
   const [personOnly, setPersonOnly] = useState(false);
+
   useEffect(() => {
-    if (searchQuery.length === 1) {
+    if (searchQuery?.length === 1) {
       lastLetterRef.current = searchQuery;
     }
   }, [searchQuery]);
@@ -119,7 +125,7 @@ const SearchContainer = memo(() => {
   // Memoize the heading text
   const headingText = useMemo(
     () => `Search results for '${searchQuery || lastLetterRef.current}'`,
-    [searchQuery],
+    [searchQuery]
   );
 
   const handlePersonOnly = () => {

@@ -2,17 +2,17 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 import clsx from 'clsx';
-
+import { useStore } from '../../state/store';
 const Search = ({
   searchOpen,
   closeSearch,
-  setSearchQuery,
+
 }: {
   searchOpen: boolean;
   closeSearch: () => void;
 
-  setSearchQuery: (_query: string) => void;
 }) => {
+  const {setSearchQuery} = useStore()
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);

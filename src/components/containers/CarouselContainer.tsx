@@ -1,8 +1,8 @@
 import { useRef } from 'react';
-import { ItemCard } from '../cards/ItemCard';
+import { MemoizedItemCard } from '../cards/ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../../interfaces/IItem';
-import { useBookmarkStore } from '../../state/store';
+import { useStore } from '../../state/store';
 
 const Carousel = ({
   items,
@@ -14,7 +14,7 @@ const Carousel = ({
   showRating?: boolean;
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const bookmarks = useStore((state) => state.bookmarks);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
@@ -49,7 +49,7 @@ const Carousel = ({
             key={`item-${item.id}-${itemType || item.media_type}`}
             className='w-[180px] flex-shrink-0'
           >
-            <ItemCard
+            <MemoizedItemCard
               textSize={'md'}
               item={item}
               itemType={itemType || item.media_type || 'Unknown'}
@@ -59,7 +59,7 @@ const Carousel = ({
                 (bookmarks) =>
                   bookmarks.id === item.id &&
                   (bookmarks.type === itemType ||
-                    bookmarks.type === item.media_type),
+                    bookmarks.type === item.media_type)
               )}
             />
           </div>
