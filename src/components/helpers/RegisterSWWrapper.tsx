@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { registerSW } from 'virtual:pwa-register';
 
@@ -12,7 +11,6 @@ export function RegisterSWWrapper() {
   });
 
   useEffect(() => {
-    // this will ensure it's mounted and runs on first render
   }, []);
 
   if (!updateAvailable) return null;
