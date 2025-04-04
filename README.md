@@ -22,7 +22,7 @@
 
   **Solution:** Created a fetch on demand only when the user scrolls down, as caught by the react intersection observer. This prevents any fetching if the user never scrolls down, but fetches each carousel component at a threshold of 0.0 and a rootMargin of 100px, 0px when the user continues scrolling down on the page. 
 
-  **Problem:** The addition of more carousel item components on the main page to feature shows from Netflix or movies from Hulu, for example, was causing a increasing drag on the back button responsiveness to get back to that page from the item detail page. The user is encouraged to click on a card to find out more about a show or a movie on a detail page, and the detail page is preloaded on hover with that intent, however when the user hits the back button to resume looking at more items back navigation was experiencing delays of up to 275ms. This was noticeable and ultimatley discouraging use of the detail page. 
+  **Problem:** The addition of more carousel item components on the main page to feature shows from Netflix or movies from Hulu, for example, was causing a increasing drag on the back button responsiveness to get back to that page from the item detail page. The user is encouraged to click on a card to find out more about a show or a movie on a detail page, and the detail page is preloaded on hover with that intent, however when the user hits the back button to resume looking at more items back navigation was experiencing delays of up to 275ms. This was noticeable and ultimately discouraging use of the detail page. 
   
   **Solution:**: An educated guess was that the delay came from React unmounting and remounting the slide and all the carousel components on every navigation and back navigation respectively. KeepAlive from react-activation was employed to stop the unmounting of the page and indeed, back button response is now instant - in line with user expectations. A state hook in App.js was removed and refactored to use zustand due to a warning about the hook and timing of mounting. StrictMode in dev mode will throw a warning about state continuously, but that is not a problem in production or if StrictMode is removed in dev.  
 
@@ -76,7 +76,31 @@
   Final deploy link TBD.
 
 ### Screenshots
-![movies-unlimited](src/assets/images/movies-unlimited.png)
+![movies-unlimited](src/assets/images/main-slide.png)
+
+![movies-unlimited](src/assets/images/main-cont.png)
+
+![movies-unlimited](src/assets/images/main.png)
+
+![movies-unlimited](src/assets/images/discover.png)
+
+![movies-unlimited](src/assets/images/trending.png)
+
+![movies-unlimited](src/assets/images/searchitems.png)
+
+![movies-unlimited](src/assets/images/searchpeople.png)
+
+![movies-unlimited](src/assets/images/watch.png)
+
+![movies-unlimited](src/assets/images/watch-tv.png)
+
+![movies-unlimited](src/assets/images/watch-movie.png)
+
+![movies-unlimited](src/assets/images/item.png)
+
+![movies-unlimited](src/assets/images/cast.png)
+
+![movies-unlimited](src/assets/images/castwork.png)
 
 
 
