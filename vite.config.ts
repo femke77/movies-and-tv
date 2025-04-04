@@ -53,7 +53,6 @@ export default defineConfig({
         icons: icons,
       },
       workbox: {
-        
         globPatterns: ['**/*.{js,css,html,svg,jsx,png,jpg,webp,jpeg}'],
         globIgnores: [
           'node_modules/**/*',

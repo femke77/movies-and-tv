@@ -45,10 +45,16 @@ export const filterMainPageResults = (results: IItem[]) => {
 // filter out duplicate items from the TMDB API's combined works of a cast member
 export const filterCastResults = (results: IItem[]) => {
   const seen = new Set();
-  return results.filter((item) => {
-    const k = `item-${item.id}-${item.media_type}`;
-    return seen.has(k) ? false : seen.add(k);
-  });
+  return results
+    .filter((item) => {
+      const k = `item-${item.id}-${item.media_type}`;
+      return seen.has(k) ? false : seen.add(k);
+    })
+    .sort((a, b) => {
+      const aDate = a.release_date || a.first_air_date || '0000-00-00';
+      const bDate = b.release_date || b.first_air_date || '0000-00-00';
+      return dayjs(bDate).isAfter(dayjs(aDate)) ? 1 : -1;
+    });
 };
 
 export const isIphoneSafari = () => {

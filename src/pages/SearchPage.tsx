@@ -34,7 +34,7 @@ const Results = memo(({ personOnly }: ResultsProps) => {
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ['infinite-search', query] });
-  }, [personOnly]);
+  }, [personOnly, query, queryClient]);
 
   useEffect(() => {
     if (query?.length === 1) {
