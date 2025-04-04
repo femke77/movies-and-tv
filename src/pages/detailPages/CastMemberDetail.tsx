@@ -72,7 +72,7 @@ const CastMemberDetail = () => {
                 {/* High-res image */}
                 <div className='absolute inset-0 z-[3]'>
                   <img
-                    className={`w-full h-full object-cover rounded-b-lg transition-all duration-300 ease-in-out ${
+                    className={`w-full h-full object-cover rounded-b-lg transition-opacity duration-300 ease-in-out ${
                       hiResImageLoaded ? 'opacity-100' : 'opacity-0'
                     }`}
                     src={`https://image.tmdb.org/t/p/original${castData.profile_path}`}

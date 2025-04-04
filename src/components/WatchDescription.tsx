@@ -79,7 +79,7 @@ const WatchDescription = ({
           </span>
         </div>
       ) : (
-        <div className={`my-2 h-[100px] `}>{overview || ''}</div>
+        <div className={`my-2 h-[100px] lg:h-fit`}>{overview || ''}</div>
       )}
     </div>
   );

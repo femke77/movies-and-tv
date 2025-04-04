@@ -207,7 +207,7 @@ nav {
   background-clip: text;
   animation-name: shine;
   animation-duration: 5s;
-  animation-iteration-count: infinite;
+  animation-iteration-count: 2;
   animation-timing-function: linear;
   text-shadow: 0 0px 0px rgba(255, 255, 255, 0.5);
 }
@@ -221,7 +221,7 @@ nav {
   background-clip: text;
   animation-name: shine;
   animation-duration: 5s;
-  animation-iteration-count: infinite;
+  animation-iteration-count: 2;
   animation-timing-function: linear;
   text-shadow: 0 0px 0px rgba(255, 255, 255, 0.5);
 }

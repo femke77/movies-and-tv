@@ -16,6 +16,7 @@ import BackButton from '../../components/buttons/BackBtn';
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [backgroundLoaded, setBackgroundLoaded] = useState(false);
+  const [logoLoaded, setLogoLoaded] = useState(false);
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
@@ -40,6 +41,22 @@ const ItemDetail = () => {
       setBackgroundLoaded(false);
     };
   }, [item?.backdrop_path]);
+
+  useEffect(() => {
+    if (
+      item?.networks?.[0]?.logo_path ||
+      item?.production_companies?.[0]?.logo_path
+    ) {
+      const img = new Image();
+      img.src = `https://image.tmdb.org/t/p/w92${item?.networks?.[0]?.logo_path || item?.production_companies?.[0]?.logo_path}`;
+      img.onload = () => {
+        setLogoLoaded(true);
+      };
+    }
+    return () => {
+      setLogoLoaded(false);
+    };
+  }, [item]);
 
   if (!item) return null;
 
@@ -80,7 +97,7 @@ const ItemDetail = () => {
             <BackButton />
           </div>
           <div
-            className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-all duration-800 ease-in ${
+            className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-opacity duration-800 ease-in ${
               isVisible && backgroundLoaded ? 'opacity-40' : 'opacity-0'
             }`}
             style={{
@@ -151,22 +168,22 @@ const ItemDetail = () => {
                 (item_type === 'movie' &&
                   item.production_companies?.length > 0 &&
                   item.production_companies?.[0]?.logo_path) ? (
-                  <div className='min-h-[23px] min-w-[92px] max-h-23 pt-2 mr-2 flex-shrink-0 flex items-center justify-center'>
+                  <div
+                    className={`'min-h-[23px] min-w-[92px] max-h-23 pt-2 mr-2 flex-shrink-0 flex items-center justify-center  opacity-0 ${isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  >
                     {/* tv network logo */}
                     {item_type === 'tv' &&
                       item.networks?.length > 0 &&
                       item.networks?.[0]?.logo_path && (
-                        <div className='mt-1 flex items-center justify-center bg-white/70 rounded-md'>
+                        <div
+                          className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                        >
                           <img
-                            className='max-w-[92px] h-auto object-contain p-2 opacity-0'
+                            className='max-w-[92px] h-auto object-contain p-1'
                             src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
                             title={`${item.networks?.[0]?.name}`}
                             alt={`${item.networks?.[0]?.name}'s official logo`}
-                            onLoad={(e) =>
-                              (e.target as HTMLImageElement).classList.remove(
-                                'opacity-0',
-                              )
-                            }
+                            onLoad={() => setLogoLoaded(true)}
                             onError={(e) =>
                               (
                                 (e.target as HTMLElement)
@@ -181,16 +198,14 @@ const ItemDetail = () => {
                     {item_type === 'movie' &&
                       item.production_companies?.length > 0 &&
                       item.production_companies?.[0]?.logo_path && (
-                        <div className='mt-1 flex items-center justify-center bg-white/70  rounded-md'>
+                        <div
+                          className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                        >
                           <img
+                            className='max-w-[92px] h-auto object-contain p-1'
                             src={`https://image.tmdb.org/t/p/w92${item.production_companies?.[0]?.logo_path}`}
                             alt={`${item.production_companies?.[0]?.name}'s official logo`}
-                            onLoad={(e) =>
-                              (e.target as HTMLImageElement).classList.remove(
-                                'opacity-0',
-                              )
-                            }
-                            className='max-w-[92px] h-auto object-contain p-2 opacity-0 '
+                            onLoad={() => setLogoLoaded(true)}
                             title={`${item.production_companies?.[0]?.name}`}
                             onError={(e) =>
                               (
