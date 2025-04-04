@@ -94,6 +94,7 @@ const ItemCard = ({
         transition-opacity duration-500 ease-linear ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
+        onMouseEnter={() => void import('../../pages/detailPages/ItemDetail')}
       >
         <Link to={`/${itemType}/${item.id}`} className='w-full '>
           <div className='group relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-900'>

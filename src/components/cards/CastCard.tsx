@@ -11,6 +11,9 @@ export const CastCard = ({
   return (
     <div
       className={`flex flex-col flex-1 items-center text-center mb-10 ${cardWidth}`}
+      onMouseEnter={() =>
+        void import('../../pages/detailPages/CastMemberDetail')
+      }
     >
       <Link to={`/explore/cast/${cast.id}`} className='relative'>
         <img

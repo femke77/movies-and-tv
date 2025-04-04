@@ -1,4 +1,4 @@
-import { useBookmarkStore } from '../state/store';
+import { useStore } from '../state/store';
 import { ItemCard } from '../components/cards/ItemCard';
 import {
   useQueries,
@@ -13,7 +13,7 @@ import BackButton from '../components/buttons/BackBtn';
 
 const Watchlist = () => {
   useDocumentTitle('Your Watchlist | BingeBox');
-  const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const bookmarks = useStore((state) => state.bookmarks);
   const [filterType, setFilterType] = useState<string>('all');
   const queryClient = useQueryClient();
 

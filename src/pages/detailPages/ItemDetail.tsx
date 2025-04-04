@@ -8,7 +8,7 @@ import { getStrokeColor } from '../../utils/helpers';
 import { CastList } from '../../components/lists/CastList';
 import dayjs from 'dayjs';
 import BookmarkBtn from '../../components/buttons/BookmarkBtn';
-import { useBookmarkStore } from '../../state/store';
+import { useStore } from '../../state/store';
 import Share from '../../components/buttons/ShareButtons';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import BackButton from '../../components/buttons/BackBtn';
@@ -20,9 +20,13 @@ const ItemDetail = () => {
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
-  const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const bookmarks = useStore((state) => state.bookmarks);
 
-  useDocumentTitle(`${item?.title || item?.name} | BingeBox`);
+  useDocumentTitle(
+    item?.title || item?.name
+      ? `${item.title || item.name} | BingeBox`
+      : 'Loading... | BingeBox',
+  );
 
   useEffect(() => {
     if (item?.backdrop_path) {
@@ -48,7 +52,10 @@ const ItemDetail = () => {
       item?.production_companies?.[0]?.logo_path
     ) {
       const img = new Image();
-      img.src = `https://image.tmdb.org/t/p/w92${item?.networks?.[0]?.logo_path || item?.production_companies?.[0]?.logo_path}`;
+      img.src = `https://image.tmdb.org/t/p/w92${
+        item?.networks?.[0]?.logo_path ||
+        item?.production_companies?.[0]?.logo_path
+      }`;
       img.onload = () => {
         setLogoLoaded(true);
       };
@@ -129,6 +136,7 @@ const ItemDetail = () => {
                         : 'opacity-0'
                     }`}
                     onLoad={() => setHighResPosterLoaded(true)}
+                    loading='lazy'
                     onError={(e) =>
                       ((e.target as HTMLImageElement).src =
                         '/no_poster_available.svg')
@@ -169,14 +177,20 @@ const ItemDetail = () => {
                   item.production_companies?.length > 0 &&
                   item.production_companies?.[0]?.logo_path) ? (
                   <div
-                    className={`'min-h-[23px] min-w-[92px] max-h-23 pt-2 mr-2 flex-shrink-0 flex items-center justify-center  opacity-0 ${isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                    className={`'min-h-[23px] min-w-[92px] max-h-23 pt-2 mr-2 flex-shrink-0 flex items-center justify-center  opacity-0 ${
+                      isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'
+                    }`}
                   >
                     {/* tv network logo */}
                     {item_type === 'tv' &&
                       item.networks?.length > 0 &&
                       item.networks?.[0]?.logo_path && (
                         <div
-                          className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                          className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${
+                            isVisible && logoLoaded
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          }`}
                         >
                           <img
                             className='max-w-[92px] h-auto object-contain p-1'
@@ -184,6 +198,7 @@ const ItemDetail = () => {
                             title={`${item.networks?.[0]?.name}`}
                             alt={`${item.networks?.[0]?.name}'s official logo`}
                             onLoad={() => setLogoLoaded(true)}
+                            loading='lazy'
                             onError={(e) =>
                               (
                                 (e.target as HTMLElement)
@@ -199,7 +214,11 @@ const ItemDetail = () => {
                       item.production_companies?.length > 0 &&
                       item.production_companies?.[0]?.logo_path && (
                         <div
-                          className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                          className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${
+                            isVisible && logoLoaded
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          }`}
                         >
                           <img
                             className='max-w-[92px] h-auto object-contain p-1'
@@ -207,6 +226,7 @@ const ItemDetail = () => {
                             alt={`${item.production_companies?.[0]?.name}'s official logo`}
                             onLoad={() => setLogoLoaded(true)}
                             title={`${item.production_companies?.[0]?.name}`}
+                            loading='lazy'
                             onError={(e) =>
                               (
                                 (e.target as HTMLElement)

@@ -11,15 +11,18 @@ interface BookmarkStore {
   addBookmark: (_id: string, _type: string) => void;
   removeBookmark: (_id: string, _type: string) => void;
   isBookmarked: (_id: string, _type: string) => boolean;
+  searchQuery: string;
+  setSearchQuery: (_query: string) => void;
 }
 
-export const useBookmarkStore = create<BookmarkStore>()(
+export const useStore = create<BookmarkStore>()(
   persist(
     (set, get) => ({
       bookmarks: [],
       modalData: null, // Store the item being bookmarked
       showModal: false,
-
+      searchQuery: '',
+      setSearchQuery: (query: string) => set({ searchQuery: query }),
       openModal: (id: string, type: string) => {
         set({
           modalData: {
@@ -55,6 +58,7 @@ export const useBookmarkStore = create<BookmarkStore>()(
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         bookmarks: state.bookmarks,
+        searchQuery: state.searchQuery,
       }),
     },
   ),

@@ -29,11 +29,7 @@ const tvNav = [
 
 const meNav = [{ title: 'My Watchlist', url: '/account/saved' }];
 
-export default function Navigation({
-  setSearchQuery,
-}: {
-  setSearchQuery: (_query: string) => void;
-}) {
+export default function Navigation() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -213,11 +209,7 @@ export default function Navigation({
       {/* Search Bar */}
       {isVisible && (
         <div ref={searchRef}>
-          <Search
-            searchOpen={searchOpen}
-            closeSearch={closeSearch}
-            setSearchQuery={setSearchQuery}
-          />
+          <Search searchOpen={searchOpen} closeSearch={closeSearch} />
         </div>
       )}
     </div>

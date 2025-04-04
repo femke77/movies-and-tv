@@ -2,7 +2,7 @@ import { useEffect, memo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { IItem } from '../interfaces/IItem';
 import { MemoizedItemCard } from './cards/ItemCard';
-import { useBookmarkStore } from '../state/store';
+import { useStore } from '../state/store';
 
 interface IExploreProps {
   data: {
@@ -25,7 +25,7 @@ const Explore = memo(
     itemType = 'movie',
   }: IExploreProps) => {
     const { ref, inView } = useInView();
-    const bookmarks = useBookmarkStore((state) => state.bookmarks);
+    const bookmarks = useStore((state) => state.bookmarks);
     useEffect(() => {
       if (inView && hasNextPage) {
         fetchNextPage();

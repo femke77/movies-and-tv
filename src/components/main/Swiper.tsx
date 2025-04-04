@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
 import SlideSkeleton from '../loadingSkeletons/SlideSkeleton';
-import { useBookmarkStore } from '../../state/store';
+import { useStore } from '../../state/store';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -14,7 +14,7 @@ const Slide = lazy(() => import('./Slide'));
 export default function SwiperElement() {
   const { data: items = [] } = useTrendingAll();
   // subscribe to bookmarks array in zustand store for reactivity
-  const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  const bookmarks = useStore((state) => state.bookmarks);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const progressCircle = useRef<SVGSVGElement>(null);

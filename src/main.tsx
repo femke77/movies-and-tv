@@ -1,4 +1,4 @@
-import { StrictMode, lazy } from 'react';
+import { lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
@@ -15,6 +15,8 @@ import FAQPage from './pages/FAQ.tsx';
 import CastDetailSkeleton from './components/loadingSkeletons/CastDetailSkeleton.tsx';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
+import { RegisterSWWrapper } from './components/helpers/RegisterSWWrapper.tsx';
+import { AliveScope, KeepAlive } from 'react-activation';
 
 const CastMemberDetail = lazy(
   () => import('./pages/detailPages/CastMemberDetail.tsx'),
@@ -61,7 +63,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: (
+          <KeepAlive saveScrollPosition='screen' name='home'>
+            <Home />
+          </KeepAlive>
+        ),
       },
       {
         path: 'search/:query?',
@@ -196,28 +202,27 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <PersistQueryClientProvider
-      client={queryClient}
-      persistOptions={{
-        persister,
-        maxAge: 1000 * 60 * 60 * 24,
-        // uncomment the next line and add something to the string text to bust the cache if needed
-        // buster:'',
-        dehydrateOptions: {
-          shouldDehydrateQuery: (query) => {
-            // Only persist specific query types
-            const queryKey = query.queryKey;
-            return (
-              queryKey[0] === 'logo' || queryKey[0] === 'all_trending_items'
-            );
-          },
+  <PersistQueryClientProvider
+    client={queryClient}
+    persistOptions={{
+      persister,
+      maxAge: 1000 * 60 * 60 * 24,
+      // uncomment the next line and add something to the string text to bust the cache if needed
+      // buster:'',
+      dehydrateOptions: {
+        shouldDehydrateQuery: (query) => {
+          // Only persist specific query types
+          const queryKey = query.queryKey;
+          return queryKey[0] === 'logo' || queryKey[0] === 'all_trending_items';
         },
-      }}
-    >
+      },
+    }}
+  >
+    <RegisterSWWrapper />
+    <AliveScope>
       <RouterProvider router={router} />
-    </PersistQueryClientProvider>
-  </StrictMode>,
+    </AliveScope>
+  </PersistQueryClientProvider>,
 );
 
 // https://tanstack.com/query/latest/docs/framework/react/plugins/persistQueryClient
