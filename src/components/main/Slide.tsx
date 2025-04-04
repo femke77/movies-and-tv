@@ -122,7 +122,7 @@ const Slide = ({
            isVisible && highResBgLoaded? 'opacity-100' : 'opacity-0'
          } z-0`)}
         style={{
-          backgroundImage: `url('https://image.tmdb.org/t/p/w780${slide.backdrop_path}')`,
+          backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
         }}
       >
         {/* gradient overlays */}
