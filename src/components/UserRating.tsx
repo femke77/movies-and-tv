@@ -39,7 +39,7 @@ const UserRating = ({
           fillOpacity='0.3'
           strokeDasharray='100'
           strokeDashoffset={100 - (rating / 10) * 100}
-          className='transition-all duration-300 ease-out'
+          className='transition-opacity duration-300 ease-out'
         />
         <text
           x='50%'
