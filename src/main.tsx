@@ -1,4 +1,4 @@
-import { StrictMode, lazy } from 'react';
+import { StrictMode, lazy, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
@@ -15,6 +15,7 @@ import FAQPage from './pages/FAQ.tsx';
 import CastDetailSkeleton from './components/loadingSkeletons/CastDetailSkeleton.tsx';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
+import { registerSW } from 'virtual:pwa-register';
 
 const CastMemberDetail = lazy(
   () => import('./pages/detailPages/CastMemberDetail.tsx'),
@@ -51,7 +52,13 @@ const queryClient = new QueryClient({
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
 });
+const [updateAvailable, setUpdateAvailable] = useState(false);
 
+const updateSW = registerSW({
+  onNeedRefresh() {
+    setUpdateAvailable(true);
+  },
+});
 const router = createBrowserRouter([
   {
     path: '/',
@@ -214,7 +221,20 @@ createRoot(document.getElementById('root')!).render(
           },
         },
       }}
-    >
+    >{updateAvailable && (
+      <div className='z-100 fixed h-10 bottom-0 left-0 right-0 bg-blue-600 text-white p-4 flex justify-between items-center'>
+        <span>A new update is available!</span>
+        <button
+          className='bg-white text-blue-800 text-sm h-6 p-3 rounded flex items-center justify-center'
+          onClick={() => {
+            updateSW();
+            setUpdateAvailable(false);
+          }}
+        >
+          Reload
+        </button>
+      </div>
+    )}
       <RouterProvider router={router} />
     </PersistQueryClientProvider>
   </StrictMode>,
