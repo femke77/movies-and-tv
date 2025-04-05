@@ -72,7 +72,7 @@ const WatchDescription = ({
           {`${open ? overview : overview?.slice(0, 200)}` || ''}
 
           <span
-            className={`inline-block text-[#fff9] cursor-pointer ml-1`}
+            className={`inline-block text-[#fff9] cursor-pointer `}
             onClick={() => setOpen(!open)}
           >
             {open ? 'Show less' : '...Show more'}
