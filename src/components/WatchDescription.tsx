@@ -67,7 +67,7 @@ const WatchDescription = ({
       </div>
       {getTextLength() ? (
         <div
-          className={`my-2  ${open ? 'h-fit' : 'h-[150px] sm:h-[55px] md:h-[100px]'} `}
+          className={`my-2  ${open ? 'h-fit' : ' sm:h-[55px] md:h-[80px] lg:h-fit'} `}
         >
           {`${open ? overview : overview?.slice(0, 200)}` || ''}
 
