@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
 import dayjs from 'dayjs';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import DraggableCarousel from '../containers/SimpleCarousel';
 import ConfirmModal from '../modals/ConfirmModal';
-
+import { ArrowRight } from 'lucide-react';
 interface WatchItem {
   title: string;
   posterPath: string;
@@ -20,6 +20,7 @@ interface WatchItems {
 }
 
 const ContinueWatching = () => {
+  const location = useLocation();
   const [items, setItems] = useState<WatchItems>({});
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState(false);
@@ -29,7 +30,16 @@ const ContinueWatching = () => {
     const continueWatching = localStorage.getItem('continueWatching');
 
     if (continueWatching) {
-      setItems(JSON.parse(continueWatching));
+      const parsedData = JSON.parse(continueWatching);
+      if (location.pathname === '/account/history') {
+        setItems(parsedData);
+      } else {
+        const slicedData = Object.fromEntries(
+          Object.entries(parsedData).slice(0, 5),
+        ) as WatchItems;
+
+        setItems(slicedData);
+      }
     }
   }, []);
 
@@ -104,18 +114,34 @@ const ContinueWatching = () => {
         showModal={openModal}
         closeModal={closeModal}
         handleClick={handleClearAll}
-        message={'Are you sure you want to clear all items?'}
+        message={
+          'Are you sure you want to clear ALL items from continue watching?'
+        }
       />
+
       {Object.keys(items).length !== 0 && (
         <>
           <div className=' flex justify-between items-center'>
             <h1 className='text-2xl font-semibold mb-4'>Continue Watching</h1>
-            <button
-              onClick={() => setOpenModal(true)}
-              className='bg-gray-700 h-9 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-            >
-              Clear All
-            </button>
+            <div className='flex items-center'>
+              <button
+                onClick={() => setOpenModal(true)}
+                className='bg-gray-700 h-7 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+              >
+                Clear All
+              </button>
+              {location.pathname === '/' && (
+                <>
+                  <Link
+                    to='/account/history'
+                    className=' p-2 pointer-events-auto text-white'
+                  >
+                    See All Watch History
+                  </Link>
+                  <ArrowRight className='text-white mr-6' />
+                </>
+              )}
+            </div>
           </div>
           <div
             ref={carouselRef}

@@ -67,19 +67,21 @@ const WatchDescription = ({
       </div>
       {getTextLength() ? (
         <div
-          className={`my-2  ${open ? 'h-fit' : ' sm:h-[55px] md:h-[80px] lg:h-fit'} `}
+          className={`my-2  ${open ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'} `}
         >
           {`${open ? overview : overview?.slice(0, 200)}` || ''}
 
           <span
-            className={`inline-block text-[#fff9] cursor-pointer ml-1`}
+            className={`inline-block text-[#fff9] cursor-pointer `}
             onClick={() => setOpen(!open)}
           >
             {open ? 'Show less' : '...Show more'}
           </span>
         </div>
       ) : (
-        <div className={`my-2 h-[100px] lg:h-fit`}>{overview || ''}</div>
+        <div className={`my-2 h-42 sm:h-16 md:h-14 lg:h-fit`}>
+          {overview || ''}
+        </div>
       )}
     </div>
   );

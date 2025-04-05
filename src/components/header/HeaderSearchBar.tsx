@@ -10,7 +10,7 @@ const Search = ({
   searchOpen: boolean;
   closeSearch: () => void;
 }) => {
-  const { setSearchQuery } = useStore();
+  const { addToPreviousSearches } = useStore();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
@@ -28,7 +28,6 @@ const Search = ({
     }
 
     if (value) {
-      setSearchQuery(value);
       debounceRef.current = setTimeout(() => {
         if (!hasNavigated.current) {
           navigate(`/search/${value}`);
@@ -43,6 +42,10 @@ const Search = ({
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        const value = inputRef.current?.value.trim();
+        if (value) {
+          addToPreviousSearches(value);
+        }
       }}
       role='search'
       className={clsx(
