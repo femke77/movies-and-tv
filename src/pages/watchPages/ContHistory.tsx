@@ -24,7 +24,6 @@ const History = () => {
           Clear All
         </button>
         </div>
-      <div className='flex flex-col gap-2 mt-4 ml-6'>
         <ConfirmModal
           showModal={showModal}
           closeModal={() => setShowModal(false)}
@@ -34,11 +33,12 @@ const History = () => {
           }}
           message='Are you sure you want to clear your search history?'
         />
-        {previousSearches.map((item, index) => (
+      <div className='flex flex-col gap-2 mt-4 ml-6'>
+        {previousSearches.length > 0 ? (<>{previousSearches?.map((item, index) => (
           <div key={index} className='text-white text-md'>
             <Link to={`/search/${item}`}> {item}</Link>
           </div>
-        ))}
+        ))}</>) : (<p>Your previous searches will appear here.</p>) }
       </div>
     </div>
   );
