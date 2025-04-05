@@ -29,11 +29,13 @@ export const useStore = create<BookmarkStore>()(
         // Skip if query already exists
         if (get().previousSearches.includes(query.toLocaleLowerCase())) return;    
         set((state) => {
+          const lowerCaseQuery = query.toLocaleLowerCase();
+          // Check if the query already exists in the previous searches
           // Create new array either with just the newest items (if at limit)
           // or with all previous items plus the new one
           const newSearches = state.previousSearches.length >= 20
-            ? [...state.previousSearches.slice(1), query]  // Remove oldest item
-            : [...state.previousSearches, query];          // Simply add
+            ? [...state.previousSearches.slice(1), lowerCaseQuery]  // Remove oldest item
+            : [...state.previousSearches, lowerCaseQuery];          // Simply add
             
           return { previousSearches: newSearches };
         });
