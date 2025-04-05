@@ -31,11 +31,12 @@
   **Solution:**  Preloading of important images and progressive loading of images. Placeholder -> lowres -> hiRes. Hold the image for paint until it is ready. transition-opacity makes the image appearance look controlled and smooth. 
 
   ### Metrics as of 4/4/2025
-  - 75K memory usage according to Chrome task manager
-  - 99% performance according to Lighthouse
+  - 161-187MB average browser memory usage 
+  - 99% performance by Lighthouse
   - 0.0 CLS 
   - 192kb compressed size after build
   - All paint metrics in the green, including INP with page navigation
+  
 
   ## Table of Contents 📖
   
