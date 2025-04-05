@@ -18,6 +18,7 @@ import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persist
 import { RegisterSWWrapper } from './components/helpers/RegisterSWWrapper.tsx';
 import { AliveScope, KeepAlive } from 'react-activation';
 
+const History = lazy(() => import('./pages/watchPages/ContHistory.tsx'));
 const CastMemberDetail = lazy(
   () => import('./pages/detailPages/CastMemberDetail.tsx'),
 );
@@ -191,6 +192,14 @@ const router = createBrowserRouter([
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <Watchlist />
+              </DelayedSuspense>
+            ),
+          },
+          {
+            path: 'history',
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <History/>
               </DelayedSuspense>
             ),
           },
