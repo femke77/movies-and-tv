@@ -62,7 +62,7 @@ const WatchTV = () => {
   useEffect(() => {
     if (!series) return;
     // setTimeout(() => {
-    addToContinueWatchingTv(Number(series_id!), 'tv', dayjs().unix(), series.original_name, selectedSeason, selectedEpisode, series.poster_path)
+    addToContinueWatchingTv(Number(series_id!), 'tv', dayjs().unix(), series.original_name, selectedSeason, selectedEpisode, series.backdrop_path)
     
     // }, 60000);
   }, [series_id, series, selectedSeason, selectedEpisode]);

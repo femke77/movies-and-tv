@@ -18,6 +18,7 @@ interface BookmarkStore {
   addToContinueWatchingTv: (_id: number, _media_type: string, _lastUpdated: number, _title:string, _season: number, _episode: number, _poster_path: string) => void;
   addToContinueWatchingMovie: (_id: number, _media_type: string, _lastUpdated: number, _title:string, _poster_path: string, release_date:string, runtime:string) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
+  clearContinueWatching: () => void;
 }
 
 export const useStore = create<BookmarkStore>()(
@@ -82,7 +83,7 @@ export const useStore = create<BookmarkStore>()(
           return { continueWatching: newContinueWatching };
         });
       },
-  
+      clearContinueWatching: () => set({ continueWatching: {} }),
       openModal: (id: string, type: string) => {
         set({
           modalData: {

@@ -10,10 +10,11 @@ import { useEffect, useState, useRef } from 'react';
 import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
+
 const WatchMovie = () => {
   const {addToContinueWatchingMovie} = useStore()
   const { movie_id } = useParams<{ movie_id: string }>();
-  const { data: movie = {} } = useWatchDetails('movie', movie_id ?? '');
+  const { data: movie} = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -29,16 +30,16 @@ const WatchMovie = () => {
     if (!movie) return;
     // setTimeout(() => {
     addToContinueWatchingMovie(
-      Number(movie.id),
+      Number(movie_id),
       'movie',
       dayjs().unix(),
       movie.title,
-      movie.poster_path,
+      movie.backdrop_path,
       movie.release_date,
       movie.runtime,
     );
     // }, 60000);
-  }, [movie_id]);
+  }, [movie_id, movie]);
 
   useEffect(() => {
     let newURL = '';
