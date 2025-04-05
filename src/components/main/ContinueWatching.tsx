@@ -35,7 +35,7 @@ const ContinueWatching = () => {
         setItems(parsedData);
       } else {
         const slicedData = Object.fromEntries(
-          Object.entries(parsedData).slice(0, 5)
+          Object.entries(parsedData).slice(0, 5),
         ) as WatchItems;
 
         setItems(slicedData);
@@ -48,7 +48,7 @@ const ContinueWatching = () => {
       | React.MouseEvent<HTMLButtonElement>
       | React.TouchEvent<HTMLButtonElement>
       | React.KeyboardEvent<HTMLButtonElement>,
-    key: string
+    key: string,
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -75,7 +75,7 @@ const ContinueWatching = () => {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    key: string
+    key: string,
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       setActiveItemId(key);
@@ -88,7 +88,8 @@ const ContinueWatching = () => {
     const items = carouselRef.current.querySelectorAll('[data-carousel-item]');
     const currentIndex = Array.from(items).findIndex(
       (item) =>
-        item === document.activeElement || item.contains(document.activeElement)
+        item === document.activeElement ||
+        item.contains(document.activeElement),
     );
 
     switch (e.key) {
@@ -130,14 +131,15 @@ const ContinueWatching = () => {
                 Clear All
               </button>
               {location.pathname === '/' && (
-             <>
-                <Link
-                  to='/account/history'
-                  className=' p-2 pointer-events-auto text-white'
-                >
-                  See All Watch History
-                </Link>
-                <ArrowRight className='text-white mr-6' /></>
+                <>
+                  <Link
+                    to='/account/history'
+                    className=' p-2 pointer-events-auto text-white'
+                  >
+                    See All Watch History
+                  </Link>
+                  <ArrowRight className='text-white mr-6' />
+                </>
               )}
             </div>
           </div>
@@ -243,7 +245,7 @@ const ContinueWatching = () => {
                               'Invalid Date'
                                 ? 'Unknown Date '
                                 : dayjs(items[key].release_date).format(
-                                    'YYYY'
+                                    'YYYY',
                                   )}{' '}
                               &#x2022; {items[key].runtime || '0'} min
                             </p>

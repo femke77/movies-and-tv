@@ -27,7 +27,10 @@ const tvNav = [
   { title: 'All TV', url: '/explore/all-tv' },
 ];
 
-const meNav = [{ title: 'My Watchlist', url: '/account/saved' }, { title: 'Continue Watching', url: '/account/history' }];
+const meNav = [
+  { title: 'My Watchlist', url: '/account/saved' },
+  { title: 'Continue Watching', url: '/account/history' },
+];
 
 export default function Navigation() {
   const [searchOpen, setSearchOpen] = useState(false);

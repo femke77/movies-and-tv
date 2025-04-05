@@ -23,13 +23,8 @@ const Results = memo(({ personOnly }: ResultsProps) => {
   const { ref, inView } = useInView();
   const bookmarks = useStore((state) => state.bookmarks);
   const { addToPreviousSearches } = useStore();
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteSearchQuery(query ?? '');
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteSearchQuery(query ?? '');
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -98,7 +93,7 @@ const Results = memo(({ personOnly }: ResultsProps) => {
                     item={item}
                     textSize='md'
                     isBookmarked={bookmarks.some(
-                      (a) => a.id === item.id && a.type === item.media_type
+                      (a) => a.id === item.id && a.type === item.media_type,
                     )}
                   />
                 </div>
@@ -139,7 +134,7 @@ const SearchContainer = memo(() => {
   // Memoize the heading text
   const headingText = useMemo(
     () => `Search results for '${searchQuery || lastLetterRef.current}'`,
-    [searchQuery]
+    [searchQuery],
   );
 
   const handlePersonOnly = () => {

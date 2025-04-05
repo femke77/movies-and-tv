@@ -217,9 +217,7 @@ const WatchTV = () => {
             )}
 
             <div
-              className={`${
-                isIphoneSafari() || isIPad() ? 'invisible' : ''
-              }`}
+              className={`${isIphoneSafari() || isIPad() ? 'invisible' : ''}`}
             >
               <FullscreenBtn elementId='video-player' />
             </div>

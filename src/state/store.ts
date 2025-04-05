@@ -13,7 +13,7 @@ interface BookmarkStore {
   isBookmarked: (_id: string, _type: string) => boolean;
 
   previousSearches: string[];
-  addToPreviousSearches: (_query:string) => void;
+  addToPreviousSearches: (_query: string) => void;
   clearPreviousSearches: () => void;
 }
 
@@ -23,20 +23,21 @@ export const useStore = create<BookmarkStore>()(
       bookmarks: [],
       modalData: null, // Store the item being bookmarked
       showModal: false,
-     
+
       previousSearches: [],
       addToPreviousSearches: (query) => {
         // Skip if query already exists
-        if (get().previousSearches.includes(query.toLocaleLowerCase())) return;    
+        if (get().previousSearches.includes(query.toLocaleLowerCase())) return;
         set((state) => {
           const lowerCaseQuery = query.toLocaleLowerCase();
           // Check if the query already exists in the previous searches
           // Create new array either with just the newest items (if at limit)
           // or with all previous items plus the new one
-          const newSearches = state.previousSearches.length >= 20
-            ? [...state.previousSearches.slice(1), lowerCaseQuery]  // Remove oldest item
-            : [...state.previousSearches, lowerCaseQuery];          // Simply add
-            
+          const newSearches =
+            state.previousSearches.length >= 20
+              ? [...state.previousSearches.slice(1), lowerCaseQuery] // Remove oldest item
+              : [...state.previousSearches, lowerCaseQuery]; // Simply add
+
           return { previousSearches: newSearches };
         });
       },

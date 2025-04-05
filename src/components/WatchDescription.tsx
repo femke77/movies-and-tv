@@ -79,7 +79,9 @@ const WatchDescription = ({
           </span>
         </div>
       ) : (
-        <div className={`my-2 h-42 sm:h-16 md:h-14 lg:h-fit`}>{overview || ''}</div>
+        <div className={`my-2 h-42 sm:h-16 md:h-14 lg:h-fit`}>
+          {overview || ''}
+        </div>
       )}
     </div>
   );

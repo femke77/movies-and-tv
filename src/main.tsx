@@ -199,7 +199,7 @@ const router = createBrowserRouter([
             path: 'history',
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
-                <History/>
+                <History />
               </DelayedSuspense>
             ),
           },

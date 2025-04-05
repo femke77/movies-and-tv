@@ -10,7 +10,7 @@ const Search = ({
   searchOpen: boolean;
   closeSearch: () => void;
 }) => {
-  const {addToPreviousSearches } = useStore();
+  const { addToPreviousSearches } = useStore();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
@@ -28,7 +28,6 @@ const Search = ({
     }
 
     if (value) {
-
       debounceRef.current = setTimeout(() => {
         if (!hasNavigated.current) {
           navigate(`/search/${value}`);
