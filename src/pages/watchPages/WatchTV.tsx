@@ -218,7 +218,7 @@ const WatchTV = () => {
 
             <div
               className={`${
-                isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''
+                isIphoneSafari() || isIPad() ? 'invisible' : ''
               }`}
             >
               <FullscreenBtn elementId='video-player' />
@@ -237,7 +237,7 @@ const WatchTV = () => {
                 height='100%'
                 // sandbox="allow-scripts allow-same-origin"
                 // src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
-                allow='encrypted-media'
+                allow='encrypted-media; autoplay;'
                 src={'about:blank'}
                 allowFullScreen
               ></iframe>
@@ -371,9 +371,9 @@ const WatchTV = () => {
                   title={
                     <div className='flex items-center'>
                       <Settings size={20} className='mr-4' color='#ffffff' />
-                      <div className='flex justify-between w-full'>
-                        <p>Change Server</p>
-                        <p className='text-white/70 text-sm ml-9 truncate text-ellipsis'>
+                      <div className='flex justify-between items-center w-full'>
+                        <p className='mr-2'>Change Server</p>
+                        <p className='text-white/70 text-sm truncate text-ellipsis'>
                           {
                             servers.find(
                               (server) => server.value === selectedServer,

@@ -11,7 +11,7 @@ import TopRatedTv from '../components/main/TopRatedTv';
 
 const Home = () => {
   useEffect(() => {
-    // fixes the scroll position on page reload
+    // fixes the scroll position bug on page reload that was showing the contintue watching section
     const isPageReload = !window.performance
       .getEntriesByType('navigation')
       .some(
@@ -45,7 +45,6 @@ const Home = () => {
         <ProductionCo company_name='Marvel Movies' company_id={420} />
         <ProductionCo company_name='Featured Disney' company_id={2} />
         <ProductionCo company_name='Neon/Hulu Movies' company_id={90733} />
-
         <TopRatedTv />
       </div>
     </>
