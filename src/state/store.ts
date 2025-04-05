@@ -11,10 +11,13 @@ interface BookmarkStore {
   addBookmark: (_id: string, _type: string) => void;
   removeBookmark: (_id: string, _type: string) => void;
   isBookmarked: (_id: string, _type: string) => boolean;
-
   previousSearches: string[];
   addToPreviousSearches: (_query: string) => void;
   clearPreviousSearches: () => void;
+  continueWatching: { [key: string]: {id: number, media_type: string, lastUpdated: number, title:string, season?: number, episode?: number, poster_path: string, release_date?: string, runtime?: string} };
+  addToContinueWatchingTv: (_id: number, _media_type: string, _lastUpdated: number, _title:string, _season: number, _episode: number, _poster_path: string) => void;
+  addToContinueWatchingMovie: (_id: number, _media_type: string, _lastUpdated: number, _title:string, _poster_path: string, release_date:string, runtime:string) => void;
+  removeFromContinueWatching: (_id: number, _media_type: string) => void;
 }
 
 export const useStore = create<BookmarkStore>()(
@@ -23,16 +26,13 @@ export const useStore = create<BookmarkStore>()(
       bookmarks: [],
       modalData: null, // Store the item being bookmarked
       showModal: false,
-
       previousSearches: [],
       addToPreviousSearches: (query) => {
-        // Skip if query already exists
         if (get().previousSearches.includes(query.toLocaleLowerCase())) return;
         set((state) => {
           const lowerCaseQuery = query.toLocaleLowerCase();
-          // Check if the query already exists in the previous searches
           // Create new array either with just the newest items (if at limit)
-          // or with all previous items plus the new one
+          // or with all previous items plus the new one. Rotates the array.
           const newSearches =
             state.previousSearches.length >= 20
               ? [...state.previousSearches.slice(1), lowerCaseQuery] // Remove oldest item
@@ -42,6 +42,47 @@ export const useStore = create<BookmarkStore>()(
         });
       },
       clearPreviousSearches: () => set({ previousSearches: [] }),
+      continueWatching: {},
+     addToContinueWatchingTv : (id, media_type, lastUpdated, title, season, episode, poster_path) => {
+        set((state) => ({
+          continueWatching: {
+            ...state.continueWatching,
+            [`${id}-${media_type}`]: {
+              lastUpdated,
+              title,
+              season,
+              episode,
+              media_type,
+              id,
+              poster_path,
+            },
+          },
+        }));
+      },
+      addToContinueWatchingMovie: (id, media_type, lastUpdated, title, poster_path, release_date, runtime) => {
+        set((state) => ({
+          continueWatching: {
+            ...state.continueWatching,
+            [`${id}-${media_type}`]: {
+              lastUpdated,
+              title,
+              media_type,
+              id,
+              poster_path,
+              release_date,
+              runtime,
+            },
+          },
+        }));
+      },
+      removeFromContinueWatching: (id, media_type) => {
+        set((state) => {
+          const newContinueWatching = { ...state.continueWatching };
+          delete newContinueWatching[`${id}-${media_type}`];
+          return { continueWatching: newContinueWatching };
+        });
+      },
+  
       openModal: (id: string, type: string) => {
         set({
           modalData: {
@@ -78,6 +119,7 @@ export const useStore = create<BookmarkStore>()(
       partialize: (state) => ({
         bookmarks: state.bookmarks,
         previousSearches: state.previousSearches,
+        continueWatching: state.continueWatching,
       }),
     },
   ),

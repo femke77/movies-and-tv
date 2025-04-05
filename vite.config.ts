@@ -71,12 +71,18 @@ export default defineConfig({
               expiration: {
                 maxEntries: 100,
                 maxAgeSeconds: 60 * 60 * 24 * 30, //  30 days limit
+                purgeOnQuotaError: true,
               },
               cacheableResponse: {
                 statuses: [0, 200], // Successful responses only!
               },
+              fetchOptions: {
+                mode: 'no-cors',
+              },
             },
+            
           },
+          
         ],
         // these should be set automatically by the plugin
         // skipWaiting: false,

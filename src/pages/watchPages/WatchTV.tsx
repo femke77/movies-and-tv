@@ -17,6 +17,7 @@ import { isIPad, isIphoneSafari } from '../../utils/helpers';
 import EpisodeList from '../../components/lists/EpisodeList';
 import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
+import { useStore } from '../../state/store';
 
 // FIXME This needs to be more componentized. iframe at least needs it's own component.
 // FIXME url params controlled instead of state controlled ??? would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management. Thinking about this.
@@ -24,6 +25,7 @@ import useDocumentTitle from '../../hooks/usePageTitles';
 
 const WatchTV = () => {
   const { servers } = serverData;
+  const {addToContinueWatchingTv} = useStore()
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { series_id } = useParams<{ series_id: string }>();
@@ -59,25 +61,10 @@ const WatchTV = () => {
   useDocumentTitle(`Watch ${series?.original_name || 'TV Show'} | BingeBox`);
   useEffect(() => {
     if (!series) return;
-    setTimeout(() => {
-      const continueWatching = localStorage.getItem('continueWatching');
-      const watchData = continueWatching ? JSON.parse(continueWatching) : {};
-
-      const newWatchData = {
-        ...watchData,
-        [series_id!]: {
-          lastUpdated: dayjs().unix(),
-          title: series.original_name,
-          posterPath: series.backdrop_path,
-          media_type: 'tv',
-          id: Number(series_id),
-          season: selectedSeason,
-          episode: selectedEpisode,
-        },
-      };
-
-      localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
-    }, 60000);
+    // setTimeout(() => {
+    addToContinueWatchingTv(Number(series_id!), 'tv', dayjs().unix(), series.original_name, selectedSeason, selectedEpisode, series.poster_path)
+    
+    // }, 60000);
   }, [series_id, series, selectedSeason, selectedEpisode]);
 
   useEffect(() => {

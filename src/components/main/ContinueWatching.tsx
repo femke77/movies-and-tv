@@ -4,6 +4,8 @@ import { Link, useLocation } from 'react-router-dom';
 import DraggableCarousel from '../containers/SimpleCarousel';
 import ConfirmModal from '../modals/ConfirmModal';
 import { ArrowRight } from 'lucide-react';
+import { useStore } from '../../state/store';
+
 interface WatchItem {
   title: string;
   posterPath: string;
@@ -58,7 +60,7 @@ const ContinueWatching = () => {
       setItems(newItems);
       setActiveItemId(null);
       localStorage.setItem('continueWatching', JSON.stringify(newItems));
-    }, 200);
+    }, 150);
   };
 
   const closeModal = () => {
@@ -115,21 +117,22 @@ const ContinueWatching = () => {
         closeModal={closeModal}
         handleClick={handleClearAll}
         message={
-          'Are you sure you want to clear ALL items from continue watching?'
+          'Are you sure you want to clear all items from continue watching?'
         }
       />
 
       {Object.keys(items).length !== 0 && (
         <>
-          <div className=' flex justify-between items-center'>
-            <h1 className='text-2xl font-semibold mb-4'>Continue Watching</h1>
+          <div className='z-10 flex justify-between items-center'>
+            <h1 className='z-10 text-2xl font-semibold'>Continue Watching</h1>
             <div className='flex items-center'>
+              {location.pathname === '/account/history' && (
               <button
                 onClick={() => setOpenModal(true)}
-                className='bg-gray-700 h-7 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+                className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
               >
                 Clear All
-              </button>
+              </button>)}
               {location.pathname === '/' && (
                 <>
                   <Link
