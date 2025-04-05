@@ -1,11 +1,47 @@
+import ContinueWatching from '../../components/main/ContinueWatching';
+import { useStore } from '../../state/store';
+import { Link } from 'react-router-dom';
+import ConfirmModal from '../../components/modals/ConfirmModal';
+import { useState } from 'react';
 
 const History = () => {
+  const { previousSearches, clearPreviousSearches } = useStore(
+    (state) => state
+  );
+  const [showModal, setShowModal] = useState(false);
+
   return (
-    <div className="w-full h-full flex flex-col items-center mt-24">
-      <h1 className="text-2xl font-bold">Continue Watching</h1>
-      <h1 className="text-2xl font-bold">History</h1>
+    <div className='w-full h-full  mt-36'>
+      <ContinueWatching />
+      <div className='flex justify-between items-end'>
+      <h1 className='mt-12 text-2xl font-semibold ml-6'>
+        Previous Search History
+      </h1>
+        <button
+          onClick={() => setShowModal(true)}
+          className='bg-gray-700 h-7 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+        >
+          Clear All
+        </button>
+        </div>
+      <div className='flex flex-col gap-2 mt-4 ml-6'>
+        <ConfirmModal
+          showModal={showModal}
+          closeModal={() => setShowModal(false)}
+          handleClick={() => {
+            clearPreviousSearches();
+            setShowModal(false);
+          }}
+          message='Are you sure you want to clear your search history?'
+        />
+        {previousSearches.map((item, index) => (
+          <div key={index} className='text-white text-md'>
+            <Link to={`/search/${item}`}> {item}</Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default History;

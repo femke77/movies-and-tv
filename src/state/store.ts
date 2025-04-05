@@ -11,8 +11,10 @@ interface BookmarkStore {
   addBookmark: (_id: string, _type: string) => void;
   removeBookmark: (_id: string, _type: string) => void;
   isBookmarked: (_id: string, _type: string) => boolean;
-  searchQuery: string;
-  setSearchQuery: (_query: string) => void;
+
+  previousSearches: string[];
+  addToPreviousSearches: (_query:string) => void;
+  clearPreviousSearches: () => void;
 }
 
 export const useStore = create<BookmarkStore>()(
@@ -21,8 +23,22 @@ export const useStore = create<BookmarkStore>()(
       bookmarks: [],
       modalData: null, // Store the item being bookmarked
       showModal: false,
-      searchQuery: '',
-      setSearchQuery: (query: string) => set({ searchQuery: query }),
+     
+      previousSearches: [],
+      addToPreviousSearches: (query) => {
+        // Skip if query already exists
+        if (get().previousSearches.includes(query.toLocaleLowerCase())) return;    
+        set((state) => {
+          // Create new array either with just the newest items (if at limit)
+          // or with all previous items plus the new one
+          const newSearches = state.previousSearches.length >= 20
+            ? [...state.previousSearches.slice(1), query]  // Remove oldest item
+            : [...state.previousSearches, query];          // Simply add
+            
+          return { previousSearches: newSearches };
+        });
+      },
+      clearPreviousSearches: () => set({ previousSearches: [] }),
       openModal: (id: string, type: string) => {
         set({
           modalData: {
@@ -58,7 +74,7 @@ export const useStore = create<BookmarkStore>()(
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         bookmarks: state.bookmarks,
-        searchQuery: state.searchQuery,
+        previousSearches: state.previousSearches,
       }),
     },
   ),

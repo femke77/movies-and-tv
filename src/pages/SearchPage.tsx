@@ -22,9 +22,14 @@ const Results = memo(({ personOnly }: ResultsProps) => {
 
   const { ref, inView } = useInView();
   const bookmarks = useStore((state) => state.bookmarks);
-
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteSearchQuery(query ?? '');
+  const { addToPreviousSearches } = useStore();
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteSearchQuery(query ?? '');
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -57,7 +62,14 @@ const Results = memo(({ personOnly }: ResultsProps) => {
           <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
             {allPersons?.length > 0 ? (
               allPersons.map((item: ICast) => (
-                <CastCard key={`person-${item.id}`} cast={item} />
+                <div
+                  onClick={() => {
+                    addToPreviousSearches(item.name);
+                  }}
+                  key={`person-${item.id}`}
+                >
+                  <CastCard cast={item} />
+                </div>
               ))
             ) : (
               <p className='text-lg text-gray-400'>No results found.</p>
@@ -76,14 +88,20 @@ const Results = memo(({ personOnly }: ResultsProps) => {
           <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
             {allItems?.length > 0 ? (
               allItems.map((item: IItem) => (
-                <MemoizedItemCard
+                <div
+                  onClick={() => {
+                    addToPreviousSearches(item.original_name || item.title);
+                  }}
                   key={`${item.media_type}-${item.id}`}
-                  item={item}
-                  textSize='md'
-                  isBookmarked={bookmarks.some(
-                    (a) => a.id === item.id && a.type === item.media_type,
-                  )}
-                />
+                >
+                  <MemoizedItemCard
+                    item={item}
+                    textSize='md'
+                    isBookmarked={bookmarks.some(
+                      (a) => a.id === item.id && a.type === item.media_type
+                    )}
+                  />
+                </div>
               ))
             ) : (
               <p className='text-lg text-gray-400'>No results found.</p>
@@ -106,7 +124,8 @@ Results.displayName = 'Results';
 
 // container component
 const SearchContainer = memo(() => {
-  const { searchQuery } = useStore();
+  const { query } = useParams<{ query: string }>();
+  const searchQuery = query?.replace(/%20/g, ' ') || '';
   const lastLetterRef = useRef<string | null>(null);
   useDocumentTitle(`Search results for '${searchQuery}' | BingeBox`);
   const [personOnly, setPersonOnly] = useState(false);
@@ -120,7 +139,7 @@ const SearchContainer = memo(() => {
   // Memoize the heading text
   const headingText = useMemo(
     () => `Search results for '${searchQuery || lastLetterRef.current}'`,
-    [searchQuery],
+    [searchQuery]
   );
 
   const handlePersonOnly = () => {
