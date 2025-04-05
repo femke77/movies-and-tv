@@ -34,9 +34,9 @@
   - 161-187MB average browser memory usage 
   - 99% performance by Lighthouse
   - 0.0 CLS 
-  - 192kb compressed size after build
+  - 199kb compressed size after build
   - All paint metrics in the green, including INP with page navigation
-  
+
 
   ## Table of Contents 📖
   
