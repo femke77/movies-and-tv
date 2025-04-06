@@ -8,7 +8,6 @@ import { Link } from 'lucide-react';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 const Share = ({ media_type, url }: { media_type: string; url: string }) => {
-
   const copyToClipboard = async (text: string) => {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       try {
@@ -39,14 +38,13 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
       try {
         // Use the newer API if available, fallback to the deprecated one if not
         if (window.isSecureContext) {
-
           navigator.clipboard
             .writeText(text)
             .then(() => toast.success('Link copied to clipboard!'))
             .catch(() => toast.error('Failed to copy link'));
         } else {
           // For older browsers or non-secure contexts
-          // We still use execCommand but handle it gracefully for now
+          // still use execCommand but handle it gracefully for now
           document.execCommand('copy');
           toast.success('Link copied to clipboard!');
         }
@@ -110,7 +108,6 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
         className='cursor-pointer bg-transparent border-none text-white flex items-center space-x-1'
       >
         <Link />
-     
       </button>
       <ToastContainer
         position='bottom-left'
