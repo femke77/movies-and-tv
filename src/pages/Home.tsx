@@ -8,7 +8,7 @@ import TrendingMovies from '../components/main/TrendingMovies';
 import TopRatedMovies from '../components/main/TopRatedMovies';
 import TrendingTV from '../components/main/TrendingTv';
 import TopRatedTv from '../components/main/TopRatedTv';
-import MovieProvider from '../components/main/MovieProvider';
+import Provider from '../components/main/Provider';
 
 const Home = () => {
   useEffect(() => {
@@ -65,10 +65,11 @@ const Home = () => {
           company_name='DisneyMovies'
           company_id={2}
         />
-        <MovieProvider
+        <Provider
           header='Movies on Hulu'
           provider_name='Hulu'
           provider_id={15}
+          media_type='movie'
         />
         <TopRatedTv />
       </div>
