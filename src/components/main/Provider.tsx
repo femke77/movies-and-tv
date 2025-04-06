@@ -1,19 +1,21 @@
-import { useProvider } from '../../hooks/useMovieProvider';
+import { useProvider } from '../../hooks/useProvider';
 import CarouselContainer from '../containers/CarouselContainer';
 import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
 import { Link } from 'react-router-dom';
 
-const MovieProvider = ({
+const Provider = ({
   provider_name,
   provider_id,
   header,
+  media_type,
 }: {
   provider_name: string;
   provider_id: number;
   header: string;
+  media_type: 'movie' | 'tv';
 }) => {
   const { data: items = [], isLoading } = useProvider(
-    'movie',
+    media_type,
     provider_name,
     provider_id,
   );
@@ -32,10 +34,10 @@ const MovieProvider = ({
           ))}
         </div>
       ) : (
-        <CarouselContainer items={items} itemType='movie' />
+        <CarouselContainer items={items} itemType={media_type} />
       )}
     </div>
   );
 };
 
-export default MovieProvider;
+export default Provider;
