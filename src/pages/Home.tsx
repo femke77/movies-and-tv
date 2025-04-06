@@ -71,6 +71,12 @@ const Home = () => {
           provider_id={15}
           media_type='movie'
         />
+        <Provider
+          header='Horror by Shudder'
+          provider_name='ShudderMovies'
+          provider_id={99}
+          media_type='movie'
+        />
         <TopRatedTv />
       </div>
     </>
