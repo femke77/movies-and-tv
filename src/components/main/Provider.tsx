@@ -12,7 +12,7 @@ const Provider = ({
   provider_name: string;
   provider_id: number;
   header: string;
-    media_type: 'movie' | 'tv';
+  media_type: 'movie' | 'tv';
 }) => {
   const { data: items = [], isLoading } = useProvider(
     media_type,
