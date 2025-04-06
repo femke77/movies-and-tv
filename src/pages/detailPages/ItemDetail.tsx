@@ -193,7 +193,7 @@ const ItemDetail = () => {
                           }`}
                         >
                           <img
-                            className='max-w-[92px] h-auto object-contain p-1'
+                            className='max-w-[92px] max-h-18 h-auto object-contain p-1'
                             src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
                             title={`${item.networks?.[0]?.name}`}
                             alt={`${item.networks?.[0]?.name}'s official logo`}
@@ -221,7 +221,7 @@ const ItemDetail = () => {
                           }`}
                         >
                           <img
-                            className='max-w-[92px] h-auto object-contain p-1'
+                            className='max-w-[92px] max-h-18 h-auto object-contain p-1'
                             src={`https://image.tmdb.org/t/p/w92${item.production_companies?.[0]?.logo_path}`}
                             alt={`${item.production_companies?.[0]?.name}'s official logo`}
                             onLoad={() => setLogoLoaded(true)}
