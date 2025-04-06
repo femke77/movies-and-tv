@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const MovieProvider = ({
   provider_name,
   provider_id,
-  header
+  header,
 }: {
   provider_name: string;
   provider_id: number;
@@ -21,9 +21,7 @@ const MovieProvider = ({
   return (
     <div className=' mt-20  min-h-[350px]' id={`${provider_name}-section`}>
       <Link to='/explore/movies'>
-        <h2 className='text-2xl font-bold mb-6  ml-5'>
-        {header}
-        </h2>
+        <h2 className='text-2xl font-bold mb-6  ml-5'>{header}</h2>
       </Link>
       {isLoading ? (
         <div className='flex gap-3 px-4 py-2 w-full  '>

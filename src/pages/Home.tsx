@@ -16,7 +16,7 @@ const Home = () => {
     const isPageReload = !window.performance
       .getEntriesByType('navigation')
       .some(
-        (nav) => (nav as PerformanceNavigationTiming).type === 'back_forward'
+        (nav) => (nav as PerformanceNavigationTiming).type === 'back_forward',
       );
 
     if (isPageReload) {
@@ -49,11 +49,7 @@ const Home = () => {
           network_name='HuluTV'
           network_id={453}
         />
-        <Network
-          header='Apple TV+'
-          network_name='AppleTV+'
-          network_id={2552}
-        />
+        <Network header='Apple TV+' network_name='AppleTV+' network_id={2552} />
         <Network
           header='Now Streaming on Paramount+'
           network_name='Paramount+'

@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 const Network = ({
   network_name,
   network_id,
-  header
+  header,
 }: {
   network_name: string;
   network_id: number;
-  header: string
+  header: string;
 }) => {
   const { data: items = [], isLoading } = useNetwork(
     'tv',
@@ -21,9 +21,7 @@ const Network = ({
   return (
     <div className=' mt-20  min-h-[350px]' id={`${network_name}-section`}>
       <Link to='/explore/tv'>
-        <h2 className='text-2xl font-bold mb-6  ml-5'>
-         {header}
-        </h2>
+        <h2 className='text-2xl font-bold mb-6  ml-5'>{header}</h2>
       </Link>
       {isLoading ? (
         <div className='flex gap-3 px-4 py-2 w-full  '>

@@ -11,7 +11,7 @@ const createProviderFetcher =
     const { data } = await TMDBClient.get(
       `/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=US&with_watch_providers=${provider_id}`,
     );
-  
+
     return data.results;
   };
 

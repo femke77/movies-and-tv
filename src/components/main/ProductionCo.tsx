@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 const ProductionCo = ({
   company_name,
   company_id,
-  header
+  header,
 }: {
   company_name: string;
   company_id: number;
-  header: string
+  header: string;
 }) => {
   const { data: items = [], isLoading } = useProductionCo(
     'movie',
