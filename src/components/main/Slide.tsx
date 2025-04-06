@@ -223,17 +223,17 @@ const Slide = ({
             {/* Buttons section */}
             <div
               className={clsx(
-                `flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start mt-2 h-[50px]`,
+                `[@media(max-width:1050px)]:pl-5 flex flex-row flex-wrap items-center w-full justify-center [@media(min-width:1050px)]:justify-start pt-6 h-[50px]`,
               )}
             >
-              <div className='mr-6'>
+              <div className='mr-5'>
                 {isVisible ? (
                   <UserRating rating={slide.vote_average ?? 0} />
                 ) : (
                   <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
                 )}
               </div>
-              <div className='mr-6'>
+              <div className='mr-5'>
                 {isVisible ? (
                   <Tooltip text='Watch Now'>
                     <WatchButton
@@ -245,7 +245,7 @@ const Slide = ({
                   <ButtonPlaceholder />
                 )}
               </div>
-              <div className=' mr-6 rounded-[50%] cursor-pointer w-[64px] h-[64px] flex items-center bg-[#ffffff1a] border-2 border-white/20 backdrop-blur-[5px] hover:bg-gray-700'>
+              <div className='mr-5 rounded-[50%] cursor-pointer w-[64px] h-[64px] flex items-center bg-[#ffffff1a] border-2 border-white/20 backdrop-blur-[5px] hover:bg-gray-700'>
                 {/* Bookmark */}
                 <div className='mx-auto mt-1 '>
                   <Tooltip
