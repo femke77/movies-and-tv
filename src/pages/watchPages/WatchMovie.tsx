@@ -9,10 +9,12 @@ import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
 import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
+import { useStore } from '../../state/store';
 
 const WatchMovie = () => {
+  const { addToContinueWatchingMovie } = useStore();
   const { movie_id } = useParams<{ movie_id: string }>();
-  const { data: movie = {} } = useWatchDetails('movie', movie_id ?? '');
+  const { data: movie } = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -26,25 +28,19 @@ const WatchMovie = () => {
 
   useEffect(() => {
     if (!movie) return;
-    setTimeout(() => {
-      const continueWatching = localStorage.getItem('continueWatching');
-      const watchData = continueWatching ? JSON.parse(continueWatching) : {};
+    // setTimeout(() => {
+    addToContinueWatchingMovie(
+      Number(movie_id),
+      'movie',
+      dayjs().unix(),
+      movie.title,
+      movie.backdrop_path,
+      movie.release_date,
+      movie.runtime,
+    );
+    // }, 60000);
 
-      const newWatchData = {
-        ...watchData,
-        [movie_id!]: {
-          lastUpdated: dayjs().unix(),
-          title: movie.title,
-          posterPath: movie.backdrop_path,
-          media_type: 'movie',
-          id: Number(movie_id),
-          release_date: movie.release_date,
-          runtime: movie.runtime,
-        },
-      };
-
-      localStorage.setItem('continueWatching', JSON.stringify(newWatchData));
-    }, 60000);
+    // es-lint-disable-next-line react-hooks/exhaustive-deps
   }, [movie_id, movie]);
 
   useEffect(() => {

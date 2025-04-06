@@ -69,7 +69,7 @@ const Watchlist = () => {
         <BackButton />
       </div>
       <h1 className='relative z-1 text-4xl text-center mx-3 mb-9'>Watchlist</h1>
-      <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'></div>
+      <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800' />
 
       <div className='relative flex justify-center space-x-4 mb-8 z-1'>
         <button

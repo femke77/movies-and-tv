@@ -4,15 +4,17 @@ import { Link, useLocation } from 'react-router-dom';
 import DraggableCarousel from '../containers/SimpleCarousel';
 import ConfirmModal from '../modals/ConfirmModal';
 import { ArrowRight } from 'lucide-react';
+import { useStore } from '../../state/store';
+
 interface WatchItem {
   title: string;
-  posterPath: string;
+  poster_path: string;
   media_type: string;
   id: number;
   episode?: number;
   season?: number;
   release_date?: string;
-  runtime?: number;
+  runtime?: string;
 }
 
 interface WatchItems {
@@ -21,27 +23,26 @@ interface WatchItems {
 
 const ContinueWatching = () => {
   const location = useLocation();
+  const continueWatching = useStore((state) => state.continueWatching);
+
+  const { removeFromContinueWatching, clearContinueWatching } = useStore();
   const [items, setItems] = useState<WatchItems>({});
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const continueWatching = localStorage.getItem('continueWatching');
-
     if (continueWatching) {
-      const parsedData = JSON.parse(continueWatching);
       if (location.pathname === '/account/history') {
-        setItems(parsedData);
-      } else {
-        const slicedData = Object.fromEntries(
-          Object.entries(parsedData).slice(0, 5),
-        ) as WatchItems;
-
-        setItems(slicedData);
+        setItems(continueWatching);
+      } else if (location.pathname === '/') {
+        const slicedItems = Object.fromEntries(
+          Object.entries(continueWatching).slice(0, 5),
+        );
+        setItems(slicedItems);
       }
     }
-  }, []);
+  }, [continueWatching, location.pathname]);
 
   const handleDelete = (
     e:
@@ -53,12 +54,9 @@ const ContinueWatching = () => {
     e.preventDefault();
     e.stopPropagation();
     setTimeout(() => {
-      const newItems = { ...items };
-      delete newItems[key];
-      setItems(newItems);
+      removeFromContinueWatching(Number(key.split('-')[0]), key.split('-')[1]);
       setActiveItemId(null);
-      localStorage.setItem('continueWatching', JSON.stringify(newItems));
-    }, 200);
+    }, 150);
   };
 
   const closeModal = () => {
@@ -66,10 +64,10 @@ const ContinueWatching = () => {
   };
 
   const handleClearAll = () => {
-    const newItems = {};
-    setItems(newItems);
+    clearContinueWatching();
+    setItems({});
     setActiveItemId(null);
-    localStorage.setItem('continueWatching', JSON.stringify(newItems));
+
     closeModal();
   };
 
@@ -115,21 +113,23 @@ const ContinueWatching = () => {
         closeModal={closeModal}
         handleClick={handleClearAll}
         message={
-          'Are you sure you want to clear ALL items from continue watching?'
+          'Are you sure you want to clear all items from continue watching?'
         }
       />
 
       {Object.keys(items).length !== 0 && (
         <>
-          <div className=' flex justify-between items-center'>
-            <h1 className='text-2xl font-semibold mb-4'>Continue Watching</h1>
+          <h1 className='z-10 text-2xl font-semibold'>Continue Watching</h1>
+          <div className='z-10 flex justify-between items-center'>
             <div className='flex items-center'>
-              <button
-                onClick={() => setOpenModal(true)}
-                className='bg-gray-700 h-7 w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-              >
-                Clear All
-              </button>
+              {location.pathname === '/account/history' && (
+                <button
+                  onClick={() => setOpenModal(true)}
+                  className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+                >
+                  Clear All
+                </button>
+              )}
               {location.pathname === '/' && (
                 <>
                   <Link
@@ -166,10 +166,10 @@ const ContinueWatching = () => {
                   >
                     <div className={`relative ${isActive ? 'active' : ''}`}>
                       {/* Image and gradient overlay */}
-                      {items[key].posterPath ? (
+                      {items[key].poster_path ? (
                         <img
                           className='rounded-xl mr-2 w-86 h-50'
-                          src={`https://image.tmdb.org/t/p/w780${items[key].posterPath}`}
+                          src={`https://image.tmdb.org/t/p/w780${items[key].poster_path}`}
                           alt={`${items[key].title}'s backdrop`}
                           loading='lazy'
                           onError={(e) => {
@@ -247,7 +247,7 @@ const ContinueWatching = () => {
                                 : dayjs(items[key].release_date).format(
                                     'YYYY',
                                   )}{' '}
-                              &#x2022; {items[key].runtime || '0'} min
+                              &#x2022; {Number(items[key].runtime) || '0'} min
                             </p>
                           )}
                         </h3>
