@@ -40,7 +40,7 @@ const Home = () => {
         <TopRatedMovies />
         <TrendingTV />
         <Network
-          header='Trending TV on Netflix'
+          header='Top Series on Netflix'
           network_name='Netflix'
           network_id={213}
         />
@@ -55,7 +55,7 @@ const Home = () => {
           network_id={2552}
         />
         <Network
-          header='Paramount+'
+          header='Now Streaming on Paramount+'
           network_name='Paramount+'
           network_id={4330}
         />
@@ -65,7 +65,7 @@ const Home = () => {
           company_id={420}
         />
         <ProductionCo
-          header='Featured Disney'
+          header='Featured Disney Movies'
           company_name='DisneyMovies'
           company_id={2}
         />
