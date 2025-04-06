@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { Link, useLocation } from 'react-router-dom';
 import DraggableCarousel from '../containers/SimpleCarousel';
 import ConfirmModal from '../modals/ConfirmModal';
-import { ArrowRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { useStore } from '../../state/store';
 
 interface WatchItem {
@@ -112,37 +112,37 @@ const ContinueWatching = () => {
         showModal={openModal}
         closeModal={closeModal}
         handleClick={handleClearAll}
-        message={
-          'Are you sure you want to clear all items from continue watching?'
-        }
+        message={'Are you sure you want to clear everything?'}
       />
 
       {Object.keys(items).length !== 0 && (
         <>
-          <h1 className='z-10 text-2xl font-semibold'>Continue Watching</h1>
-          <div className='z-10 flex justify-between items-center'>
-            <div className='flex items-center'>
-              {location.pathname === '/account/history' && (
+          <div className='z-10 flex items-center'>
+            {location.pathname === '/account/history' && (
+              <div className='w-full flex justify-end items-center'>
                 <button
                   onClick={() => setOpenModal(true)}
                   className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
                 >
                   Clear All
                 </button>
-              )}
-              {location.pathname === '/' && (
-                <>
-                  <Link
-                    to='/account/history'
-                    className=' p-2 pointer-events-auto text-white'
-                  >
-                    See All Watch History
-                  </Link>
-                  <ArrowRight className='text-white mr-6' />
-                </>
-              )}
-            </div>
+              </div>
+            )}
+            {location.pathname === '/' && (
+              <>
+                <Link
+                  to='/account/history'
+                  className='pointer-events-auto text-white flex items-center'
+                >
+                  <h1 className='z-10 text-2xl font-semibold pr-2 pb-1.5'>
+                    Continue Watching
+                  </h1>
+                  <ChevronRight color='#ffffff' />
+                </Link>
+              </>
+            )}
           </div>
+
           <div
             ref={carouselRef}
             className='flex'
