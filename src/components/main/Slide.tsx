@@ -232,14 +232,14 @@ const Slide = ({
               )}
             >
               <div className='mr-5'>
-              {contentLoaded ? (
+                {contentLoaded ? (
                   <UserRating rating={slide.vote_average ?? 0} />
                 ) : (
                   <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
                 )}
               </div>
               <div className='mr-5'>
-              {contentLoaded ? (
+                {contentLoaded ? (
                   <Tooltip text='Watch Now'>
                     <WatchButton
                       itemType={slide.media_type!}

@@ -14,7 +14,6 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
         await navigator.clipboard.writeText(text);
         toast.success('Link copied to clipboard!');
       } catch (err) {
-        console.error('Clipboard API failed, falling back', err);
         fallbackCopyToClipboard(text);
       }
     } else {
@@ -54,7 +53,6 @@ const Share = ({ media_type, url }: { media_type: string; url: string }) => {
         document.body.removeChild(textArea);
       }
     } catch (err) {
-      console.error('Fallback copy failed', err);
       toast.error('Copy failed');
     }
   };
