@@ -10,15 +10,13 @@ import TrendingTV from '../components/main/TrendingTv';
 import TopRatedTv from '../components/main/TopRatedTv';
 import Provider from '../components/main/Provider';
 
-
-
 const Home = () => {
   useEffect(() => {
     // fixes the scroll position bug on page reload that was showing the contintue watching section
     const isPageReload = !window.performance
       .getEntriesByType('navigation')
       .some(
-        (nav) => (nav as PerformanceNavigationTiming).type === 'back_forward',
+        (nav) => (nav as PerformanceNavigationTiming).type === 'back_forward'
       );
 
     if (isPageReload) {
@@ -36,7 +34,6 @@ const Home = () => {
       <div className='mt-46'>
         <ContinueWatching />
       </div>
-
 
       <div className='my-28'>
         <TrendingMovies />
