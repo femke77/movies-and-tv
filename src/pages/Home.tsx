@@ -10,6 +10,8 @@ import TrendingTV from '../components/main/TrendingTv';
 import TopRatedTv from '../components/main/TopRatedTv';
 import Provider from '../components/main/Provider';
 
+import TextSkeleton from '../components/loadingSkeletons/TextSkeleton';
+
 const Home = () => {
   useEffect(() => {
     // fixes the scroll position bug on page reload that was showing the contintue watching section
@@ -23,7 +25,7 @@ const Home = () => {
       window.scrollTo(0, 0);
     }
   }, []);
-  
+
   useEffect(() => {
     document.title = 'Home | BingeBox';
   }, []);
@@ -35,6 +37,7 @@ const Home = () => {
         <ContinueWatching />
       </div>
 
+<TextSkeleton/>
       <div className='my-28'>
         <TrendingMovies />
         <PopularMovies />

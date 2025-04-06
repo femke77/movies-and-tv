@@ -18,6 +18,7 @@ import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persist
 import { RegisterSWWrapper } from './components/helpers/RegisterSWWrapper.tsx';
 import { AliveScope, KeepAlive } from 'react-activation';
 import WatchPageSkeleton from './components/loadingSkeletons/WatchPageSkeleton.tsx';
+import TextSkeleton from './components/loadingSkeletons/TextSkeleton.tsx';
 
 const History = lazy(() => import('./pages/watchPages/ContHistory.tsx'));
 const CastMemberDetail = lazy(() =>
@@ -82,11 +83,11 @@ const router = createBrowserRouter([
 
       {
         path: 'dmca',
-        element: <DMCA />,
+        element: <DelayedSuspense fallback={<TextSkeleton/>}><DMCA /></DelayedSuspense>,
       },
       {
         path: 'faqs',
-        element: <FAQPage />,
+        element: <DelayedSuspense fallback={<TextSkeleton/>}><FAQPage /></DelayedSuspense>,
       },
 
       {
