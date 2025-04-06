@@ -64,8 +64,6 @@ const Slide = ({
   // image preloading
   useLayoutEffect(() => {
     if (isVisible || currentIndex === 0) {
-      // Set content as loaded after a brief delay
-
       // Preload background image
       if (slide.backdrop_path) {
         const bgImg = new Image();
