@@ -6,9 +6,11 @@ import { Link } from 'react-router-dom';
 const Network = ({
   network_name,
   network_id,
+  header
 }: {
   network_name: string;
   network_id: number;
+  header: string
 }) => {
   const { data: items = [], isLoading } = useNetwork(
     'tv',
@@ -20,7 +22,7 @@ const Network = ({
     <div className=' mt-20  min-h-[350px]' id={`${network_name}-section`}>
       <Link to='/explore/tv'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>
-          Popular on {network_name}
+         {header}
         </h2>
       </Link>
       {isLoading ? (
