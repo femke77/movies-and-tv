@@ -83,7 +83,6 @@ const Slide = ({
       }
 
       return () => {
-        // Cleanup function to reset loading states
         setHighResBgLoaded(false);
         setPosterLoaded(false);
         clearTimeout(contentTimer);
