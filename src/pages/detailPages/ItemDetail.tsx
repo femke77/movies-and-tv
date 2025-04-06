@@ -177,7 +177,7 @@ const ItemDetail = () => {
                   item.production_companies?.length > 0 &&
                   item.production_companies?.[0]?.logo_path) ? (
                   <div
-                    className={`'min-h-[23px] min-w-[92px] max-h-23 pt-2 mr-2 flex-shrink-0 flex items-center justify-center  opacity-0 ${
+                    className={`min-h-[23px] min-w-[92px] max-h-[23px] pt-2 mr-2 flex-shrink-0 flex items-center justify-center  opacity-0 ${
                       isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'
                     }`}
                   >
@@ -193,7 +193,7 @@ const ItemDetail = () => {
                           }`}
                         >
                           <img
-                            className='max-w-[92px] max-h-18 h-auto object-contain p-1'
+                            className='max-w-[92px] max-h-20  object-contain p-1'
                             src={`https://image.tmdb.org/t/p/w92${item.networks?.[0]?.logo_path}`}
                             title={`${item.networks?.[0]?.name}`}
                             alt={`${item.networks?.[0]?.name}'s official logo`}
@@ -221,7 +221,7 @@ const ItemDetail = () => {
                           }`}
                         >
                           <img
-                            className='max-w-[92px] max-h-18 h-auto object-contain p-1'
+                            className='max-w-[92px] max-h-20 object-contain p-1'
                             src={`https://image.tmdb.org/t/p/w92${item.production_companies?.[0]?.logo_path}`}
                             alt={`${item.production_companies?.[0]?.name}'s official logo`}
                             onLoad={() => setLogoLoaded(true)}
