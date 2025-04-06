@@ -10,7 +10,7 @@ import TrendingTV from '../components/main/TrendingTv';
 import TopRatedTv from '../components/main/TopRatedTv';
 import Provider from '../components/main/Provider';
 
-import TextSkeleton from '../components/loadingSkeletons/TextSkeleton';
+
 
 const Home = () => {
   useEffect(() => {
@@ -37,7 +37,7 @@ const Home = () => {
         <ContinueWatching />
       </div>
 
-<TextSkeleton/>
+
       <div className='my-28'>
         <TrendingMovies />
         <PopularMovies />

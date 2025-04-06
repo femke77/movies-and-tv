@@ -19,6 +19,7 @@ import { RegisterSWWrapper } from './components/helpers/RegisterSWWrapper.tsx';
 import { AliveScope, KeepAlive } from 'react-activation';
 import WatchPageSkeleton from './components/loadingSkeletons/WatchPageSkeleton.tsx';
 import TextSkeleton from './components/loadingSkeletons/TextSkeleton.tsx';
+import HistoryPageSkeleton from './components/loadingSkeletons/HistoryPageSkeleton.tsx';
 
 const History = lazy(() => import('./pages/watchPages/ContHistory.tsx'));
 const CastMemberDetail = lazy(() =>
@@ -212,7 +213,7 @@ const router = createBrowserRouter([
           {
             path: 'history',
             element: (
-              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+              <DelayedSuspense fallback={<HistoryPageSkeleton/>}>
                 <History />
               </DelayedSuspense>
             ),
