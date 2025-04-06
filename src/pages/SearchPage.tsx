@@ -122,7 +122,12 @@ const SearchContainer = memo(() => {
   const { query } = useParams<{ query: string }>();
   const searchQuery = query?.replace(/%20/g, ' ') || '';
   const lastLetterRef = useRef<string | null>(null);
-  useDocumentTitle(`Search results for '${searchQuery}' | BingeBox`);
+  useDocumentTitle(
+    searchQuery?.length > 0
+      ? `Search results for ${searchQuery} | BingeBox`
+      : 'Loading... | BingeBox',
+  );
+
   const [personOnly, setPersonOnly] = useState(false);
 
   useEffect(() => {

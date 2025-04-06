@@ -28,6 +28,7 @@ const WatchTV = () => {
   const { addToContinueWatchingTv } = useStore();
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
   const { series_id } = useParams<{ series_id: string }>();
   const [isLoading, setIsLoading] = useState(true);
   const [selectedServer, setSelectedServer] = useState(() => {
@@ -58,7 +59,12 @@ const WatchTV = () => {
     series_id ?? '',
     String(selectedSeason),
   );
-  useDocumentTitle(`Watch ${series?.original_name || 'TV Show'} | BingeBox`);
+  useDocumentTitle(
+   series?.original_name 
+      ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
+      : 'Loading... | BingeBox',
+  );
+
   useEffect(() => {
     if (!series) return;
     // setTimeout(() => {
@@ -117,10 +123,16 @@ const WatchTV = () => {
     }
   }, [series_id, selectedSeason, selectedEpisode]);
 
+  // when page is remounted, user will see loading spinner for 750ms
   useEffect(() => {
     timeoutRef.current = setTimeout(() => {
       setIsLoading(false);
-    }, 1250);
+    }, 750);
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -176,7 +188,7 @@ const WatchTV = () => {
         iframeRef.current.contentWindow?.location.replace('about:blank');
       }
 
-      setTimeout(() => {
+      iframeLoadRef.current = setTimeout(() => {
         iframeRef.current?.contentWindow?.location.replace(newURL);
         timeoutRef.current = setTimeout(() => {
           setIsLoading(false);
@@ -191,6 +203,9 @@ const WatchTV = () => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+      } 
+      if (iframeLoadRef.current) {
+        clearTimeout(iframeLoadRef.current);
       }
     };
   }, [selectedServer, series_id, selectedSeason, selectedEpisode]);
