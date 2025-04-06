@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { Link, useLocation } from 'react-router-dom';
 import DraggableCarousel from '../containers/SimpleCarousel';
 import ConfirmModal from '../modals/ConfirmModal';
-import { ArrowRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { useStore } from '../../state/store';
 
 interface WatchItem {
@@ -37,7 +37,7 @@ const ContinueWatching = () => {
         setItems(continueWatching);
       } else if (location.pathname === '/') {
         const slicedItems = Object.fromEntries(
-          Object.entries(continueWatching).slice(0, 5),
+          Object.entries(continueWatching).slice(0, 5)
         );
         setItems(slicedItems);
       }
@@ -49,7 +49,7 @@ const ContinueWatching = () => {
       | React.MouseEvent<HTMLButtonElement>
       | React.TouchEvent<HTMLButtonElement>
       | React.KeyboardEvent<HTMLButtonElement>,
-    key: string,
+    key: string
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -73,7 +73,7 @@ const ContinueWatching = () => {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    key: string,
+    key: string
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       setActiveItemId(key);
@@ -86,8 +86,7 @@ const ContinueWatching = () => {
     const items = carouselRef.current.querySelectorAll('[data-carousel-item]');
     const currentIndex = Array.from(items).findIndex(
       (item) =>
-        item === document.activeElement ||
-        item.contains(document.activeElement),
+        item === document.activeElement || item.contains(document.activeElement)
     );
 
     switch (e.key) {
@@ -112,37 +111,38 @@ const ContinueWatching = () => {
         showModal={openModal}
         closeModal={closeModal}
         handleClick={handleClearAll}
-        message={
-          'Are you sure you want to clear all items from continue watching?'
-        }
+        message={'Are you sure you want to clear everything?'}
       />
 
       {Object.keys(items).length !== 0 && (
         <>
-          <div className='z-10 flex justify-between items-center'>
-          <h1 className='z-10 text-2xl font-semibold'>Continue Watching</h1>
-            <div className='flex items-center'>
+          <div className='z-10 flex items-center'>
+     
               {location.pathname === '/account/history' && (
+                <div className='w-full flex justify-end items-center'>
                 <button
                   onClick={() => setOpenModal(true)}
                   className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
                 >
                   Clear All
                 </button>
+                </div>
               )}
               {location.pathname === '/' && (
                 <>
                   <Link
                     to='/account/history'
-                    className=' p-2 pointer-events-auto text-white'
+                    className='pointer-events-auto text-white flex items-center'
                   >
-                    See All Watch History
+                  <h1 className='z-10 text-2xl font-semibold pr-2 pb-1.5'>
+                    Continue Watching
+                  </h1>
+                    <ChevronRight color='#ffffff' />
                   </Link>
-                  <ArrowRight className='text-white mr-6' />
                 </>
               )}
             </div>
-          </div>
+         
           <div
             ref={carouselRef}
             className='flex'
@@ -245,7 +245,7 @@ const ContinueWatching = () => {
                               'Invalid Date'
                                 ? 'Unknown Date '
                                 : dayjs(items[key].release_date).format(
-                                    'YYYY',
+                                    'YYYY'
                                   )}{' '}
                               &#x2022; {Number(items[key].runtime) || '0'} min
                             </p>

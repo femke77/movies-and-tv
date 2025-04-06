@@ -6,14 +6,15 @@ import { useState } from 'react';
 
 const History = () => {
   const { previousSearches, clearPreviousSearches } = useStore(
-    (state) => state,
+    (state) => state
   );
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className='z-10 w-full h-full  mt-36'>
+    <div className='z-10 w-full h-full mt-26'>
       <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800' />
-
+   
+ <h1 className='z-10 top-7 ml-6 relative text-2xl font-semibold text-white'>Continue Watching</h1>
       <ContinueWatching />
       <div className='z-10 flex justify-between items-end mt-6'>
         <h1 className='z-10 mt-12 text-2xl font-semibold ml-6'>
