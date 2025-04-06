@@ -120,7 +120,7 @@ const ContinueWatching = () => {
       {Object.keys(items).length !== 0 && (
         <>
           <div className='z-10 flex justify-between items-center'>
-          <h1 className='z-10 text-2xl font-semibold'>Continue Watching</h1>
+            <h1 className='z-10 text-2xl font-semibold'>Continue Watching</h1>
             <div className='flex items-center'>
               {location.pathname === '/account/history' && (
                 <button
