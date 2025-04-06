@@ -17,22 +17,23 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { RegisterSWWrapper } from './components/helpers/RegisterSWWrapper.tsx';
 import { AliveScope, KeepAlive } from 'react-activation';
+import WatchPageSkeleton from './components/loadingSkeletons/WatchPageSkeleton.tsx';
 
 const History = lazy(() => import('./pages/watchPages/ContHistory.tsx'));
-const CastMemberDetail = lazy(
-  () => import('./pages/detailPages/CastMemberDetail.tsx'),
+const CastMemberDetail = lazy(() =>
+  import('./pages/detailPages/CastMemberDetail.tsx')
 );
 const Watchlist = lazy(() => import('./pages/Watchlist.tsx'));
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
 const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
 const ItemDetail = lazy(() => import('./pages/detailPages/ItemDetail.tsx'));
 const Results = lazy(() => import('./pages/SearchPage.tsx'));
-const MovieTopRated = lazy(
-  () => import('./pages/moviePages/MovieTopRated.tsx'),
+const MovieTopRated = lazy(() =>
+  import('./pages/moviePages/MovieTopRated.tsx')
 );
 const MoviePopular = lazy(() => import('./pages/moviePages/MoviePopular.tsx'));
-const MovieTrending = lazy(
-  () => import('./pages/moviePages/MovieTrending.tsx'),
+const MovieTrending = lazy(() =>
+  import('./pages/moviePages/MovieTrending.tsx')
 );
 const TvTrending = lazy(() => import('./pages/tvPages/TvTrending.tsx'));
 const TvTopRated = lazy(() => import('./pages/tvPages/TvTopRated.tsx'));
@@ -72,7 +73,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'search/:query?',
-        element: <Results />,
+        element: (
+          <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+            <Results />
+          </DelayedSuspense>
+        ),
       },
 
       {
@@ -176,11 +181,19 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'movie/:movie_id',
-            element: <WatchMovie />,
+            element: (
+              <DelayedSuspense fallback={<WatchPageSkeleton />}>
+                <WatchMovie />
+              </DelayedSuspense>
+            ),
           },
           {
             path: 'tv/:series_id',
-            element: <WatchTV />,
+            element: (
+              <DelayedSuspense fallback={<WatchPageSkeleton />}>
+                <WatchTV />
+              </DelayedSuspense>
+            ),
           },
         ],
       },
@@ -231,7 +244,7 @@ createRoot(document.getElementById('root')!).render(
     <AliveScope>
       <RouterProvider router={router} />
     </AliveScope>
-  </PersistQueryClientProvider>,
+  </PersistQueryClientProvider>
 );
 
 // https://tanstack.com/query/latest/docs/framework/react/plugins/persistQueryClient

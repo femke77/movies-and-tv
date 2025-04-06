@@ -17,7 +17,7 @@ const CastMemberDetail = () => {
 
   useDocumentTitle(
     castData?.name
-      ? `${castData.name} | BingeBox`
+      ? `${castData.name}'s Profile | BingeBox`
       : 'Loading... | BingeBox',
   );
 
