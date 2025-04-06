@@ -12,7 +12,7 @@ const History = () => {
 
   return (
     <div className='z-10 w-full h-full  mt-36'>
-            <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'/>
+      <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800' />
 
       <ContinueWatching />
       <div className='z-10 flex justify-between items-end mt-6'>

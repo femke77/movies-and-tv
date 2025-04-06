@@ -25,8 +25,7 @@ const ContinueWatching = () => {
   const location = useLocation();
   const continueWatching = useStore((state) => state.continueWatching);
 
-  
-  const {removeFromContinueWatching, clearContinueWatching} = useStore();
+  const { removeFromContinueWatching, clearContinueWatching } = useStore();
   const [items, setItems] = useState<WatchItems>({});
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState(false);
@@ -37,7 +36,9 @@ const ContinueWatching = () => {
       if (location.pathname === '/account/history') {
         setItems(continueWatching);
       } else if (location.pathname === '/') {
-        const slicedItems = Object.fromEntries(Object.entries(continueWatching).slice(0, 5));
+        const slicedItems = Object.fromEntries(
+          Object.entries(continueWatching).slice(0, 5),
+        );
         setItems(slicedItems);
       }
     }
@@ -55,7 +56,6 @@ const ContinueWatching = () => {
     setTimeout(() => {
       removeFromContinueWatching(Number(key.split('-')[0]), key.split('-')[1]);
       setActiveItemId(null);
-
     }, 150);
   };
 
@@ -119,16 +119,17 @@ const ContinueWatching = () => {
 
       {Object.keys(items).length !== 0 && (
         <>
+          <h1 className='z-10 text-2xl font-semibold'>Continue Watching</h1>
           <div className='z-10 flex justify-between items-center'>
-            <h1 className='z-10 text-2xl font-semibold'>Continue Watching</h1>
             <div className='flex items-center'>
               {location.pathname === '/account/history' && (
-              <button
-                onClick={() => setOpenModal(true)}
-                className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-              >
-                Clear All
-              </button>)}
+                <button
+                  onClick={() => setOpenModal(true)}
+                  className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+                >
+                  Clear All
+                </button>
+              )}
               {location.pathname === '/' && (
                 <>
                   <Link

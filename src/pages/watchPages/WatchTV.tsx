@@ -25,7 +25,7 @@ import { useStore } from '../../state/store';
 
 const WatchTV = () => {
   const { servers } = serverData;
-  const {addToContinueWatchingTv} = useStore()
+  const { addToContinueWatchingTv } = useStore();
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { series_id } = useParams<{ series_id: string }>();
@@ -62,9 +62,18 @@ const WatchTV = () => {
   useEffect(() => {
     if (!series) return;
     // setTimeout(() => {
-    addToContinueWatchingTv(Number(series_id!), 'tv', dayjs().unix(), series.original_name, selectedSeason, selectedEpisode, series.backdrop_path)
-    
+    addToContinueWatchingTv(
+      Number(series_id!),
+      'tv',
+      dayjs().unix(),
+      series.original_name,
+      selectedSeason,
+      selectedEpisode,
+      series.backdrop_path,
+    );
+
     // }, 60000);
+    // es-lint-disable-next-line react-hooks/exhaustive-deps
   }, [series_id, series, selectedSeason, selectedEpisode]);
 
   useEffect(() => {

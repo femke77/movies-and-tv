@@ -80,9 +80,7 @@ export default defineConfig({
                 mode: 'no-cors',
               },
             },
-            
           },
-          
         ],
         // these should be set automatically by the plugin
         // skipWaiting: false,

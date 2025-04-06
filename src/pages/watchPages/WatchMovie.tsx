@@ -12,9 +12,9 @@ import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
 
 const WatchMovie = () => {
-  const {addToContinueWatchingMovie} = useStore()
+  const { addToContinueWatchingMovie } = useStore();
   const { movie_id } = useParams<{ movie_id: string }>();
-  const { data: movie} = useWatchDetails('movie', movie_id ?? '');
+  const { data: movie } = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -39,6 +39,8 @@ const WatchMovie = () => {
       movie.runtime,
     );
     // }, 60000);
+
+    // es-lint-disable-next-line react-hooks/exhaustive-deps
   }, [movie_id, movie]);
 
   useEffect(() => {

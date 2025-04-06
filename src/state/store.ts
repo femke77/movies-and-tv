@@ -14,9 +14,37 @@ interface BookmarkStore {
   previousSearches: string[];
   addToPreviousSearches: (_query: string) => void;
   clearPreviousSearches: () => void;
-  continueWatching: { [key: string]: {id: number, media_type: string, lastUpdated: number, title:string, season?: number, episode?: number, poster_path: string, release_date?: string, runtime?: string} };
-  addToContinueWatchingTv: (_id: number, _media_type: string, _lastUpdated: number, _title:string, _season: number, _episode: number, _poster_path: string) => void;
-  addToContinueWatchingMovie: (_id: number, _media_type: string, _lastUpdated: number, _title:string, _poster_path: string, release_date:string, runtime:string) => void;
+  continueWatching: {
+    [key: string]: {
+      id: number;
+      media_type: string;
+      lastUpdated: number;
+      title: string;
+      season?: number;
+      episode?: number;
+      poster_path: string;
+      release_date?: string;
+      runtime?: string;
+    };
+  };
+  addToContinueWatchingTv: (
+    _id: number,
+    _media_type: string,
+    _lastUpdated: number,
+    _title: string,
+    _season: number,
+    _episode: number,
+    _poster_path: string,
+  ) => void;
+  addToContinueWatchingMovie: (
+    _id: number,
+    _media_type: string,
+    _lastUpdated: number,
+    _title: string,
+    _poster_path: string,
+    _release_date: string,
+    _runtime: string,
+  ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
 }
@@ -25,13 +53,13 @@ export const useStore = create<BookmarkStore>()(
   persist(
     (set, get) => ({
       bookmarks: [],
-      modalData: null, // Store the item being bookmarked
+      modalData: null, // Store the data of the item toggling bookmark state
       showModal: false,
       previousSearches: [],
       addToPreviousSearches: (query) => {
-        if (get().previousSearches.includes(query.toLocaleLowerCase())) return;
+        const lowerCaseQuery = query.toLocaleLowerCase();
+        if (get().previousSearches.includes(query)) return;
         set((state) => {
-          const lowerCaseQuery = query.toLocaleLowerCase();
           // Create new array either with just the newest items (if at limit)
           // or with all previous items plus the new one. Rotates the array.
           const newSearches =
@@ -44,7 +72,15 @@ export const useStore = create<BookmarkStore>()(
       },
       clearPreviousSearches: () => set({ previousSearches: [] }),
       continueWatching: {},
-     addToContinueWatchingTv : (id, media_type, lastUpdated, title, season, episode, poster_path) => {
+      addToContinueWatchingTv: (
+        id,
+        media_type,
+        lastUpdated,
+        title,
+        season,
+        episode,
+        poster_path,
+      ) => {
         set((state) => ({
           continueWatching: {
             ...state.continueWatching,
@@ -60,7 +96,15 @@ export const useStore = create<BookmarkStore>()(
           },
         }));
       },
-      addToContinueWatchingMovie: (id, media_type, lastUpdated, title, poster_path, release_date, runtime) => {
+      addToContinueWatchingMovie: (
+        id,
+        media_type,
+        lastUpdated,
+        title,
+        poster_path,
+        release_date,
+        runtime,
+      ) => {
         set((state) => ({
           continueWatching: {
             ...state.continueWatching,
@@ -115,7 +159,7 @@ export const useStore = create<BookmarkStore>()(
         get().bookmarks.some((b) => b.id === id && b.type === type),
     }),
     {
-      name: 'bookmark-storage',
+      name: 'bingebox-storage',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         bookmarks: state.bookmarks,
