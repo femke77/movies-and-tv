@@ -82,17 +82,21 @@ define(['./workbox-f6195dc0'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "/index.html",
-    "revision": "0.dqo9lmtoc2"
+    "revision": "0.89pdnsmi7p8"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("/index.html"), {
     allowlist: [/^\/$/]
   }));
-  workbox.registerRoute(/^https:\/\/image\.tmdb\.org\/t\/p\/(w\d+|h\d+)\/.*$/, new workbox.CacheFirst({
+  workbox.registerRoute(/^https:\/\/image\.tmdb\.org\/t\/p\/(w1280|w500|w185)\/.*$/, new workbox.CacheFirst({
     "cacheName": "tmdb-images",
+    "fetchOptions": {
+      "mode": "no-cors"
+    },
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 100,
-      maxAgeSeconds: 2592000
+      maxAgeSeconds: 2592000,
+      purgeOnQuotaError: true
     }), new workbox.CacheableResponsePlugin({
       statuses: [0, 200]
     })]

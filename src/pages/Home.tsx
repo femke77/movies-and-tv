@@ -8,6 +8,7 @@ import TrendingMovies from '../components/main/TrendingMovies';
 import TopRatedMovies from '../components/main/TopRatedMovies';
 import TrendingTV from '../components/main/TrendingTv';
 import TopRatedTv from '../components/main/TopRatedTv';
+import MovieProvider from '../components/main/MovieProvider';
 
 const Home = () => {
   useEffect(() => {
@@ -38,13 +39,37 @@ const Home = () => {
         <PopularMovies />
         <TopRatedMovies />
         <TrendingTV />
-        <Network network_name='Netflix' network_id={213} />
-        <Network network_name='Hulu' network_id={453} />
-        <Network network_name='Apple TV+' network_id={2552} />
-        <Network network_name='Paramount' network_id={2076} />
-        <ProductionCo company_name='Marvel Movies' company_id={420} />
-        <ProductionCo company_name='Featured Disney' company_id={2} />
-        <ProductionCo company_name='Neon/Hulu Movies' company_id={90733} />
+        <Network
+          header='Top Series on Netflix'
+          network_name='Netflix'
+          network_id={213}
+        />
+        <Network
+          header='Popular on Hulu'
+          network_name='HuluTV'
+          network_id={453}
+        />
+        <Network header='Apple TV+' network_name='AppleTV+' network_id={2552} />
+        <Network
+          header='Now Streaming on Paramount+'
+          network_name='Paramount+'
+          network_id={4330}
+        />
+        <ProductionCo
+          header='Marvel Movies'
+          company_name='MarvelMovies'
+          company_id={420}
+        />
+        <ProductionCo
+          header='Featured Disney Movies'
+          company_name='DisneyMovies'
+          company_id={2}
+        />
+        <MovieProvider
+          header='Movies on Hulu'
+          provider_name='Hulu'
+          provider_id={15}
+        />
         <TopRatedTv />
       </div>
     </>

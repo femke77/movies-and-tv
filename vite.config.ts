@@ -64,7 +64,9 @@ export default defineConfig({
         ],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/image\.tmdb\.org\/t\/p\/(w\d+|h\d+)\/.*$/,
+            // cache slide backdrops, posters, and logos
+            urlPattern:
+              /^https:\/\/image\.tmdb\.org\/t\/p\/(w1280|w500|w185)\/.*$/,
             handler: 'CacheFirst', // Use cached images first, fetch only if missing (reduces api calls)
             options: {
               cacheName: 'tmdb-images',

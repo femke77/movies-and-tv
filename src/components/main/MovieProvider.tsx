@@ -1,26 +1,26 @@
-import { useNetwork } from '../../hooks/useNetwork';
+import { useProvider } from '../../hooks/useMovieProvider';
 import CarouselContainer from '../containers/CarouselContainer';
 import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
 import { Link } from 'react-router-dom';
 
-const Network = ({
-  network_name,
-  network_id,
+const MovieProvider = ({
+  provider_name,
+  provider_id,
   header,
 }: {
-  network_name: string;
-  network_id: number;
+  provider_name: string;
+  provider_id: number;
   header: string;
 }) => {
-  const { data: items = [], isLoading } = useNetwork(
-    'tv',
-    network_name,
-    network_id,
+  const { data: items = [], isLoading } = useProvider(
+    'movie',
+    provider_name,
+    provider_id,
   );
 
   return (
-    <div className=' mt-20  min-h-[350px]' id={`${network_name}-section`}>
-      <Link to='/explore/tv'>
+    <div className=' mt-20  min-h-[350px]' id={`${provider_name}-section`}>
+      <Link to='/explore/movies'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>{header}</h2>
       </Link>
       {isLoading ? (
@@ -32,10 +32,10 @@ const Network = ({
           ))}
         </div>
       ) : (
-        <CarouselContainer items={items} itemType='tv' />
+        <CarouselContainer items={items} itemType='movie' />
       )}
     </div>
   );
 };
 
-export default Network;
+export default MovieProvider;
