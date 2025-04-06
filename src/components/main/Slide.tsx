@@ -4,7 +4,7 @@ import { useItemLogos } from '../../hooks/useTrendingWithLogoFetch';
 import genresData from '../../utils/data/genres.json';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { useState, useLayoutEffect, lazy } from 'react';
+import { useState, useEffect, lazy } from 'react';
 import BookmarkBtn from '../buttons/BookmarkBtn';
 import Tooltip from '../modals/ToolTip';
 
@@ -38,7 +38,7 @@ const Slide = ({
 }) => {
   const [highResBgLoaded, setHighResBgLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false);
-
+  const [contentLoaded, setContentLoaded] = useState(false);
   const [logoStatus, setLogoStatus] = useState({
     loaded: false,
     visible: false,
@@ -62,8 +62,12 @@ const Slide = ({
   });
 
   // image preloading
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isVisible || currentIndex === 0) {
+      const contentTimer = setTimeout(() => {
+        setContentLoaded(true);
+      }, 100);
+
       // Preload background image
       if (slide.backdrop_path) {
         const bgImg = new Image();
@@ -82,12 +86,13 @@ const Slide = ({
         // Cleanup function to reset loading states
         setHighResBgLoaded(false);
         setPosterLoaded(false);
+        clearTimeout(contentTimer);
       };
     }
   }, [isVisible, currentIndex, slide]);
 
   // Separate effect for logo loading to avoid race conditions
-  useLayoutEffect(() => {
+  useEffect(() => {
     if ((isVisible || currentIndex === 0) && displayLogo) {
       const logoImg = new Image();
       logoImg.onload = () => {
@@ -98,15 +103,15 @@ const Slide = ({
   }, [isVisible, currentIndex, displayLogo]);
 
   // Show logo after it's loaded and other content is ready
-  useLayoutEffect(() => {
-    if (logoStatus.loaded && isVisible) {
+  useEffect(() => {
+    if (contentLoaded && logoStatus.loaded && isVisible) {
       const logoTimer = setTimeout(() => {
         setLogoStatus((prev) => ({ ...prev, visible: true }));
       }, 500);
 
       return () => clearTimeout(logoTimer);
     }
-  }, [logoStatus.loaded, isVisible]);
+  }, [contentLoaded, logoStatus.loaded, isVisible]);
 
   return (
     <div
@@ -132,7 +137,7 @@ const Slide = ({
       <div
         className='max-w-[1800px] mx-auto relative h-full'
         style={{
-          opacity: isVisible ? 1 : 0,
+          opacity: contentLoaded ? 1 : 0,
           transition: 'opacity 700ms ease-in-out',
         }}
       >
@@ -210,7 +215,7 @@ const Slide = ({
                 </div>
 
                 {/* Overview text with placeholder */}
-                {isVisible ? (
+                {contentLoaded ? (
                   <p className='text-white line-clamp-3 text-center [@media(min-width:1050px)]:text-left mb-10 h-[72px] px-0 sm:px-6 [@media(min-width:1050px)]:px-0'>
                     {slide.overview}
                   </p>
@@ -227,14 +232,14 @@ const Slide = ({
               )}
             >
               <div className='mr-5'>
-                {isVisible ? (
+              {contentLoaded ? (
                   <UserRating rating={slide.vote_average ?? 0} />
                 ) : (
                   <div className='w-12 h-12 bg-gray-700/30 rounded-full'></div>
                 )}
               </div>
               <div className='mr-5'>
-                {isVisible ? (
+              {contentLoaded ? (
                   <Tooltip text='Watch Now'>
                     <WatchButton
                       itemType={slide.media_type!}
