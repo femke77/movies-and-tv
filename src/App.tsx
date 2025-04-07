@@ -8,6 +8,7 @@ import { ScrollRestoration } from 'react-router-dom';
 import BookmarkModal from './components/modals/BookmarkModal';
 
 function App() {
+  
   return (
     <>
       <ScrollRestoration />

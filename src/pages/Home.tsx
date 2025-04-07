@@ -10,9 +10,13 @@ import TrendingTV from '../components/main/TrendingTv';
 import TopRatedTv from '../components/main/TopRatedTv';
 import Provider from '../components/main/Provider';
 import useDocumentTitle from '../hooks/usePageTitles';
+import { useActivate } from 'react-activation';
 
 const Home = () => {
   useDocumentTitle('Home | BingeBox');
+  useActivate(() => {
+    document.title = 'Home | BingeBox';
+  });
   useEffect(() => {
     // fixes the scroll position bug on page reload that was showing the contintue watching section
     const isPageReload = !window.performance
