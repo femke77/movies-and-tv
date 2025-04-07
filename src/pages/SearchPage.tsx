@@ -22,6 +22,11 @@ const Results = memo(({ personOnly }: ResultsProps) => {
 
   const { ref, inView } = useInView();
   const bookmarks = useStore((state) => state.bookmarks);
+  const isBookmarked = useMemo(() => {
+    const set = new Set(bookmarks.map(b => `${b.id}-${b.type}`));
+    return (id: number, type: string) => set.has(`${id}-${type}`);
+  }, [bookmarks]);
+
   const { addToPreviousSearches } = useStore();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteSearchQuery(query ?? '');
@@ -92,8 +97,8 @@ const Results = memo(({ personOnly }: ResultsProps) => {
                   <MemoizedItemCard
                     item={item}
                     textSize='md'
-                    isBookmarked={bookmarks.some(
-                      (a) => a.id === item.id && a.type === item.media_type,
+                    isBookmarked={isBookmarked(
+                      Number(item.id),  item.media_type || 'Unknown',
                     )}
                   />
                 </div>

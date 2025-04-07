@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Chip from '../../components/Chip';
 import { useItemDetail } from '../../hooks/useItemOrWatchDetail';
 import { useParams } from 'react-router-dom';
@@ -22,6 +22,11 @@ const ItemDetail = () => {
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
   const bookmarks = useStore((state) => state.bookmarks);
+  const isBookmarked = useMemo(() => {
+    const set = new Set(bookmarks.map(b => `${b.id}-${b.type}`));
+    return (id: number, type: string) => set.has(`${id}-${type}`);
+  }, [bookmarks]);
+
 
   useDocumentTitle(
     item?.title || item?.name
@@ -291,10 +296,7 @@ const ItemDetail = () => {
                 </div>
                 <div className='min-w-10 h-10 pt-3 flex items-center justify-center pl-2'>
                   <BookmarkBtn
-                    isBookmarked={bookmarks.some(
-                      (bookmark) =>
-                        bookmark.id === item.id && bookmark.type === item_type,
-                    )}
+                    isBookmarked={isBookmarked(Number(item.id), item_type!)}
                     id={item.id}
                     type={item_type!}
                   />
