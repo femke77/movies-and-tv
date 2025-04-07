@@ -129,8 +129,9 @@ header {
 }
 
 nav {
-    scrollbar-gutter: stable !important
+  scrollbar-gutter: stable !important
 }
+
 .swiper {
   width: 100%;
   min-height: 100%;
@@ -226,18 +227,39 @@ nav {
   text-shadow: 0 0px 0px rgba(255, 255, 255, 0.5);
 }
 
-@keyframes shine {
-  0% {
-    background-position: -200px;
+@layer utilities {
+  @keyframes pulse {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
   }
-  100% {
-    background-position: 200px;
+
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 }
 
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
+@layer utilities {
+  @keyframes shine {
+    0% {
+      background-position: -200px;
+    }
+
+    100% {
+      background-position: 200px;
+    }
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
   }
 }
 
@@ -299,9 +321,12 @@ nav {
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 4rem; /* Reduced from 6rem */
-  margin-top: 2rem; /* Reduced from 3rem */
-  margin-bottom: 2rem; /* Reduced from 3rem */
+  max-width: 4rem;
+  /* Reduced from 6rem */
+  margin-top: 2rem;
+  /* Reduced from 3rem */
+  margin-bottom: 2rem;
+  /* Reduced from 3rem */
 }
 
 .loader:before,
@@ -310,25 +335,30 @@ nav {
   position: absolute;
   border-radius: 50%;
   animation: pulsOut 1.8s ease-in-out infinite;
-  filter: drop-shadow(0 0 0.5rem rgba(255, 255, 255, 0.75)); /* Reduced shadow */
+  filter: drop-shadow(0 0 0.5rem rgba(255, 255, 255, 0.75));
+  /* Reduced shadow */
 }
 
 .loader:before {
   width: 100%;
   padding-bottom: 100%;
-  box-shadow: inset 0 0 0 0.5rem #fff; /* Reduced from 1rem */
+  box-shadow: inset 0 0 0 0.5rem #fff;
+  /* Reduced from 1rem */
   animation-name: pulsIn;
 }
 
 .loader:after {
-  width: calc(100% - 1rem); /* Reduced from 2rem */
-  padding-bottom: calc(100% - 1rem); /* Reduced from 2rem */
+  width: calc(100% - 1rem);
+  /* Reduced from 2rem */
+  padding-bottom: calc(100% - 1rem);
+  /* Reduced from 2rem */
   box-shadow: 0 0 0 0 #fff;
 }
 
 @keyframes pulsIn {
   0% {
-    box-shadow: inset 0 0 0 0.5rem #fff; /* Reduced from 1rem */
+    box-shadow: inset 0 0 0 0.5rem #fff;
+    /* Reduced from 1rem */
     opacity: 1;
   }
 
@@ -340,6 +370,7 @@ nav {
 }
 
 @keyframes pulsOut {
+
   0%,
   50% {
     box-shadow: 0 0 0 0 #fff;
@@ -347,7 +378,8 @@ nav {
   }
 
   100% {
-    box-shadow: 0 0 0 0.5rem #fff; /* Reduced from 1rem */
+    box-shadow: 0 0 0 0.5rem #fff;
+    /* Reduced from 1rem */
     opacity: 1;
   }
 }

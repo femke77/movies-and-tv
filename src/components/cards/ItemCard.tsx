@@ -60,6 +60,25 @@ const ItemCard = ({
     };
   }, [item]);
 
+  // Handle the transition end event to set visibility to false
+  // prevents detached dom nodes in memory due to css transitions
+  useEffect(() => {
+    const handleTransitionEnd = () => {
+      if (!isVisible) {
+        setIsVisible(false); 
+      }
+    };
+    const cardElement = document.querySelector('.item-card');
+    if (cardElement) {
+      cardElement.addEventListener('transitionend', handleTransitionEnd);
+    }
+    return () => {
+      if (cardElement) {
+        cardElement.removeEventListener('transitionend', handleTransitionEnd);
+      }
+    };
+  }, [isVisible]);
+
   const movieGenres = item?.genre_ids?.map((genreId) => {
     const genre = genres.find((genre) => genre.id === genreId);
     return genre?.name;
@@ -90,9 +109,9 @@ const ItemCard = ({
   return (
     <>
       <div
-        className={`relative mb-10 flex flex-col items-center justify-between w-full bg-black rounded-xl shadow-lg  
+        className={`item-card relative mb-10 flex flex-col items-center justify-between w-full bg-black rounded-xl shadow-lg  
         transition-opacity duration-500 ease-linear ${
-          isVisible ? 'opacity-100' : 'opacity-0'
+          isVisible ? 'opacity-100' : 'opacity-0 visibility-hidden'
         }`}
         onMouseEnter={() => void import('../../pages/detailPages/ItemDetail')}
       >
