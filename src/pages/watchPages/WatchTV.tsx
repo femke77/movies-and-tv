@@ -269,8 +269,8 @@ const WatchTV = () => {
             </div>
             {/* player controls (for tv) */}
             {series && (
-              <div className='min-h-[100px] rounded-lg flex items-center justify-between gap-[16px]  p-[16px] bg-[#1f1f1f]'>
-                <div className='flex flex-col gap-2 w-full '>
+              <div className='min-h-[100px] mb-1 rounded-lg flex items-center justify-between gap-[16px]  p-[16px] bg-[#1f1f1f]'>
+                <div className='flex flex-col  w-full '>
                   <div className='flex justify-center sm:justify-between items-center flex-wrap'>
                     <div className='text-[#fff9] flex  mx-5 sm:mx-0'>
                       <div className='flex flex-col mt-[15px] sm:flex-row'>
@@ -357,7 +357,7 @@ const WatchTV = () => {
               </div>
             )}
 
-            <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]'>
+            <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] px-[24px] py-3 mb-[24px]'>
               {/* description */}
               {series && (
                 <WatchDescription
