@@ -14,6 +14,7 @@ import BackButton from '../components/buttons/BackBtn';
 const Watchlist = () => {
   useDocumentTitle('Your Watchlist | BingeBox');
   const bookmarks = useStore((state) => state.bookmarks);
+
   const [filterType, setFilterType] = useState<string>('all');
   const queryClient = useQueryClient();
 

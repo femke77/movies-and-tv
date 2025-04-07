@@ -1,4 +1,4 @@
-import { useEffect, memo } from 'react';
+import { useEffect, memo, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { IItem } from '../interfaces/IItem';
 import { MemoizedItemCard } from './cards/ItemCard';
@@ -26,6 +26,11 @@ const Explore = memo(
   }: IExploreProps) => {
     const { ref, inView } = useInView();
     const bookmarks = useStore((state) => state.bookmarks);
+    const isBookmarked = useMemo(() => {
+      const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
+      return (id: number, type: string) => set.has(`${id}-${type}`);
+    }, [bookmarks]);
+
     useEffect(() => {
       if (inView && hasNextPage) {
         fetchNextPage();
@@ -45,9 +50,7 @@ const Explore = memo(
                 item={item}
                 showGenres={true}
                 showRating={true}
-                isBookmarked={bookmarks.some(
-                  (a) => a.id === item.id && a.type === itemType,
-                )}
+                isBookmarked={isBookmarked(Number(item.id), itemType)}
               />
             ))
           ) : (
