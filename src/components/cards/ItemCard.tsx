@@ -65,7 +65,7 @@ const ItemCard = ({
   useEffect(() => {
     const handleTransitionEnd = () => {
       if (!isVisible) {
-        setIsVisible(false); 
+        setIsVisible(false);
       }
     };
     const cardElement = document.querySelector('.item-card');
