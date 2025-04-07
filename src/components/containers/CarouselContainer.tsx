@@ -17,7 +17,7 @@ const Carousel = ({
   const bookmarks = useStore((state) => state.bookmarks);
 
   const isBookmarked = useMemo(() => {
-    const set = new Set(bookmarks.map(b => `${b.id}-${b.type}`));
+    const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
     return (id: number, type: string) => set.has(`${id}-${type}`);
   }, [bookmarks]);
 
@@ -51,7 +51,7 @@ const Carousel = ({
       >
         {items.map((item) => (
           <div
-          key={`${item.id}-${item.media_type || itemType || 'Unknown'}`}
+            key={`${item.id}-${item.media_type || itemType || 'Unknown'}`}
             className='w-[180px] flex-shrink-0'
           >
             <MemoizedItemCard
@@ -60,7 +60,10 @@ const Carousel = ({
               itemType={itemType || item.media_type || 'Unknown'}
               showRating={showRating}
               showGenres={false}
-              isBookmarked={isBookmarked(Number(item.id), item.media_type || itemType || 'Unknown')}
+              isBookmarked={isBookmarked(
+                Number(item.id),
+                item.media_type || itemType || 'Unknown',
+              )}
             />
           </div>
         ))}

@@ -27,10 +27,10 @@ const Explore = memo(
     const { ref, inView } = useInView();
     const bookmarks = useStore((state) => state.bookmarks);
     const isBookmarked = useMemo(() => {
-      const set = new Set(bookmarks.map(b => `${b.id}-${b.type}`));
+      const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
       return (id: number, type: string) => set.has(`${id}-${type}`);
     }, [bookmarks]);
-  
+
     useEffect(() => {
       if (inView && hasNextPage) {
         fetchNextPage();
