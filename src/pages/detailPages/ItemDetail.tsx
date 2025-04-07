@@ -17,6 +17,7 @@ const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [backgroundLoaded, setBackgroundLoaded] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
+  const [lowResPosterLoaded, setLowResPosterLoaded] = useState(false);
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
@@ -60,6 +61,21 @@ const ItemDetail = () => {
         setLogoLoaded(true);
       };
     }
+
+    if (item?.poster_path) {
+      const lowResPoster = new Image();
+      lowResPoster.src = `https://image.tmdb.org/t/p/w185${item.poster_path}`;
+      lowResPoster.onload = () => {
+        setLowResPosterLoaded(true);
+      }
+
+      const highResPoster = new Image();
+      highResPoster.src = `https://image.tmdb.org/t/p/w780${item.poster_path}`;
+      highResPoster.onload = () => {
+        setHighResPosterLoaded(true);
+      }
+    }
+
     return () => {
       setLogoLoaded(false);
     };
@@ -67,9 +83,9 @@ const ItemDetail = () => {
 
   if (!item) return null;
 
-  const hiResPosterPath = item?.poster_path
-    ? `https://image.tmdb.org/t/p/w780${item.poster_path}`
-    : '/no_poster_available.svg';
+  // const hiResPosterPath = item?.poster_path
+  //   ? `https://image.tmdb.org/t/p/w780${item.poster_path}`
+  //   : '/no_poster_available.svg';
 
   const releaseYearMovie = item?.release_date?.split('-')[0];
   const releaseYearTV = item?.first_air_date?.split('-')[0];
@@ -93,6 +109,9 @@ const ItemDetail = () => {
       ? '0'
       : calculateROI;
 
+      const PosterPlaceHolder = () => (
+        <div className='w-full h-full bg-gray-900 absolute inset-0 z-[1]' />
+      );
   return (
     <>
       {item ? (
@@ -127,21 +146,38 @@ const ItemDetail = () => {
                     backgroundColor: 'rgba(0,0,0,0.2)',
                   }}
                 >
+                         {/* Placeholder */}
+                {(!lowResPosterLoaded || !highResPosterLoaded) && <PosterPlaceHolder />}
                   <img
-                    src={hiResPosterPath}
-                    alt={`official poster for ${item.title || item.name}`}
-                    className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-600 ease-in-out ${
-                      isVisible && highResPosterLoaded
-                        ? 'opacity-100'
-                        : 'opacity-0'
-                    }`}
-                    onLoad={() => setHighResPosterLoaded(true)}
+                    src={`https://image.tmdb.org/t/p/w185${item.poster_path}`}
+                    alt=''
+                    className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-300 ease-in-out ${
+                      isVisible && lowResPosterLoaded
+                         ? 'opacity-100 blur-[5px]'
+                       : 'opacity-0 '
+                      }`}
+                    onLoad={() => setLowResPosterLoaded(true)}
                     loading='lazy'
                     onError={(e) =>
                       ((e.target as HTMLImageElement).src =
-                        '/no_poster_available.svg')
+                      '/no_poster_available.svg')
                     }
                   />
+                    <img
+                      src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
+                      alt={`official poster for ${item.title || item.name}`}
+                      className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-600 ease-in-out ${
+                        isVisible && highResPosterLoaded
+                          ? 'opacity-100'
+                          : 'opacity-0'
+                      }`}
+                      onLoad={() => setHighResPosterLoaded(true)}
+                      loading='lazy'
+                      onError={(e) =>
+                        ((e.target as HTMLImageElement).src =
+                          '/no_poster_available.svg')
+                      }
+                    />
                 </div>
               </section>
             </div>
