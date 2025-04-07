@@ -28,6 +28,7 @@ const WatchTV = () => {
   const { addToContinueWatchingTv } = useStore();
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
   const { series_id } = useParams<{ series_id: string }>();
   const [isLoading, setIsLoading] = useState(true);
   const [selectedServer, setSelectedServer] = useState(() => {
@@ -58,7 +59,12 @@ const WatchTV = () => {
     series_id ?? '',
     String(selectedSeason),
   );
-  useDocumentTitle(`Watch ${series?.original_name || 'TV Show'} | BingeBox`);
+  useDocumentTitle(
+    series?.original_name
+      ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
+      : 'Loading... | BingeBox',
+  );
+
   useEffect(() => {
     if (!series) return;
     // setTimeout(() => {
@@ -117,10 +123,16 @@ const WatchTV = () => {
     }
   }, [series_id, selectedSeason, selectedEpisode]);
 
+  // when page is remounted, user will see loading spinner for 750ms
   useEffect(() => {
     timeoutRef.current = setTimeout(() => {
       setIsLoading(false);
-    }, 1250);
+    }, 750);
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -176,7 +188,7 @@ const WatchTV = () => {
         iframeRef.current.contentWindow?.location.replace('about:blank');
       }
 
-      setTimeout(() => {
+      iframeLoadRef.current = setTimeout(() => {
         iframeRef.current?.contentWindow?.location.replace(newURL);
         timeoutRef.current = setTimeout(() => {
           setIsLoading(false);
@@ -191,6 +203,9 @@ const WatchTV = () => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+      }
+      if (iframeLoadRef.current) {
+        clearTimeout(iframeLoadRef.current);
       }
     };
   }, [selectedServer, series_id, selectedSeason, selectedEpisode]);
@@ -254,8 +269,8 @@ const WatchTV = () => {
             </div>
             {/* player controls (for tv) */}
             {series && (
-              <div className='min-h-[100px] rounded-lg flex items-center justify-between gap-[16px]  p-[16px] bg-[#1f1f1f]'>
-                <div className='flex flex-col gap-2 w-full '>
+              <div className='min-h-[100px] mb-1 rounded-lg flex items-center justify-between gap-[16px]  p-[16px] bg-[#1f1f1f]'>
+                <div className='flex flex-col  w-full '>
                   <div className='flex justify-center sm:justify-between items-center flex-wrap'>
                     <div className='text-[#fff9] flex  mx-5 sm:mx-0'>
                       <div className='flex flex-col mt-[15px] sm:flex-row'>
@@ -342,7 +357,7 @@ const WatchTV = () => {
               </div>
             )}
 
-            <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]'>
+            <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] px-[24px] py-3 mb-[24px]'>
               {/* description */}
               {series && (
                 <WatchDescription

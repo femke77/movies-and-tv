@@ -17,6 +17,9 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { RegisterSWWrapper } from './components/helpers/RegisterSWWrapper.tsx';
 import { AliveScope, KeepAlive } from 'react-activation';
+import WatchPageSkeleton from './components/loadingSkeletons/WatchPageSkeleton.tsx';
+import TextSkeleton from './components/loadingSkeletons/TextSkeleton.tsx';
+import HistoryPageSkeleton from './components/loadingSkeletons/HistoryPageSkeleton.tsx';
 
 const History = lazy(() => import('./pages/watchPages/ContHistory.tsx'));
 const CastMemberDetail = lazy(
@@ -72,16 +75,28 @@ const router = createBrowserRouter([
       },
       {
         path: 'search/:query?',
-        element: <Results />,
+        element: (
+          <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+            <Results />
+          </DelayedSuspense>
+        ),
       },
 
       {
         path: 'dmca',
-        element: <DMCA />,
+        element: (
+          <DelayedSuspense fallback={<TextSkeleton />}>
+            <DMCA />
+          </DelayedSuspense>
+        ),
       },
       {
         path: 'faqs',
-        element: <FAQPage />,
+        element: (
+          <DelayedSuspense fallback={<TextSkeleton />}>
+            <FAQPage />
+          </DelayedSuspense>
+        ),
       },
 
       {
@@ -176,11 +191,19 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'movie/:movie_id',
-            element: <WatchMovie />,
+            element: (
+              <DelayedSuspense fallback={<WatchPageSkeleton />}>
+                <WatchMovie />
+              </DelayedSuspense>
+            ),
           },
           {
             path: 'tv/:series_id',
-            element: <WatchTV />,
+            element: (
+              <DelayedSuspense fallback={<WatchPageSkeleton />}>
+                <WatchTV />
+              </DelayedSuspense>
+            ),
           },
         ],
       },
@@ -198,7 +221,7 @@ const router = createBrowserRouter([
           {
             path: 'history',
             element: (
-              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+              <DelayedSuspense fallback={<HistoryPageSkeleton />}>
                 <History />
               </DelayedSuspense>
             ),

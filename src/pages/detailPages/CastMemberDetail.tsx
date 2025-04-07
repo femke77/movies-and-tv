@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import Carousel from '../../components/containers/CarouselContainer';
 import { IItem } from '../../interfaces/IItem';
 import BackButton from '../../components/buttons/BackBtn';
+import useDocumentTitle from '../../hooks/usePageTitles';
 
 const CastMemberDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,6 +14,12 @@ const CastMemberDetail = () => {
   const [lowResImageLoaded, setLowResImageLoaded] = useState(false);
   const [hiResImageLoaded, setHiResImageLoaded] = useState(false);
   const [showBio, setShowBio] = useState(false);
+
+  useDocumentTitle(
+    castData?.name
+      ? `${castData.name}'s Profile | BingeBox`
+      : 'Loading... | BingeBox',
+  );
 
   useEffect(() => {
     if (castData && castData.profile_path) {

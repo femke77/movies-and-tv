@@ -19,7 +19,7 @@ const WatchDescription = ({
   };
 
   return (
-    <div>
+    <div className='mt-2'>
       <h1 className='text-xl mb-2'>{title || ''}</h1>
       <div className='flex items-center text-[#fff9] text-sm'>
         <div className='flex items-center'>

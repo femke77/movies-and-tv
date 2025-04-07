@@ -64,9 +64,9 @@ const Slide = ({
   // image preloading
   useEffect(() => {
     if (isVisible || currentIndex === 0) {
-      const contentTimer = setTimeout(() => {
-        setContentLoaded(true);
-      }, 100);
+      // const contentTimer = setTimeout(() => {
+      setContentLoaded(true);
+      // }, 100);
 
       // Preload background image
       if (slide.backdrop_path) {
@@ -85,7 +85,7 @@ const Slide = ({
       return () => {
         setHighResBgLoaded(false);
         setPosterLoaded(false);
-        clearTimeout(contentTimer);
+        // clearTimeout(contentTimer);
       };
     }
   }, [isVisible, currentIndex, slide]);

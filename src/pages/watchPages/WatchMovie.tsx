@@ -19,7 +19,12 @@ const WatchMovie = () => {
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  useDocumentTitle(`Watch ${movie?.title || 'Movie'}  | BingeBox`);
+  useDocumentTitle(
+    movie?.title
+      ? `Watch ${movie?.title || 'Movie'}  | BingeBox`
+      : 'Loading... | BingeBox',
+  );
+
   const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
@@ -92,7 +97,7 @@ const WatchMovie = () => {
       iframeRef.current?.contentWindow?.location.replace(newURL);
       timeoutRef.current = setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
+      }, 750);
     }, 300);
 
     localStorage.setItem('lastSelectedServer', selectedServer);

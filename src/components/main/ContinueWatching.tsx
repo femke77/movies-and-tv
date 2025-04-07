@@ -169,7 +169,7 @@ const ContinueWatching = () => {
                       {items[key].poster_path ? (
                         <img
                           className='rounded-xl mr-2 w-86 h-50'
-                          src={`https://image.tmdb.org/t/p/w780${items[key].poster_path}`}
+                          src={`https://image.tmdb.org/t/p/w300${items[key].poster_path}`}
                           alt={`${items[key].title}'s backdrop`}
                           loading='lazy'
                           onError={(e) => {

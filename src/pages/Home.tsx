@@ -9,8 +9,10 @@ import TopRatedMovies from '../components/main/TopRatedMovies';
 import TrendingTV from '../components/main/TrendingTv';
 import TopRatedTv from '../components/main/TopRatedTv';
 import Provider from '../components/main/Provider';
+import useDocumentTitle from '../hooks/usePageTitles';
 
 const Home = () => {
+  useDocumentTitle('Home | BingeBox');
   useEffect(() => {
     // fixes the scroll position bug on page reload that was showing the contintue watching section
     const isPageReload = !window.performance
@@ -22,9 +24,11 @@ const Home = () => {
     if (isPageReload) {
       window.scrollTo(0, 0);
     }
-  }, []);
-  useEffect(() => {
-    document.title = 'Home | BingeBox';
+
+    // //  works to set the document title on back nav with the keep-alive
+    // if (document.title !== 'Home | BingeBox') {
+    //   document.title = 'Home | BingeBox';
+    // }
   }, []);
 
   return (

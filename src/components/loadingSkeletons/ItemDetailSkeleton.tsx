@@ -7,7 +7,7 @@ const SkeletonText = ({ width }: { width: string }) => (
 );
 
 const SkeletonPoster = () => (
-  <div className='w-[300px] md:w-[340px] h-[500px] bg-gray-700/30 rounded-lg animate-pulse'></div>
+  <div className='w-full h-full bg-gray-700/30 rounded-lg animate-pulse'></div>
 );
 
 const SkeletonRating = () => (
@@ -30,7 +30,17 @@ const ItemDetailSkeleton = () => {
       <div className='relative z-10 w-full flex flex-wrap'>
         {/* Left Section - Poster */}
         <div className='relative md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3'>
-          <SkeletonPoster />
+          <section className='w-[280px] sm:w-[450px] md:w-[300px] flex-shrink-0'>
+            <div
+              className='relative w-full md:w-[340px] mx-auto overflow-hidden'
+              style={{
+                //  maintain poster dimensions before image loads
+                aspectRatio: '2/3',
+              }}
+            >
+              <SkeletonPoster />
+            </div>
+          </section>
         </div>
 
         {/* Right Section - Details */}

@@ -3,13 +3,14 @@ import { useStore } from '../../state/store';
 import { Link } from 'react-router-dom';
 import ConfirmModal from '../../components/modals/ConfirmModal';
 import { useState } from 'react';
+import useDocumentTitle from '../../hooks/usePageTitles';
 
 const History = () => {
   const { previousSearches, clearPreviousSearches } = useStore(
     (state) => state,
   );
   const [showModal, setShowModal] = useState(false);
-
+  useDocumentTitle('Watch History | BingeBox');
   return (
     <div className='z-10 w-full h-full mt-26'>
       <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800' />
