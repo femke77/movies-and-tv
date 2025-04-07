@@ -65,7 +65,7 @@ const Slide = ({
   useEffect(() => {
     if (isVisible || currentIndex === 0) {
       // const contentTimer = setTimeout(() => {
-        setContentLoaded(true);
+      setContentLoaded(true);
       // }, 100);
 
       // Preload background image

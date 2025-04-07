@@ -1,4 +1,4 @@
-import { useEffect} from 'react';
+import { useEffect } from 'react';
 import SwiperElement from '../components/main/Swiper';
 import ContinueWatching from '../components/main/ContinueWatching';
 import Network from '../components/main/Network';
@@ -18,7 +18,7 @@ const Home = () => {
     const isPageReload = !window.performance
       .getEntriesByType('navigation')
       .some(
-        (nav) => (nav as PerformanceNavigationTiming).type === 'back_forward'
+        (nav) => (nav as PerformanceNavigationTiming).type === 'back_forward',
       );
 
     if (isPageReload) {

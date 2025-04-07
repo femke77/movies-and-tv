@@ -21,11 +21,10 @@ const WatchMovie = () => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   useDocumentTitle(
     movie?.title
-      ?`Watch ${movie?.title || 'Movie'}  | BingeBox`
+      ? `Watch ${movie?.title || 'Movie'}  | BingeBox`
       : 'Loading... | BingeBox',
   );
-  
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
