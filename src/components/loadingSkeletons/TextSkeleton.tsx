@@ -14,5 +14,5 @@ const TextSkeleton = () => {
       <div className='w-[65%] h-4 bg-gray-800 animate-pulse rounded-md mb-2'></div>
     </div>
   );
-};7
+};
 export default TextSkeleton;
