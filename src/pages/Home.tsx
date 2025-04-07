@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import SwiperElement from '../components/main/Swiper';
 import ContinueWatching from '../components/main/ContinueWatching';
 import Network from '../components/main/Network';
