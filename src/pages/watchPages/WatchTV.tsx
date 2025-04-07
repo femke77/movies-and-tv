@@ -60,7 +60,7 @@ const WatchTV = () => {
     String(selectedSeason),
   );
   useDocumentTitle(
-   series?.original_name 
+    series?.original_name
       ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
       : 'Loading... | BingeBox',
   );
@@ -203,7 +203,7 @@ const WatchTV = () => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
-      } 
+      }
       if (iframeLoadRef.current) {
         clearTimeout(iframeLoadRef.current);
       }

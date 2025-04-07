@@ -22,20 +22,20 @@ import TextSkeleton from './components/loadingSkeletons/TextSkeleton.tsx';
 import HistoryPageSkeleton from './components/loadingSkeletons/HistoryPageSkeleton.tsx';
 
 const History = lazy(() => import('./pages/watchPages/ContHistory.tsx'));
-const CastMemberDetail = lazy(() =>
-  import('./pages/detailPages/CastMemberDetail.tsx')
+const CastMemberDetail = lazy(
+  () => import('./pages/detailPages/CastMemberDetail.tsx'),
 );
 const Watchlist = lazy(() => import('./pages/Watchlist.tsx'));
 const TvAll = lazy(() => import('./pages/tvPages/TvAll.tsx'));
 const MovieAll = lazy(() => import('./pages/moviePages/MovieAll.tsx'));
 const ItemDetail = lazy(() => import('./pages/detailPages/ItemDetail.tsx'));
 const Results = lazy(() => import('./pages/SearchPage.tsx'));
-const MovieTopRated = lazy(() =>
-  import('./pages/moviePages/MovieTopRated.tsx')
+const MovieTopRated = lazy(
+  () => import('./pages/moviePages/MovieTopRated.tsx'),
 );
 const MoviePopular = lazy(() => import('./pages/moviePages/MoviePopular.tsx'));
-const MovieTrending = lazy(() =>
-  import('./pages/moviePages/MovieTrending.tsx')
+const MovieTrending = lazy(
+  () => import('./pages/moviePages/MovieTrending.tsx'),
 );
 const TvTrending = lazy(() => import('./pages/tvPages/TvTrending.tsx'));
 const TvTopRated = lazy(() => import('./pages/tvPages/TvTopRated.tsx'));
@@ -84,11 +84,19 @@ const router = createBrowserRouter([
 
       {
         path: 'dmca',
-        element: <DelayedSuspense fallback={<TextSkeleton/>}><DMCA /></DelayedSuspense>,
+        element: (
+          <DelayedSuspense fallback={<TextSkeleton />}>
+            <DMCA />
+          </DelayedSuspense>
+        ),
       },
       {
         path: 'faqs',
-        element: <DelayedSuspense fallback={<TextSkeleton/>}><FAQPage /></DelayedSuspense>,
+        element: (
+          <DelayedSuspense fallback={<TextSkeleton />}>
+            <FAQPage />
+          </DelayedSuspense>
+        ),
       },
 
       {
@@ -213,7 +221,7 @@ const router = createBrowserRouter([
           {
             path: 'history',
             element: (
-              <DelayedSuspense fallback={<HistoryPageSkeleton/>}>
+              <DelayedSuspense fallback={<HistoryPageSkeleton />}>
                 <History />
               </DelayedSuspense>
             ),
@@ -246,7 +254,7 @@ createRoot(document.getElementById('root')!).render(
     <AliveScope>
       <RouterProvider router={router} />
     </AliveScope>
-  </PersistQueryClientProvider>
+  </PersistQueryClientProvider>,
 );
 
 // https://tanstack.com/query/latest/docs/framework/react/plugins/persistQueryClient

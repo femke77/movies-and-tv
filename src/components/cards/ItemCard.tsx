@@ -106,9 +106,7 @@ const ItemCard = ({
                 <div className='absolute inset-0 z-[2]'>
                   <img
                     className={`w-full h-full object-cover rounded-b-lg  transition-opacity duration-400 ease-in-out ${
-                      lowResLoaded
-                        ? 'opacity-100 blur-[10px]'
-                        : 'opacity-0 '
+                      lowResLoaded ? 'opacity-100 blur-[10px]' : 'opacity-0 '
                     }`}
                     src={`https://image.tmdb.org/t/p/w92${item.poster_path}`}
                     alt=''
