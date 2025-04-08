@@ -113,9 +113,9 @@ const ItemDetail = () => {
       ? '0'
       : calculateROI;
 
-  const PosterPlaceHolder = () => (
-    <div className='w-full h-full bg-gray-900 absolute inset-0 z-[1]' />
-  );
+  // const PosterPlaceHolder = () => (
+  //   <div className='w-full h-full bg-gray-900 absolute inset-0 z-[1]' />
+  // );
   return (
     <>
       {item ? (
@@ -150,10 +150,8 @@ const ItemDetail = () => {
                     backgroundColor: 'rgba(0,0,0,0.2)',
                   }}
                 >
-                  {/* Placeholder */}
-                  {(!lowResPosterLoaded || !highResPosterLoaded) && (
-                    <PosterPlaceHolder />
-                  )}
+
+    
                   {item.poster_path ? (
                     <>
                       <img

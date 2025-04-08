@@ -22,7 +22,7 @@ export default defineConfig({
           },
         }),
       ],
-      // Checking vendor size - 585kb was the result
+      // Checking vendor size 
       // output: {
       //   manualChunks(id) {
       //     if (id.includes('node_modules')) {
@@ -39,7 +39,6 @@ export default defineConfig({
       registerType: 'prompt',
       injectRegister: 'auto',
       includeManifestIcons: false,
-      selfDestroying: true,
       devOptions: {
         enabled: true,
         type: 'module',
@@ -55,7 +54,7 @@ export default defineConfig({
       },
       workbox: {
         cleanupOutdatedCaches: true,
-        globPatterns: ['**/*.{js,css,html,svg,jsx,png,jpg,webp,jpeg}'],
+        globPatterns: ['**/*.{js,css,html,svg,jsx,png,jpg,webp,jpeg,ttf}'],
         globIgnores: [
           'node_modules/**/*',
           'sw.js',
