@@ -142,4 +142,3 @@ export const useTVSeasonEpisodes = (id: string, season_num: string) => {
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
 };
-
