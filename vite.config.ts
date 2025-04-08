@@ -71,7 +71,7 @@ export default defineConfig({
             handler: 'CacheFirst', // Use cached images first, fetch only if missing (reduces api calls)
             options: {
               cacheName: 'tmdb-images',
-              
+
               expiration: {
                 maxEntries: 100,
                 maxAgeSeconds: 60 * 60 * 24 * 30, //  30 days limit
@@ -84,7 +84,6 @@ export default defineConfig({
                 mode: 'no-cors',
               },
             },
-        
           },
           {
             urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com\/.*/i,
@@ -99,7 +98,7 @@ export default defineConfig({
                 statuses: [0, 200],
               },
             },
-          }
+          },
         ],
         // these should be set automatically by the plugin for prompt mode:
         // skipWaiting: false,
