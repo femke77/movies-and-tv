@@ -9,11 +9,12 @@ import { useEffect, useCallback, useMemo, useState } from 'react';
 import { fetchItemDetail } from '../hooks/useItemOrWatchDetail';
 import { IItem } from '../interfaces/IItem';
 import useDocumentTitle from '../hooks/usePageTitles';
+import { useShallow } from 'zustand/react/shallow';
 import BackButton from '../components/buttons/BackBtn';
 
 const Watchlist = () => {
   useDocumentTitle('Your Watchlist | BingeBox');
-  const bookmarks = useStore((state) => state.bookmarks);
+  const bookmarks = useStore(useShallow((state) => state.bookmarks));
 
   const [filterType, setFilterType] = useState<string>('all');
   const queryClient = useQueryClient();

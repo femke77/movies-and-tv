@@ -3,7 +3,7 @@ import { MemoizedItemCard } from '../cards/ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../../interfaces/IItem';
 import { useStore } from '../../state/store';
-
+import { useShallow } from 'zustand/react/shallow'
 const Carousel = ({
   items,
   itemType,
@@ -14,7 +14,7 @@ const Carousel = ({
   showRating?: boolean;
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const bookmarks = useStore((state) => state.bookmarks);
+  const bookmarks = useStore(useShallow((state) => state.bookmarks));
 
   const isBookmarked = useMemo(() => {
     const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));

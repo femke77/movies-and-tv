@@ -12,6 +12,7 @@ import { useStore } from '../../state/store';
 import Share from '../../components/buttons/ShareButtons';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import BackButton from '../../components/buttons/BackBtn';
+import { useShallow } from 'zustand/react/shallow'
 
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -21,7 +22,7 @@ const ItemDetail = () => {
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
-  const bookmarks = useStore((state) => state.bookmarks);
+  const bookmarks = useStore(useShallow((state) => state.bookmarks));
 
   const isBookmarked = useMemo(() => {
     const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
