@@ -113,6 +113,7 @@ const ItemCard = ({
         transition-opacity duration-500 ease-linear ${
           isVisible ? 'opacity-100' : 'opacity-0 visibility-hidden'
         }`}
+        // preload a lazy loaded detail page
         onMouseEnter={() => void import('../../pages/detailPages/ItemDetail')}
       >
         <Link to={`/${itemType}/${item.id}`} className='w-full '>
