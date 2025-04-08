@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer';
 import { IItem } from '../interfaces/IItem';
 import { MemoizedItemCard } from './cards/ItemCard';
 import { useStore } from '../state/store';
-import { useShallow } from 'zustand/react/shallow'
+import { useShallow } from 'zustand/react/shallow';
 interface IExploreProps {
   data: {
     pages: { results: IItem[] }[];

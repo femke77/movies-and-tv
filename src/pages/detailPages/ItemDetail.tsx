@@ -12,7 +12,7 @@ import { useStore } from '../../state/store';
 import Share from '../../components/buttons/ShareButtons';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import BackButton from '../../components/buttons/BackBtn';
-import { useShallow } from 'zustand/react/shallow'
+import { useShallow } from 'zustand/react/shallow';
 
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,7 +32,7 @@ const ItemDetail = () => {
   useDocumentTitle(
     item?.title || item?.name
       ? `${item.title || item.name} | BingeBox`
-      : 'Loading... | BingeBox'
+      : 'Loading... | BingeBox',
   );
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const ItemDetail = () => {
       highResPoster.onerror = () => {
         highResPoster.src = '/no_poster_available.svg';
         setHighResPosterLoaded(false);
-      }
+      };
     }
 
     return () => {
@@ -97,12 +97,12 @@ const ItemDetail = () => {
 
   const strokeColor = getStrokeColor(item?.vote_average);
   const directorData = item?.crew?.find(
-    (member: { job: string }) => member.job === 'Director'
+    (member: { job: string }) => member.job === 'Director',
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = item?.crew?.find(
     (member: { job: string }) =>
-      member.job === 'Screenplay' || member.job === 'Writer'
+      member.job === 'Screenplay' || member.job === 'Writer',
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -151,8 +151,6 @@ const ItemDetail = () => {
                     backgroundColor: 'rgba(0,0,0,0.2)',
                   }}
                 >
-
-    
                   {item.poster_path ? (
                     <>
                       <img
@@ -165,7 +163,6 @@ const ItemDetail = () => {
                         }`}
                         onLoad={() => setLowResPosterLoaded(true)}
                         loading='eager'
-                        
                       />
                       <img
                         src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
@@ -177,7 +174,6 @@ const ItemDetail = () => {
                         }`}
                         onLoad={() => setHighResPosterLoaded(true)}
                         loading='lazy'
-                       
                       />
                     </>
                   ) : (
@@ -248,10 +244,10 @@ const ItemDetail = () => {
                             onLoad={() => setLogoLoaded(true)}
                             loading='lazy'
                             onError={(e) =>
-                              ((e.target as HTMLElement)
-                                .parentElement as HTMLDivElement).classList.add(
-                                'hidden'
-                              )
+                              (
+                                (e.target as HTMLElement)
+                                  .parentElement as HTMLDivElement
+                              ).classList.add('hidden')
                             }
                           />
                         </div>
@@ -276,10 +272,10 @@ const ItemDetail = () => {
                             title={`${item.production_companies?.[0]?.name}`}
                             loading='lazy'
                             onError={(e) =>
-                              ((e.target as HTMLElement)
-                                .parentElement as HTMLDivElement).classList.add(
-                                'hidden'
-                              )
+                              (
+                                (e.target as HTMLElement)
+                                  .parentElement as HTMLDivElement
+                              ).classList.add('hidden')
                             }
                           />
                         </div>
@@ -335,8 +331,8 @@ const ItemDetail = () => {
                         ? dayjs(item.release_date).format('MMM DD, YYYY')
                         : 'TBD'
                       : item.first_air_date
-                      ? dayjs(item.first_air_date).format('MMM DD, YYYY')
-                      : 'TBD'}
+                        ? dayjs(item.first_air_date).format('MMM DD, YYYY')
+                        : 'TBD'}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
@@ -345,8 +341,8 @@ const ItemDetail = () => {
                     {item.runtime
                       ? `${item.runtime} min`
                       : item.episode_run_time?.[0]
-                      ? `${item.episode_run_time[0]} min`
-                      : 'Unknown'}
+                        ? `${item.episode_run_time[0]} min`
+                        : 'Unknown'}
                   </span>
                 </p>
               </div>
@@ -410,7 +406,7 @@ const ItemDetail = () => {
                           {item.created_by.map(
                             (
                               creator: { id: string; name: string },
-                              index: number
+                              index: number,
                             ) => (
                               <span
                                 key={creator.id}
@@ -419,7 +415,7 @@ const ItemDetail = () => {
                                 {creator.name}
                                 {index < item.created_by.length - 1 ? ', ' : ''}
                               </span>
-                            )
+                            ),
                           )}
                         </p>
                         <p className='text-xl font-bold'>
