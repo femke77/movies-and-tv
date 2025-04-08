@@ -74,6 +74,8 @@ export const useItemDetail = (type: string, id: string) => {
         };
       }
     },
+    staleTime: 1000 * 60 * 10, // 10 minutes
+    gcTime: 1000 * 60 * 11, // 11 minutes
     refetchOnWindowFocus: false,
     retry: 2,
     enabled: !!id,
