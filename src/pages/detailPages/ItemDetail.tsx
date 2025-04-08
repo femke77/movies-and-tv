@@ -22,7 +22,7 @@ const ItemDetail = () => {
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
   const bookmarks = useStore((state) => state.bookmarks);
-  const {setPageTitle} = useStore()
+  const { setPageTitle } = useStore();
 
   const isBookmarked = useMemo(() => {
     const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
@@ -36,11 +36,13 @@ const ItemDetail = () => {
   );
 
   useEffect(() => {
-  setPageTitle( item?.title || item?.name
-    ? `${item.title || item.name} | BingeBox`
-    : 'Loading... | BingeBox',)
-  },[])
-  
+    setPageTitle(
+      item?.title || item?.name
+        ? `${item.title || item.name} | BingeBox`
+        : 'Loading... | BingeBox',
+    );
+  }, []);
+
   useEffect(() => {
     if (item?.backdrop_path) {
       const img = new Image();

@@ -162,7 +162,7 @@ export const useStore = create<BookmarkStore>()(
       pageTitle: 'Home | Bingebox',
       setPageTitle: (title) => {
         set({ pageTitle: title });
-      }
+      },
     }),
     {
       name: 'bingebox-storage',

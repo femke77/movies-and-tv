@@ -15,7 +15,7 @@ const ProductionCo = ({
   const { data: items = [], isLoading } = useProductionCo(
     'movie',
     company_name,
-    company_id
+    company_id,
   );
 
   return (
@@ -25,8 +25,8 @@ const ProductionCo = ({
       </Link>
       {isLoading ? (
         <div className='flex gap-3 px-4 py-2 w-full  '>
-          {Array.from({ length: 15 }).map(() => (
-            <div className=' w-[180px] flex-shrink-0'>
+          {Array.from({ length: 15 }).map((_, i) => (
+            <div key={i} className=' w-[180px] flex-shrink-0'>
               <ItemCardSkeleton />
             </div>
           ))}

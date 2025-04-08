@@ -38,8 +38,11 @@ const WatchPageSkeleton = () => {
         {/* Right Sidebar Skeleton */}
         <div className='secondary lg:w-[400px] lg:flex-shrink-0'>
           <div className='sidebar bg-[#1f1f1f] max-h-[800px] flex flex-col rounded-lg p-4 space-y-3'>
-            {Array.from({ length: 9 }).map(() => (
-              <div className='h-10 bg-[#333] rounded animate-pulse'></div>
+            {Array.from({ length: 9 }).map((_, i) => (
+              <div
+                key={i}
+                className='h-10 bg-[#333] rounded animate-pulse'
+              ></div>
             ))}
           </div>
         </div>
