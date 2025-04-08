@@ -1,7 +1,6 @@
 import {useState } from 'react';
 import { registerSW } from 'virtual:pwa-register';
 
-// trying to fix memory issues with service worker:
 export function RegisterSWWrapper() {
   const [updateAvailable, setUpdateAvailable] = useState(false);
 
@@ -11,31 +10,24 @@ export function RegisterSWWrapper() {
     },
   });
 
-  // Function to handle update with proper unregistration
   const handleUpdate = async () => {
     setUpdateAvailable(false);
     
     if ('serviceWorker' in navigator) {
       try {
-        // Get the current registration
         const registration = await navigator.serviceWorker.getRegistration();
         
         if (registration) {
-          // Unregister the old service worker
           await registration.unregister();
           console.log('Previous service worker unregistered');
         }
-        
-        // Call the updateSW function provided by Vite PWA
-        // This typically reloads the page and registers the new worker
+
         updateSW(true);
       } catch (error) {
         console.error('Error during service worker update:', error);
-        // Fallback to regular update if unregistration fails
         updateSW(true);
       }
     } else {
-      // If service workers aren't supported, just update normally
       updateSW(true);
     }
   };
