@@ -12,6 +12,7 @@ import { useStore } from '../../state/store';
 import Share from '../../components/buttons/ShareButtons';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import BackButton from '../../components/buttons/BackBtn';
+import { useShallow } from 'zustand/react/shallow';
 
 const ItemDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -21,8 +22,7 @@ const ItemDetail = () => {
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
-  const bookmarks = useStore((state) => state.bookmarks);
-  const { setPageTitle } = useStore();
+  const bookmarks = useStore(useShallow((state) => state.bookmarks));
 
   const isBookmarked = useMemo(() => {
     const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
@@ -36,14 +36,6 @@ const ItemDetail = () => {
   );
 
   useEffect(() => {
-    setPageTitle(
-      item?.title || item?.name
-        ? `${item.title || item.name} | BingeBox`
-        : 'Loading... | BingeBox',
-    );
-  }, []);
-
-  useEffect(() => {
     if (item?.backdrop_path) {
       const img = new Image();
       img.src = `https://image.tmdb.org/t/p/w342${item.backdrop_path}`;
@@ -51,10 +43,7 @@ const ItemDetail = () => {
         setBackgroundLoaded(true);
         setIsVisible(true);
       };
-    } else {
-      setIsVisible(true);
     }
-
     return () => {
       setIsVisible(false);
       setBackgroundLoaded(false);
@@ -88,18 +77,20 @@ const ItemDetail = () => {
       highResPoster.onload = () => {
         setHighResPosterLoaded(true);
       };
+      highResPoster.onerror = () => {
+        highResPoster.src = '/no_poster_available.svg';
+        setHighResPosterLoaded(false);
+      };
     }
 
     return () => {
+      setLowResPosterLoaded(false);
+      setHighResPosterLoaded(false);
       setLogoLoaded(false);
     };
   }, [item]);
 
   if (!item) return null;
-
-  // const hiResPosterPath = item?.poster_path
-  //   ? `https://image.tmdb.org/t/p/w780${item.poster_path}`
-  //   : '/no_poster_available.svg';
 
   const releaseYearMovie = item?.release_date?.split('-')[0];
   const releaseYearTV = item?.first_air_date?.split('-')[0];
@@ -123,9 +114,9 @@ const ItemDetail = () => {
       ? '0'
       : calculateROI;
 
-  const PosterPlaceHolder = () => (
-    <div className='w-full h-full bg-gray-900 absolute inset-0 z-[1]' />
-  );
+  // const PosterPlaceHolder = () => (
+  //   <div className='w-full h-full bg-gray-900 absolute inset-0 z-[1]' />
+  // );
   return (
     <>
       {item ? (
@@ -160,40 +151,41 @@ const ItemDetail = () => {
                     backgroundColor: 'rgba(0,0,0,0.2)',
                   }}
                 >
-                  {/* Placeholder */}
-                  {(!lowResPosterLoaded || !highResPosterLoaded) && (
-                    <PosterPlaceHolder />
+                  {item.poster_path ? (
+                    <>
+                      <img
+                        src={`https://image.tmdb.org/t/p/w185${item.poster_path}`}
+                        alt=''
+                        className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-300 ease-in-out ${
+                          isVisible && lowResPosterLoaded
+                            ? 'opacity-100 blur-[5px]'
+                            : 'opacity-0 '
+                        }`}
+                        onLoad={() => setLowResPosterLoaded(true)}
+                        loading='eager'
+                      />
+                      <img
+                        src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
+                        alt={`official poster for ${item.title || item.name}`}
+                        className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-500 ease-in-out ${
+                          isVisible && highResPosterLoaded
+                            ? 'opacity-100'
+                            : 'opacity-0'
+                        }`}
+                        onLoad={() => setHighResPosterLoaded(true)}
+                        loading='lazy'
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <img
+                        src='/no_poster_available.svg'
+                        alt='no poster available'
+                        loading='lazy'
+                        className='absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-500 ease-in-out'
+                      />
+                    </>
                   )}
-                  <img
-                    src={`https://image.tmdb.org/t/p/w185${item.poster_path}`}
-                    alt=''
-                    className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-300 ease-in-out ${
-                      isVisible && lowResPosterLoaded
-                        ? 'opacity-100 blur-[5px]'
-                        : 'opacity-0 '
-                    }`}
-                    onLoad={() => setLowResPosterLoaded(true)}
-                    loading='lazy'
-                    onError={(e) =>
-                      ((e.target as HTMLImageElement).src =
-                        '/no_poster_available.svg')
-                    }
-                  />
-                  <img
-                    src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
-                    alt={`official poster for ${item.title || item.name}`}
-                    className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-600 ease-in-out ${
-                      isVisible && highResPosterLoaded
-                        ? 'opacity-100'
-                        : 'opacity-0'
-                    }`}
-                    onLoad={() => setHighResPosterLoaded(true)}
-                    loading='lazy'
-                    onError={(e) =>
-                      ((e.target as HTMLImageElement).src =
-                        '/no_poster_available.svg')
-                    }
-                  />
                 </div>
               </section>
             </div>
@@ -453,7 +445,7 @@ const ItemDetail = () => {
           </div>
         </section>
       ) : (
-        <p>No Movie Found 😔</p>
+        <p className='mt-30 text-center text-white text-3xl'>Not Found 😔</p>
       )}
     </>
   );

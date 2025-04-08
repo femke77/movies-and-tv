@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer';
 import { IItem } from '../interfaces/IItem';
 import { MemoizedItemCard } from './cards/ItemCard';
 import { useStore } from '../state/store';
-
+import { useShallow } from 'zustand/react/shallow';
 interface IExploreProps {
   data: {
     pages: { results: IItem[] }[];
@@ -25,7 +25,7 @@ const Explore = memo(
     itemType = 'movie',
   }: IExploreProps) => {
     const { ref, inView } = useInView();
-    const bookmarks = useStore((state) => state.bookmarks);
+    const bookmarks = useStore(useShallow((state) => state.bookmarks));
     const isBookmarked = useMemo(() => {
       const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
       return (id: number, type: string) => set.has(`${id}-${type}`);

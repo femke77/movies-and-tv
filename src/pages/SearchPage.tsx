@@ -10,7 +10,7 @@ import BackButton from '../components/buttons/BackBtn';
 import { CastCard } from '../components/cards/CastCard';
 import { ICast } from '../interfaces/ICast';
 import { useQueryClient } from '@tanstack/react-query';
-
+import { useShallow } from 'zustand/react/shallow';
 interface ResultsProps {
   personOnly: boolean;
 }
@@ -21,7 +21,7 @@ const Results = memo(({ personOnly }: ResultsProps) => {
   const lastResultsRef = useRef<IItem[]>([]);
 
   const { ref, inView } = useInView();
-  const bookmarks = useStore((state) => state.bookmarks);
+  const bookmarks = useStore(useShallow((state) => state.bookmarks));
   const isBookmarked = useMemo(() => {
     const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
     return (id: number, type: string) => set.has(`${id}-${type}`);
