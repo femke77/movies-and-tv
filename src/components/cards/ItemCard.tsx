@@ -156,6 +156,7 @@ const ItemCard = ({
                 <img
                   src='/no_poster_available.svg'
                   alt={'no poster available'}
+                  loading='lazy'
                 />
               </div>
             )}

@@ -18,7 +18,7 @@ const CastMemberDetail = () => {
   useDocumentTitle(
     castData?.name
       ? `${castData.name}'s Profile | BingeBox`
-      : 'Loading... | BingeBox',
+      : 'Loading... | BingeBox'
   );
 
   useEffect(() => {
@@ -98,6 +98,7 @@ const CastMemberDetail = () => {
               <img
                 src='/no_cast_photo.jpeg'
                 alt={'No image available'}
+                loading='lazy'
                 className='w-full h-full object-contain'
               />
             </div>
@@ -120,9 +121,22 @@ const CastMemberDetail = () => {
                 <p className='text-md mt-3 text-gray-400'>
                   Born: {dayjs(castData.birthday).format('MMM DD, YYYY')}
                 </p>
-                <p className='text-md text-gray-400'>
-                  Age: {dayjs().diff(castData.birthday, 'year')} years
-                </p>
+                {!castData.deathday ? (
+                  <p className='text-md text-gray-400'>
+                    Age: {dayjs().diff(castData.birthday, 'year')} years
+                  </p>
+                ) : (
+                  <>
+                    <p className='text-md text-gray-400'>
+                      Died: {dayjs(castData.deathday).format('MMM DD, YYYY')}
+                    </p>
+                    <p className='text-md text-gray-400'>
+                      Lived to be:{' '}
+                      {dayjs(castData.deathday).diff(castData.birthday, 'year')}{' '}
+                      years old
+                    </p>
+                  </>
+                )}
               </>
             )}
 
@@ -132,11 +146,6 @@ const CastMemberDetail = () => {
               </p>
             )}
 
-            {castData.deathday && (
-              <p className='text-md text-gray-400'>
-                Died: {dayjs(castData.deathday).format('MMM DD, YYYY')}
-              </p>
-            )}
 
             {castData.biography && (
               <>

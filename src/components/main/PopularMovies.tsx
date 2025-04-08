@@ -34,7 +34,7 @@ const PopularMovies = () => {
             {Array.from({ length: 15 }).map((_, i) => (
               <div
                 key={`skeleton-${i}`}
-                className='TEST TEST w-[180px] flex-shrink-0'
+                className='w-[180px] flex-shrink-0'
               >
                 <ItemCardSkeleton />
               </div>
