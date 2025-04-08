@@ -10,8 +10,8 @@ const HistoryPageSkeleton = () => {
 
       {/* Carousel Skeleton (5 Cards) */}
       <div className='z-10 mt-10 ml-6 flex gap-4 overflow-x-auto pr-6'>
-        {Array.from({ length: 5 }).map(() => (
-          <div className='w-[320px] h-[220px] rounded-lg bg-gray-800 animate-pulse flex-shrink-0' />
+        {Array.from({ length: 5 }).map((_,i) => (
+          <div key={i} className='w-[320px] h-[220px] rounded-lg bg-gray-800 animate-pulse flex-shrink-0' />
         ))}
       </div>
 
@@ -25,8 +25,8 @@ const HistoryPageSkeleton = () => {
 
       {/* Search Results Skeleton (8 Rows) */}
       <div className='z-10 flex flex-col gap-2 mt-4 ml-6'>
-        {Array.from({ length: 8 }).map(() => (
-          <div className='w-[200px] h-5 bg-gray-800 rounded animate-pulse' />
+        {Array.from({ length: 8 }).map((_,i) => (
+          <div key={i} className='w-[200px] h-5 bg-gray-800 rounded animate-pulse' />
         ))}
       </div>
     </div>
