@@ -56,7 +56,7 @@ const ContinueWatching = () => {
     setTimeout(() => {
       removeFromContinueWatching(Number(key.split('-')[0]), key.split('-')[1]);
       setActiveItemId(null);
-    }, 150);
+    }, 50);
   };
 
   const closeModal = () => {

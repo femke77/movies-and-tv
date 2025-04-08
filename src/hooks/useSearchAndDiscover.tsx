@@ -161,8 +161,8 @@ export const useInfiniteTrendingQuery = (
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: true,
-    staleTime: 1000 * 60 * 60 * 1, // 1 hour
-    gcTime: 1000 * 60 * 60 * 65, // 65min
+    staleTime: 1000 * 60 * 60 * 6, 
+    gcTime: 1000 * 60 * 370, 
     refetchOnWindowFocus: false,
     placeholderData: (previousData) => previousData,
     select: (data) => ({
