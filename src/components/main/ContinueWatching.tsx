@@ -56,7 +56,7 @@ const ContinueWatching = () => {
     setTimeout(() => {
       removeFromContinueWatching(Number(key.split('-')[0]), key.split('-')[1]);
       setActiveItemId(null);
-    }, 150);
+    }, 50);
   };
 
   const closeModal = () => {
@@ -181,7 +181,8 @@ const ContinueWatching = () => {
                         <img
                           className='rounded-xl mr-2  object-cover w-86 h-50'
                           src='/noimage2.webp'
-                          alt='no image available'
+                          loading='lazy'
+                          alt='no backdrop available'
                         />
                       )}
                       {/* <div className ={`bg-white absolute bottom-0 left-0 w-20 h-[4px] rounded-xl z-5`}></div> */}

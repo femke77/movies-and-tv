@@ -60,7 +60,7 @@ export const useStore = create<BookmarkStore>()(
       previousSearches: [],
       addToPreviousSearches: (query) => {
         const lowerCaseQuery = query.toLocaleLowerCase();
-        if (get().previousSearches.includes(query)) return;
+        if (get().previousSearches.includes(lowerCaseQuery)) return;
         set((state) => {
           // Create new array either with just the newest items (if at limit)
           // or with all previous items plus the new one. Rotates the array.

@@ -121,6 +121,7 @@ export const useInfiniteDiscoverQuery = (
     staleTime: 1000 * 60 * 60 * 1, // 1 hour
     gcTime: 1000 * 60 * 60 * 65, // 65min
     retry: 2,
+    maxPages: 10, //avoid bloating the cache
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
     select: (data) => ({
       pages: data.pages.map((page) => ({
@@ -161,10 +162,12 @@ export const useInfiniteTrendingQuery = (
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: true,
-    staleTime: 1000 * 60 * 60 * 1, // 1 hour
-    gcTime: 1000 * 60 * 60 * 65, // 65min
+    staleTime: 1000 * 60 * 60 * 6,
+    gcTime: 1000 * 60 * 370,
     refetchOnWindowFocus: false,
+    maxPages: 10, //avoid bloating the cache
     placeholderData: (previousData) => previousData,
+
     select: (data) => ({
       pages: data.pages.map((page) => ({
         ...page,

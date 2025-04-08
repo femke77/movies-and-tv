@@ -53,6 +53,7 @@ export default defineConfig({
         icons: icons,
       },
       workbox: {
+        cleanupOutdatedCaches: true,
         globPatterns: ['**/*.{js,css,html,svg,jsx,png,jpg,webp,jpeg}'],
         globIgnores: [
           'node_modules/**/*',
@@ -70,6 +71,7 @@ export default defineConfig({
             handler: 'CacheFirst', // Use cached images first, fetch only if missing (reduces api calls)
             options: {
               cacheName: 'tmdb-images',
+
               expiration: {
                 maxEntries: 100,
                 maxAgeSeconds: 60 * 60 * 24 * 30, //  30 days limit
@@ -83,11 +85,24 @@ export default defineConfig({
               },
             },
           },
+          {
+            urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts',
+              expiration: {
+                maxEntries: 5,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
         ],
-        // these should be set automatically by the plugin
+        // these should be set automatically by the plugin for prompt mode:
         // skipWaiting: false,
         // clientsClaim: true,
-        // cleanupOutdatedCaches: true,
         navigateFallback: '/index.html',
         disableDevLogs: true,
       },
