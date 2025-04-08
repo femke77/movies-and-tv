@@ -3,7 +3,7 @@ import { MemoizedItemCard } from '../cards/ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../../interfaces/IItem';
 import { useStore } from '../../state/store';
-import { useShallow } from 'zustand/react/shallow'
+import { useShallow } from 'zustand/react/shallow';
 const Carousel = ({
   items,
   itemType,

@@ -10,7 +10,7 @@ import BackButton from '../components/buttons/BackBtn';
 import { CastCard } from '../components/cards/CastCard';
 import { ICast } from '../interfaces/ICast';
 import { useQueryClient } from '@tanstack/react-query';
-import { useShallow } from 'zustand/react/shallow'
+import { useShallow } from 'zustand/react/shallow';
 interface ResultsProps {
   personOnly: boolean;
 }
