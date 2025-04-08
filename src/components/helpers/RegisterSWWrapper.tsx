@@ -10,27 +10,6 @@ export function RegisterSWWrapper() {
     },
   });
 
-  const handleUpdate = async () => {
-    setUpdateAvailable(false);
-
-    if ('serviceWorker' in navigator) {
-      try {
-        const registration = await navigator.serviceWorker.getRegistration();
-
-        if (registration) {
-          await registration.unregister();
-          console.log('Previous service worker unregistered');
-        }
-
-        updateSW(true);
-      } catch (error) {
-        console.error('Error during service worker update:', error);
-        updateSW(true);
-      }
-    } else {
-      updateSW(true);
-    }
-  };
 
   if (!updateAvailable) return null;
 
@@ -39,7 +18,10 @@ export function RegisterSWWrapper() {
       <span>A new update is available!</span>
       <button
         className='bg-white text-blue-800 text-sm h-6 p-3 rounded flex items-center justify-center'
-        onClick={handleUpdate}
+        onClick={() => {
+          updateSW();
+          setUpdateAvailable(false);
+        }}
       >
         Reload
       </button>

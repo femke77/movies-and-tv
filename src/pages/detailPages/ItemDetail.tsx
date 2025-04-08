@@ -22,7 +22,6 @@ const ItemDetail = () => {
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
   const bookmarks = useStore((state) => state.bookmarks);
-  const { setPageTitle } = useStore();
 
   const isBookmarked = useMemo(() => {
     const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
@@ -32,16 +31,8 @@ const ItemDetail = () => {
   useDocumentTitle(
     item?.title || item?.name
       ? `${item.title || item.name} | BingeBox`
-      : 'Loading... | BingeBox',
+      : 'Loading... | BingeBox'
   );
-
-  useEffect(() => {
-    setPageTitle(
-      item?.title || item?.name
-        ? `${item.title || item.name} | BingeBox`
-        : 'Loading... | BingeBox',
-    );
-  }, []);
 
   useEffect(() => {
     if (item?.backdrop_path) {
@@ -51,10 +42,7 @@ const ItemDetail = () => {
         setBackgroundLoaded(true);
         setIsVisible(true);
       };
-    } else {
-      setIsVisible(true);
     }
-
     return () => {
       setIsVisible(false);
       setBackgroundLoaded(false);
@@ -88,30 +76,32 @@ const ItemDetail = () => {
       highResPoster.onload = () => {
         setHighResPosterLoaded(true);
       };
+      highResPoster.onerror = () => {
+        highResPoster.src = '/no_poster_available.svg';
+        setHighResPosterLoaded(false);
+      }
     }
 
     return () => {
+      setLowResPosterLoaded(false);
+      setHighResPosterLoaded(false);
       setLogoLoaded(false);
     };
   }, [item]);
 
   if (!item) return null;
 
-  // const hiResPosterPath = item?.poster_path
-  //   ? `https://image.tmdb.org/t/p/w780${item.poster_path}`
-  //   : '/no_poster_available.svg';
-
   const releaseYearMovie = item?.release_date?.split('-')[0];
   const releaseYearTV = item?.first_air_date?.split('-')[0];
 
   const strokeColor = getStrokeColor(item?.vote_average);
   const directorData = item?.crew?.find(
-    (member: { job: string }) => member.job === 'Director',
+    (member: { job: string }) => member.job === 'Director'
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = item?.crew?.find(
     (member: { job: string }) =>
-      member.job === 'Screenplay' || member.job === 'Writer',
+      member.job === 'Screenplay' || member.job === 'Writer'
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -164,36 +154,43 @@ const ItemDetail = () => {
                   {(!lowResPosterLoaded || !highResPosterLoaded) && (
                     <PosterPlaceHolder />
                   )}
-                  <img
-                    src={`https://image.tmdb.org/t/p/w185${item.poster_path}`}
-                    alt=''
-                    className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-300 ease-in-out ${
-                      isVisible && lowResPosterLoaded
-                        ? 'opacity-100 blur-[5px]'
-                        : 'opacity-0 '
-                    }`}
-                    onLoad={() => setLowResPosterLoaded(true)}
-                    loading='lazy'
-                    onError={(e) =>
-                      ((e.target as HTMLImageElement).src =
-                        '/no_poster_available.svg')
-                    }
-                  />
-                  <img
-                    src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
-                    alt={`official poster for ${item.title || item.name}`}
-                    className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-600 ease-in-out ${
-                      isVisible && highResPosterLoaded
-                        ? 'opacity-100'
-                        : 'opacity-0'
-                    }`}
-                    onLoad={() => setHighResPosterLoaded(true)}
-                    loading='lazy'
-                    onError={(e) =>
-                      ((e.target as HTMLImageElement).src =
-                        '/no_poster_available.svg')
-                    }
-                  />
+                  {item.poster_path ? (
+                    <>
+                      <img
+                        src={`https://image.tmdb.org/t/p/w185${item.poster_path}`}
+                        alt=''
+                        className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-300 ease-in-out ${
+                          isVisible && lowResPosterLoaded
+                            ? 'opacity-100 blur-[5px]'
+                            : 'opacity-0 '
+                        }`}
+                        onLoad={() => setLowResPosterLoaded(true)}
+                        loading='eager'
+                        
+                      />
+                      <img
+                        src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
+                        alt={`official poster for ${item.title || item.name}`}
+                        className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-500 ease-in-out ${
+                          isVisible && highResPosterLoaded
+                            ? 'opacity-100'
+                            : 'opacity-0'
+                        }`}
+                        onLoad={() => setHighResPosterLoaded(true)}
+                        loading='lazy'
+                       
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <img
+                        src='/no_poster_available.svg'
+                        alt='no poster available'
+                        loading='lazy'
+                        className='absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-500 ease-in-out'
+                      />
+                    </>
+                  )}
                 </div>
               </section>
             </div>
@@ -252,10 +249,10 @@ const ItemDetail = () => {
                             onLoad={() => setLogoLoaded(true)}
                             loading='lazy'
                             onError={(e) =>
-                              (
-                                (e.target as HTMLElement)
-                                  .parentElement as HTMLDivElement
-                              ).classList.add('hidden')
+                              ((e.target as HTMLElement)
+                                .parentElement as HTMLDivElement).classList.add(
+                                'hidden'
+                              )
                             }
                           />
                         </div>
@@ -280,10 +277,10 @@ const ItemDetail = () => {
                             title={`${item.production_companies?.[0]?.name}`}
                             loading='lazy'
                             onError={(e) =>
-                              (
-                                (e.target as HTMLElement)
-                                  .parentElement as HTMLDivElement
-                              ).classList.add('hidden')
+                              ((e.target as HTMLElement)
+                                .parentElement as HTMLDivElement).classList.add(
+                                'hidden'
+                              )
                             }
                           />
                         </div>
@@ -339,8 +336,8 @@ const ItemDetail = () => {
                         ? dayjs(item.release_date).format('MMM DD, YYYY')
                         : 'TBD'
                       : item.first_air_date
-                        ? dayjs(item.first_air_date).format('MMM DD, YYYY')
-                        : 'TBD'}
+                      ? dayjs(item.first_air_date).format('MMM DD, YYYY')
+                      : 'TBD'}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
@@ -349,8 +346,8 @@ const ItemDetail = () => {
                     {item.runtime
                       ? `${item.runtime} min`
                       : item.episode_run_time?.[0]
-                        ? `${item.episode_run_time[0]} min`
-                        : 'Unknown'}
+                      ? `${item.episode_run_time[0]} min`
+                      : 'Unknown'}
                   </span>
                 </p>
               </div>
@@ -414,7 +411,7 @@ const ItemDetail = () => {
                           {item.created_by.map(
                             (
                               creator: { id: string; name: string },
-                              index: number,
+                              index: number
                             ) => (
                               <span
                                 key={creator.id}
@@ -423,7 +420,7 @@ const ItemDetail = () => {
                                 {creator.name}
                                 {index < item.created_by.length - 1 ? ', ' : ''}
                               </span>
-                            ),
+                            )
                           )}
                         </p>
                         <p className='text-xl font-bold'>
@@ -453,7 +450,7 @@ const ItemDetail = () => {
           </div>
         </section>
       ) : (
-        <p>No Movie Found 😔</p>
+        <p className='mt-30 text-center text-white text-3xl'>Not Found 😔</p>
       )}
     </>
   );

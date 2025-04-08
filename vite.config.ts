@@ -39,6 +39,7 @@ export default defineConfig({
       registerType: 'prompt',
       injectRegister: 'auto',
       includeManifestIcons: false,
+      selfDestroying: true,
       devOptions: {
         enabled: true,
         type: 'module',
@@ -74,7 +75,7 @@ export default defineConfig({
 
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30, //  30 days limit
+                maxAgeSeconds: 60 * 60 * 24 * 7, //  7 days limit
                 purgeOnQuotaError: true,
               },
               cacheableResponse: {

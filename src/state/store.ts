@@ -47,8 +47,7 @@ interface BookmarkStore {
   ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
-  pageTitle: string;
-  setPageTitle: (_title: string) => void;
+
 }
 
 export const useStore = create<BookmarkStore>()(
@@ -159,10 +158,7 @@ export const useStore = create<BookmarkStore>()(
 
       isBookmarked: (id, type) =>
         get().bookmarks.some((b) => b.id === id && b.type === type),
-      pageTitle: 'Home | Bingebox',
-      setPageTitle: (title) => {
-        set({ pageTitle: title });
-      },
+      
     }),
     {
       name: 'bingebox-storage',
