@@ -67,9 +67,10 @@ const discoverResults = async (
   deselectedGenres = '',
   with_companies = '',
   with_networks = '',
+  watch_providers = '',
 ) => {
   const { data } = await TMDBClient.get(
-    `/discover/${type}?vote_average.gte=${voteAverage}&include_adult=false&vote_count.gte=${voteCount}&language=${lang}&sort_by=${sort}&page=${pageParam}&with_genres=${genres}&without_genres=${deselectedGenres}&with_companies=${with_companies}&with_networks=${with_networks}`,
+    `/discover/${type}?vote_average.gte=${voteAverage}&include_adult=false&vote_count.gte=${voteCount}&language=${lang}&sort_by=${sort}&page=${pageParam}&with_genres=${genres}&without_genres=${deselectedGenres}&with_companies=${with_companies}&with_networks=${with_networks}&with_watch_providers=${watch_providers}&watch_region=US`,
   );
   return {
     results: data.results,
@@ -88,6 +89,7 @@ export const useInfiniteDiscoverQuery = (
   deselectedGenres?: string,
   with_companies?: string,
   with_networks?: string,
+  watch_providers?: string,
 ) => {
   return useInfiniteQuery({
     queryKey: [
@@ -114,6 +116,7 @@ export const useInfiniteDiscoverQuery = (
         deselectedGenres,
         with_companies,
         with_networks,
+        watch_providers,
       ),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,

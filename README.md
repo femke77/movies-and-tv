@@ -36,7 +36,7 @@ Initial load 850-1000ms
 
 **Problem:** Bookmarks were originally stored as an array and a 'some' function was used to see if any particular item was in the bookmarks array. This could lead to a performance bottleneck as bookmarks array grows and the 'some' function was breaking memoization in the map of MemoizedItemCards due to new function creation on every render.
 
-**Solution:** Refactored bookmarks to an object using id-media_type as key. Checking if a movie or tv show is in the bookmarks object is O(1) time, a new function is not created on every render and React can properly maintain memoization. 
+**Solution:** Refactored bookmarks to an object using id-media_type as key. Checking if a movie or tv show is in the bookmarks object is O(1) time, a new function is not created on every render and React can properly maintain memoization. A significant drop in memory use was noted.
 
 ### Metrics as of 4/7/2025
 
