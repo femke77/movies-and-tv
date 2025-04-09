@@ -4,15 +4,20 @@ import { Link } from 'react-router-dom';
 import ConfirmModal from '../../components/modals/ConfirmModal';
 import { useState } from 'react';
 import useDocumentTitle from '../../hooks/usePageTitles';
+import BackButton from '../../components/buttons/BackBtn';
+import { useShallow } from 'zustand/react/shallow';
 
 const History = () => {
   const { previousSearches, clearPreviousSearches } = useStore(
-    (state) => state,
-  );
+    useShallow((state) => state
+  ));
   const [showModal, setShowModal] = useState(false);
   useDocumentTitle('Watch History | BingeBox');
   return (
     <div className='z-10 w-full h-full mt-26'>
+      <div className='absolute top-20 left-3 z-10 mb-10'>
+      <BackButton/>
+      </div>
       <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800' />
 
       <h1 className='z-10 top-7 ml-6 relative text-2xl font-semibold text-white'>

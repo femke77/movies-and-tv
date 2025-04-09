@@ -47,7 +47,7 @@ const Explore = memo(
                 item={item}
                 showGenres={true}
                 showRating={true}
-                isBookmarked={!!bookmarks[`${item.id}-${item.media_type || itemType}`]}
+                isBookmarked={!!bookmarks[`${item.id}-${item.media_type || itemType || 'Unknown'}`]}
               />
             ))
           ) : (

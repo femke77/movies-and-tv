@@ -22,7 +22,7 @@ const ItemDetail = () => {
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
-  const bookmarks = useStore(useShallow((state) => state.bookmarks));
+  const bookmark = useStore(useShallow((state) => state.bookmarks[`${id}-${item_type}`]));
 
   // const isBookmarked = useMemo(() => {
   //   const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
@@ -297,7 +297,7 @@ const ItemDetail = () => {
                 </div>
                 <div className='min-w-10 h-10 pt-3 flex items-center justify-center pl-2'>
                   <BookmarkBtn
-                    isBookmarked={!!bookmarks[`${item.id}-${item_type}`]}
+                    isBookmarked={!!bookmark}
                     id={item.id}
                     type={item_type!}
                   />

@@ -57,7 +57,7 @@ const Carousel = ({
               itemType={itemType || item.media_type || 'Unknown'}
               showRating={showRating}
               showGenres={false}
-              isBookmarked={!!bookmarks[`${item.id}-${item.media_type || itemType}`]}
+              isBookmarked={!!bookmarks[`${item.id}-${item.media_type || itemType || 'Unknown'}`]}
             
             />
           </div>
