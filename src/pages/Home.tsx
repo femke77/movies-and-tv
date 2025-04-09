@@ -79,6 +79,7 @@ const Home = () => {
           provider_name='ShudderMovies'
           provider_id={99}
           media_type='movie'
+          // genre='27'
         />
         <TopRatedTv />
       </div>
