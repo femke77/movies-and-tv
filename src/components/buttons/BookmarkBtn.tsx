@@ -1,6 +1,6 @@
 import { Bookmark, BookmarkCheck } from 'lucide-react';
 import { useStore } from '../../state/store';
-
+import { useShallow } from 'zustand/react/shallow';
 interface BookmarkBtnProps {
   id: string | number;
   type: string;
@@ -16,7 +16,7 @@ const BookmarkBtn = ({
   iconSize = 40,
   color = 'white',
 }: BookmarkBtnProps) => {
-  const openModal = useStore((state) => state.openModal);
+  const openModal = useStore(useShallow((state) => state.openModal));
 
   const handleBookmarkToggle = (e: React.MouseEvent) => {
     e.preventDefault();

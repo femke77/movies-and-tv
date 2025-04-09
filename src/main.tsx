@@ -5,7 +5,6 @@ import App from './App.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import { QueryClient } from '@tanstack/react-query';
-import ScrollToTop from './components/helpers/ScrollToTop.tsx';
 import ItemDetailSkeleton from './components/loadingSkeletons/ItemDetailSkeleton.tsx';
 import NotFound from './pages/404.tsx';
 import ItemCardSkeletonGrid from './components/loadingSkeletons/ItemCardSkeletonGrid.tsx';
@@ -102,11 +101,9 @@ const router = createBrowserRouter([
       {
         path: ':item_type/:id',
         element: (
-          <ScrollToTop>
-            <DelayedSuspense fallback={<ItemDetailSkeleton />}>
-              <ItemDetail />
-            </DelayedSuspense>
-          </ScrollToTop>
+          <DelayedSuspense fallback={<ItemDetailSkeleton />}>
+            <ItemDetail />
+          </DelayedSuspense>
         ),
       },
       {

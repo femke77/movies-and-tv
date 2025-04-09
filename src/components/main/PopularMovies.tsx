@@ -32,10 +32,7 @@ const PopularMovies = () => {
         {isLoading ? (
           <div className='flex gap-3 px-4 py-2 w-full'>
             {Array.from({ length: 15 }).map((_, i) => (
-              <div
-                key={`skeleton-${i}`}
-                className='TEST TEST w-[180px] flex-shrink-0'
-              >
+              <div key={`skeleton-${i}`} className='w-[180px] flex-shrink-0'>
                 <ItemCardSkeleton />
               </div>
             ))}

@@ -11,6 +11,7 @@ import { CastCard } from '../components/cards/CastCard';
 import { ICast } from '../interfaces/ICast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useShallow } from 'zustand/react/shallow';
+
 interface ResultsProps {
   personOnly: boolean;
 }
@@ -22,10 +23,6 @@ const Results = memo(({ personOnly }: ResultsProps) => {
 
   const { ref, inView } = useInView();
   const bookmarks = useStore(useShallow((state) => state.bookmarks));
-  const isBookmarked = useMemo(() => {
-    const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
-    return (id: number, type: string) => set.has(`${id}-${type}`);
-  }, [bookmarks]);
 
   const { addToPreviousSearches } = useStore();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
@@ -97,10 +94,7 @@ const Results = memo(({ personOnly }: ResultsProps) => {
                   <MemoizedItemCard
                     item={item}
                     textSize='md'
-                    isBookmarked={isBookmarked(
-                      Number(item.id),
-                      item.media_type || 'Unknown',
-                    )}
+                    isBookmarked={!!bookmarks[`${item.id}-${item.media_type}`]}
                   />
                 </div>
               ))

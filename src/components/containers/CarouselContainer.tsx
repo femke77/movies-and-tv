@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef } from 'react';
 import { MemoizedItemCard } from '../cards/ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../../interfaces/IItem';
@@ -15,11 +15,6 @@ const Carousel = ({
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const bookmarks = useStore(useShallow((state) => state.bookmarks));
-
-  const isBookmarked = useMemo(() => {
-    const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
-    return (id: number, type: string) => set.has(`${id}-${type}`);
-  }, [bookmarks]);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
@@ -60,10 +55,11 @@ const Carousel = ({
               itemType={itemType || item.media_type || 'Unknown'}
               showRating={showRating}
               showGenres={false}
-              isBookmarked={isBookmarked(
-                Number(item.id),
-                item.media_type || itemType || 'Unknown',
-              )}
+              isBookmarked={
+                !!bookmarks[
+                  `${item.id}-${item.media_type || itemType || 'Unknown'}`
+                ]
+              }
             />
           </div>
         ))}

@@ -28,11 +28,6 @@ const Home = () => {
     if (isPageReload) {
       window.scrollTo(0, 0);
     }
-
-    // //  works to set the document title on back nav with the keep-alive
-    // if (document.title !== 'Home | BingeBox') {
-    //   document.title = 'Home | BingeBox';
-    // }
   }, []);
 
   return (

@@ -45,7 +45,7 @@ const WatchMovie = () => {
     );
     // }, 60000);
 
-    // es-lint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movie_id, movie]);
 
   useEffect(() => {
@@ -126,7 +126,9 @@ const WatchMovie = () => {
             )}
             {/* iphone safari doesn't support the FS api */}
             <div
-              className={`${isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''}`}
+              className={`${
+                isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''
+              }`}
             >
               <FullscreenBtn elementId='iframe' />
             </div>

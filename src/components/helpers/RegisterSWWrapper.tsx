@@ -37,12 +37,20 @@ export function RegisterSWWrapper() {
   return (
     <div className='z-100 fixed h-10 bottom-0 left-0 right-0 bg-blue-600 text-white p-4 flex justify-between items-center'>
       <span>A new update is available!</span>
-      <button
-        className='bg-white text-blue-800 text-sm h-6 p-3 rounded flex items-center justify-center'
-        onClick={handleUpdate}
+      <div className='flex gap-2'>
+        <button
+          className='bg-white text-blue-800 text-sm h-6 p-3 rounded flex items-center justify-center'
+          onClick={handleUpdate}
+        >
+          Reload
+        </button>
+        {/* <button
+        className="bg-white text-blue-800 text-sm h-6 p-3 rounded flex items-center justify-center"
+        onClick={dismissUpdate}
       >
-        Reload
-      </button>
+        Dismiss (I will reload later)
+      </button> */}
+      </div>
     </div>
   );
 }

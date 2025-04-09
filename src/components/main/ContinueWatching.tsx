@@ -5,6 +5,7 @@ import DraggableCarousel from '../containers/SimpleCarousel';
 import ConfirmModal from '../modals/ConfirmModal';
 import { ChevronRight } from 'lucide-react';
 import { useStore } from '../../state/store';
+import { useShallow } from 'zustand/react/shallow';
 
 interface WatchItem {
   title: string;
@@ -23,7 +24,9 @@ interface WatchItems {
 
 const ContinueWatching = () => {
   const location = useLocation();
-  const continueWatching = useStore((state) => state.continueWatching);
+  const continueWatching = useStore(
+    useShallow((state) => state.continueWatching),
+  );
 
   const { removeFromContinueWatching, clearContinueWatching } = useStore();
   const [items, setItems] = useState<WatchItems>({});
