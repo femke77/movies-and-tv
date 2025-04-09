@@ -22,6 +22,7 @@ const Episode = ({
 
   return (
     <button
+      id={`episode-${episode?.season_number}-${episode?.episode_number}`}
       value={`${episode?.season_number}-${episode?.episode_number}`}
       onClick={(e) => handleEpisodeClick(e.currentTarget.value)}
       className={`flex flex-wrap sm:flex-nowrap text-[12px]  rounded-lg p-2 w-full border border-[#303030] mb-2 ${

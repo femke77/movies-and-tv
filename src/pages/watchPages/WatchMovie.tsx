@@ -22,7 +22,7 @@ const WatchMovie = () => {
   useDocumentTitle(
     movie?.title
       ? `Watch ${movie?.title || 'Movie'}  | BingeBox`
-      : 'Loading... | BingeBox',
+      : 'Loading... | BingeBox'
   );
 
   const [isLoading, setIsLoading] = useState(false);
@@ -41,11 +41,11 @@ const WatchMovie = () => {
       movie.title,
       movie.backdrop_path,
       movie.release_date,
-      movie.runtime,
+      movie.runtime
     );
     // }, 60000);
 
-    // es-lint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movie_id, movie]);
 
   useEffect(() => {
@@ -126,7 +126,9 @@ const WatchMovie = () => {
             )}
             {/* iphone safari doesn't support the FS api */}
             <div
-              className={`${isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''}`}
+              className={`${
+                isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''
+              }`}
             >
               <FullscreenBtn elementId='iframe' />
             </div>
@@ -151,7 +153,7 @@ const WatchMovie = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer,
+                          (server) => server.value === selectedServer
                         )?.name
                       }
                       ...{' '}

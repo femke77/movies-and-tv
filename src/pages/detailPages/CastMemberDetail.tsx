@@ -18,7 +18,7 @@ const CastMemberDetail = () => {
   useDocumentTitle(
     castData?.name
       ? `${castData.name}'s Profile | BingeBox`
-      : 'Loading... | BingeBox'
+      : 'Loading... | BingeBox',
   );
 
   useEffect(() => {
@@ -145,7 +145,6 @@ const CastMemberDetail = () => {
                 Place of Birth: {castData.place_of_birth}
               </p>
             )}
-
 
             {castData.biography && (
               <>

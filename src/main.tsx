@@ -101,11 +101,9 @@ const router = createBrowserRouter([
       {
         path: ':item_type/:id',
         element: (
-        
-            <DelayedSuspense fallback={<ItemDetailSkeleton />}>
-              <ItemDetail />
-            </DelayedSuspense>
-      
+          <DelayedSuspense fallback={<ItemDetailSkeleton />}>
+            <ItemDetail />
+          </DelayedSuspense>
         ),
       },
       {
