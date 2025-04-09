@@ -44,8 +44,9 @@ const ContinueWatching = ({
       if (location.pathname === '/account/history') {
         setItems(continueWatching);
       } else if (location.pathname === '/') {
+        // show only the last 5 items in reverse order so most recent is always on the left
         const slicedItems = Object.fromEntries(
-          Object.entries(continueWatching).slice(0, 5)
+          Object.entries(continueWatching).slice(-5).reverse()
         );
         setItems(slicedItems);
       }
@@ -101,7 +102,7 @@ const ContinueWatching = ({
   };
 
   return (
-    <div className='ml-6'>
+    <div className='ml-2'>
       <ConfirmModal
         showModal={openModal}
         closeModal={closeModal}
@@ -128,7 +129,7 @@ const ContinueWatching = ({
                   to='/account/history'
                   className='pointer-events-auto text-white flex items-center'
                 >
-                  <h1 className='z-10 text-2xl font-semibold pr-2 pb-1.5'>
+                  <h1 className='pl-2 z-10 text-2xl font-bold pr-2 pb-1.5'>
                     Continue Watching
                   </h1>
                   <ChevronRight color='#ffffff' />
