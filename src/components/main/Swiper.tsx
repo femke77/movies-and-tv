@@ -1,4 +1,4 @@
-import { useRef, useState, lazy, Suspense, useMemo } from 'react';
+import { useRef, useState, lazy, Suspense} from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
@@ -15,10 +15,7 @@ export default function SwiperElement() {
   const { data: items = [] } = useTrendingAll();
   // subscribe to bookmarks array in zustand store for reactivity
   const bookmarks = useStore((state) => state.bookmarks);
-  const isBookmarked = useMemo(() => {
-    const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
-    return (id: number, type: string) => set.has(`${id}-${type}`);
-  }, [bookmarks]);
+
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -63,10 +60,8 @@ export default function SwiperElement() {
                   isVisible={index === currentIndex}
                   currentIndex={index}
                   movieList={items}
-                  isBookmarked={isBookmarked(
-                    Number(item.id),
-                    item.media_type || 'Unknown',
-                  )}
+                  isBookmarked={!!bookmarks[`${item.id}-${item.media_type}`]}
+                 
                 />
               </Suspense>
             </SwiperSlide>

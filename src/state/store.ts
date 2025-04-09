@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import dayjs from 'dayjs';
 
 interface BookmarkStore {
-  bookmarks: { id: string; type: string }[];
+  bookmarks: { [key: string]: { id: string; type: string; dateAdded: number } };
   modalData: { id: string; type: string; isBookmarked: boolean } | null;
   showModal: boolean;
   openModal: (_id: string, _type: string) => void;
@@ -34,7 +34,7 @@ interface BookmarkStore {
     _title: string,
     _season: number,
     _episode: number,
-    _poster_path: string,
+    _poster_path: string
   ) => void;
   addToContinueWatchingMovie: (
     _id: number,
@@ -43,7 +43,7 @@ interface BookmarkStore {
     _title: string,
     _poster_path: string,
     _release_date: string,
-    _runtime: string,
+    _runtime: string
   ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
@@ -52,7 +52,7 @@ interface BookmarkStore {
 export const useStore = create<BookmarkStore>()(
   persist(
     (set, get) => ({
-      bookmarks: [],
+      bookmarks: {},
       modalData: null, // Store the data of the item toggling bookmark state
       showModal: false,
       previousSearches: [],
@@ -79,7 +79,7 @@ export const useStore = create<BookmarkStore>()(
         title,
         season,
         episode,
-        poster_path,
+        poster_path
       ) => {
         set((state) => ({
           continueWatching: {
@@ -103,7 +103,7 @@ export const useStore = create<BookmarkStore>()(
         title,
         poster_path,
         release_date,
-        runtime,
+        runtime
       ) => {
         set((state) => ({
           continueWatching: {
@@ -142,21 +142,24 @@ export const useStore = create<BookmarkStore>()(
 
       addBookmark: (id, type) =>
         set((state) => ({
-          bookmarks: [
+          bookmarks: {
             ...state.bookmarks,
-            { id, type, dateAdded: dayjs().unix() },
-          ],
+            [`${id}-${type}`]: {
+              id: id,
+              type: type,
+              dateAdded: dayjs().unix(),
+            },
+          },
         })),
 
       removeBookmark: (id, type) =>
-        set((state) => ({
-          bookmarks: state.bookmarks.filter(
-            (b) => !(b.id === id && b.type === type),
-          ),
-        })),
-
+        set((state) => {
+          const newBookmarks = { ...state.bookmarks };
+          delete newBookmarks[`${id}-${type}`];
+          return { bookmarks: newBookmarks };
+        }),
       isBookmarked: (id, type) =>
-        get().bookmarks.some((b) => b.id === id && b.type === type),
+        get().bookmarks[`${id}-${type}`] !== undefined,
     }),
     {
       name: 'bingebox-storage',
@@ -166,8 +169,8 @@ export const useStore = create<BookmarkStore>()(
         previousSearches: state.previousSearches,
         continueWatching: state.continueWatching,
       }),
-    },
-  ),
+    }
+  )
 );
 
 //////////////////////////////////////////////

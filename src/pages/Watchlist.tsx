@@ -9,18 +9,18 @@ import { useEffect, useCallback, useMemo, useState } from 'react';
 import { fetchItemDetail } from '../hooks/useItemOrWatchDetail';
 import { IItem } from '../interfaces/IItem';
 import useDocumentTitle from '../hooks/usePageTitles';
-import { useShallow } from 'zustand/react/shallow';
+
 import BackButton from '../components/buttons/BackBtn';
 
 const Watchlist = () => {
   useDocumentTitle('Your Watchlist | BingeBox');
-  const bookmarks = useStore(useShallow((state) => state.bookmarks));
+  const bookmarks= useStore(((state) => state.bookmarks));
 
   const [filterType, setFilterType] = useState<string>('all');
   const queryClient = useQueryClient();
 
   const itemQueries = useQueries({
-    queries: bookmarks.map((item) => ({
+    queries: Object.values(bookmarks).map((item) => ({
       queryKey: ['watchlist', item.id, item.type],
       queryFn: () => fetchItemDetail(item.type, item.id),
       staleTime: 1000 * 60 * 60 * 24, // 24 hours
