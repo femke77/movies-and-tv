@@ -40,7 +40,7 @@ Initial load 850-1000ms
 
 ### Metrics as of 4/7/2025
 
-- ~200 MB average browser memory usage after good amount of app usage with heavy caching strategies- holds steady for hours.
+- ~180-200 MB average browser memory usage after good amount of app usage with heavy caching strategies- holds steady for hours.
 - ~42-72MB heap size depending on how much is cached by react query (depends on usage)
 - 99% performance by Lighthouse
 - 0.0 CLS
