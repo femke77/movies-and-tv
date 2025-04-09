@@ -54,7 +54,7 @@ export const useInfiniteSearchQuery = (query: string) => {
   });
 };
 
-// Discover new items
+//////////////////////////// Discover new movies and shows  //////////////////////////////////////
 
 const discoverResults = async (
   type = 'movie',
@@ -137,7 +137,7 @@ export const useInfiniteDiscoverQuery = (
   });
 };
 
-// Trending items
+///////////////////////////// Trending movies and tv   ////////////////////////////////////////////////
 // type can be 'all', 'movie', 'tv'
 // time_window can be 'day', 'week'
 const getTrending = async ({
