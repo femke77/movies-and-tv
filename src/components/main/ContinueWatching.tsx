@@ -26,10 +26,10 @@ interface WatchItems {
 const ContinueWatching = () => {
   const location = useLocation();
   const continueWatching = useStore(
-    useShallow((state) => state.continueWatching),
+    useShallow((state) => state.continueWatching)
   );
 
-  const {clearContinueWatching } = useStore();
+  const { clearContinueWatching } = useStore();
   const [items, setItems] = useState<WatchItems>({});
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState(false);
@@ -41,13 +41,12 @@ const ContinueWatching = () => {
         setItems(continueWatching);
       } else if (location.pathname === '/') {
         const slicedItems = Object.fromEntries(
-          Object.entries(continueWatching).slice(0, 5),
+          Object.entries(continueWatching).slice(0, 5)
         );
         setItems(slicedItems);
       }
     }
   }, [continueWatching, location.pathname]);
-
 
   const closeModal = () => {
     setOpenModal(false);
@@ -63,7 +62,7 @@ const ContinueWatching = () => {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    key: string,
+    key: string
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       setActiveItemId(key);
@@ -76,8 +75,7 @@ const ContinueWatching = () => {
     const items = carouselRef.current.querySelectorAll('[data-carousel-item]');
     const currentIndex = Array.from(items).findIndex(
       (item) =>
-        item === document.activeElement ||
-        item.contains(document.activeElement),
+        item === document.activeElement || item.contains(document.activeElement)
     );
 
     switch (e.key) {
@@ -140,14 +138,12 @@ const ContinueWatching = () => {
           >
             <DraggableCarousel>
               {Object.keys(items).map((key: string) => {
-   
-                
                 const isActive = activeItemId === key;
                 return (
                   <div
                     data-carousel-item
                     tabIndex={0}
-                    className='text-white relative flex-shrink-0 focus:outline-2 focus:outline-white '
+                    className='text-white mr-3 mt-4 relative flex-shrink-0 focus:outline-2 focus:outline-white '
                     key={key}
                     onFocus={() => setActiveItemId(key)}
                     onBlur={() => setActiveItemId(null)}
@@ -156,11 +152,11 @@ const ContinueWatching = () => {
                     onMouseLeave={() => setActiveItemId(null)}
                     onKeyDown={(e) => handleKeyDown(e, key)}
                   >
-                   <ContinueWatchingCard
+                    <ContinueWatchingCard
                       item={items[key]}
                       isActive={isActive}
                       setActiveItemId={setActiveItemId}
-                    activeItemId={activeItemId}
+                      activeItemId={activeItemId}
                     />
                   </div>
                 );
