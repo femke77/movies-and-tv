@@ -114,7 +114,7 @@ const ContinueWatching = ({
         <>
           <div className='z-10 flex items-center'>
             {location.pathname === '/account/history' && (
-              <div className='w-full flex justify-end items-center'>
+              <div className='w-full flex justify-start mt-10 sm:mt-0 sm:justify-end items-center'>
                 <button
                   onClick={() => setOpenModal(true)}
                   className='bg-gray-700 h-7 z-10 mb-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'

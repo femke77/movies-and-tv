@@ -52,7 +52,7 @@ const ContinueWatchingCard = ({
       {item.poster_path ? (
         <img
           className='rounded-xl w-86 h-50'
-          src={`https://image.tmdb.org/t/p/w300${item.poster_path}`}
+          src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
           alt={`${item.title}'s backdrop`}
           loading='lazy'
           onError={(e) => {
