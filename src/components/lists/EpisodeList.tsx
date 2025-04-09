@@ -36,7 +36,7 @@ const EpisodeList = ({
         }
       }
     }
-    // Scroll to the selected episode only on mount
+    // Scroll to the selected episode only on mount, user can take it from there
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
