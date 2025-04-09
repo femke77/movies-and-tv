@@ -23,7 +23,6 @@ const Results = memo(({ personOnly }: ResultsProps) => {
 
   const { ref, inView } = useInView();
   const bookmarks = useStore(useShallow((state) => state.bookmarks));
- 
 
   const { addToPreviousSearches } = useStore();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =

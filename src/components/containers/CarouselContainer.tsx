@@ -16,8 +16,6 @@ const Carousel = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const bookmarks = useStore(useShallow((state) => state.bookmarks));
 
-
-
   const scrollLeft = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
@@ -57,8 +55,11 @@ const Carousel = ({
               itemType={itemType || item.media_type || 'Unknown'}
               showRating={showRating}
               showGenres={false}
-              isBookmarked={!!bookmarks[`${item.id}-${item.media_type || itemType || 'Unknown'}`]}
-            
+              isBookmarked={
+                !!bookmarks[
+                  `${item.id}-${item.media_type || itemType || 'Unknown'}`
+                ]
+              }
             />
           </div>
         ))}

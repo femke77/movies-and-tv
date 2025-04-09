@@ -34,7 +34,7 @@ interface BookmarkStore {
     _title: string,
     _season: number,
     _episode: number,
-    _poster_path: string
+    _poster_path: string,
   ) => void;
   addToContinueWatchingMovie: (
     _id: number,
@@ -43,7 +43,7 @@ interface BookmarkStore {
     _title: string,
     _poster_path: string,
     _release_date: string,
-    _runtime: string
+    _runtime: string,
   ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
@@ -79,7 +79,7 @@ export const useStore = create<BookmarkStore>()(
         title,
         season,
         episode,
-        poster_path
+        poster_path,
       ) => {
         set((state) => ({
           continueWatching: {
@@ -103,7 +103,7 @@ export const useStore = create<BookmarkStore>()(
         title,
         poster_path,
         release_date,
-        runtime
+        runtime,
       ) => {
         set((state) => ({
           continueWatching: {
@@ -169,8 +169,8 @@ export const useStore = create<BookmarkStore>()(
         previousSearches: state.previousSearches,
         continueWatching: state.continueWatching,
       }),
-    }
-  )
+    },
+  ),
 );
 
 //////////////////////////////////////////////

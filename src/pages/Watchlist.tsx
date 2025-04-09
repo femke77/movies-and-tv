@@ -15,7 +15,7 @@ import { useShallow } from 'zustand/react/shallow';
 
 const Watchlist = () => {
   useDocumentTitle('Your Watchlist | BingeBox');
-  const bookmarks= useStore(useShallow(((state) => state.bookmarks)));
+  const bookmarks = useStore(useShallow((state) => state.bookmarks));
 
   const [filterType, setFilterType] = useState<string>('all');
   const queryClient = useQueryClient();

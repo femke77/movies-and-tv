@@ -24,7 +24,9 @@ interface WatchItems {
 
 const ContinueWatching = () => {
   const location = useLocation();
-  const continueWatching = useStore(useShallow((state) => state.continueWatching));
+  const continueWatching = useStore(
+    useShallow((state) => state.continueWatching),
+  );
 
   const { removeFromContinueWatching, clearContinueWatching } = useStore();
   const [items, setItems] = useState<WatchItems>({});
