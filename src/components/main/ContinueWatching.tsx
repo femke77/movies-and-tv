@@ -23,7 +23,11 @@ interface WatchItems {
   [key: string]: WatchItem;
 }
 
-const ContinueWatching = () => {
+const ContinueWatching = ({
+  showCarousel = true,
+}: {
+  showCarousel?: boolean;
+}) => {
   const location = useLocation();
   const continueWatching = useStore(
     useShallow((state) => state.continueWatching)
@@ -60,6 +64,7 @@ const ContinueWatching = () => {
     closeModal();
   };
 
+  // Select active card with keyboard
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
     key: string
@@ -69,6 +74,7 @@ const ContinueWatching = () => {
     }
   };
 
+  // This function handles the keyboard navigation for the carousel
   const handleCarouselKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!carouselRef.current) return;
 
@@ -110,7 +116,7 @@ const ContinueWatching = () => {
               <div className='w-full flex justify-end items-center'>
                 <button
                   onClick={() => setOpenModal(true)}
-                  className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+                  className='bg-gray-700 h-7 z-10 mb-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
                 >
                   Clear All
                 </button>
@@ -131,19 +137,48 @@ const ContinueWatching = () => {
             )}
           </div>
 
-          <div
-            ref={carouselRef}
-            className='flex'
-            onKeyDown={handleCarouselKeyDown}
-          >
-            <DraggableCarousel>
+          {showCarousel ? (
+            <div
+              ref={carouselRef}
+              className='flex'
+              onKeyDown={handleCarouselKeyDown}
+            >
+              <DraggableCarousel>
+                {Object.keys(items).map((key: string) => {
+                  const isActive = activeItemId === key;
+                  return (
+                    <div
+                      data-carousel-item
+                      tabIndex={0}
+                      className='text-white mr-3 relative flex-shrink-0 focus:outline-2 focus:outline-white '
+                      key={key}
+                      onFocus={() => setActiveItemId(key)}
+                      onBlur={() => setActiveItemId(null)}
+                      onTouchStart={() => setActiveItemId(key)}
+                      onMouseEnter={() => setActiveItemId(key)}
+                      onMouseLeave={() => setActiveItemId(null)}
+                      onKeyDown={(e) => handleKeyDown(e, key)}
+                    >
+                      <ContinueWatchingCard
+                        item={items[key]}
+                        isActive={isActive}
+                        setActiveItemId={setActiveItemId}
+                        activeItemId={activeItemId}
+                      />
+                    </div>
+                  );
+                })}
+              </DraggableCarousel>
+            </div>
+          ) : (
+        
+            <div className='flex flex-wrap space-x-3 space-y-3'>
               {Object.keys(items).map((key: string) => {
                 const isActive = activeItemId === key;
                 return (
                   <div
-                    data-carousel-item
                     tabIndex={0}
-                    className='text-white mr-3 mt-4 relative flex-shrink-0 focus:outline-2 focus:outline-white '
+                    className='text-white  focus:outline-2 focus:outline-white '
                     key={key}
                     onFocus={() => setActiveItemId(key)}
                     onBlur={() => setActiveItemId(null)}
@@ -161,8 +196,9 @@ const ContinueWatching = () => {
                   </div>
                 );
               })}
-            </DraggableCarousel>
-          </div>
+            </div>
+         
+          )}
         </>
       )}
     </div>

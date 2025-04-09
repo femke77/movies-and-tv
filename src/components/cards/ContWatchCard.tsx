@@ -44,7 +44,10 @@ const ContinueWatchingCard = ({
   };
 
   return (
-    <div className={`relative  ${isActive ? 'active' : ''}`}>
+    <div
+    
+    
+    className={`relative  ${isActive ? 'active' : ''}`}>
       {/* Image and gradient overlay */}
       {item.poster_path ? (
         <img
