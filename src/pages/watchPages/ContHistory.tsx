@@ -9,7 +9,7 @@ import { useShallow } from 'zustand/react/shallow';
 
 const History = () => {
   const { previousSearches, clearPreviousSearches } = useStore(
-    useShallow((state) => state),
+    useShallow((state) => state)
   );
   const [showModal, setShowModal] = useState(false);
   useDocumentTitle('Watch History | BingeBox');
@@ -18,12 +18,13 @@ const History = () => {
       <div className='absolute top-20 left-3 z-10 mb-10'>
         <BackButton />
       </div>
+      
       <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800' />
 
-      <h1 className='z-10 top-7 ml-6 relative text-2xl font-semibold text-white'>
-        Continue Watching
-      </h1>
-      <ContinueWatching />
+      <div className='mt-36'>
+        <ContinueWatching />
+      </div>
+
       <div className='z-10 flex justify-between items-end mt-6'>
         <h1 className='z-10 mt-12 text-2xl font-semibold ml-6'>
           Previous Search History
@@ -46,13 +47,13 @@ const History = () => {
       />
       <div className='z-10 flex flex-col gap-2 mt-4 ml-6'>
         {previousSearches.length > 0 ? (
-          <>
+          <div className='grid grid-cols-1 sm:grid-cols-2'>
             {previousSearches?.map((item, index) => (
               <div key={index} className='text-white z-10 text-md'>
                 <Link to={`/search/${item}`}> {item}</Link>
               </div>
             ))}
-          </>
+          </div>
         ) : (
           <p className='z-10'>Your previous searches will appear here.</p>
         )}

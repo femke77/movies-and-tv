@@ -83,7 +83,6 @@ export const useStore = create<BookmarkStore>()(
       ) => {
         set((state) => ({
           continueWatching: {
-            ...state.continueWatching,
             [`${id}-${media_type}`]: {
               lastUpdated,
               title,
@@ -93,6 +92,7 @@ export const useStore = create<BookmarkStore>()(
               id,
               poster_path,
             },
+            ...state.continueWatching,
           },
         }));
       },
@@ -107,7 +107,6 @@ export const useStore = create<BookmarkStore>()(
       ) => {
         set((state) => ({
           continueWatching: {
-            ...state.continueWatching,
             [`${id}-${media_type}`]: {
               lastUpdated,
               title,
@@ -117,6 +116,7 @@ export const useStore = create<BookmarkStore>()(
               release_date,
               runtime,
             },
+            ...state.continueWatching,
           },
         }));
       },

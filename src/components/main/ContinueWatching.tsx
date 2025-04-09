@@ -25,7 +25,7 @@ interface WatchItems {
 const ContinueWatching = () => {
   const location = useLocation();
   const continueWatching = useStore(
-    useShallow((state) => state.continueWatching),
+    useShallow((state) => state.continueWatching)
   );
 
   const { removeFromContinueWatching, clearContinueWatching } = useStore();
@@ -40,7 +40,7 @@ const ContinueWatching = () => {
         setItems(continueWatching);
       } else if (location.pathname === '/') {
         const slicedItems = Object.fromEntries(
-          Object.entries(continueWatching).slice(0, 5),
+          Object.entries(continueWatching).slice(0, 5)
         );
         setItems(slicedItems);
       }
@@ -52,7 +52,7 @@ const ContinueWatching = () => {
       | React.MouseEvent<HTMLButtonElement>
       | React.TouchEvent<HTMLButtonElement>
       | React.KeyboardEvent<HTMLButtonElement>,
-    key: string,
+    key: string
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -76,7 +76,7 @@ const ContinueWatching = () => {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    key: string,
+    key: string
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       setActiveItemId(key);
@@ -89,8 +89,7 @@ const ContinueWatching = () => {
     const items = carouselRef.current.querySelectorAll('[data-carousel-item]');
     const currentIndex = Array.from(items).findIndex(
       (item) =>
-        item === document.activeElement ||
-        item.contains(document.activeElement),
+        item === document.activeElement || item.contains(document.activeElement)
     );
 
     switch (e.key) {
@@ -120,30 +119,25 @@ const ContinueWatching = () => {
 
       {Object.keys(items).length !== 0 && (
         <>
-          <div className='z-10 flex items-center'>
-            {location.pathname === '/account/history' && (
-              <div className='w-full flex justify-end items-center'>
-                <button
-                  onClick={() => setOpenModal(true)}
-                  className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-                >
-                  Clear All
-                </button>
-              </div>
-            )}
-            {location.pathname === '/' && (
-              <>
-                <Link
-                  to='/account/history'
-                  className='pointer-events-auto text-white flex items-center'
-                >
-                  <h1 className='z-10 text-2xl font-semibold pr-2 pb-1.5'>
-                    Continue Watching
-                  </h1>
-                  <ChevronRight color='#ffffff' />
-                </Link>
-              </>
-            )}
+          <div className='z-10 2-full flex justify-between items-center flex-wrap'>
+            <Link
+              to='/account/history'
+              className='pointer-events-auto text-white flex items-center'
+            >
+              <h1 className='z-10 text-2xl font-bold pr-2 pb-1.5'>
+                Continue Watching
+              </h1>
+              <ChevronRight color='#ffffff' />
+            </Link>
+
+         
+              <button
+                onClick={() => setOpenModal(true)}
+                className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+              >
+                Clear All
+              </button>
+          
           </div>
 
           <div
@@ -172,7 +166,7 @@ const ContinueWatching = () => {
                       {items[key].poster_path ? (
                         <img
                           className='rounded-xl mr-2 w-86 h-50'
-                          src={`https://image.tmdb.org/t/p/w300${items[key].poster_path}`}
+                          src={`https://image.tmdb.org/t/p/w780${items[key].poster_path}`}
                           alt={`${items[key].title}'s backdrop`}
                           loading='lazy'
                           onError={(e) => {
@@ -249,7 +243,7 @@ const ContinueWatching = () => {
                               'Invalid Date'
                                 ? 'Unknown Date '
                                 : dayjs(items[key].release_date).format(
-                                    'YYYY',
+                                    'YYYY'
                                   )}{' '}
                               &#x2022; {Number(items[key].runtime) || '0'} min
                             </p>
