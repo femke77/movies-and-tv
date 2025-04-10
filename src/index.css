@@ -132,15 +132,21 @@ nav {
   scrollbar-gutter: stable !important
 }
 
+.swiper {
+  position: relative;
+  height: 96vh;
 
+}
+/* do not remove this! */
+.brave-fix {
+  height: 68svw;
+}
 
 .swiper-slide {
   text-align: center;
   font-size: 16px;
   background: transparent;
   color: black;
-
-
 }
 
 
@@ -181,7 +187,6 @@ nav {
 
 .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
 .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
- 
   background-color: white;
 }
 

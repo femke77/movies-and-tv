@@ -1,6 +1,15 @@
 import { IItem } from '../interfaces/IItem';
 import dayjs from 'dayjs';
 
+// Extend Navigator interface to include Brave browser detection
+declare global {
+  interface Navigator {
+    brave?: {
+      isBrave?: () => Promise<boolean>;
+    };
+  }
+}
+
 export const getStrokeColor = (rating: number) => {
   if (rating >= 7.0 && rating <= 10) return 'green';
   else if (rating >= 5 && rating < 7.0) return 'orange';
@@ -73,4 +82,9 @@ export const isIPad = () => {
     /iPad/.test(navigator.userAgent) ||
     (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1)
   );
+};
+
+
+export const isBraveBrowser = async (): Promise<boolean> => {
+  return !!(navigator.brave && await navigator.brave.isBrave?.());
 };
