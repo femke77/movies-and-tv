@@ -185,7 +185,7 @@ const WatchTV = () => {
         newURL = `https://vidlink.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
       case 'moviesapi.club':
-        newURL = `https://moviesapi.to/tv/${series_id}-${selectedSeason}-${selectedEpisode}`;
+        newURL = `https://moviesapi.club/tv/${series_id}-${selectedSeason}-${selectedEpisode}`;
         break;
       case 'embed.su':
         newURL = `https://embed.su/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
