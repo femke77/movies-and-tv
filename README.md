@@ -34,9 +34,13 @@ Initial load 850-1000ms
 
 **Solution:**  Adding an explict unregister command in the helper component calling registerSW and generating the prompt helped the browser to let go of the old service worker quickly without needing the tab closed and allowed memory to go back to baseline after reload. Caches were removed by vite and memory was back to normal in just a few minutes. 
 
+**Problem:** Bookmarks were originally stored as an array and a 'some' function was used to see if any particular item was in the bookmarks array. This could lead to a performance bottleneck as bookmarks array grows and the 'some' function was breaking memoization in the map of MemoizedItemCards due to new function creation on every render.
+
+**Solution:** Refactored bookmarks to an object using id-media_type as key. Checking if a movie or tv show is in the bookmarks object is O(1) time, a new function is not created on every render and React can properly maintain memoization. A significant drop in memory use was noted.
+
 ### Metrics as of 4/7/2025
 
-- ~280 MB average browser memory usage after good amount of app usage with heavy caching strategies- holds steady for hours.
+- ~180-200 MB average browser memory usage after good amount of app usage with heavy caching strategies- holds steady for hours.
 - ~42-72MB heap size depending on how much is cached by react query (depends on usage)
 - 99% performance by Lighthouse
 - 0.0 CLS

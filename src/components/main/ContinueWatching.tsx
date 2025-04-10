@@ -6,6 +6,7 @@ import ConfirmModal from '../modals/ConfirmModal';
 import { ChevronRight } from 'lucide-react';
 import { useStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
+import LazyImage from '../helpers/LazyImage';
 
 interface WatchItem {
   title: string;
@@ -18,10 +19,6 @@ interface WatchItem {
   runtime?: string;
 }
 
-interface WatchItems {
-  [key: string]: WatchItem;
-}
-
 const ContinueWatching = () => {
   const location = useLocation();
   const continueWatching = useStore(
@@ -29,8 +26,8 @@ const ContinueWatching = () => {
   );
 
   const { removeFromContinueWatching, clearContinueWatching } = useStore();
-  const [items, setItems] = useState<WatchItems>({});
-  const [activeItemId, setActiveItemId] = useState<string | null>(null);
+  const [items, setItems] = useState<WatchItem[]>([]);
+  const [activeItemId, setActiveItemId] = useState<number | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -39,9 +36,8 @@ const ContinueWatching = () => {
       if (location.pathname === '/account/history') {
         setItems(continueWatching);
       } else if (location.pathname === '/') {
-        const slicedItems = Object.fromEntries(
-          Object.entries(continueWatching).slice(0, 5),
-        );
+        const slicedItems = continueWatching.slice(0, 5);
+
         setItems(slicedItems);
       }
     }
@@ -52,12 +48,13 @@ const ContinueWatching = () => {
       | React.MouseEvent<HTMLButtonElement>
       | React.TouchEvent<HTMLButtonElement>
       | React.KeyboardEvent<HTMLButtonElement>,
-    key: string,
+    id: number,
+    media_type: string,
   ) => {
     e.preventDefault();
     e.stopPropagation();
     setTimeout(() => {
-      removeFromContinueWatching(Number(key.split('-')[0]), key.split('-')[1]);
+      removeFromContinueWatching(id, media_type);
       setActiveItemId(null);
     }, 50);
   };
@@ -68,7 +65,7 @@ const ContinueWatching = () => {
 
   const handleClearAll = () => {
     clearContinueWatching();
-    setItems({});
+    setItems([]);
     setActiveItemId(null);
 
     closeModal();
@@ -76,10 +73,10 @@ const ContinueWatching = () => {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    key: string,
+    id: number,
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
-      setActiveItemId(key);
+      setActiveItemId(id);
     }
   };
 
@@ -118,32 +115,25 @@ const ContinueWatching = () => {
         message={'Are you sure you want to clear everything?'}
       />
 
-      {Object.keys(items).length !== 0 && (
+      {items?.length !== 0 && (
         <>
-          <div className='z-10 flex items-center'>
-            {location.pathname === '/account/history' && (
-              <div className='w-full flex justify-end items-center'>
-                <button
-                  onClick={() => setOpenModal(true)}
-                  className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-                >
-                  Clear All
-                </button>
-              </div>
-            )}
-            {location.pathname === '/' && (
-              <>
-                <Link
-                  to='/account/history'
-                  className='pointer-events-auto text-white flex items-center'
-                >
-                  <h1 className='z-10 text-2xl font-semibold pr-2 pb-1.5'>
-                    Continue Watching
-                  </h1>
-                  <ChevronRight color='#ffffff' />
-                </Link>
-              </>
-            )}
+          <div className='z-10 2-full flex justify-between items-center flex-wrap'>
+            <Link
+              to='/account/history'
+              className='pointer-events-auto text-white flex items-center'
+            >
+              <h1 className='z-10 text-2xl font-bold pr-2 pb-1.5'>
+                Continue Watching
+              </h1>
+              <ChevronRight color='#ffffff' />
+            </Link>
+
+            <button
+              onClick={() => setOpenModal(true)}
+              className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+            >
+              Clear All
+            </button>
           </div>
 
           <div
@@ -152,33 +142,28 @@ const ContinueWatching = () => {
             onKeyDown={handleCarouselKeyDown}
           >
             <DraggableCarousel>
-              {Object.keys(items).map((key: string) => {
-                const isActive = activeItemId === key;
+              {items?.map((item) => {
+                const isActive = activeItemId === item.id;
                 return (
                   <div
                     data-carousel-item
                     tabIndex={0}
-                    className='text-white relative flex-shrink-0 focus:outline-2 focus:outline-white '
-                    key={key}
-                    onFocus={() => setActiveItemId(key)}
+                    className='text-white relative flex-shrink-0 focus:outline-2 focus:rounded-lg focus:outline-white '
+                    key={item.id}
+                    onFocus={() => setActiveItemId(item.id)}
                     onBlur={() => setActiveItemId(null)}
-                    onTouchStart={() => setActiveItemId(key)}
-                    onMouseEnter={() => setActiveItemId(key)}
+                    onTouchStart={() => setActiveItemId(item.id)}
+                    onMouseEnter={() => setActiveItemId(item.id)}
                     onMouseLeave={() => setActiveItemId(null)}
-                    onKeyDown={(e) => handleKeyDown(e, key)}
+                    onKeyDown={(e) => handleKeyDown(e, item.id)}
                   >
                     <div className={`relative ${isActive ? 'active' : ''}`}>
                       {/* Image and gradient overlay */}
-                      {items[key].poster_path ? (
-                        <img
-                          className='rounded-xl mr-2 w-86 h-50'
-                          src={`https://image.tmdb.org/t/p/w300${items[key].poster_path}`}
-                          alt={`${items[key].title}'s backdrop`}
-                          loading='lazy'
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src =
-                              '/noimage2.webp';
-                          }}
+                      {item.poster_path ? (
+                        <LazyImage
+                          className='rounded-xl  w-86 h-50'
+                          src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
+                          alt={`${item.title}'s backdrop`}
                         />
                       ) : (
                         <img
@@ -209,11 +194,15 @@ const ContinueWatching = () => {
                             className='text-white font-bold rounded-full z-50 cursor-pointer bg-black/60 p-2 hover:bg-black/80 focus:outline-2 focus:outline-white '
                             onKeyDown={(e) => {
                               if (e.key === 'Enter' || e.key === ' ') {
-                                handleDelete(e, key);
+                                handleDelete(e, item.id, item.media_type);
                               }
                             }}
-                            onTouchStart={(e) => handleDelete(e, key)}
-                            onClick={(e) => handleDelete(e, key)}
+                            onTouchStart={(e) =>
+                              handleDelete(e, item.id, item.media_type)
+                            }
+                            onClick={(e) =>
+                              handleDelete(e, item.id, item.media_type)
+                            }
                           >
                             <svg
                               xmlns='http://www.w3.org/2000/svg'
@@ -235,23 +224,19 @@ const ContinueWatching = () => {
 
                       {/* Title and info */}
                       <div className='absolute bottom-0 left-0 w-full px-5 pb-4'>
-                        <h2 className='text-xl font-bold'>
-                          {items[key].title}
-                        </h2>
+                        <h2 className='text-xl font-bold'>{item.title}</h2>
                         <h3 className='text-lg'>
-                          {items[key].media_type === 'tv' ? (
+                          {item.media_type === 'tv' ? (
                             <p>
-                              S{items[key].season}:E{items[key].episode}
+                              S{item.season}:E{item.episode}
                             </p>
                           ) : (
                             <p>
-                              {dayjs(items[key].release_date).format('YYYY') ===
+                              {dayjs(item.release_date).format('YYYY') ===
                               'Invalid Date'
                                 ? 'Unknown Date '
-                                : dayjs(items[key].release_date).format(
-                                    'YYYY',
-                                  )}{' '}
-                              &#x2022; {Number(items[key].runtime) || '0'} min
+                                : dayjs(item.release_date).format('YYYY')}{' '}
+                              &#x2022; {Number(item.runtime) || '0'} min
                             </p>
                           )}
                         </h3>
@@ -264,7 +249,7 @@ const ContinueWatching = () => {
                         }`}
                       >
                         <Link
-                          to={`/watch/${items[key].media_type}/${items[key].id}`}
+                          to={`/watch/${item.media_type}/${item.id}`}
                           tabIndex={isActive ? 0 : -1}
                           className='rounded-full bg-white/20 p-4 backdrop-blur-sm focus:outline-2 focus:outline-white '
                         >

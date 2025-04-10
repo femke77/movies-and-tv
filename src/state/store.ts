@@ -1,6 +1,21 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 import dayjs from 'dayjs';
+import { get, set, del } from 'idb-keyval';
+
+export const idbStorage = {
+  getItem: async (name: string) => {
+    const value = await get(name);
+    return value ?? null;
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setItem: async (name: string, value: any) => {
+    await set(name, value);
+  },
+  removeItem: async (name: string) => {
+    await del(name);
+  },
+};
 
 interface BookmarkStore {
   bookmarks: { [key: string]: { id: string; type: string; dateAdded: number } };
@@ -15,18 +30,17 @@ interface BookmarkStore {
   addToPreviousSearches: (_query: string) => void;
   clearPreviousSearches: () => void;
   continueWatching: {
-    [key: string]: {
-      id: number;
-      media_type: string;
-      lastUpdated: number;
-      title: string;
-      season?: number;
-      episode?: number;
-      poster_path: string;
-      release_date?: string;
-      runtime?: string;
-    };
-  };
+    id: number;
+    media_type: string;
+    lastUpdated: number;
+    title: string;
+    season?: number;
+    episode?: number;
+    poster_path: string;
+    release_date?: string;
+    runtime?: string;
+  }[];
+
   addToContinueWatchingTv: (
     _id: number,
     _media_type: string,
@@ -71,7 +85,7 @@ export const useStore = create<BookmarkStore>()(
         });
       },
       clearPreviousSearches: () => set({ previousSearches: [] }),
-      continueWatching: {},
+      continueWatching: [],
       addToContinueWatchingTv: (
         id,
         media_type,
@@ -81,19 +95,23 @@ export const useStore = create<BookmarkStore>()(
         episode,
         poster_path,
       ) => {
+        if (
+          get().continueWatching.some(
+            (item) => item.id === id && item.media_type === media_type,
+          )
+        )
+          return;
+        const newItem = {
+          id,
+          media_type,
+          lastUpdated,
+          title,
+          season,
+          episode,
+          poster_path,
+        };
         set((state) => ({
-          continueWatching: {
-            ...state.continueWatching,
-            [`${id}-${media_type}`]: {
-              lastUpdated,
-              title,
-              season,
-              episode,
-              media_type,
-              id,
-              poster_path,
-            },
-          },
+          continueWatching: [newItem, ...state.continueWatching],
         }));
       },
       addToContinueWatchingMovie: (
@@ -105,29 +123,34 @@ export const useStore = create<BookmarkStore>()(
         release_date,
         runtime,
       ) => {
+        if (
+          get().continueWatching.some(
+            (item) => item.id === id && item.media_type === media_type,
+          )
+        )
+          return;
+        const newItem = {
+          id,
+          media_type,
+          lastUpdated,
+          title,
+          poster_path,
+          release_date,
+          runtime,
+        };
         set((state) => ({
-          continueWatching: {
-            ...state.continueWatching,
-            [`${id}-${media_type}`]: {
-              lastUpdated,
-              title,
-              media_type,
-              id,
-              poster_path,
-              release_date,
-              runtime,
-            },
-          },
+          continueWatching: [newItem, ...state.continueWatching],
         }));
       },
       removeFromContinueWatching: (id, media_type) => {
         set((state) => {
-          const newContinueWatching = { ...state.continueWatching };
-          delete newContinueWatching[`${id}-${media_type}`];
+          const newContinueWatching = state.continueWatching.filter(
+            (item) => !(item.id === id && item.media_type === media_type),
+          );
           return { continueWatching: newContinueWatching };
         });
       },
-      clearContinueWatching: () => set({ continueWatching: {} }),
+      clearContinueWatching: () => set({ continueWatching: [] }),
       openModal: (id: string, type: string) => {
         set({
           modalData: {
@@ -138,6 +161,7 @@ export const useStore = create<BookmarkStore>()(
           showModal: true,
         });
       },
+
       closeModal: () => set({ showModal: false, modalData: null }),
 
       addBookmark: (id, type) =>
@@ -162,8 +186,8 @@ export const useStore = create<BookmarkStore>()(
         get().bookmarks[`${id}-${type}`] !== undefined,
     }),
     {
-      name: 'bingebox-storage',
-      storage: createJSONStorage(() => localStorage),
+      name: 'bingebox-idb-storage',
+      storage: idbStorage,
       partialize: (state) => ({
         bookmarks: state.bookmarks,
         previousSearches: state.previousSearches,
@@ -172,62 +196,3 @@ export const useStore = create<BookmarkStore>()(
     },
   ),
 );
-
-//////////////////////////////////////////////
-
-// TODO refactor: this is the beginning
-
-// import { create } from 'zustand';
-// import { persist, createJSONStorage } from 'zustand/middleware';
-
-// interface BookmarkStore {
-//   bookmarks: { [key: string]: {_id: string, _type: string} };
-//   modalData: { id: string; type: string; isBookmarked: boolean } | null;
-//   showModal: boolean;
-//   toggleBookmark: (_id: string, _type: string) => void;
-//   openModal: (_id: string, _type: string) => void;
-//   closeModal: () => void;
-
-//   isBookmarked: (key: string) => boolean;
-// }
-
-// export const useBookmarkStore = create<BookmarkStore>()(
-//   persist(
-//     (set, get) => ({
-//       bookmarks: {},
-//       modalData: null, // Store the item being bookmarked
-//       showModal: false,
-
-//       openModal: (id: string, type: string) => {
-//         const key = `${id}-${type}`;
-//         set({
-//           modalData: {
-//             id,
-//             type,
-//             isBookmarked: get().bookmarks[key] || false,
-//           },
-//           showModal: true,
-//         });
-//       },
-//       closeModal: () => set({ showModal: false, modalData: null }),
-
-//       toggleBookmark: (id, type) =>
-//         set((state) => {
-//           const key = `${id}-${type}`;
-//           const updated = { ...state.bookmarks };
-//           updated[key] ? delete updated[key] : (updated[key] = true);
-//           return { bookmarks: updated };
-//         }),
-
-//       isBookmarked: (id, type) =>
-//         get().bookmarks.some((b) => b.id === id && b.type === type),
-//     }),
-//     {
-//       name: 'bookmark-storage',
-//       storage: createJSONStorage(() => localStorage),
-//       partialize: (state) => ({
-//         bookmarks: state.bookmarks,
-//       }),
-//     },
-//   ),
-// );

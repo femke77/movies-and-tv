@@ -20,7 +20,7 @@ import WatchPageSkeleton from './components/loadingSkeletons/WatchPageSkeleton.t
 import TextSkeleton from './components/loadingSkeletons/TextSkeleton.tsx';
 import HistoryPageSkeleton from './components/loadingSkeletons/HistoryPageSkeleton.tsx';
 
-const History = lazy(() => import('./pages/watchPages/ContHistory.tsx'));
+const History = lazy(() => import('./pages/watchPages/History.tsx'));
 const CastMemberDetail = lazy(
   () => import('./pages/detailPages/CastMemberDetail.tsx'),
 );

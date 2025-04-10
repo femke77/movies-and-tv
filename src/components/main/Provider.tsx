@@ -8,11 +8,13 @@ const Provider = ({
   provider_id,
   header,
   media_type,
+  genre,
 }: {
   provider_name: string;
   provider_id: number;
   header: string;
   media_type: 'movie' | 'tv';
+  genre?: string;
 }) => {
   const { data: items = [], isLoading } = useProvider(
     media_type,
@@ -22,12 +24,15 @@ const Provider = ({
 
   return (
     <div className=' mt-20  min-h-[350px]' id={`${provider_name}-section`}>
-      <Link to='/explore/movies'>
+      <Link
+        to={media_type === 'tv' ? `/explore/popular-tv` : `/explore/popular`}
+        state={{ genre: genre }}
+      >
         <h2 className='text-2xl font-bold mb-6  ml-5'>{header}</h2>
       </Link>
       {isLoading ? (
         <div className='flex gap-3 px-4 py-2 w-full  '>
-          {Array.from({ length: 15 }).map((_, i) => (
+          {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className=' w-[180px] flex-shrink-0'>
               <ItemCardSkeleton />
             </div>
