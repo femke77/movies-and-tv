@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import dayjs from 'dayjs';
 import { get, set, del } from 'idb-keyval';
 
+// indexeddb is ava on over 98% of broswers so no fallback will be coded at this time
 export const idbStorage = {
   getItem: async (name: string) => {
     const value = await get(name);

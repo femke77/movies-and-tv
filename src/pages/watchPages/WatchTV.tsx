@@ -131,7 +131,18 @@ const WatchTV = () => {
     const viewProgressObj = localStorage.getItem(`viewing-progress`);
     if (viewProgressObj) {
       const viewProgress = JSON.parse(viewProgressObj);
-
+      // keep a rotation of 250 tv series in local storage and remove the oldest in favor of the most recent
+      if (Object.keys(viewProgress).length > 250) {
+        const oldestKey = Object.keys(viewProgress).reduce((oldest, key) => {
+          if (!viewProgress[oldest].lastUpdated) return key;
+          if (!viewProgress[key].lastUpdated) return oldest;
+          return viewProgress[key].lastUpdated <
+            viewProgress[oldest].lastUpdated
+            ? key
+            : oldest;
+        }, Object.keys(viewProgress)[0]);
+        delete viewProgress[oldestKey];
+      }
       const updatedViewProgress = {
         ...viewProgress,
         ...updatedViewProgressItem,
