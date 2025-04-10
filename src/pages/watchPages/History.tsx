@@ -7,6 +7,7 @@ import useDocumentTitle from '../../hooks/usePageTitles';
 import BackButton from '../../components/buttons/BackBtn';
 import { useShallow } from 'zustand/react/shallow';
 
+
 const History = () => {
   const { previousSearches, clearPreviousSearches } = useStore(
     useShallow((state) => state)

@@ -6,6 +6,7 @@ import ConfirmModal from '../modals/ConfirmModal';
 import { ChevronRight } from 'lucide-react';
 import { useStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
+import LazyImage from '../helpers/LazyImage';
 
 interface WatchItem {
   title: string;
@@ -162,16 +163,13 @@ const ContinueWatching = () => {
                     <div className={`relative ${isActive ? 'active' : ''}`}>
                       {/* Image and gradient overlay */}
                       {item.poster_path ? (
-                        <img
-                          className='rounded-xl mr-2 w-86 h-50'
+                        <LazyImage
+                          className='rounded-xl  w-86 h-50'
                           src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
                           alt={`${item.title}'s backdrop`}
-                          loading='lazy'
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src =
-                              '/noimage2.webp';
-                          }}
                         />
+                        
+                      
                       ) : (
                         <img
                           className='rounded-xl mr-2  object-cover w-86 h-50'
