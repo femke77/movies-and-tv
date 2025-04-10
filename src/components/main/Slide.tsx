@@ -8,7 +8,6 @@ import { useState, useEffect, lazy } from 'react';
 import BookmarkBtn from '../buttons/BookmarkBtn';
 import Tooltip from '../modals/ToolTip';
 
-
 const UserRating = lazy(() => import('../UserRating'));
 const WatchButton = lazy(() => import('../buttons/WatchButtonSmall'));
 
@@ -112,7 +111,6 @@ const Slide = ({
       return () => clearTimeout(logoTimer);
     }
   }, [contentLoaded, logoStatus.loaded, isVisible]);
-
 
   return (
     <div
