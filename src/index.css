@@ -132,13 +132,6 @@ nav {
   scrollbar-gutter: stable !important
 }
 
-.swiper {
-  width: 100%;
-  min-height: 100%;
-  position: relative;
-  height: 94vh;
-
-}
 
 
 .swiper-slide {
@@ -188,6 +181,7 @@ nav {
 
 .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
 .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+ 
   background-color: white;
 }
 

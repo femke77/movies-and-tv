@@ -112,19 +112,25 @@ const Slide = ({
     }
   }, [contentLoaded, logoStatus.loaded, isVisible]);
 
+
+
   return (
     <div
       className={` swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden ${
         isVisible ? 'visible' : 'invisible'
       }`}
+      
     >
       <div
-        className={clsx(`mt-10 absolute inset-0 bg-cover bg-center md:bg-top transition-opacity 
-         duration-1500 ease-in-out ${
-           isVisible && highResBgLoaded ? 'opacity-100' : 'opacity-0'
-         } z-0`)}
+       className={clsx(`mt-10 absolute inset-0  bg-center md:bg-top transition-opacity 
+  duration-1500 ease-in-out ${
+    isVisible && highResBgLoaded ? 'opacity-100' : 'opacity-0'
+  } z-0 transform-none `)}
         style={{
           backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}')`,
+          backgroundSize: '100% auto',
+          backgroundRepeat: 'no-repeat',
+          
         }}
       >
         {/* gradient overlays */}
