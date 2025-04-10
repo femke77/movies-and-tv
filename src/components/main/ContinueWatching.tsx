@@ -19,8 +19,6 @@ interface WatchItem {
   runtime?: string;
 }
 
-
-
 const ContinueWatching = () => {
   const location = useLocation();
   const continueWatching = useStore(
@@ -151,7 +149,7 @@ const ContinueWatching = () => {
                   <div
                     data-carousel-item
                     tabIndex={0}
-                    className='text-white relative flex-shrink-0 focus:outline-2 focus:outline-white '
+                    className='text-white relative flex-shrink-0 focus:outline-2 focus:rounded-lg focus:outline-white '
                     key={item.id}
                     onFocus={() => setActiveItemId(item.id)}
                     onBlur={() => setActiveItemId(null)}

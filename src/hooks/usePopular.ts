@@ -8,7 +8,7 @@ import {
 
 const createPopularFetcher = (type: 'movie' | 'tv') => async () => {
   const { data } = await TMDBClient.get(
-    `/${type}/popular?language=en-US&page=1`,
+    `/${type}/popular?include_adult=false&include_video=falselanguage=en-US&page=1`,
   );
   return data.results;
 };

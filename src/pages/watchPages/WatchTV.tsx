@@ -10,7 +10,7 @@ import WatchPrevBtn from '../../components/buttons/WatchPrevBtn';
 import WatchNextBtn from '../../components/buttons/WatchNextBtn';
 import ListBoxComp from '../../components/selectors/ListBox';
 import serverData from '../../utils/data/servers.json';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef} from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/buttons/SeasonNavigation';
 import { isIPad, isIphoneSafari } from '../../utils/helpers';
@@ -31,24 +31,40 @@ const WatchTV = () => {
   const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
   const { series_id } = useParams<{ series_id: string }>();
   const [isLoading, setIsLoading] = useState(true);
+  
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
     return lastSelectedServer || servers[0].value;
   });
+
   const [selectedSeason, setSelectedSeason] = useState(() => {
-    const lastSelectedSeason = localStorage.getItem(
-      `lastSelectedSeason-${series_id}`,
-    );
-    if (lastSelectedSeason) return Number(lastSelectedSeason);
-    return 1;
+
+    const viewProgressObj = localStorage.getItem(`viewing-progress`);
+    if (viewProgressObj) {
+      const viewProgress = JSON.parse(viewProgressObj);
+      const selectedSeason = viewProgress[`tv-${series_id}`]?.season;
+      if (selectedSeason) {
+        return Number(selectedSeason);
+      }
+      return 1
+    }
+    return 1
   });
+
+
   const [selectedEpisode, setSelectedEpisode] = useState(() => {
-    const lastSelectedEpisode = localStorage.getItem(
-      `lastSelectedEpisode-${series_id}`,
-    );
-    if (lastSelectedEpisode) return Number(lastSelectedEpisode);
-    return 1;
+   const viewProgressObj = localStorage.getItem(`viewing-progress`);
+    if (viewProgressObj) {
+      const viewProgress = JSON.parse(viewProgressObj);
+      const selectedEpisode = viewProgress[`tv-${series_id}`]?.episode;
+      if (selectedEpisode) {
+        return Number(selectedEpisode);
+      }
+      return 1
+    }
+    return 1
   });
+
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
   const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
 
@@ -92,33 +108,33 @@ const WatchTV = () => {
   }, [selectedSeason, episodes]);
 
   useEffect(() => {
-    const lastSeason = localStorage.getItem(`lastSelectedSeason-${series_id}`);
-    if (lastSeason) {
-      localStorage.removeItem(`lastSelectedSeason-${series_id}`);
+    
+    const viewProgressObj = localStorage.getItem(`viewing-progress`);
+    if (viewProgressObj) {
+      
+      const viewProgress = JSON.parse(viewProgressObj);
+      const updatedViewProgress = {
+        ...viewProgress,       
+        [`tv-${series_id}`]: {
+          season: selectedSeason,
+          episode: selectedEpisode,
+          lastUpdated: dayjs().unix(),
+        },
+      };
       localStorage.setItem(
-        `lastSelectedSeason-${series_id}`,
-        String(selectedSeason),
+        `viewing-progress`,
+        JSON.stringify(updatedViewProgress),
       );
     } else {
       localStorage.setItem(
-        `lastSelectedSeason-${series_id}`,
-        String(selectedSeason),
-      );
-    }
-
-    const lastEpisode = localStorage.getItem(
-      `lastSelectedEpisode-${series_id}`,
-    );
-    if (lastEpisode) {
-      localStorage.removeItem(`lastSelectedEpisode-${series_id}`);
-      localStorage.setItem(
-        `lastSelectedEpisode-${series_id}`,
-        String(selectedEpisode),
-      );
-    } else {
-      localStorage.setItem(
-        `lastSelectedEpisode-${series_id}`,
-        String(selectedEpisode),
+        `viewing-progress`,
+        JSON.stringify({
+          [`tv-${series_id}`]: {
+            season: selectedSeason,
+            episode: selectedEpisode,
+            lastUpdated: dayjs().unix(),    
+          },
+        }),
       );
     }
   }, [series_id, selectedSeason, selectedEpisode]);
@@ -192,7 +208,7 @@ const WatchTV = () => {
         iframeRef.current?.contentWindow?.location.replace(newURL);
         timeoutRef.current = setTimeout(() => {
           setIsLoading(false);
-        }, 1500);
+        }, 750);
       }, 300);
 
       localStorage.setItem('lastSelectedServer', selectedServer);

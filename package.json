@@ -20,6 +20,7 @@
     "axios": "^1.7.9",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
+    "idb-keyval": "^6.2.1",
     "lucide-react": "^0.477.0",
     "react": "^18.3.1",
     "react-activation": "^0.13.0",

@@ -1,6 +1,20 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 import dayjs from 'dayjs';
+import { get, set, del } from 'idb-keyval';
+
+export const idbStorage = {
+  getItem: async (name: string) => {
+    const value = await get(name);
+    return value ?? null;
+  },
+  setItem: async (name: string, value: any) => {
+    await set(name, value);
+  },
+  removeItem: async (name: string) => {
+    await del(name);
+  },
+};
 
 interface BookmarkStore {
   bookmarks: { [key: string]: { id: string; type: string; dateAdded: number } };
@@ -148,8 +162,8 @@ export const useStore = create<BookmarkStore>()(
         get().bookmarks[`${id}-${type}`] !== undefined,
     }),
     {
-      name: 'bingebox-storage',
-      storage: createJSONStorage(() => localStorage),
+      name: 'bingebox-idb-storage',
+      storage: idbStorage,
       partialize: (state) => ({
         bookmarks: state.bookmarks,
         previousSearches: state.previousSearches,
