@@ -10,7 +10,7 @@ import WatchPrevBtn from '../../components/buttons/WatchPrevBtn';
 import WatchNextBtn from '../../components/buttons/WatchNextBtn';
 import ListBoxComp from '../../components/selectors/ListBox';
 import serverData from '../../utils/data/servers.json';
-import { useEffect, useState, useRef} from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/buttons/SeasonNavigation';
 import { isIPad, isIphoneSafari } from '../../utils/helpers';
@@ -31,38 +31,51 @@ const WatchTV = () => {
   const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
   const { series_id } = useParams<{ series_id: string }>();
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const [selectedServer, setSelectedServer] = useState(() => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
     return lastSelectedServer || servers[0].value;
   });
 
-  const [selectedSeason, setSelectedSeason] = useState(() => {
-
+  const [viewProgress] = useState(() => {
     const viewProgressObj = localStorage.getItem(`viewing-progress`);
     if (viewProgressObj) {
-      const viewProgress = JSON.parse(viewProgressObj);
+      const items = JSON.parse(viewProgressObj);
+      const progressItem = items[`tv-${series_id}`];
+      if (progressItem) {
+        return {
+          [`tv-${series_id}`]: {
+            season: Number(progressItem.season),
+            episode: Number(progressItem.episode),
+            lastUpdated: Number(progressItem.lastUpdated),
+          },
+        };
+      }
+      return null;
+    }
+    return null;
+  });
+
+  const [selectedSeason, setSelectedSeason] = useState(() => {
+    if (viewProgress) {
       const selectedSeason = viewProgress[`tv-${series_id}`]?.season;
       if (selectedSeason) {
         return Number(selectedSeason);
       }
-      return 1
+      return 1;
     }
-    return 1
+    return 1;
   });
 
-
   const [selectedEpisode, setSelectedEpisode] = useState(() => {
-   const viewProgressObj = localStorage.getItem(`viewing-progress`);
-    if (viewProgressObj) {
-      const viewProgress = JSON.parse(viewProgressObj);
+    if (viewProgress) {
       const selectedEpisode = viewProgress[`tv-${series_id}`]?.episode;
       if (selectedEpisode) {
         return Number(selectedEpisode);
       }
-      return 1
+      return 1;
     }
-    return 1
+    return 1;
   });
 
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
@@ -73,12 +86,12 @@ const WatchTV = () => {
   const { data: series } = useWatchDetails('tv', series_id!);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
-    String(selectedSeason),
+    String(selectedSeason)
   );
   useDocumentTitle(
     series?.original_name
       ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
-      : 'Loading... | BingeBox',
+      : 'Loading... | BingeBox'
   );
 
   useEffect(() => {
@@ -91,7 +104,7 @@ const WatchTV = () => {
       series.original_name,
       selectedSeason,
       selectedEpisode,
-      series.backdrop_path,
+      series.backdrop_path
     );
 
     // }, 60000);
@@ -108,36 +121,34 @@ const WatchTV = () => {
   }, [selectedSeason, episodes]);
 
   useEffect(() => {
-    
+    const updatedViewProgressItem = {
+      [`tv-${series_id}`]: {
+        season: selectedSeason,
+        episode: selectedEpisode,
+        lastUpdated: dayjs().unix(),
+      },
+    };
     const viewProgressObj = localStorage.getItem(`viewing-progress`);
     if (viewProgressObj) {
-      
       const viewProgress = JSON.parse(viewProgressObj);
+
       const updatedViewProgress = {
-        ...viewProgress,       
-        [`tv-${series_id}`]: {
-          season: selectedSeason,
-          episode: selectedEpisode,
-          lastUpdated: dayjs().unix(),
-        },
+        ...viewProgress,
+        ...updatedViewProgressItem,
       };
+
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgress),
+        JSON.stringify(updatedViewProgress)
       );
     } else {
+
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify({
-          [`tv-${series_id}`]: {
-            season: selectedSeason,
-            episode: selectedEpisode,
-            lastUpdated: dayjs().unix(),    
-          },
-        }),
+        JSON.stringify(updatedViewProgressItem)
       );
     }
-  }, [series_id, selectedSeason, selectedEpisode]);
+  }, [selectedSeason, selectedEpisode]);
 
   // when page is remounted, user will see loading spinner for 750ms
   useEffect(() => {
@@ -163,7 +174,6 @@ const WatchTV = () => {
       case 'vidlink.pro':
         newURL = `https://vidlink.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
-
       case 'moviesapi.club':
         newURL = `https://moviesapi.to/tv/${series_id}-${selectedSeason}-${selectedEpisode}`;
         break;
@@ -274,7 +284,7 @@ const WatchTV = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer,
+                          (server) => server.value === selectedServer
                         )?.name
                       }
                       ...{' '}
@@ -401,7 +411,7 @@ const WatchTV = () => {
                         <p className='text-white/70 text-sm truncate text-ellipsis'>
                           {
                             servers.find(
-                              (server) => server.value === selectedServer,
+                              (server) => server.value === selectedServer
                             )?.name
                           }
                         </p>
