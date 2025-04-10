@@ -86,12 +86,12 @@ const WatchTV = () => {
   const { data: series } = useWatchDetails('tv', series_id!);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
-    String(selectedSeason),
+    String(selectedSeason)
   );
   useDocumentTitle(
     series?.original_name
       ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
-      : 'Loading... | BingeBox',
+      : 'Loading... | BingeBox'
   );
 
   useEffect(() => {
@@ -104,7 +104,7 @@ const WatchTV = () => {
       series.original_name,
       selectedSeason,
       selectedEpisode,
-      series.backdrop_path,
+      series.backdrop_path
     );
 
     // }, 60000);
@@ -131,7 +131,17 @@ const WatchTV = () => {
     const viewProgressObj = localStorage.getItem(`viewing-progress`);
     if (viewProgressObj) {
       const viewProgress = JSON.parse(viewProgressObj);
-
+      if (Object.keys(viewProgress).length > 250) {
+        const oldestKey = Object.keys(viewProgress).reduce((oldest, key) => {
+          if (!viewProgress[oldest].lastUpdated) return key;
+          if (!viewProgress[key].lastUpdated) return oldest;
+          return viewProgress[key].lastUpdated <
+            viewProgress[oldest].lastUpdated
+            ? key
+            : oldest;
+        }, Object.keys(viewProgress)[0]);
+        delete viewProgress[oldestKey];
+      }
       const updatedViewProgress = {
         ...viewProgress,
         ...updatedViewProgressItem,
@@ -139,12 +149,12 @@ const WatchTV = () => {
 
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgress),
+        JSON.stringify(updatedViewProgress)
       );
     } else {
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgressItem),
+        JSON.stringify(updatedViewProgressItem)
       );
     }
   }, [selectedSeason, selectedEpisode]);
@@ -283,7 +293,7 @@ const WatchTV = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer,
+                          (server) => server.value === selectedServer
                         )?.name
                       }
                       ...{' '}
@@ -410,7 +420,7 @@ const WatchTV = () => {
                         <p className='text-white/70 text-sm truncate text-ellipsis'>
                           {
                             servers.find(
-                              (server) => server.value === selectedServer,
+                              (server) => server.value === selectedServer
                             )?.name
                           }
                         </p>
