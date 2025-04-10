@@ -14,19 +14,18 @@ interface BookmarkStore {
   previousSearches: string[];
   addToPreviousSearches: (_query: string) => void;
   clearPreviousSearches: () => void;
-  continueWatching: {
-    [key: string]: {
-      id: number;
-      media_type: string;
-      lastUpdated: number;
-      title: string;
-      season?: number;
-      episode?: number;
-      poster_path: string;
-      release_date?: string;
-      runtime?: string;
-    };
-  };
+  continueWatching:{
+    id: number;
+    media_type: string;
+    lastUpdated: number;
+    title: string;
+    season?: number;
+    episode?: number;
+    poster_path: string;
+    release_date?: string;
+    runtime?: string;
+  }[]
+ 
   addToContinueWatchingTv: (
     _id: number,
     _media_type: string,
@@ -71,7 +70,7 @@ export const useStore = create<BookmarkStore>()(
         });
       },
       clearPreviousSearches: () => set({ previousSearches: [] }),
-      continueWatching: {},
+      continueWatching: [],
       addToContinueWatchingTv: (
         id,
         media_type,
@@ -81,19 +80,10 @@ export const useStore = create<BookmarkStore>()(
         episode,
         poster_path,
       ) => {
+        if (get().continueWatching.some((item) => item.id === id && item.media_type === media_type)) return
+        const newItem = {id, media_type, lastUpdated, title, season, episode, poster_path};
         set((state) => ({
-          continueWatching: {
-            [`${id}-${media_type}`]: {
-              lastUpdated,
-              title,
-              season,
-              episode,
-              media_type,
-              id,
-              poster_path,
-            },
-            ...state.continueWatching,
-          },
+          continueWatching: [newItem,...state.continueWatching],
         }));
       },
       addToContinueWatchingMovie: (
@@ -105,29 +95,21 @@ export const useStore = create<BookmarkStore>()(
         release_date,
         runtime,
       ) => {
+        if (get().continueWatching.some((item) => item.id === id && item.media_type === media_type)) return
+        const newItem = {id, media_type, lastUpdated, title, poster_path, release_date, runtime};
         set((state) => ({
-          continueWatching: {
-            [`${id}-${media_type}`]: {
-              lastUpdated,
-              title,
-              media_type,
-              id,
-              poster_path,
-              release_date,
-              runtime,
-            },
-            ...state.continueWatching,
-          },
+          continueWatching: [newItem,...state.continueWatching],
         }));
       },
       removeFromContinueWatching: (id, media_type) => {
         set((state) => {
-          const newContinueWatching = { ...state.continueWatching };
-          delete newContinueWatching[`${id}-${media_type}`];
+          const newContinueWatching = state.continueWatching.filter(
+            (item) => !(item.id === id && item.media_type === media_type),
+          );
           return { continueWatching: newContinueWatching };
         });
       },
-      clearContinueWatching: () => set({ continueWatching: {} }),
+      clearContinueWatching: () => set({ continueWatching: [] }),
       openModal: (id: string, type: string) => {
         set({
           modalData: {
@@ -138,6 +120,10 @@ export const useStore = create<BookmarkStore>()(
           showModal: true,
         });
       },
+
+
+
+
       closeModal: () => set({ showModal: false, modalData: null }),
 
       addBookmark: (id, type) =>
