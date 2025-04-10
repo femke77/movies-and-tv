@@ -114,7 +114,7 @@ const Slide = ({
 
   return (
     <div
-      className={` swiper-slide bg-black h-full flex items-center py-10 slide-container overflow-hidden ${
+      className={` swiper-slide bg-black h-full flex items-center slide-container overflow-hidden ${
         isVisible ? 'visible' : 'invisible'
       }`}
     >

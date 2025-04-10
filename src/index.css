@@ -133,21 +133,20 @@ nav {
 }
 
 .swiper {
-  width: 100%;
-  min-height: 100%;
   position: relative;
-  height: 94vh;
+  height: 96vh;
 
 }
-
+/* do not remove this! */
+.brave-fix {
+  height: 68svw;
+}
 
 .swiper-slide {
   text-align: center;
   font-size: 16px;
   background: transparent;
   color: black;
-
-
 }
 
 

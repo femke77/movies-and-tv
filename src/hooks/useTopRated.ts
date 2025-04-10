@@ -8,7 +8,7 @@ import {
 
 const createTopRatedFetcher = (type: 'movie' | 'tv') => async () => {
   const { data } = await TMDBClient.get(
-    `/${type}/top_rated?language=en-US&page=1`,
+    `/${type}/top_rated?include_adult=false&include_video=false&language=en-US&page=1`,
   );
   return data.results;
 };
