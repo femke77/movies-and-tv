@@ -84,7 +84,6 @@ export const isIPad = () => {
   );
 };
 
-
 export const isBraveBrowser = async (): Promise<boolean> => {
-  return !!(navigator.brave && await navigator.brave.isBrave?.());
+  return !!(navigator.brave && (await navigator.brave.isBrave?.()));
 };

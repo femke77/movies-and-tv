@@ -101,8 +101,6 @@ const Slide = ({
     }
   }, [isVisible, currentIndex, displayLogo]);
 
-
-
   // Show logo after it's loaded and other content is ready
   useEffect(() => {
     if (contentLoaded && logoStatus.loaded && isVisible) {
