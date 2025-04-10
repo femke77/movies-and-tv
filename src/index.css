@@ -132,15 +132,18 @@ nav {
   scrollbar-gutter: stable !important
 }
 
-
+.swiper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .swiper-slide {
   text-align: center;
   font-size: 16px;
   background: transparent;
   color: black;
-  min-height: 100svh;
-  max-height: 100svh;
-  overflow: hidden;
+
+
 }
 
 
@@ -182,6 +185,7 @@ nav {
 .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
 .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
   background-color: white;
+  
 }
 
 .slide-container {
