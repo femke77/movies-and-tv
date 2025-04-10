@@ -9,7 +9,7 @@ import {
 const createCompanyFetcher =
   (type: 'movie' | 'tv', company_id: number) => async () => {
     const { data } = await TMDBClient.get(
-      `/discover/${type}?with_companies=${company_id}&language=en`,
+      `/discover/${type}?include_adult=false&include_video=false&with_companies=${company_id}&language=en`,
     );
     return data.results;
   };

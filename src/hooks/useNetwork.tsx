@@ -9,7 +9,7 @@ import {
 const createNetworkFetcher =
   (type: 'movie' | 'tv', network_id: number) => async () => {
     const { data } = await TMDBClient.get(
-      `/discover/${type}?with_networks=${network_id}&language=en&sort_by=popularity.desc`,
+      `/discover/${type}?include_adult=false&include_video=false&with_networks=${network_id}&language=en&sort_by=popularity.desc`,
     );
     return data.results;
   };
