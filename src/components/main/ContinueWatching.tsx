@@ -22,7 +22,7 @@ interface WatchItem {
 const ContinueWatching = () => {
   const location = useLocation();
   const continueWatching = useStore(
-    useShallow((state) => state.continueWatching)
+    useShallow((state) => state.continueWatching),
   );
 
   const { removeFromContinueWatching, clearContinueWatching } = useStore();
@@ -37,7 +37,7 @@ const ContinueWatching = () => {
         setItems(continueWatching);
       } else if (location.pathname === '/') {
         const slicedItems = continueWatching.slice(0, 5);
-      
+
         setItems(slicedItems);
       }
     }
@@ -48,8 +48,8 @@ const ContinueWatching = () => {
       | React.MouseEvent<HTMLButtonElement>
       | React.TouchEvent<HTMLButtonElement>
       | React.KeyboardEvent<HTMLButtonElement>,
-    id:number,
-    media_type:string
+    id: number,
+    media_type: string,
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -73,7 +73,7 @@ const ContinueWatching = () => {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    id: number
+    id: number,
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       setActiveItemId(id);
@@ -86,7 +86,8 @@ const ContinueWatching = () => {
     const items = carouselRef.current.querySelectorAll('[data-carousel-item]');
     const currentIndex = Array.from(items).findIndex(
       (item) =>
-        item === document.activeElement || item.contains(document.activeElement)
+        item === document.activeElement ||
+        item.contains(document.activeElement),
     );
 
     switch (e.key) {
@@ -127,14 +128,12 @@ const ContinueWatching = () => {
               <ChevronRight color='#ffffff' />
             </Link>
 
-         
-              <button
-                onClick={() => setOpenModal(true)}
-                className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-              >
-                Clear All
-              </button>
-          
+            <button
+              onClick={() => setOpenModal(true)}
+              className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+            >
+              Clear All
+            </button>
           </div>
 
           <div
@@ -166,8 +165,6 @@ const ContinueWatching = () => {
                           src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
                           alt={`${item.title}'s backdrop`}
                         />
-                        
-                      
                       ) : (
                         <img
                           className='rounded-xl mr-2  object-cover w-86 h-50'
@@ -200,8 +197,12 @@ const ContinueWatching = () => {
                                 handleDelete(e, item.id, item.media_type);
                               }
                             }}
-                            onTouchStart={(e) => handleDelete(e, item.id, item.media_type)}
-                            onClick={(e) => handleDelete(e, item.id, item.media_type)}
+                            onTouchStart={(e) =>
+                              handleDelete(e, item.id, item.media_type)
+                            }
+                            onClick={(e) =>
+                              handleDelete(e, item.id, item.media_type)
+                            }
                           >
                             <svg
                               xmlns='http://www.w3.org/2000/svg'
@@ -223,9 +224,7 @@ const ContinueWatching = () => {
 
                       {/* Title and info */}
                       <div className='absolute bottom-0 left-0 w-full px-5 pb-4'>
-                        <h2 className='text-xl font-bold'>
-                          {item.title}
-                        </h2>
+                        <h2 className='text-xl font-bold'>{item.title}</h2>
                         <h3 className='text-lg'>
                           {item.media_type === 'tv' ? (
                             <p>
@@ -236,9 +235,7 @@ const ContinueWatching = () => {
                               {dayjs(item.release_date).format('YYYY') ===
                               'Invalid Date'
                                 ? 'Unknown Date '
-                                : dayjs(item.release_date).format(
-                                    'YYYY'
-                                  )}{' '}
+                                : dayjs(item.release_date).format('YYYY')}{' '}
                               &#x2022; {Number(item.runtime) || '0'} min
                             </p>
                           )}

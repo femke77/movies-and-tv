@@ -8,9 +8,8 @@ const MoviePopular = () => {
   const { genres } = genreData;
   const { sortOptions } = sortOptionsData;
   useDocumentTitle('Discover Popular Movies | BingeBox');
-  const {state} = useLocation();
+  const { state } = useLocation();
 
-  
   if (!genres) return null;
   if (!sortOptions) return null;
 

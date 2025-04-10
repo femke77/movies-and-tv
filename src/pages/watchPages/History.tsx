@@ -7,10 +7,9 @@ import useDocumentTitle from '../../hooks/usePageTitles';
 import BackButton from '../../components/buttons/BackBtn';
 import { useShallow } from 'zustand/react/shallow';
 
-
 const History = () => {
   const { previousSearches, clearPreviousSearches } = useStore(
-    useShallow((state) => state)
+    useShallow((state) => state),
   );
   const [showModal, setShowModal] = useState(false);
   useDocumentTitle('Watch History | BingeBox');
@@ -19,7 +18,7 @@ const History = () => {
       <div className='absolute top-20 left-3 z-10 mb-10'>
         <BackButton />
       </div>
-      
+
       <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800' />
 
       <div className='mt-36'>

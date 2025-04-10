@@ -15,7 +15,7 @@ interface MediaListContainerProps {
   voteAverage?: number;
   sortOptions: { id: number; name: string; value: string }[];
   voteCount?: number;
-  genre?:string;
+  genre?: string;
 }
 
 const MediaListContainer = ({
@@ -26,11 +26,8 @@ const MediaListContainer = ({
   voteAverage,
   sortOptions,
   voteCount,
-  genre
+  genre,
 }: MediaListContainerProps) => {
-
-
-  
   const isInitialMount = useRef(true);
 
   const location = useLocation();
@@ -40,7 +37,6 @@ const MediaListContainer = ({
     return stored ? JSON.parse(stored) : [];
   });
 
-  
   const [deSelectedGenres, setDeSelectedGenres] = useState<string[]>(() => {
     const stored = sessionStorage.getItem(`${mediaType}-deSelectedGenres`);
     return stored ? JSON.parse(stored) : [];

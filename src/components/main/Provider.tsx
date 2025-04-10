@@ -8,7 +8,7 @@ const Provider = ({
   provider_id,
   header,
   media_type,
-  genre
+  genre,
 }: {
   provider_name: string;
   provider_id: number;
@@ -24,7 +24,10 @@ const Provider = ({
 
   return (
     <div className=' mt-20  min-h-[350px]' id={`${provider_name}-section`}>
-      <Link to={media_type === 'tv' ? `/explore/popular-tv`: `/explore/popular`} state={{'genre':genre}}>
+      <Link
+        to={media_type === 'tv' ? `/explore/popular-tv` : `/explore/popular`}
+        state={{ genre: genre }}
+      >
         <h2 className='text-2xl font-bold mb-6  ml-5'>{header}</h2>
       </Link>
       {isLoading ? (
