@@ -66,7 +66,7 @@ export const useItemDetail = (type: string, id: string) => {
       }
 
       if (type === 'movie') {
-        const [movie, rating, credits,quality] = await Promise.all([
+        const [movie, rating, credits, quality] = await Promise.all([
           fetchItemDetail(type, id),
           fetchMovieRating(id),
           fetchItemCredits(type, id),
@@ -77,7 +77,7 @@ export const useItemDetail = (type: string, id: string) => {
           ...movie,
           rating,
           ...credits,
-          ...quality
+          ...quality,
         };
       } else if (type === 'tv') {
         const [tv, rating, credits, quality] = await Promise.all([
@@ -91,7 +91,7 @@ export const useItemDetail = (type: string, id: string) => {
           ...tv,
           rating,
           ...credits,
-          ...quality
+          ...quality,
         };
       }
     },

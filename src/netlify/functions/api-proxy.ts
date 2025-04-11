@@ -1,9 +1,8 @@
-import { Handler } from '@netlify/functions'
-
+import { Handler } from '@netlify/functions';
 
 const handler: Handler = async (event) => {
-  const path = event.path.replace('/.netlify/functions/api-proxy', '')
-  const url = `https://api.offlinetv.net${path}${event.rawQuery ? '?' + event.rawQuery : ''}`
+  const path = event.path.replace('/.netlify/functions/api-proxy', '');
+  const url = `https://api.offlinetv.net${path}${event.rawQuery ? '?' + event.rawQuery : ''}`;
 
   const res = await fetch(url, {
     method: event.httpMethod,
@@ -12,9 +11,9 @@ const handler: Handler = async (event) => {
       host: 'api.offlinetv.net',
     },
     body: event.body,
-  })
+  });
 
-  const body = await res.text()
+  const body = await res.text();
 
   return {
     statusCode: res.status,
@@ -22,7 +21,7 @@ const handler: Handler = async (event) => {
       'content-type': res.headers.get('content-type') || 'application/json',
     },
     body,
-  }
-}
+  };
+};
 
-export { handler }
+export { handler };
