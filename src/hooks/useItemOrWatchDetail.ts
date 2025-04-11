@@ -40,10 +40,8 @@ const fetchItemCredits = async (type: string, id: string) => {
 };
 
 // https://api.offlinetv.net/api/quality?tmdb_ids=1087891
-const fetchItemQuality = async (id: string) => {
-  const response = await fetch(
-    `https://api.offlinetv.net/quality?tmdb_ids=${id}`,
-  );
+const fetchItemQuality = async ( id: string) => {
+const response = await fetch(`/api/quality?tmdb_ids=${id}`);
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
