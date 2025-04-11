@@ -25,7 +25,7 @@ const ItemDetail = () => {
   console.log(item);
 
   const bookmark = useStore(
-    useShallow((state) => state.bookmarks[`${id}-${item_type}`])
+    useShallow((state) => state.bookmarks[`${id}-${item_type}`]),
   );
 
   // const isBookmarked = useMemo(() => {
@@ -36,7 +36,7 @@ const ItemDetail = () => {
   useDocumentTitle(
     item?.title || item?.name
       ? `${item.title || item.name} | BingeBox`
-      : 'Loading... | BingeBox'
+      : 'Loading... | BingeBox',
   );
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const ItemDetail = () => {
         setLogoLoaded(true);
       };
     }
-// TMDB provides a fake poster_path of nothing if image is not available
+    // TMDB provides a fake poster_path of nothing if image is not available
 
     if (item?.poster_path) {
       const lowResPoster = new Image();
@@ -102,12 +102,12 @@ const ItemDetail = () => {
 
   const strokeColor = getStrokeColor(item?.vote_average);
   const directorData = item?.crew?.find(
-    (member: { job: string }) => member.job === 'Director'
+    (member: { job: string }) => member.job === 'Director',
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = item?.crew?.find(
     (member: { job: string }) =>
-      member.job === 'Screenplay' || member.job === 'Writer'
+      member.job === 'Screenplay' || member.job === 'Writer',
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -259,10 +259,10 @@ const ItemDetail = () => {
                             onLoad={() => setLogoLoaded(true)}
                             loading='lazy'
                             onError={(e) =>
-                              ((e.target as HTMLElement)
-                                .parentElement as HTMLDivElement).classList.add(
-                                'hidden'
-                              )
+                              (
+                                (e.target as HTMLElement)
+                                  .parentElement as HTMLDivElement
+                              ).classList.add('hidden')
                             }
                           />
                         </div>
@@ -287,10 +287,10 @@ const ItemDetail = () => {
                             title={`${item.production_companies?.[0]?.name}`}
                             loading='lazy'
                             onError={(e) =>
-                              ((e.target as HTMLElement)
-                                .parentElement as HTMLDivElement).classList.add(
-                                'hidden'
-                              )
+                              (
+                                (e.target as HTMLElement)
+                                  .parentElement as HTMLDivElement
+                              ).classList.add('hidden')
                             }
                           />
                         </div>
@@ -346,8 +346,8 @@ const ItemDetail = () => {
                         ? dayjs(item.release_date).format('MMM DD, YYYY')
                         : 'TBD'
                       : item.first_air_date
-                      ? dayjs(item.first_air_date).format('MMM DD, YYYY')
-                      : 'TBD'}
+                        ? dayjs(item.first_air_date).format('MMM DD, YYYY')
+                        : 'TBD'}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
@@ -356,8 +356,8 @@ const ItemDetail = () => {
                     {item.runtime
                       ? `${item.runtime} min`
                       : item.episode_run_time?.[0]
-                      ? `${item.episode_run_time[0]} min`
-                      : 'Unknown'}
+                        ? `${item.episode_run_time[0]} min`
+                        : 'Unknown'}
                   </span>
                 </p>
               </div>
@@ -421,7 +421,7 @@ const ItemDetail = () => {
                           {item.created_by.map(
                             (
                               creator: { id: string; name: string },
-                              index: number
+                              index: number,
                             ) => (
                               <span
                                 key={creator.id}
@@ -430,7 +430,7 @@ const ItemDetail = () => {
                                 {creator.name}
                                 {index < item.created_by.length - 1 ? ', ' : ''}
                               </span>
-                            )
+                            ),
                           )}
                         </p>
                         <p className='text-xl font-bold'>

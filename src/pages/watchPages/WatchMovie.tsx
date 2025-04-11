@@ -108,8 +108,6 @@ const WatchMovie = () => {
     };
   }, [selectedServer, movie_id]);
 
-
-
   return (
     <div className='min-h-screen pt-[60px]'>
       <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
@@ -137,7 +135,6 @@ const WatchMovie = () => {
           </div>
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
-        
               <iframe
                 ref={iframeRef}
                 id='iframe'

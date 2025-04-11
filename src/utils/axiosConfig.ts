@@ -12,7 +12,6 @@ export const apiOfflineTV = axios.create({
   baseURL: 'https://api.offlinetv.net/api/',
   headers: {
     'Content-Type': 'application/json',
-    
   },
 });
 
