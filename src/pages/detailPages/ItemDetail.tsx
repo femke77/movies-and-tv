@@ -22,6 +22,8 @@ const ItemDetail = () => {
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
+  console.log(item);
+
   const bookmark = useStore(
     useShallow((state) => state.bookmarks[`${id}-${item_type}`]),
   );
@@ -66,6 +68,7 @@ const ItemDetail = () => {
         setLogoLoaded(true);
       };
     }
+    // TMDB provides a fake poster_path of nothing if image is not available
 
     if (item?.poster_path) {
       const lowResPoster = new Image();
@@ -208,13 +211,23 @@ const ItemDetail = () => {
                   <Chip key={genre.id} label={genre.name} />
                 ))}
               </div>
-              <p className='text-lg text-light'>
-                Rating:{' '}
-                <span className='text-xl text-gray-200/70 my-3 font-bold'>
-                  {item.rating}
-                </span>
-              </p>
-
+              <div className='flex flex-wrap items-center justify-center md:justify-start mb-2'>
+                <p className='text-lg text-light mr-3'>
+                  Rating:{' '}
+                  <span className='text-lg text-gray-200/70 mr-4 font-bold'>
+                    {item.rating}
+                  </span>
+                </p>
+                {item[String(id)]?.bestQuality && (
+                  <div className='flex items-center'>
+                    <p className='text-lg text-light mr-3'>Best Quality: </p>
+                    <Chip
+                      label={item[String(id)]?.bestQuality}
+                      fontSize='text-md'
+                    />
+                  </div>
+                )}
+              </div>
               <div className='justify-center flex flex-wrap items-center md:justify-start gap-x-2  mb-3'>
                 {(item_type === 'tv' &&
                   item.networks?.length > 0 &&
@@ -297,7 +310,7 @@ const ItemDetail = () => {
                 <div className='min-w-10 h-20 pt-3 flex items-center justify-center'>
                   <WatchButton itemType={item_type!} id={item.id} />
                 </div>
-                <div className='min-w-10 h-10 pt-3 flex items-center justify-center pl-2'>
+                <div className='min-w-10 h-10 flex items-center justify-center pl-2 mt-3'>
                   <BookmarkBtn
                     isBookmarked={!!bookmark}
                     id={item.id}

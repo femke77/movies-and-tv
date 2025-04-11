@@ -53,10 +53,17 @@ const ContinueWatching = () => {
   ) => {
     e.preventDefault();
     e.stopPropagation();
-    setTimeout(() => {
+    // debounce the last item to avoid clicking the item card.
+    // eventually make all deleting a modal interaction
+    if (items.length === 1) {
+      setTimeout(() => {
+        removeFromContinueWatching(id, media_type);
+        setActiveItemId(null);
+      }, 300);
+    } else {
       removeFromContinueWatching(id, media_type);
       setActiveItemId(null);
-    }, 50);
+    }
   };
 
   const closeModal = () => {

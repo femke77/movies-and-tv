@@ -8,6 +8,13 @@ export const apiClient = axios.create({
   },
 });
 
+export const apiOfflineTV = axios.create({
+  baseURL: 'https://api.offlinetv.net/api/',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 export const TMDBClient = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
   headers: {

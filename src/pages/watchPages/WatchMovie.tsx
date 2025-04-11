@@ -61,7 +61,7 @@ const WatchMovie = () => {
         newURL = `https://vidlink.pro/movie/${movie_id}`;
         break;
       case 'moviesapi.club':
-        newURL = `https://moviesapi.to/movie/${movie_id}`;
+        newURL = `https://moviesapi.club/movie/${movie_id}`;
         break;
       case 'embed.su':
         newURL = `https://embed.su/embed/movie/${movie_id}`;
