@@ -68,6 +68,7 @@ const ItemDetail = () => {
         setLogoLoaded(true);
       };
     }
+// TMDB provides a fake poster_path of nothing if image is not available
 
     if (item?.poster_path) {
       const lowResPoster = new Image();
@@ -217,13 +218,15 @@ const ItemDetail = () => {
                     {item.rating}
                   </span>
                 </p>
-                <div className='flex items-center'>
-                  <p className='text-lg text-light mr-3'>Best Quality: </p>
-                  <Chip
-                    label={item[String(id)].bestQuality}
-                    fontSize='text-md'
-                  />
-                </div>
+                {item[String(id)]?.bestQuality && (
+                  <div className='flex items-center'>
+                    <p className='text-lg text-light mr-3'>Best Quality: </p>
+                    <Chip
+                      label={item[String(id)]?.bestQuality}
+                      fontSize='text-md'
+                    />
+                  </div>
+                )}
               </div>
               <div className='justify-center flex flex-wrap items-center md:justify-start gap-x-2  mb-3'>
                 {(item_type === 'tv' &&

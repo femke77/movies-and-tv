@@ -85,13 +85,13 @@ define(['./workbox-f6195dc0'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "/index.html",
-    "revision": "0.5m55laovet8"
+    "revision": "0.llui1b7bb6"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("/index.html"), {
     allowlist: [/^\/$/]
   }));
-  workbox.registerRoute(/^https:\/\/image\.tmdb\.org\/t\/p\/(w1280|w500|w185)\/.*$/, new workbox.CacheFirst({
+  workbox.registerRoute(/^https:\/\/image\.tmdb\.org\/t\/p\/(w1280|w500|w185)\/&cache=true\/.*$/, new workbox.CacheFirst({
     "cacheName": "tmdb-images",
     "fetchOptions": {
       "mode": "no-cors"
