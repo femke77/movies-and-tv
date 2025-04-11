@@ -23,12 +23,9 @@ const ItemDetail = () => {
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
 
-
   const bookmark = useStore(
     useShallow((state) => state.bookmarks[`${id}-${item_type}`]),
   );
-
-
 
   useDocumentTitle(
     item?.title || item?.name
