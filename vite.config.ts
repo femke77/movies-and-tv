@@ -66,7 +66,7 @@ export default defineConfig({
         runtimeCaching: [
           {
             // cache slide backdrops, posters, and logos with the cache=true query param added by me (not a part of tmdb api)
-            urlPattern: /^https:\/\/image\.tmdb\.org\/t\/p\/(w1280|w500|w185)\/&cache=true\/.*$/,
+            urlPattern: /^https:\/\/image\.tmdb\.org\/t\/p\/w\d+\/.*&cache=true$/,
             handler: 'CacheFirst', // Use cached images first, fetch only if missing (reduces api calls)
             options: {
               cacheName: 'tmdb-images',
@@ -114,6 +114,7 @@ export default defineConfig({
   ],
   server: {
     port: 3003,
+    host:true,
     proxy: {
       '/api': {
         target: 'https://api.offlinetv.net',

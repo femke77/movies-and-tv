@@ -134,9 +134,10 @@ nav {
 
 .swiper {
   width: 100%;
-  height: 100%;
-  position: relative;
-  height: 96vh;
+  min-height: 100%;
+
+  height: 98vh;
+
 }
 
 .swiper-slide {
@@ -144,14 +145,12 @@ nav {
   font-size: 16px;
   background: transparent;
   color: black;
-
-}
-
-.slide-container {
   aspect-ratio: 16/9;
-  background-color: #000;
   overflow: hidden;
+
+
 }
+
 
 
 .swiper-button-next::after,

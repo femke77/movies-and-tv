@@ -113,13 +113,14 @@ const Slide = ({
   }, [contentLoaded, logoStatus.loaded, isVisible]);
 
   return (
+  
     <div
-      className={` swiper-slide bg-black h-full flex items-center slide-container overflow-hidden ${
+      className={` swiper-slide  bg-black h-full flex items-center slide-container overflow-hidden ${
         isVisible ? 'visible' : 'invisible'
-      }`}
+      } `}
     >
       <div
-        className={clsx(`mt-10 absolute inset-0 bg-cover  bg-center md:bg-top transition-opacity 
+        className={clsx(`mt-12 absolute inset-0 bg-cover  bg-center md:bg-top transition-opacity 
          duration-1500 ease-in-out ${
            isVisible && highResBgLoaded ? 'opacity-100' : 'opacity-0'
          } z-0`)}
@@ -299,6 +300,7 @@ const Slide = ({
         )}
       </div>
     </div>
+  
   );
 };
 
