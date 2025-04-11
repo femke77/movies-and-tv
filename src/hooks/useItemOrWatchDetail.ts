@@ -70,28 +70,24 @@ export const useItemDetail = (type: string, id: string) => {
           fetchItemDetail(type, id),
           fetchMovieRating(id),
           fetchItemCredits(type, id),
-  
         ]);
 
         return {
           ...movie,
           rating,
           ...credits,
-    
         };
       } else if (type === 'tv') {
         const [tv, rating, credits] = await Promise.all([
           fetchItemDetail(type, id),
           fetchTVContentRating(id),
           fetchItemCredits(type, id),
-      
         ]);
 
         return {
           ...tv,
           rating,
           ...credits,
-        
         };
       }
     },
