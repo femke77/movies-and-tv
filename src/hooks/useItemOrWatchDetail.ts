@@ -40,8 +40,10 @@ const fetchItemCredits = async (type: string, id: string) => {
 };
 
 // https://api.offlinetv.net/api/quality?tmdb_ids=1087891
-const fetchItemQuality = async ( id: string) => {
-const response = await fetch(`https://api.offlinetv.net/quality?tmdb_ids=${id}`);
+const fetchItemQuality = async (id: string) => {
+  const response = await fetch(
+    `https://api.offlinetv.net/quality?tmdb_ids=${id}`,
+  );
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
@@ -66,7 +68,7 @@ export const useItemDetail = (type: string, id: string) => {
       }
 
       if (type === 'movie') {
-        const [movie, rating, credits,quality] = await Promise.all([
+        const [movie, rating, credits, quality] = await Promise.all([
           fetchItemDetail(type, id),
           fetchMovieRating(id),
           fetchItemCredits(type, id),
@@ -77,7 +79,7 @@ export const useItemDetail = (type: string, id: string) => {
           ...movie,
           rating,
           ...credits,
-          ...quality
+          ...quality,
         };
       } else if (type === 'tv') {
         const [tv, rating, credits, quality] = await Promise.all([
@@ -91,7 +93,7 @@ export const useItemDetail = (type: string, id: string) => {
           ...tv,
           rating,
           ...credits,
-          ...quality
+          ...quality,
         };
       }
     },
