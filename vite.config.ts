@@ -115,14 +115,14 @@ export default defineConfig({
   ],
   server: {
     port: 3003,
-    host: true,
-    open: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://api.offlinetv.net',
         changeOrigin: true,
-        secure: false,
-      },
-    },
+     
+      }
+    }
+
   },
+  
 });

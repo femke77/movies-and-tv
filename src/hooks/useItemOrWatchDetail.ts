@@ -1,4 +1,4 @@
-import { TMDBClient } from '../utils/axiosConfig';
+import { TMDBClient} from '../utils/axiosConfig';
 import { useQuery } from '@tanstack/react-query';
 
 export const fetchItemDetail = async (type: string, id: string) => {
@@ -39,6 +39,25 @@ const fetchItemCredits = async (type: string, id: string) => {
   return data;
 };
 
+// https://api.offlinetv.net/api/quality?tmdb_ids=1087891
+const fetchItemQuality = async ( id: string) => {
+const response = await fetch('/api/quality?tmdb_ids=' + id);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  const data = await response.json();
+  if (!data) {
+    throw new Error('No data found');
+  }
+  if (data.error) {
+    throw new Error(data.error);
+  }
+ 
+return data;
+}
+
+
+
 // This is for the ItemDetail page with tv or movie content ratings and credits/cast information
 export const useItemDetail = (type: string, id: string) => {
   return useQuery({
@@ -49,28 +68,36 @@ export const useItemDetail = (type: string, id: string) => {
       }
 
       if (type === 'movie') {
-        const [movie, rating, credits] = await Promise.all([
+        const [movie, rating, credits, quality] = await Promise.all([
           fetchItemDetail(type, id),
           fetchMovieRating(id),
           fetchItemCredits(type, id),
+          fetchItemQuality(id)
         ]);
 
         return {
           ...movie,
           rating,
           ...credits,
+          ...quality
+    
+
         };
       } else if (type === 'tv') {
-        const [tv, rating, credits] = await Promise.all([
+        const [tv, rating, credits, quality] = await Promise.all([
           fetchItemDetail(type, id),
           fetchTVContentRating(id),
           fetchItemCredits(type, id),
+          fetchItemQuality(id)
+    
         ]);
 
         return {
           ...tv,
           rating,
           ...credits,
+          ...quality
+     
         };
       }
     },
@@ -97,6 +124,7 @@ export const useWatchDetails = (type: string, id: string) => {
         const [detail, episodes] = await Promise.all([
           fetchItemDetail('tv', id),
           fetchTVSeasonEpisodes(id, '1'),
+
         ]);
 
         return {

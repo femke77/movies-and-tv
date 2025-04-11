@@ -22,8 +22,10 @@ const ItemDetail = () => {
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
+  console.log(item);
+
   const bookmark = useStore(
-    useShallow((state) => state.bookmarks[`${id}-${item_type}`]),
+    useShallow((state) => state.bookmarks[`${id}-${item_type}`])
   );
 
   // const isBookmarked = useMemo(() => {
@@ -34,7 +36,7 @@ const ItemDetail = () => {
   useDocumentTitle(
     item?.title || item?.name
       ? `${item.title || item.name} | BingeBox`
-      : 'Loading... | BingeBox',
+      : 'Loading... | BingeBox'
   );
 
   useEffect(() => {
@@ -99,12 +101,12 @@ const ItemDetail = () => {
 
   const strokeColor = getStrokeColor(item?.vote_average);
   const directorData = item?.crew?.find(
-    (member: { job: string }) => member.job === 'Director',
+    (member: { job: string }) => member.job === 'Director'
   );
   const directorName = directorData?.name || 'Unknown';
   const writerData = item?.crew?.find(
     (member: { job: string }) =>
-      member.job === 'Screenplay' || member.job === 'Writer',
+      member.job === 'Screenplay' || member.job === 'Writer'
   );
   const writerName = writerData?.name || 'Unknown';
   const calculateROI =
@@ -208,13 +210,21 @@ const ItemDetail = () => {
                   <Chip key={genre.id} label={genre.name} />
                 ))}
               </div>
-              <p className='text-lg text-light'>
-                Rating:{' '}
-                <span className='text-xl text-gray-200/70 my-3 font-bold'>
-                  {item.rating}
-                </span>
-              </p>
-
+              <div className='flex flex-wrap items-center justify-center md:justify-start mb-2'>
+                <p className='text-lg text-light mr-3'>
+                  Rating:{' '}
+                  <span className='text-lg text-gray-200/70 mr-4 font-bold'>
+                    {item.rating}
+                  </span>
+                </p>
+                <div className='flex items-center'>
+                  <p className='text-lg text-light mr-3'>Best Quality: </p>
+                  <Chip
+                    label={item[String(id)].bestQuality}
+                    fontSize='text-md'
+                  />
+                </div>
+              </div>
               <div className='justify-center flex flex-wrap items-center md:justify-start gap-x-2  mb-3'>
                 {(item_type === 'tv' &&
                   item.networks?.length > 0 &&
@@ -246,10 +256,10 @@ const ItemDetail = () => {
                             onLoad={() => setLogoLoaded(true)}
                             loading='lazy'
                             onError={(e) =>
-                              (
-                                (e.target as HTMLElement)
-                                  .parentElement as HTMLDivElement
-                              ).classList.add('hidden')
+                              ((e.target as HTMLElement)
+                                .parentElement as HTMLDivElement).classList.add(
+                                'hidden'
+                              )
                             }
                           />
                         </div>
@@ -274,10 +284,10 @@ const ItemDetail = () => {
                             title={`${item.production_companies?.[0]?.name}`}
                             loading='lazy'
                             onError={(e) =>
-                              (
-                                (e.target as HTMLElement)
-                                  .parentElement as HTMLDivElement
-                              ).classList.add('hidden')
+                              ((e.target as HTMLElement)
+                                .parentElement as HTMLDivElement).classList.add(
+                                'hidden'
+                              )
                             }
                           />
                         </div>
@@ -297,7 +307,7 @@ const ItemDetail = () => {
                 <div className='min-w-10 h-20 pt-3 flex items-center justify-center'>
                   <WatchButton itemType={item_type!} id={item.id} />
                 </div>
-                <div className='min-w-10 h-10 pt-3 flex items-center justify-center pl-2'>
+                <div className='min-w-10 h-10 flex items-center justify-center pl-2 mt-3'>
                   <BookmarkBtn
                     isBookmarked={!!bookmark}
                     id={item.id}
@@ -333,8 +343,8 @@ const ItemDetail = () => {
                         ? dayjs(item.release_date).format('MMM DD, YYYY')
                         : 'TBD'
                       : item.first_air_date
-                        ? dayjs(item.first_air_date).format('MMM DD, YYYY')
-                        : 'TBD'}
+                      ? dayjs(item.first_air_date).format('MMM DD, YYYY')
+                      : 'TBD'}
                   </span>
                 </p>
                 <p className='text-xl font-bold'>
@@ -343,8 +353,8 @@ const ItemDetail = () => {
                     {item.runtime
                       ? `${item.runtime} min`
                       : item.episode_run_time?.[0]
-                        ? `${item.episode_run_time[0]} min`
-                        : 'Unknown'}
+                      ? `${item.episode_run_time[0]} min`
+                      : 'Unknown'}
                   </span>
                 </p>
               </div>
@@ -408,7 +418,7 @@ const ItemDetail = () => {
                           {item.created_by.map(
                             (
                               creator: { id: string; name: string },
-                              index: number,
+                              index: number
                             ) => (
                               <span
                                 key={creator.id}
@@ -417,7 +427,7 @@ const ItemDetail = () => {
                                 {creator.name}
                                 {index < item.created_by.length - 1 ? ', ' : ''}
                               </span>
-                            ),
+                            )
                           )}
                         </p>
                         <p className='text-xl font-bold'>
