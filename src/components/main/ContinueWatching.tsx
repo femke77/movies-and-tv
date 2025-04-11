@@ -22,7 +22,7 @@ interface WatchItem {
 const ContinueWatching = () => {
   const location = useLocation();
   const continueWatching = useStore(
-    useShallow((state) => state.continueWatching)
+    useShallow((state) => state.continueWatching),
   );
 
   const { removeFromContinueWatching, clearContinueWatching } = useStore();
@@ -49,11 +49,11 @@ const ContinueWatching = () => {
       | React.TouchEvent<HTMLButtonElement>
       | React.KeyboardEvent<HTMLButtonElement>,
     id: number,
-    media_type: string
+    media_type: string,
   ) => {
     e.preventDefault();
     e.stopPropagation();
-    // debounce the last item to avoid clicking the item card. 
+    // debounce the last item to avoid clicking the item card.
     // eventually make all deleting a modal interaction
     if (items.length === 1) {
       setTimeout(() => {
@@ -80,7 +80,7 @@ const ContinueWatching = () => {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    id: number
+    id: number,
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       setActiveItemId(id);
@@ -93,7 +93,8 @@ const ContinueWatching = () => {
     const items = carouselRef.current.querySelectorAll('[data-carousel-item]');
     const currentIndex = Array.from(items).findIndex(
       (item) =>
-        item === document.activeElement || item.contains(document.activeElement)
+        item === document.activeElement ||
+        item.contains(document.activeElement),
     );
 
     switch (e.key) {
