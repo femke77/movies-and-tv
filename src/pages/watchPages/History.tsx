@@ -45,11 +45,11 @@ const History = () => {
         }}
         message='Are you sure you want to clear your search history?'
       />
-      <div className='z-10 flex flex-col gap-2 mt-4 ml-6'>
+      <div className='z-10 flex flex-col gap-2 mt-7 ml-6'>
         {previousSearches.length > 0 ? (
           <div className='grid grid-cols-1 sm:grid-cols-2'>
             {previousSearches?.map((item, index) => (
-              <div key={index} className='text-white z-10 text-md'>
+              <div key={index} className='text-white z-10 text-md leading-8'>
                 <Link to={`/search/${item}`}> {item}</Link>
               </div>
             ))}

@@ -22,7 +22,7 @@ const WatchButton = ({
   return (
     <button
       onClick={handleClick}
-      className='cursor-pointer w-[120px] h-[35px] sm:h-[40px] sm:w-full flex items-center bg-white text-black px-1 sm:px-4 py-1 sm:py-1.5 rounded-lg hover:bg-gray-200'
+      className='cursor-pointer w-[120px] h-[35px] sm:h-[40px] sm:w-full flex items-center bg-white text-black px-2 sm:px-4 py-1 sm:py-1.5 rounded-lg hover:bg-gray-200'
     >
       <img
         src='/play.svg'
