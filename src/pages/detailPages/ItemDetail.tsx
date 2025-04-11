@@ -22,16 +22,10 @@ const ItemDetail = () => {
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
-  console.log(item);
 
   const bookmark = useStore(
     useShallow((state) => state.bookmarks[`${id}-${item_type}`]),
   );
-
-  // const isBookmarked = useMemo(() => {
-  //   const set = new Set(bookmarks.map((b) => `${b.id}-${b.type}`));
-  //   return (id: number, type: string) => set.has(`${id}-${type}`);
-  // }, [bookmarks]);
 
   useDocumentTitle(
     item?.title || item?.name
