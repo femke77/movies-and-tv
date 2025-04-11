@@ -175,7 +175,7 @@ const ItemDetail = () => {
                             : 'opacity-0'
                         }`}
                         onLoad={() => setHighResPosterLoaded(true)}
-                        loading='lazy'
+                        loading='eager'
                       />
                     </>
                   ) : (
@@ -254,7 +254,7 @@ const ItemDetail = () => {
                             title={`${item.networks?.[0]?.name}`}
                             alt={`${item.networks?.[0]?.name}'s official logo`}
                             onLoad={() => setLogoLoaded(true)}
-                            loading='lazy'
+                            loading='eager'
                             onError={(e) =>
                               (
                                 (e.target as HTMLElement)
@@ -282,7 +282,7 @@ const ItemDetail = () => {
                             alt={`${item.production_companies?.[0]?.name}'s official logo`}
                             onLoad={() => setLogoLoaded(true)}
                             title={`${item.production_companies?.[0]?.name}`}
-                            loading='lazy'
+                            loading='eager'
                             onError={(e) =>
                               (
                                 (e.target as HTMLElement)

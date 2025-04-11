@@ -11,11 +11,10 @@ const PopularMovies = () => {
       <Link to='/explore/popular'>
         <h2 className='text-2xl font-bold mb-6 ml-5'>Popular Movies</h2>
       </Link>
-
       {isLoading ? (
         <div className='flex gap-3 px-4 py-2 w-full'>
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={`skeleton-${i}`} className='w-[180px] flex-shrink-0'>
+            <div key={i} className='w-[180px] flex-shrink-0'>
               <ItemCardSkeleton />
             </div>
           ))}
