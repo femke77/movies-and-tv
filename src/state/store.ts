@@ -36,7 +36,7 @@ interface BookmarkStore {
     runtime?: string;
   }[];
 
- // methods
+  // methods
   openModal: (_id: string, _type: string) => void;
   closeModal: () => void;
   addBookmark: (_id: string, _type: string) => void;
@@ -51,7 +51,7 @@ interface BookmarkStore {
     _title: string,
     _season: number,
     _episode: number,
-    _poster_path: string,
+    _poster_path: string
   ) => void;
   addToContinueWatchingMovie: (
     _id: number,
@@ -60,7 +60,7 @@ interface BookmarkStore {
     _title: string,
     _poster_path: string,
     _release_date: string,
-    _runtime: string,
+    _runtime: string
   ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
@@ -104,7 +104,7 @@ export const useStore = create<BookmarkStore>()(
           return {
             bookmarks: get().bookmarks,
             previousSearches: get().previousSearches,
-            continueWatching: get().continueWatching
+            continueWatching: get().continueWatching,
           };
         }
 
@@ -123,29 +123,31 @@ export const useStore = create<BookmarkStore>()(
 
         // start loading
         set({ isLoading: true });
+        // notify listeners
+        get().listeners.forEach((listener) => listener());
 
         try {
           // persist middleware will handle the actual loading from IndexedDB
           // wait for it to complete, which happens after initialization
           // return the current state which will be populated by the persist middleware
 
-          // a bit of concern here since we are not actually waiting for hydration with 0 
-          await new Promise(resolve => setTimeout(resolve, 0));
-          
+          await new Promise((resolve) => setTimeout(resolve, 0));
+
           set({ isLoaded: true, isLoading: false });
-          
-          // notify listeners 
-          get().listeners.forEach(listener => listener());
-          
+
+          // notify listeners
+          get().listeners.forEach((listener) => listener());
+
           return {
             bookmarks: get().bookmarks,
             previousSearches: get().previousSearches,
-            continueWatching: get().continueWatching
+            continueWatching: get().continueWatching,
           };
         } catch (error) {
-          set({ 
-            loadError: error instanceof Error ? error : new Error(String(error)),
-            isLoading: false 
+          set({
+            loadError:
+              error instanceof Error ? error : new Error(String(error)),
+            isLoading: false,
           });
           throw error;
         }
@@ -164,14 +166,14 @@ export const useStore = create<BookmarkStore>()(
           return { previousSearches: newSearches };
         });
         // always notify listeners of the change (note this on each mutator)
-        get().listeners.forEach(listener => listener());
+        get().listeners.forEach((listener) => listener());
       },
-      
+
       clearPreviousSearches: () => {
         set({ previousSearches: [] });
-        get().listeners.forEach(listener => listener());
+        get().listeners.forEach((listener) => listener());
       },
-      
+
       addToContinueWatchingTv: (
         id,
         media_type,
@@ -190,23 +192,22 @@ export const useStore = create<BookmarkStore>()(
           episode,
           poster_path,
         };
-      
+
         set((state) => {
           const filtered = state.continueWatching.filter(
             (item) => !(item.id === id && item.media_type === media_type)
           );
-      
+
           const updated = [...filtered, newItem]
             .sort((a, b) => b.lastUpdated - a.lastUpdated)
             .slice(0, 200);
-      
+
           return { continueWatching: updated };
         });
-      
+
         get().listeners.forEach((listener) => listener());
       },
-      
-      
+
       addToContinueWatchingMovie: (
         id,
         media_type,
@@ -225,38 +226,37 @@ export const useStore = create<BookmarkStore>()(
           release_date,
           runtime,
         };
-      
+
         set((state) => {
           const filtered = state.continueWatching.filter(
             (item) => !(item.id === id && item.media_type === media_type)
           );
-      
+
           const updated = [...filtered, newItem]
             .sort((a, b) => b.lastUpdated - a.lastUpdated)
             .slice(0, 200);
-      
+
           return { continueWatching: updated };
         });
-      
+
         get().listeners.forEach((listener) => listener());
       },
-      
-      
+
       removeFromContinueWatching: (id, media_type) => {
         set((state) => {
           const newContinueWatching = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type),
+            (item) => !(item.id === id && item.media_type === media_type)
           );
           return { continueWatching: newContinueWatching };
         });
-        get().listeners.forEach(listener => listener());
+        get().listeners.forEach((listener) => listener());
       },
-      
+
       clearContinueWatching: () => {
         set({ continueWatching: [] });
-        get().listeners.forEach(listener => listener());
+        get().listeners.forEach((listener) => listener());
       },
-      
+
       openModal: (id: string, type: string) => {
         set({
           modalData: {
@@ -281,7 +281,7 @@ export const useStore = create<BookmarkStore>()(
             },
           },
         }));
-        get().listeners.forEach(listener => listener());
+        get().listeners.forEach((listener) => listener());
       },
 
       removeBookmark: (id, type) => {
@@ -290,9 +290,9 @@ export const useStore = create<BookmarkStore>()(
           delete newBookmarks[`${id}-${type}`];
           return { bookmarks: newBookmarks };
         });
-        get().listeners.forEach(listener => listener());
+        get().listeners.forEach((listener) => listener());
       },
-      
+
       isBookmarked: (id, type) =>
         get().bookmarks[`${id}-${type}`] !== undefined,
     }),
@@ -304,19 +304,19 @@ export const useStore = create<BookmarkStore>()(
         previousSearches: state.previousSearches,
         continueWatching: state.continueWatching,
       }),
-    },
-  ),
+    }
+  )
 );
 
 //hook to use store data with suspense
 export function useSuspenseStore<T>(selector: (state: BookmarkStore) => T): T {
   const store = useStore();
-  
+
   // if the store isn't loaded yet, initialize it and throw the promise
   if (!store.isLoaded && !store.isLoading) {
     throw store.initializeStore();
   }
-  
+
   // if the store is currently loading, throw a promise to trigger suspense
   if (store.isLoading) {
     throw new Promise((resolve) => {
@@ -328,35 +328,42 @@ export function useSuspenseStore<T>(selector: (state: BookmarkStore) => T): T {
       });
     });
   }
-  
+
   // throw error if error while loading
   if (store.loadError) {
     throw store.loadError;
   }
-  
+
   //  useSyncExternalStore to subscribe to changes
-  return useSyncExternalStore(
-    store.subscribe,
-    () => selector(store)
-  );
+  return useSyncExternalStore(store.subscribe, () => selector(store));
 }
 
 // for components that don't need suspense
-export function useNonSuspenseStore<T>(selector: (state: BookmarkStore) => T): T {
+export function useNonSuspenseStore<T>(
+  selector: (state: BookmarkStore) => T
+): T {
   const store = useStore();
-  
+
   // still need to initialize the store if needed, but don't throw
- useEffect(() => {
+  useEffect(() => {
     if (!store.isLoaded && !store.isLoading) {
       store.initializeStore().catch(console.error);
     }
   }, [store]);
-  
+
   // use useSyncExternalStore to subscribe to changes
-  return useSyncExternalStore(
-    store.subscribe,
-    () => selector(store)
-  );
+  return useSyncExternalStore(store.subscribe, () => selector(store));
 }
 
-//useSyncExternalStorage needs subscribe which uses listeners to notify changes. 
+//useSyncExternalStorage needs subscribe which uses listeners to notify changes.
+
+
+
+
+// rationale for:
+// await new Promise((resolve) => setTimeout(resolve, 0));
+
+/*Even though the timeout is set to 0 milliseconds, this actually defers the resolution until after the current event loop iteration completes. It effectively creates a "microtask" that allows other pending operations to finish first.
+In the context of the store's initializeStore function, this is giving the persist middleware enough time to load and hydrate the store from IndexedDB before proceeding. The function is waiting for any pending asynchronous operations to complete before marking the store as loaded.
+
+This is a common pattern in JavaScript when you need to ensure that other asynchronous operations have a chance to complete before continuing with execution, especially when dealing with operations that might be scheduled but not yet executed in the event loop.*/
