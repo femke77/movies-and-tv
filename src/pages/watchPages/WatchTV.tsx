@@ -96,8 +96,6 @@ const WatchTV = () => {
 
   useEffect(() => {
     if (!series) return;
-    console.log('selectedSeason', selectedSeason);
-    console.log('selectedEpisode', selectedEpisode);
 
     // setTimeout(() => {
     addToContinueWatchingTv(
