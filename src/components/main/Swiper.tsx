@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
 import SlideSkeleton from '../loadingSkeletons/SlideSkeleton';
-import { useStore } from '../../state/store';
+import { useNonSuspenseStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -13,8 +13,8 @@ const Slide = lazy(() => import('./Slide'));
 
 export default function SwiperElement() {
   const { data: items = [] } = useTrendingAll();
-  // subscribe to bookmarks array in zustand store for reactivity
-  const bookmarks = useStore(useShallow((state) => state.bookmarks));
+  // subscribe to bookmarks array in zustand store for reactivity and don't use suspense b/c it will block the entire component
+  const bookmarks = useNonSuspenseStore(useShallow((state) => state.bookmarks));
 
   const [currentIndex, setCurrentIndex] = useState(0);
 

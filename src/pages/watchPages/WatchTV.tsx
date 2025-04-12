@@ -19,10 +19,6 @@ import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
 
-// FIXME This needs to be more componentized. iframe at least needs it's own component.
-// FIXME url params controlled instead of state controlled ??? would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management. Thinking about this.
-// FIXME active server on listboxcomp should be name not value.
-
 const WatchTV = () => {
   const { servers } = serverData;
   const { addToContinueWatchingTv } = useStore();
@@ -96,8 +92,6 @@ const WatchTV = () => {
 
   useEffect(() => {
     if (!series) return;
-    console.log('selectedSeason', selectedSeason);
-    console.log('selectedEpisode', selectedEpisode);
 
     // setTimeout(() => {
     addToContinueWatchingTv(
@@ -110,7 +104,7 @@ const WatchTV = () => {
       series.backdrop_path,
     );
 
-    // }, 60000);
+    // }, 180000);
     // es-lint-disable-next-line react-hooks/exhaustive-deps
   }, [series_id, series, selectedSeason, selectedEpisode]);
 
@@ -161,7 +155,7 @@ const WatchTV = () => {
         JSON.stringify(updatedViewProgressItem),
       );
     }
-  }, [selectedSeason, selectedEpisode]);
+  }, [series_id, selectedSeason, selectedEpisode]);
 
   // when page is remounted, user will see loading spinner for 750ms
   useEffect(() => {

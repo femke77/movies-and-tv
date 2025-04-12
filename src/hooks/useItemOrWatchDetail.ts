@@ -1,5 +1,5 @@
 import { TMDBClient } from '../utils/axiosConfig';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const fetchItemDetail = async (type: string, id: string) => {
   const { data } = await TMDBClient.get(`/${type}/${id}`);
@@ -58,7 +58,7 @@ const fetchItemQuality = async (id: string) => {
 
 // This is for the ItemDetail page with tv or movie content ratings and credits/cast information
 export const useItemDetail = (type: string, id: string) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['item-detail', id],
     queryFn: async () => {
       if (!id) {
@@ -95,18 +95,18 @@ export const useItemDetail = (type: string, id: string) => {
         };
       }
     },
+
     staleTime: 1000 * 60 * 10, // 10 minutes
     gcTime: 1000 * 60 * 11, // 11 minutes
     refetchOnWindowFocus: false,
     retry: 2,
-    enabled: !!id,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
 };
 
 //  Watch Movie or Watch TV details including list of season 1 episodes.
 export const useWatchDetails = (type: string, id: string) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['watch-details', id, type],
     queryFn: async () => {
       if (!id) {
@@ -138,14 +138,14 @@ export const useWatchDetails = (type: string, id: string) => {
     gcTime: 1000 * 60 * 60 * 25, // 25 hours
     refetchOnWindowFocus: false,
     retry: 2,
-    enabled: !!id,
+
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
 };
 
 // get TV show episodes for a specific season
 export const useTVSeasonEpisodes = (id: string, season_num: string) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['tv-season-episodes', id, season_num],
     queryFn: async () => {
       if (!id || !season_num) {
@@ -159,7 +159,6 @@ export const useTVSeasonEpisodes = (id: string, season_num: string) => {
     gcTime: 1000 * 60 * 60 * 49, // 25 hours
     refetchOnWindowFocus: false,
     retry: 2,
-    enabled: !!id,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
 };

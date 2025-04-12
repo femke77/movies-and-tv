@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import DraggableCarousel from '../containers/SimpleCarousel';
 import ConfirmModal from '../modals/ConfirmModal';
 import { ChevronRight } from 'lucide-react';
-import { useStore } from '../../state/store';
+import { useSuspenseStore, useStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
 import LazyImage from '../helpers/LazyImage';
 
@@ -21,7 +21,7 @@ interface WatchItem {
 
 const ContinueWatching = () => {
   const location = useLocation();
-  const continueWatching = useStore(
+  const continueWatching = useSuspenseStore(
     useShallow((state) => state.continueWatching),
   );
 

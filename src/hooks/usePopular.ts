@@ -10,6 +10,9 @@ const createPopularFetcher = (type: 'movie' | 'tv') => async () => {
   const { data } = await TMDBClient.get(
     `/${type}/popular?include_adult=false&include_video=falselanguage=en-US&page=1`,
   );
+  if (!data || !data.results) {
+    throw new Error('No data found');
+  }
   return data.results;
 };
 

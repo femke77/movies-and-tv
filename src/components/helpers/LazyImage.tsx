@@ -13,6 +13,8 @@ function LazyImage({
   const imgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // by the time the cleanup function runs, imgRef.current might not be pointing to the same element it was when the effect first ran, so capture it's value to make sure it's cleaned up correctly:
+    const currentImgRef = imgRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -23,14 +25,12 @@ function LazyImage({
       { threshold: 0.1 },
     );
 
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
+    if (currentImgRef) {
+      observer.observe(currentImgRef);
     }
 
     return () => {
-      if (imgRef.current) {
-        observer.disconnect();
-      }
+      observer.disconnect();
     };
   }, []);
 

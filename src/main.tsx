@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
@@ -101,9 +101,9 @@ const router = createBrowserRouter([
       {
         path: ':item_type/:id',
         element: (
-          <DelayedSuspense fallback={<ItemDetailSkeleton />}>
+          <Suspense fallback={<ItemDetailSkeleton />}>
             <ItemDetail />
-          </DelayedSuspense>
+          </Suspense>
         ),
       },
       {

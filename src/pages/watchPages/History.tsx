@@ -1,5 +1,5 @@
 import ContinueWatching from '../../components/main/ContinueWatching';
-import { useStore } from '../../state/store';
+import { useSuspenseStore } from '../../state/store';
 import { Link } from 'react-router-dom';
 import ConfirmModal from '../../components/modals/ConfirmModal';
 import { useState } from 'react';
@@ -8,7 +8,7 @@ import BackButton from '../../components/buttons/BackBtn';
 import { useShallow } from 'zustand/react/shallow';
 
 const History = () => {
-  const { previousSearches, clearPreviousSearches } = useStore(
+  const { previousSearches, clearPreviousSearches } = useSuspenseStore(
     useShallow((state) => state),
   );
   const [showModal, setShowModal] = useState(false);

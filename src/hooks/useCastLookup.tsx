@@ -1,5 +1,5 @@
 import { TMDBClient } from '../utils/axiosConfig';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { filterCastResults } from '../utils/helpers';
 
 const getCastMemberData = async (id: number) => {
@@ -13,11 +13,10 @@ const getCastMemberWork = async (id: number) => {
 };
 
 export const useCastLookupWithWork = (id: number) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['cast-member-work', id],
     staleTime: 1000 * 60 * 60 * 24,
     gcTime: 1000 * 60 * 60 * 25,
-    enabled: !!id,
     queryFn: async () => {
       if (!id) {
         throw new Error('ID is required');

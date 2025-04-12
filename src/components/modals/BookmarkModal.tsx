@@ -1,12 +1,11 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
-import { useStore } from '../../state/store';
+import { useStore, useSuspenseStore } from '../../state/store';
 
 export default function BookmarkModal() {
-  const { showModal, modalData, closeModal, addBookmark, removeBookmark } =
-    useStore();
+  const { showModal, closeModal, addBookmark, removeBookmark } = useStore();
 
+  const modalData = useSuspenseStore((s) => s.modalData);
   if (!modalData) return null;
-
   const { id, type, isBookmarked } = modalData;
 
   const handleBookmarkToggle = () => {
