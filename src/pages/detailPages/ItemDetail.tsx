@@ -16,14 +16,13 @@ import { useShallow } from 'zustand/react/shallow';
 
 
 const ItemDetail = () => {
-  // const [isVisible, setIsVisible] = useState(false);
+
   const [backgroundLoaded, setBackgroundLoaded] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
   const [lowResPosterLoaded, setLowResPosterLoaded] = useState(false);
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item, } = useItemDetail(item_type!, id!);
-console.log('item', item);
 
 
   const bookmark = useSuspenseStore(

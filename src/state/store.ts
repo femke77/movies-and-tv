@@ -2,9 +2,9 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import dayjs from 'dayjs';
 import { get, set, del } from 'idb-keyval';
-import React, { useSyncExternalStore } from 'react';
+import { useSyncExternalStore, useEffect } from 'react';
 
-// IndexedDB storage implementation
+// IndexedDB storage implementation with idb-keyval
 export const idbStorage = {
   getItem: async (name: string) => {
     const value = await get(name);
@@ -77,7 +77,7 @@ interface BookmarkStore {
 export const useStore = create<BookmarkStore>()(
   persist(
     (set, get) => ({
-      // Existing state
+      // state
       bookmarks: {},
       modalData: null,
       showModal: false,
@@ -128,6 +128,8 @@ export const useStore = create<BookmarkStore>()(
           // persist middleware will handle the actual loading from IndexedDB
           // wait for it to complete, which happens after initialization
           // return the current state which will be populated by the persist middleware
+
+          // a bit of concern here since we are not actually waiting for hydration with 0 
           await new Promise(resolve => setTimeout(resolve, 0));
           
           set({ isLoaded: true, isLoading: false });
@@ -344,7 +346,7 @@ export function useNonSuspenseStore<T>(selector: (state: BookmarkStore) => T): T
   const store = useStore();
   
   // still need to initialize the store if needed, but don't throw
-  React.useEffect(() => {
+ useEffect(() => {
     if (!store.isLoaded && !store.isLoading) {
       store.initializeStore().catch(console.error);
     }
