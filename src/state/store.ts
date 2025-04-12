@@ -177,9 +177,8 @@ export const useStore = create<BookmarkStore>()(
         title,
         season,
         episode,
-        poster_path,
+        poster_path
       ) => {
-        // make a new item from the data
         const newItem = {
           id,
           media_type,
@@ -189,38 +188,22 @@ export const useStore = create<BookmarkStore>()(
           episode,
           poster_path,
         };
-        // get the index of the existing item in the continueWatching array
-        const existingItemIndex = get().continueWatching.findIndex(
-          (item) => item.id === id && item.media_type === media_type,
-        );
-        // it exists, update it
-        if (existingItemIndex !== -1) {
-          const updatedItem = {
-            ...get().continueWatching[existingItemIndex],
-            lastUpdated,
-            season,
-            episode,
-          };
-          // set the updated item back to the continueWatching array
-          set((state) => {
-            const newContinueWatching = [...state.continueWatching];
-            newContinueWatching[existingItemIndex] = updatedItem;
-            return { continueWatching: newContinueWatching };
-          });
-        } else {
-          // item wasn't in the array already, so add it as long as you don't exceed 200 items
-          // if the array is full, remove the oldest item (first one) and add the new one to the end
-          set((state) => {
-            const newContWatching =
-              state.continueWatching.length >= 125
-                ? [...state.continueWatching.slice(1), newItem]
-                : [...state.continueWatching, newItem];
-  
-            return { continueWatching: newContWatching };
-          });
-        }
-        get().listeners.forEach(listener => listener());
+      
+        set((state) => {
+          const filtered = state.continueWatching.filter(
+            (item) => !(item.id === id && item.media_type === media_type)
+          );
+      
+          const updated = [...filtered, newItem]
+            .sort((a, b) => b.lastUpdated - a.lastUpdated)
+            .slice(0, 200);
+      
+          return { continueWatching: updated };
+        });
+      
+        get().listeners.forEach((listener) => listener());
       },
+      
       
       addToContinueWatchingMovie: (
         id,
@@ -229,16 +212,8 @@ export const useStore = create<BookmarkStore>()(
         title,
         poster_path,
         release_date,
-        runtime,
+        runtime
       ) => {
-        // check if the movie is in the array and do not proceed if it is
-        if (
-          get().continueWatching.some(
-            (item) => item.id === id && item.media_type === media_type,
-          )
-        )
-          return;
-          // otherwise, make a new item object 
         const newItem = {
           id,
           media_type,
@@ -248,15 +223,22 @@ export const useStore = create<BookmarkStore>()(
           release_date,
           runtime,
         };
+      
         set((state) => {
-          const newContinueWatching =
-            state.continueWatching.length >= 125
-              ? [...state.continueWatching.slice(1), newItem]
-              : [...state.continueWatching, newItem];
-          return { continueWatching: newContinueWatching };
+          const filtered = state.continueWatching.filter(
+            (item) => !(item.id === id && item.media_type === media_type)
+          );
+      
+          const updated = [...filtered, newItem]
+            .sort((a, b) => b.lastUpdated - a.lastUpdated)
+            .slice(0, 200);
+      
+          return { continueWatching: updated };
         });
-        get().listeners.forEach(listener => listener());
+      
+        get().listeners.forEach((listener) => listener());
       },
+      
       
       removeFromContinueWatching: (id, media_type) => {
         set((state) => {
