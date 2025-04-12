@@ -49,7 +49,7 @@ interface BookmarkStore {
     _title: string,
     _season: number,
     _episode: number,
-    _poster_path: string,
+    _poster_path: string
   ) => void;
   addToContinueWatchingMovie: (
     _id: number,
@@ -58,7 +58,7 @@ interface BookmarkStore {
     _title: string,
     _poster_path: string,
     _release_date: string,
-    _runtime: string,
+    _runtime: string
   ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
@@ -94,14 +94,8 @@ export const useStore = create<BookmarkStore>()(
         title,
         season,
         episode,
-        poster_path,
+        poster_path
       ) => {
-        if (
-          get().continueWatching.some(
-            (item) => item.id === id && item.media_type === media_type,
-          )
-        )
-          return;
         const newItem = {
           id,
           media_type,
@@ -111,9 +105,29 @@ export const useStore = create<BookmarkStore>()(
           episode,
           poster_path,
         };
-        set((state) => ({
-          continueWatching: [newItem, ...state.continueWatching],
-        }));
+        const existingItemIndex = get().continueWatching.findIndex(
+          (item) => item.id === id && item.media_type === media_type  
+        );
+        if (existingItemIndex !== -1) {
+          // If the item already exists, update it
+          const updatedItem = {
+            ...get().continueWatching[existingItemIndex],
+            lastUpdated,
+            season,
+            episode,
+          };
+          set((state) => {
+            const newContinueWatching = [...state.continueWatching];
+            newContinueWatching[existingItemIndex] = updatedItem;
+            return { continueWatching: newContinueWatching };
+          });
+        }
+        else {
+          // If the item doesn't exist, add it to the list
+          set((state) => ({
+            continueWatching: [newItem, ...state.continueWatching],
+          }));
+        }
       },
       addToContinueWatchingMovie: (
         id,
@@ -122,11 +136,11 @@ export const useStore = create<BookmarkStore>()(
         title,
         poster_path,
         release_date,
-        runtime,
+        runtime
       ) => {
         if (
           get().continueWatching.some(
-            (item) => item.id === id && item.media_type === media_type,
+            (item) => item.id === id && item.media_type === media_type
           )
         )
           return;
@@ -146,7 +160,7 @@ export const useStore = create<BookmarkStore>()(
       removeFromContinueWatching: (id, media_type) => {
         set((state) => {
           const newContinueWatching = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type),
+            (item) => !(item.id === id && item.media_type === media_type)
           );
           return { continueWatching: newContinueWatching };
         });
@@ -194,6 +208,6 @@ export const useStore = create<BookmarkStore>()(
         previousSearches: state.previousSearches,
         continueWatching: state.continueWatching,
       }),
-    },
-  ),
+    }
+  )
 );

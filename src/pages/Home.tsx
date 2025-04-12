@@ -63,7 +63,7 @@ const Home = () => {
           company_id={420}
         />
         <ProductionCo
-          header='Featured Disney Movies'
+          header='The Happiest Movies on Earth - Disney'
           company_name='DisneyMovies'
           company_id={2}
         />
@@ -74,7 +74,7 @@ const Home = () => {
           media_type='movie'
         />
         <Provider
-          header='Horror by Shudder'
+          header='So Good, It’s Scary - Shudder'
           provider_name='ShudderMovies'
           provider_id={99}
           media_type='movie'
