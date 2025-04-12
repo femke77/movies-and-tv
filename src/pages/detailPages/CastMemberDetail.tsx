@@ -146,7 +146,7 @@ const CastMemberDetail = () => {
               </p>
             )}
 
-            {castData.biography && (
+            {castData.biography ? (
               <>
                 <h2 className='mt-3 text-gray-300 font-semibold'>Biography</h2>
                 <div className='mt-3 mb-19'>
@@ -164,6 +164,8 @@ const CastMemberDetail = () => {
                   </p>
                 </div>
               </>
+            ) : (
+              <p>Currently No Bio Available.</p>
             )}
           </div>
 
