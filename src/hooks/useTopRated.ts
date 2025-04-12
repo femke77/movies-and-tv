@@ -20,7 +20,6 @@ export const useTopRatedMovies = (ref: React.RefObject<HTMLElement>) => {
       'toprated-movies',
       createTopRatedFetcher('movie'),
       shouldFetch,
-      
     ),
   );
 };

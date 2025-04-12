@@ -17,11 +17,15 @@ const Network = ({
     'tv',
     network_name,
     network_id,
-    sectionRef
+    sectionRef,
   );
-  
+
   return (
-    <div ref={sectionRef} className=' mt-20  min-h-[350px]' id={`${network_name}-section`}>
+    <div
+      ref={sectionRef}
+      className=' mt-20  min-h-[350px]'
+      id={`${network_name}-section`}
+    >
       <Link to='/explore/tv'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>{header}</h2>
       </Link>
