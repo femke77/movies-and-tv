@@ -15,7 +15,7 @@ const SkeletonRating = () => (
 );
 
 const SkeletonButton = () => (
-  <div className='w-32 h-10 bg-gray-700/30 rounded-full animate-pulse'></div>
+  <div className='w-32 h-10 bg-gray-700/30 rounded-full animate-pulse '></div>
 );
 
 const ItemDetailSkeleton = () => {
@@ -29,7 +29,7 @@ const ItemDetailSkeleton = () => {
 
       <div className='relative z-10 w-full flex flex-wrap'>
         {/* Left Section - Poster */}
-        <div className='relative md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3'>
+        <div className='relative md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3 md:mr-4'>
           <section className='w-[280px] sm:w-[450px] md:w-[300px] flex-shrink-0'>
             <div
               className='relative w-full md:w-[340px] mx-auto overflow-hidden'
@@ -56,7 +56,7 @@ const ItemDetailSkeleton = () => {
           </div>
 
           {/* Rating + Watch Button */}
-          <div className='flex items-center mb-4 md:mb-0'>
+          <div className='flex items-center mb-4 md:mb-6'>
             <SkeletonRating />
             <div className='pl-6 h-20 sm:pl-8 pt-4'>
               <SkeletonButton />

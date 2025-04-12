@@ -2,10 +2,14 @@ import { useEffect, useState } from 'react';
 import { IItem } from '../interfaces/IItem';
 import { filterMainPageResults } from '../utils/helpers';
 
-export const useIntersectionObserver = (targetId: string) => {
+export const useIntersectionObserver = (
+  targetRef: React.RefObject<HTMLElement>,
+) => {
   const [shouldFetch, setShouldFetch] = useState(false);
 
   useEffect(() => {
+    if (!targetRef.current) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -16,13 +20,10 @@ export const useIntersectionObserver = (targetId: string) => {
       { threshold: 0.1, rootMargin: '100px 0px' },
     );
 
-    const target = document.getElementById(targetId);
-    if (target) {
-      observer.observe(target);
-    }
+    observer.observe(targetRef.current);
 
     return () => observer.disconnect();
-  }, [targetId]);
+  }, [targetRef]);
 
   return shouldFetch;
 };

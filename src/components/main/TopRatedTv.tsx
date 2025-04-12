@@ -2,12 +2,13 @@ import CarouselContainer from '../containers/CarouselContainer';
 import { useTopRatedTv } from '../../hooks/useTopRated';
 import { Link } from 'react-router-dom';
 import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
-
+import { useRef } from 'react';
 const TopRatedTv = () => {
-  const { data: shows = [], isLoading } = useTopRatedTv();
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const { data: shows = [], isLoading } = useTopRatedTv(sectionRef);
 
   return (
-    <div className=' mt-20  min-h-[350px]' id='top-tv-section'>
+    <div ref={sectionRef} className=' mt-20  min-h-[350px]' id='top-tv-section'>
       <Link to='/explore/top-series'>
         <h2 className='text-2xl font-bold mb-6 ml-5'>All-time Top Rated TV</h2>
       </Link>

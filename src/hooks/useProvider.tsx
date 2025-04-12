@@ -19,8 +19,9 @@ export const useProvider = (
   type: 'movie' | 'tv',
   provider_name: string,
   provider_id: number,
+  sectionRef: React.RefObject<HTMLElement>,
 ) => {
-  const shouldFetch = useIntersectionObserver(`${provider_name}-section`);
+  const shouldFetch = useIntersectionObserver(sectionRef);
   return useQuery<IItem[], Error>(
     useQueryConfig(
       provider_name,
