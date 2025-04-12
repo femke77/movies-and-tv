@@ -164,7 +164,9 @@ const CastMemberDetail = () => {
                   </p>
                 </div>
               </>
-            ): (<p>Currently No Bio Available.</p>)}
+            ) : (
+              <p>Currently No Bio Available.</p>
+            )}
           </div>
 
           <h2 className='text-2xl mb-4'>{castData.name}'s Work</h2>

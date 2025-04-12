@@ -98,7 +98,7 @@ const WatchTV = () => {
     if (!series) return;
     console.log('selectedSeason', selectedSeason);
     console.log('selectedEpisode', selectedEpisode);
-    
+
     // setTimeout(() => {
     addToContinueWatchingTv(
       Number(series_id!),
