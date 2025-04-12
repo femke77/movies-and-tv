@@ -19,7 +19,7 @@ export const idbStorage = {
 };
 
 interface BookmarkStore {
-  // Existing state
+  // state
   bookmarks: { [key: string]: { id: string; type: string; dateAdded: number } };
   modalData: { id: string; type: string; isBookmarked: boolean } | null;
   showModal: boolean;
@@ -36,7 +36,7 @@ interface BookmarkStore {
     runtime?: string;
   }[];
 
-
+ // methods
   openModal: (_id: string, _type: string) => void;
   closeModal: () => void;
   addBookmark: (_id: string, _type: string) => void;
@@ -65,7 +65,7 @@ interface BookmarkStore {
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
 
-  // New Suspense-related state and methods
+  // suspense-related state and methods
   isLoaded: boolean;
   isLoading: boolean;
   loadError: Error | null;
@@ -84,20 +84,20 @@ export const useStore = create<BookmarkStore>()(
       previousSearches: [],
       continueWatching: [],
 
-      // New Suspense-related state
+      // suspense-related state
       isLoaded: false,
       isLoading: false,
       loadError: null,
       listeners: new Set<() => void>(),
 
-      // Method to subscribe to store changes (for useSyncExternalStore)
+      // method to subscribe to store changes (for useSyncExternalStore)
       subscribe: (listener) => {
         const { listeners } = get();
         listeners.add(listener);
         return () => listeners.delete(listener);
       },
 
-      // Method to initialize the store and handle Suspense
+      // method to initialize the store and handle Suspense
       initializeStore: async () => {
         // If already loaded, return the data immediately
         if (get().isLoaded) {
@@ -108,9 +108,9 @@ export const useStore = create<BookmarkStore>()(
           };
         }
 
-        // If currently loading, don't start another load
+        // if currently loading, don't start another load
         if (get().isLoading) {
-          // This will be caught by Suspense
+          // will be caught by suspense
           throw new Promise((resolve) => {
             const unsubscribe = get().subscribe(() => {
               if (get().isLoaded || get().loadError) {
@@ -121,18 +121,18 @@ export const useStore = create<BookmarkStore>()(
           });
         }
 
-        // Start loading
+        // start loading
         set({ isLoading: true });
 
         try {
-          // The persist middleware will handle the actual loading from IndexedDB
-          // We just need to wait for it to complete, which happens after initialization
-          // Return the current state which will be populated by the persist middleware
+          // persist middleware will handle the actual loading from IndexedDB
+          // wait for it to complete, which happens after initialization
+          // return the current state which will be populated by the persist middleware
           await new Promise(resolve => setTimeout(resolve, 0));
           
           set({ isLoaded: true, isLoading: false });
           
-          // Notify listeners
+          // notify listeners 
           get().listeners.forEach(listener => listener());
           
           return {
@@ -149,7 +149,7 @@ export const useStore = create<BookmarkStore>()(
         }
       },
 
-      // Existing methods
+      // state methods
       addToPreviousSearches: (query) => {
         const lowerCaseQuery = query.toLocaleLowerCase();
         if (get().previousSearches.includes(lowerCaseQuery)) return;
@@ -161,7 +161,7 @@ export const useStore = create<BookmarkStore>()(
 
           return { previousSearches: newSearches };
         });
-        // Notify listeners of the change
+        // always notify listeners of the change (see this on each mutator)
         get().listeners.forEach(listener => listener());
       },
       
@@ -307,16 +307,16 @@ export const useStore = create<BookmarkStore>()(
   ),
 );
 
-// Custom hook to use store data with Suspense
+//hook to use store data with suspense
 export function useSuspenseStore<T>(selector: (state: BookmarkStore) => T): T {
   const store = useStore();
   
-  // If the store isn't loaded yet, initialize it and throw the promise
+  // if the store isn't loaded yet, initialize it and throw the promise
   if (!store.isLoaded && !store.isLoading) {
     throw store.initializeStore();
   }
   
-  // If the store is currently loading, throw a promise to trigger Suspense
+  // if the store is currently loading, throw a promise to trigger suspense
   if (store.isLoading) {
     throw new Promise((resolve) => {
       const unsubscribe = store.subscribe(() => {
@@ -328,32 +328,34 @@ export function useSuspenseStore<T>(selector: (state: BookmarkStore) => T): T {
     });
   }
   
-  // If there was an error loading the store, throw it
+  // throw error if error while loading
   if (store.loadError) {
     throw store.loadError;
   }
   
-  // Use useSyncExternalStore to subscribe to changes
+  //  useSyncExternalStore to subscribe to changes
   return useSyncExternalStore(
     store.subscribe,
     () => selector(store)
   );
 }
 
-// Helper hook for components that don't need Suspense
+// for components that don't need suspense
 export function useNonSuspenseStore<T>(selector: (state: BookmarkStore) => T): T {
   const store = useStore();
   
-  // Initialize the store if needed, but don't throw
+  // still need to initialize the store if needed, but don't throw
   React.useEffect(() => {
     if (!store.isLoaded && !store.isLoading) {
       store.initializeStore().catch(console.error);
     }
   }, [store]);
   
-  // Use useSyncExternalStore to subscribe to changes
+  // use useSyncExternalStore to subscribe to changes
   return useSyncExternalStore(
     store.subscribe,
     () => selector(store)
   );
 }
+
+//useSyncExternalStorage needs subscribe which uses listeners to notify changes. 
