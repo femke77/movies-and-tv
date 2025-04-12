@@ -43,7 +43,7 @@ const WatchMovie = () => {
       movie.release_date,
       movie.runtime,
     );
-    // }, 60000);
+    // }, 180000);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movie_id, movie]);

@@ -1,5 +1,5 @@
 import { TMDBClient } from '../utils/axiosConfig';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 export const fetchItemDetail = async (type: string, id: string) => {
   const { data } = await TMDBClient.get(`/${type}/${id}`);
@@ -58,7 +58,7 @@ const fetchItemQuality = async (id: string) => {
 
 // This is for the ItemDetail page with tv or movie content ratings and credits/cast information
 export const useItemDetail = (type: string, id: string) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['item-detail', id],
     queryFn: async () => {
       if (!id) {
@@ -95,11 +95,11 @@ export const useItemDetail = (type: string, id: string) => {
         };
       }
     },
+
     staleTime: 1000 * 60 * 10, // 10 minutes
     gcTime: 1000 * 60 * 11, // 11 minutes
     refetchOnWindowFocus: false,
     retry: 2,
-    enabled: !!id,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
   });
 };

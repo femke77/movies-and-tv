@@ -110,7 +110,7 @@ const WatchTV = () => {
       series.backdrop_path,
     );
 
-    // }, 60000);
+    // }, 180000);
     // es-lint-disable-next-line react-hooks/exhaustive-deps
   }, [series_id, series, selectedSeason, selectedEpisode]);
 
