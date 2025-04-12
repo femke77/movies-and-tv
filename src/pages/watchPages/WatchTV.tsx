@@ -82,12 +82,12 @@ const WatchTV = () => {
   const { data: series } = useWatchDetails('tv', series_id!);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
-    String(selectedSeason)
+    String(selectedSeason),
   );
   useDocumentTitle(
     series?.original_name
       ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
-      : 'Loading... | BingeBox'
+      : 'Loading... | BingeBox',
   );
 
   useEffect(() => {
@@ -101,7 +101,7 @@ const WatchTV = () => {
       series.original_name,
       selectedSeason,
       selectedEpisode,
-      series.backdrop_path
+      series.backdrop_path,
     );
 
     // }, 180000);
@@ -147,15 +147,15 @@ const WatchTV = () => {
 
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgress)
+        JSON.stringify(updatedViewProgress),
       );
     } else {
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgressItem)
+        JSON.stringify(updatedViewProgressItem),
       );
     }
-  }, [selectedSeason, selectedEpisode]);
+  }, [series_id, selectedSeason, selectedEpisode]);
 
   // when page is remounted, user will see loading spinner for 750ms
   useEffect(() => {
@@ -291,7 +291,7 @@ const WatchTV = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer
+                          (server) => server.value === selectedServer,
                         )?.name
                       }
                       ...{' '}
@@ -418,7 +418,7 @@ const WatchTV = () => {
                         <p className='text-white/70 text-sm truncate text-ellipsis'>
                           {
                             servers.find(
-                              (server) => server.value === selectedServer
+                              (server) => server.value === selectedServer,
                             )?.name
                           }
                         </p>

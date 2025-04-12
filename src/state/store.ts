@@ -10,6 +10,7 @@ export const idbStorage = {
     const value = await get(name);
     return value ?? null;
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setItem: async (name: string, value: any) => {
     await set(name, value);
   },
@@ -51,7 +52,7 @@ interface BookmarkStore {
     _title: string,
     _season: number,
     _episode: number,
-    _poster_path: string
+    _poster_path: string,
   ) => void;
   addToContinueWatchingMovie: (
     _id: number,
@@ -60,7 +61,7 @@ interface BookmarkStore {
     _title: string,
     _poster_path: string,
     _release_date: string,
-    _runtime: string
+    _runtime: string,
   ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
@@ -70,7 +71,8 @@ interface BookmarkStore {
   isLoading: boolean;
   loadError: Error | null;
   listeners: Set<() => void>;
-  subscribe: (listener: () => void) => () => void;
+  subscribe: (_listener: () => void) => () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initializeStore: () => Promise<any>;
 }
 
@@ -181,7 +183,7 @@ export const useStore = create<BookmarkStore>()(
         title,
         season,
         episode,
-        poster_path
+        poster_path,
       ) => {
         const newItem = {
           id,
@@ -195,7 +197,7 @@ export const useStore = create<BookmarkStore>()(
 
         set((state) => {
           const filtered = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type)
+            (item) => !(item.id === id && item.media_type === media_type),
           );
 
           const updated = [...filtered, newItem]
@@ -215,7 +217,7 @@ export const useStore = create<BookmarkStore>()(
         title,
         poster_path,
         release_date,
-        runtime
+        runtime,
       ) => {
         const newItem = {
           id,
@@ -229,7 +231,7 @@ export const useStore = create<BookmarkStore>()(
 
         set((state) => {
           const filtered = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type)
+            (item) => !(item.id === id && item.media_type === media_type),
           );
 
           const updated = [...filtered, newItem]
@@ -245,7 +247,7 @@ export const useStore = create<BookmarkStore>()(
       removeFromContinueWatching: (id, media_type) => {
         set((state) => {
           const newContinueWatching = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type)
+            (item) => !(item.id === id && item.media_type === media_type),
           );
           return { continueWatching: newContinueWatching };
         });
@@ -304,12 +306,12 @@ export const useStore = create<BookmarkStore>()(
         previousSearches: state.previousSearches,
         continueWatching: state.continueWatching,
       }),
-    }
-  )
+    },
+  ),
 );
 
 //hook to use store data with suspense
-export function useSuspenseStore<T>(selector: (state: BookmarkStore) => T): T {
+export function useSuspenseStore<T>(selector: (_state: BookmarkStore) => T): T {
   const store = useStore();
 
   // if the store isn't loaded yet, initialize it and throw the promise
@@ -340,7 +342,7 @@ export function useSuspenseStore<T>(selector: (state: BookmarkStore) => T): T {
 
 // for components that don't need suspense
 export function useNonSuspenseStore<T>(
-  selector: (state: BookmarkStore) => T
+  selector: (_state: BookmarkStore) => T,
 ): T {
   const store = useStore();
 
@@ -356,9 +358,6 @@ export function useNonSuspenseStore<T>(
 }
 
 //useSyncExternalStorage needs subscribe which uses listeners to notify changes.
-
-
-
 
 // rationale for:
 // await new Promise((resolve) => setTimeout(resolve, 0));

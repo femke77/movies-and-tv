@@ -13,6 +13,7 @@ function LazyImage({
   const imgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const currentImgRef = imgRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -23,14 +24,12 @@ function LazyImage({
       { threshold: 0.1 },
     );
 
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
+    if (currentImgRef) {
+      observer.observe(currentImgRef);
     }
 
     return () => {
-      if (imgRef.current) {
-        observer.disconnect();
-      }
+      observer.disconnect();
     };
   }, []);
 

@@ -70,6 +70,7 @@ const MediaListContainer = ({
     );
     sessionStorage.setItem(`${mediaType}-sortBy`, sortByOption);
   }, [
+    genre,
     selectedGenres,
     deSelectedGenres,
     sortByOption,
