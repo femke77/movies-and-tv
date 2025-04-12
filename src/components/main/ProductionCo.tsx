@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useProductionCo } from '../../hooks/useCompany';
 import CarouselContainer from '../containers/CarouselContainer';
 import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
@@ -12,14 +13,16 @@ const ProductionCo = ({
   company_id: number;
   header: string;
 }) => {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
   const { data: items = [], isLoading } = useProductionCo(
     'movie',
     company_name,
     company_id,
+    sectionRef
   );
 
   return (
-    <div className=' mt-20  min-h-[350px]' id={`${company_name}-section`}>
+    <div ref={sectionRef} className=' mt-20  min-h-[350px]' id={`${company_name}-section`}>
       <Link to='/explore/movies'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>{header}</h2>
       </Link>

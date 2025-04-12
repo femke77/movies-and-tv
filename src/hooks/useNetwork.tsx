@@ -18,8 +18,9 @@ export const useNetwork = (
   type: 'movie' | 'tv',
   network_name: string,
   network_id: number,
+  ref: React.RefObject<HTMLElement>,
 ) => {
-  const shouldFetch = useIntersectionObserver(`${network_name}-section`);
+  const shouldFetch = useIntersectionObserver(ref);
   return useQuery<IItem[], Error>(
     useQueryConfig(
       network_name,

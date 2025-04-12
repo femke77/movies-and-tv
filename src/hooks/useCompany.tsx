@@ -18,8 +18,9 @@ export const useProductionCo = (
   type: 'movie' | 'tv',
   company_name: string,
   company_id: number,
+  sectionRef: React.RefObject<HTMLElement>,
 ) => {
-  const shouldFetch = useIntersectionObserver(`${company_name}-section`);
+  const shouldFetch = useIntersectionObserver(sectionRef);
   return useQuery<IItem[], Error>(
     useQueryConfig(
       company_name,

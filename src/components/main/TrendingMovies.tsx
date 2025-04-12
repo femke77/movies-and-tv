@@ -2,12 +2,13 @@ import CarouselContainer from '../containers/CarouselContainer';
 import { useTrendingMovies } from '../../hooks/useTrending';
 import { Link } from 'react-router-dom';
 import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
-
+import { useRef } from 'react';
 const TrendingMovies = () => {
-  const { data: movies = [], isLoading } = useTrendingMovies();
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const { data: movies = [], isLoading } = useTrendingMovies(sectionRef);
 
   return (
-    <div className='min-h-[350px]' id='trending-section'>
+    <div ref={sectionRef} className='min-h-[350px]' id='trending-section'>
       <Link to='/explore/movies' state={{ time: 'day' }}>
         <h2 className='text-2xl font-bold mb-6 ml-5 '>
           Today's Trending Movies
@@ -15,7 +16,7 @@ const TrendingMovies = () => {
       </Link>
 
       {isLoading && movies.length === 0 ? (
-        <div className='flex gap-3 px-4 py-2 w-full  '>
+        <div  className='flex gap-3 px-4 py-2 w-full  '>
           {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className=' w-[180px] flex-shrink-0'>
               <ItemCardSkeleton />

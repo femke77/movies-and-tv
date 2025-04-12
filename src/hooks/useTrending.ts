@@ -11,8 +11,8 @@ const createTrendingFetcher = (type: 'movie' | 'tv') => async () => {
   return data.results;
 };
 
-export const useTrendingMovies = () => {
-  const shouldFetch = useIntersectionObserver('trending-section');
+export const useTrendingMovies = (ref: React.RefObject<HTMLElement>) => {
+  const shouldFetch = useIntersectionObserver(ref);
   return useQuery<IItem[], Error>(
     useQueryConfig(
       'trending-movies',
@@ -22,8 +22,8 @@ export const useTrendingMovies = () => {
   );
 };
 
-export const useTrendingTv = () => {
-  const shouldFetch = useIntersectionObserver('trending-tv-section');
+export const useTrendingTv = (ref: React.RefObject<HTMLElement>) => {
+  const shouldFetch = useIntersectionObserver(ref);
   return useQuery<IItem[], Error>(
     useQueryConfig('trending-tv', createTrendingFetcher('tv'), shouldFetch),
   );

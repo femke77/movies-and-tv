@@ -2,7 +2,7 @@ import { useNetwork } from '../../hooks/useNetwork';
 import CarouselContainer from '../containers/CarouselContainer';
 import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
 import { Link } from 'react-router-dom';
-
+import { useRef } from 'react';
 const Network = ({
   network_name,
   network_id,
@@ -12,14 +12,16 @@ const Network = ({
   network_id: number;
   header: string;
 }) => {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
   const { data: items = [], isLoading } = useNetwork(
     'tv',
     network_name,
     network_id,
+    sectionRef
   );
-
+  
   return (
-    <div className=' mt-20  min-h-[350px]' id={`${network_name}-section`}>
+    <div ref={sectionRef} className=' mt-20  min-h-[350px]' id={`${network_name}-section`}>
       <Link to='/explore/tv'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>{header}</h2>
       </Link>

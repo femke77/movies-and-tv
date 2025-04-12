@@ -2,12 +2,13 @@ import { useTopRatedMovies } from '../../hooks/useTopRated';
 import CarouselContainer from '../containers/CarouselContainer';
 import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
 import { Link } from 'react-router-dom';
-
+import { useRef } from 'react';
 const TopRatedMovies = () => {
-  const { data: movies = [], isLoading } = useTopRatedMovies();
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const { data: movies = [], isLoading } = useTopRatedMovies(sectionRef);
 
   return (
-    <div className=' mt-20  min-h-[350px]' id='top-section'>
+    <div ref={sectionRef} className=' mt-20  min-h-[350px]' id='top-section'>
       <Link to='/explore/toprated'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>
           All-time Top Rated Movies{' '}

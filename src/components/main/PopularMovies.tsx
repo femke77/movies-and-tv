@@ -1,13 +1,15 @@
+import { useRef } from 'react';
 import { usePopularMovies } from '../../hooks/usePopular';
 import { Link } from 'react-router-dom';
 import CarouselContainer from '../containers/CarouselContainer';
 import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
 
 const PopularMovies = () => {
-  const { data: movies = [], isLoading } = usePopularMovies();
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const { data: movies = [], isLoading } = usePopularMovies(sectionRef);
 
   return (
-    <div className='mt-20 min-h-[350px]' id='pop-section'>
+    <div ref={sectionRef} className='mt-20 min-h-[350px]' id='pop-section'>
       <Link to='/explore/popular'>
         <h2 className='text-2xl font-bold mb-6 ml-5'>Popular Movies</h2>
       </Link>

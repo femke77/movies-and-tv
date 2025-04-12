@@ -13,19 +13,20 @@ const createTopRatedFetcher = (type: 'movie' | 'tv') => async () => {
   return data.results;
 };
 
-export const useTopRatedMovies = () => {
-  const shouldFetch = useIntersectionObserver('top-section');
+export const useTopRatedMovies = (ref: React.RefObject<HTMLElement>) => {
+  const shouldFetch = useIntersectionObserver(ref);
   return useQuery<IItem[], Error>(
     useQueryConfig(
       'toprated-movies',
       createTopRatedFetcher('movie'),
       shouldFetch,
+      
     ),
   );
 };
 
-export const useTopRatedTv = () => {
-  const shouldFetch = useIntersectionObserver('top-tv-section');
+export const useTopRatedTv = (ref: React.RefObject<HTMLElement>) => {
+  const shouldFetch = useIntersectionObserver(ref);
   return useQuery<IItem[], Error>(
     useQueryConfig('toprated-tv', createTopRatedFetcher('tv'), shouldFetch),
   );
