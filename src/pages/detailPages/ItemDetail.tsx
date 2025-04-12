@@ -8,7 +8,7 @@ import { getStrokeColor } from '../../utils/helpers';
 import { CastList } from '../../components/lists/CastList';
 import dayjs from 'dayjs';
 import BookmarkBtn from '../../components/buttons/BookmarkBtn';
-import { useStore } from '../../state/store';
+import { useSuspenseStore } from '../../state/store';
 import Share from '../../components/buttons/ShareButtons';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import BackButton from '../../components/buttons/BackBtn';
@@ -25,7 +25,7 @@ const ItemDetail = () => {
   const { data: item, } = useItemDetail(item_type!, id!);
 
 
-  const bookmark = useStore(
+  const bookmark = useSuspenseStore(
     useShallow((state) => state.bookmarks[`${id}-${item_type}`]),
   );
 

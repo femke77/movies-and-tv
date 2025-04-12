@@ -19,10 +19,6 @@ import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
 
-// FIXME This needs to be more componentized. iframe at least needs it's own component.
-// FIXME url params controlled instead of state controlled ??? would reduce props drilling which is currently at my maximum allowed depth of 2 & overall make the code cleaner with less state management. Thinking about this.
-// FIXME active server on listboxcomp should be name not value.
-
 const WatchTV = () => {
   const { servers } = serverData;
   const { addToContinueWatchingTv } = useStore();
@@ -86,12 +82,12 @@ const WatchTV = () => {
   const { data: series } = useWatchDetails('tv', series_id!);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
-    String(selectedSeason),
+    String(selectedSeason)
   );
   useDocumentTitle(
     series?.original_name
       ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
-      : 'Loading... | BingeBox',
+      : 'Loading... | BingeBox'
   );
 
   useEffect(() => {
@@ -105,7 +101,7 @@ const WatchTV = () => {
       series.original_name,
       selectedSeason,
       selectedEpisode,
-      series.backdrop_path,
+      series.backdrop_path
     );
 
     // }, 180000);
@@ -151,12 +147,12 @@ const WatchTV = () => {
 
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgress),
+        JSON.stringify(updatedViewProgress)
       );
     } else {
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgressItem),
+        JSON.stringify(updatedViewProgressItem)
       );
     }
   }, [selectedSeason, selectedEpisode]);
@@ -295,7 +291,7 @@ const WatchTV = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer,
+                          (server) => server.value === selectedServer
                         )?.name
                       }
                       ...{' '}
@@ -422,7 +418,7 @@ const WatchTV = () => {
                         <p className='text-white/70 text-sm truncate text-ellipsis'>
                           {
                             servers.find(
-                              (server) => server.value === selectedServer,
+                              (server) => server.value === selectedServer
                             )?.name
                           }
                         </p>

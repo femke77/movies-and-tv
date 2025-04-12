@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { MemoizedItemCard } from '../cards/ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../../interfaces/IItem';
-import { useStore } from '../../state/store';
+import { useSuspenseStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
 const Carousel = ({
   items,
@@ -14,7 +14,7 @@ const Carousel = ({
   showRating?: boolean;
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const bookmarks = useStore(useShallow((state) => state.bookmarks));
+  const bookmarks = useSuspenseStore(useShallow((state) => state.bookmarks));
 
   const scrollLeft = () => {
     if (scrollRef.current) {

@@ -2,14 +2,14 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import dayjs from 'dayjs';
 import { get, set, del } from 'idb-keyval';
+import React, { useSyncExternalStore } from 'react';
 
-// indexeddb is ava on over 98% of broswers so no fallback will be coded at this time
+// IndexedDB storage implementation
 export const idbStorage = {
   getItem: async (name: string) => {
     const value = await get(name);
     return value ?? null;
   },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setItem: async (name: string, value: any) => {
     await set(name, value);
   },
@@ -19,17 +19,11 @@ export const idbStorage = {
 };
 
 interface BookmarkStore {
+  // Existing state
   bookmarks: { [key: string]: { id: string; type: string; dateAdded: number } };
   modalData: { id: string; type: string; isBookmarked: boolean } | null;
   showModal: boolean;
-  openModal: (_id: string, _type: string) => void;
-  closeModal: () => void;
-  addBookmark: (_id: string, _type: string) => void;
-  removeBookmark: (_id: string, _type: string) => void;
-  isBookmarked: (_id: string, _type: string) => boolean;
   previousSearches: string[];
-  addToPreviousSearches: (_query: string) => void;
-  clearPreviousSearches: () => void;
   continueWatching: {
     id: number;
     media_type: string;
@@ -42,6 +36,14 @@ interface BookmarkStore {
     runtime?: string;
   }[];
 
+
+  openModal: (_id: string, _type: string) => void;
+  closeModal: () => void;
+  addBookmark: (_id: string, _type: string) => void;
+  removeBookmark: (_id: string, _type: string) => void;
+  isBookmarked: (_id: string, _type: string) => boolean;
+  addToPreviousSearches: (_query: string) => void;
+  clearPreviousSearches: () => void;
   addToContinueWatchingTv: (
     _id: number,
     _media_type: string,
@@ -62,31 +64,112 @@ interface BookmarkStore {
   ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
+
+  // New Suspense-related state and methods
+  isLoaded: boolean;
+  isLoading: boolean;
+  loadError: Error | null;
+  listeners: Set<() => void>;
+  subscribe: (listener: () => void) => () => void;
+  initializeStore: () => Promise<any>;
 }
 
 export const useStore = create<BookmarkStore>()(
   persist(
     (set, get) => ({
+      // Existing state
       bookmarks: {},
-      modalData: null, // Store the data of the item toggling bookmark state
+      modalData: null,
       showModal: false,
       previousSearches: [],
+      continueWatching: [],
+
+      // New Suspense-related state
+      isLoaded: false,
+      isLoading: false,
+      loadError: null,
+      listeners: new Set<() => void>(),
+
+      // Method to subscribe to store changes (for useSyncExternalStore)
+      subscribe: (listener) => {
+        const { listeners } = get();
+        listeners.add(listener);
+        return () => listeners.delete(listener);
+      },
+
+      // Method to initialize the store and handle Suspense
+      initializeStore: async () => {
+        // If already loaded, return the data immediately
+        if (get().isLoaded) {
+          return {
+            bookmarks: get().bookmarks,
+            previousSearches: get().previousSearches,
+            continueWatching: get().continueWatching
+          };
+        }
+
+        // If currently loading, don't start another load
+        if (get().isLoading) {
+          // This will be caught by Suspense
+          throw new Promise((resolve) => {
+            const unsubscribe = get().subscribe(() => {
+              if (get().isLoaded || get().loadError) {
+                unsubscribe();
+                resolve(get().bookmarks);
+              }
+            });
+          });
+        }
+
+        // Start loading
+        set({ isLoading: true });
+
+        try {
+          // The persist middleware will handle the actual loading from IndexedDB
+          // We just need to wait for it to complete, which happens after initialization
+          // Return the current state which will be populated by the persist middleware
+          await new Promise(resolve => setTimeout(resolve, 0));
+          
+          set({ isLoaded: true, isLoading: false });
+          
+          // Notify listeners
+          get().listeners.forEach(listener => listener());
+          
+          return {
+            bookmarks: get().bookmarks,
+            previousSearches: get().previousSearches,
+            continueWatching: get().continueWatching
+          };
+        } catch (error) {
+          set({ 
+            loadError: error instanceof Error ? error : new Error(String(error)),
+            isLoading: false 
+          });
+          throw error;
+        }
+      },
+
+      // Existing methods
       addToPreviousSearches: (query) => {
         const lowerCaseQuery = query.toLocaleLowerCase();
         if (get().previousSearches.includes(lowerCaseQuery)) return;
         set((state) => {
-          // Create new array either with just the newest items (if at limit)
-          // or with all previous items plus the new one. Rotates the array.
           const newSearches =
             state.previousSearches.length >= 20
-              ? [...state.previousSearches.slice(1), lowerCaseQuery] // Remove oldest item
-              : [...state.previousSearches, lowerCaseQuery]; // Simply add
+              ? [...state.previousSearches.slice(1), lowerCaseQuery]
+              : [...state.previousSearches, lowerCaseQuery];
 
           return { previousSearches: newSearches };
         });
+        // Notify listeners of the change
+        get().listeners.forEach(listener => listener());
       },
-      clearPreviousSearches: () => set({ previousSearches: [] }),
-      continueWatching: [],
+      
+      clearPreviousSearches: () => {
+        set({ previousSearches: [] });
+        get().listeners.forEach(listener => listener());
+      },
+      
       addToContinueWatchingTv: (
         id,
         media_type,
@@ -109,7 +192,6 @@ export const useStore = create<BookmarkStore>()(
           (item) => item.id === id && item.media_type === media_type,
         );
         if (existingItemIndex !== -1) {
-          // If the item already exists, update it
           const updatedItem = {
             ...get().continueWatching[existingItemIndex],
             lastUpdated,
@@ -122,12 +204,13 @@ export const useStore = create<BookmarkStore>()(
             return { continueWatching: newContinueWatching };
           });
         } else {
-          // If the item doesn't exist, add it to the list
           set((state) => ({
             continueWatching: [newItem, ...state.continueWatching],
           }));
         }
+        get().listeners.forEach(listener => listener());
       },
+      
       addToContinueWatchingMovie: (
         id,
         media_type,
@@ -155,7 +238,9 @@ export const useStore = create<BookmarkStore>()(
         set((state) => ({
           continueWatching: [newItem, ...state.continueWatching],
         }));
+        get().listeners.forEach(listener => listener());
       },
+      
       removeFromContinueWatching: (id, media_type) => {
         set((state) => {
           const newContinueWatching = state.continueWatching.filter(
@@ -163,8 +248,14 @@ export const useStore = create<BookmarkStore>()(
           );
           return { continueWatching: newContinueWatching };
         });
+        get().listeners.forEach(listener => listener());
       },
-      clearContinueWatching: () => set({ continueWatching: [] }),
+      
+      clearContinueWatching: () => {
+        set({ continueWatching: [] });
+        get().listeners.forEach(listener => listener());
+      },
+      
       openModal: (id: string, type: string) => {
         set({
           modalData: {
@@ -178,7 +269,7 @@ export const useStore = create<BookmarkStore>()(
 
       closeModal: () => set({ showModal: false, modalData: null }),
 
-      addBookmark: (id, type) =>
+      addBookmark: (id, type) => {
         set((state) => ({
           bookmarks: {
             ...state.bookmarks,
@@ -188,14 +279,19 @@ export const useStore = create<BookmarkStore>()(
               dateAdded: dayjs().unix(),
             },
           },
-        })),
+        }));
+        get().listeners.forEach(listener => listener());
+      },
 
-      removeBookmark: (id, type) =>
+      removeBookmark: (id, type) => {
         set((state) => {
           const newBookmarks = { ...state.bookmarks };
           delete newBookmarks[`${id}-${type}`];
           return { bookmarks: newBookmarks };
-        }),
+        });
+        get().listeners.forEach(listener => listener());
+      },
+      
       isBookmarked: (id, type) =>
         get().bookmarks[`${id}-${type}`] !== undefined,
     }),
@@ -210,3 +306,54 @@ export const useStore = create<BookmarkStore>()(
     },
   ),
 );
+
+// Custom hook to use store data with Suspense
+export function useSuspenseStore<T>(selector: (state: BookmarkStore) => T): T {
+  const store = useStore();
+  
+  // If the store isn't loaded yet, initialize it and throw the promise
+  if (!store.isLoaded && !store.isLoading) {
+    throw store.initializeStore();
+  }
+  
+  // If the store is currently loading, throw a promise to trigger Suspense
+  if (store.isLoading) {
+    throw new Promise((resolve) => {
+      const unsubscribe = store.subscribe(() => {
+        if (store.isLoaded || store.loadError) {
+          unsubscribe();
+          resolve(null);
+        }
+      });
+    });
+  }
+  
+  // If there was an error loading the store, throw it
+  if (store.loadError) {
+    throw store.loadError;
+  }
+  
+  // Use useSyncExternalStore to subscribe to changes
+  return useSyncExternalStore(
+    store.subscribe,
+    () => selector(store)
+  );
+}
+
+// Helper hook for components that don't need Suspense
+export function useNonSuspenseStore<T>(selector: (state: BookmarkStore) => T): T {
+  const store = useStore();
+  
+  // Initialize the store if needed, but don't throw
+  React.useEffect(() => {
+    if (!store.isLoaded && !store.isLoading) {
+      store.initializeStore().catch(console.error);
+    }
+  }, [store]);
+  
+  // Use useSyncExternalStore to subscribe to changes
+  return useSyncExternalStore(
+    store.subscribe,
+    () => selector(store)
+  );
+}

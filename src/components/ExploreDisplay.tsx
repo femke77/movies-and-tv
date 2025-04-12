@@ -2,7 +2,7 @@ import { useEffect, memo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { IItem } from '../interfaces/IItem';
 import { MemoizedItemCard } from './cards/ItemCard';
-import { useStore } from '../state/store';
+import { useSuspenseStore } from '../state/store';
 import { useShallow } from 'zustand/react/shallow';
 interface IExploreProps {
   data: {
@@ -25,7 +25,7 @@ const Explore = memo(
     itemType = 'movie',
   }: IExploreProps) => {
     const { ref, inView } = useInView();
-    const bookmarks = useStore(useShallow((state) => state.bookmarks));
+    const bookmarks = useSuspenseStore(useShallow((state) => state.bookmarks));
 
     useEffect(() => {
       if (inView && hasNextPage) {
