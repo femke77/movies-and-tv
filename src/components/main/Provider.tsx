@@ -21,11 +21,15 @@ const Provider = ({
     media_type,
     provider_name,
     provider_id,
-    sectionRef
+    sectionRef,
   );
 
   return (
-    <div ref={sectionRef} className=' mt-20  min-h-[350px]' id={`${provider_name}-section`}>
+    <div
+      ref={sectionRef}
+      className=' mt-20  min-h-[350px]'
+      id={`${provider_name}-section`}
+    >
       <Link
         to={media_type === 'tv' ? `/explore/popular-tv` : `/explore/popular`}
         state={{ genre: genre }}

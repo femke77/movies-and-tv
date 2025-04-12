@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { IItem } from '../interfaces/IItem';
 import { filterMainPageResults } from '../utils/helpers';
 
-
-export const useIntersectionObserver = (targetRef: React.RefObject<HTMLElement>) => {
+export const useIntersectionObserver = (
+  targetRef: React.RefObject<HTMLElement>,
+) => {
   const [shouldFetch, setShouldFetch] = useState(false);
 
   useEffect(() => {
@@ -16,7 +17,7 @@ export const useIntersectionObserver = (targetRef: React.RefObject<HTMLElement>)
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: '100px 0px' }
+      { threshold: 0.1, rootMargin: '100px 0px' },
     );
 
     observer.observe(targetRef.current);
@@ -26,7 +27,6 @@ export const useIntersectionObserver = (targetRef: React.RefObject<HTMLElement>)
 
   return shouldFetch;
 };
-
 
 export const useQueryConfig = (
   queryKey: string,
