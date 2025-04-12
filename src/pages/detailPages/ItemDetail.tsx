@@ -16,13 +16,14 @@ import { useShallow } from 'zustand/react/shallow';
 
 
 const ItemDetail = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  // const [isVisible, setIsVisible] = useState(false);
   const [backgroundLoaded, setBackgroundLoaded] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
   const [lowResPosterLoaded, setLowResPosterLoaded] = useState(false);
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item, } = useItemDetail(item_type!, id!);
+console.log('item', item);
 
 
   const bookmark = useSuspenseStore(
@@ -41,11 +42,9 @@ const ItemDetail = () => {
       img.src = `https://image.tmdb.org/t/p/w342${item.backdrop_path}`;
       img.onload = () => {
         setBackgroundLoaded(true);
-        setIsVisible(true);
       };
     }
     return () => {
-      setIsVisible(false);
       setBackgroundLoaded(false);
     };
   }, [item?.backdrop_path]);
@@ -131,7 +130,7 @@ const ItemDetail = () => {
           </div>
           <div
             className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-opacity duration-800 ease-in ${
-              isVisible && backgroundLoaded ? 'opacity-40' : 'opacity-0'
+              backgroundLoaded ? 'opacity-40' : 'opacity-0'
             }`}
             style={{
               backgroundImage: backgroundLoaded
@@ -159,7 +158,7 @@ const ItemDetail = () => {
                         src={`https://image.tmdb.org/t/p/w185${item.poster_path}`}
                         alt=''
                         className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-300 ease-in-out ${
-                          isVisible && lowResPosterLoaded
+                           lowResPosterLoaded
                             ? 'opacity-100 blur-[5px]'
                             : 'opacity-0 '
                         }`}
@@ -170,7 +169,7 @@ const ItemDetail = () => {
                         src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
                         alt={`official poster for ${item.title || item.name}`}
                         className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-500 ease-in-out ${
-                          isVisible && highResPosterLoaded
+                           highResPosterLoaded
                             ? 'opacity-100'
                             : 'opacity-0'
                         }`}
@@ -234,7 +233,7 @@ const ItemDetail = () => {
                   item.production_companies?.[0]?.logo_path) ? (
                   <div
                     className={`min-h-[23px] min-w-[92px] max-h-[23px] pt-2 mr-2 flex-shrink-0 flex items-center justify-center  opacity-0 ${
-                      isVisible && logoLoaded ? 'opacity-100' : 'opacity-0'
+                       logoLoaded ? 'opacity-100' : 'opacity-0'
                     }`}
                   >
                     {/* tv network logo */}
@@ -243,7 +242,7 @@ const ItemDetail = () => {
                       item.networks?.[0]?.logo_path && (
                         <div
                           className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${
-                            isVisible && logoLoaded
+                            logoLoaded
                               ? 'opacity-100'
                               : 'opacity-0'
                           }`}
@@ -271,7 +270,7 @@ const ItemDetail = () => {
                       item.production_companies?.[0]?.logo_path && (
                         <div
                           className={`mt-1 flex items-center justify-center bg-white/70 rounded-md transition-opacity duration-800 ${
-                            isVisible && logoLoaded
+                           logoLoaded
                               ? 'opacity-100'
                               : 'opacity-0'
                           }`}

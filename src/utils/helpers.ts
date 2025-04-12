@@ -71,7 +71,6 @@ export const filterCastResults = (results: IItem[]) => {
 };
 
 
-
 export const isIphoneSafari = () => {
   const ua = navigator.userAgent;
   return (
