@@ -22,12 +22,7 @@ const ProductionCo = ({
   );
 
   return (
-    <div
-      ref={sectionRef}
-      className='h-[475px]'
-      id={`${company_name}-section`}
-    >
-      
+    <div ref={sectionRef} className='h-[475px]' id={`${company_name}-section`}>
       <Link to='/explore/movies'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>{header}</h2>
       </Link>
