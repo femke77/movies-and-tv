@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { MemoizedItemCard } from '../cards/ItemCard';
+import { ItemCard } from '../cards/ItemCard';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../../interfaces/IItem';
 import { useSuspenseStore } from '../../state/store';
@@ -45,20 +45,17 @@ const Carousel = ({
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {items.map((item) => (
-          <div
-            key={`${item.id}-${item.media_type || itemType || 'Unknown'}`}
-            className='w-[180px] flex-shrink-0'
-          >
-            <MemoizedItemCard
+          <div key={`${item.id}`} className='w-[180px] flex-shrink-0'>
+            <ItemCard
               textSize={'md'}
               item={item}
-              itemType={itemType || item.media_type || 'Unknown'}
+              itemType={itemType || item.media_type}
               showRating={showRating}
               showGenres={false}
               isBookmarked={
-                !!bookmarks[
-                  `${item.id}-${item.media_type || itemType || 'Unknown'}`
-                ]
+                bookmarks
+                  ? !!bookmarks?.[`${item.id}-${item.media_type || itemType}`]
+                  : false
               }
             />
           </div>

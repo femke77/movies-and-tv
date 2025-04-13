@@ -6,7 +6,7 @@ import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
 
 const PopularTv = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  const { data: shows = [], isLoading } = usePopularTv(sectionRef);
+  const { data: shows, isLoading } = usePopularTv(sectionRef);
 
   return (
     <div ref={sectionRef} className='h-[475px]' id='pop-tv-section'>
@@ -22,7 +22,7 @@ const PopularTv = () => {
           ))}
         </div>
       ) : (
-        <CarouselContainer items={shows} itemType='tv' />
+        <CarouselContainer items={shows || []} itemType='tv' />
       )}
     </div>
   );

@@ -6,8 +6,7 @@ import { useRef } from 'react';
 
 const TrendingTV = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  const { data: shows = [], isLoading } = useTrendingTv(sectionRef);
-  console.log('trending tv:', shows, isLoading);
+  const { data: shows, isLoading } = useTrendingTv(sectionRef);
 
   return (
     <div ref={sectionRef} className=' h-[475px]' id='trending-tv-section'>
@@ -23,7 +22,7 @@ const TrendingTV = () => {
           ))}
         </div>
       ) : (
-        <CarouselContainer items={shows} itemType='tv' />
+        <CarouselContainer items={shows || []} itemType='tv' />
       )}
     </div>
   );
