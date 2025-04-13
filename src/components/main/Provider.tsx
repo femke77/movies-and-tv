@@ -1,7 +1,5 @@
 import { useProvider } from '../../hooks/useProvider';
-import CarouselContainer from '../containers/CarouselContainer';
-import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
-import { Link } from 'react-router-dom';
+import Showcase from './Showcase';
 import { useRef } from 'react';
 const Provider = ({
   provider_name,
@@ -21,29 +19,24 @@ const Provider = ({
     media_type,
     provider_name,
     provider_id,
-    sectionRef,
+    sectionRef
   );
 
   return (
-    <div ref={sectionRef} className='h-[475px]' id={`${provider_name}-section`}>
-      <Link
-        to={media_type === 'tv' ? `/explore/popular-tv` : `/explore/popular`}
-        state={{ genre: genre }}
-      >
-        <h2 className='text-2xl font-bold mb-6  ml-5'>{header}</h2>
-      </Link>
-      {isLoading ? (
-        <div className='flex gap-3 px-4 py-2 w-full  '>
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className=' w-[180px] flex-shrink-0'>
-              <ItemCardSkeleton />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <CarouselContainer items={items} itemType={media_type} />
-      )}
-    </div>
+    <>
+      <Showcase
+        ref={sectionRef}
+        header={header}
+        items={items}
+        isLoading={isLoading}
+        media_type={media_type}
+        linkTo={
+          media_type === 'tv' ? `/explore/popular-tv` : `/explore/popular`
+        }
+        section_id={`${provider_name}-section`}
+        link_state={{ genre: genre }}
+      />
+    </>
   );
 };
 
