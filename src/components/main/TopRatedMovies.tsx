@@ -1,31 +1,22 @@
 import { useTopRatedMovies } from '../../hooks/useTopRated';
-import CarouselContainer from '../containers/CarouselContainer';
-import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
-import { Link } from 'react-router-dom';
+import Showcase from './Showcase';
 import { useRef } from 'react';
 const TopRatedMovies = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const { data: movies = [], isLoading } = useTopRatedMovies(sectionRef);
 
   return (
-    <div ref={sectionRef} className='h-[475px]' id='top-section'>
-      <Link to='/explore/toprated'>
-        <h2 className='text-2xl font-bold mb-6  ml-5'>
-          All-time Top Rated Movies{' '}
-        </h2>
-      </Link>
-      {isLoading ? (
-        <div className='flex gap-3 px-4 py-2 w-full  '>
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className=' w-[180px] flex-shrink-0'>
-              <ItemCardSkeleton />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <CarouselContainer items={movies} itemType='movie' />
-      )}
-    </div>
+    <>
+      <Showcase
+        ref={sectionRef}
+        header='All-time Top Rated Movies'
+        items={movies}
+        isLoading={isLoading}
+        media_type='movie'
+        linkTo='/explore/toprated'
+        section_id='toprated-movies'
+      />
+    </>
   );
 };
 

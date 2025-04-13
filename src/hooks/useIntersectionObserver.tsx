@@ -39,7 +39,7 @@ export const useQueryConfig = (
   gcTime: 1000 * 60 * 60 * 25,
   refetchOnWindowFocus: false,
   refetchInterval: 1000 * 60 * 30, // 30 minutes
-  // placeholderData: (previousData: IItem[] | undefined) => previousData,
+  placeholderData: (previousData: IItem[] | undefined) => previousData,
   enabled,
   retry: 2,
   retryDelay: (attempt: number) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
