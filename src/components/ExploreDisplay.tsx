@@ -46,10 +46,10 @@ const Explore = memo(
                 item={item}
                 showGenres={true}
                 showRating={true}
-                isBookmarked={bookmarks ? 
-                  !!bookmarks?.[
-                    `${item.id}-${item.media_type || itemType}`
-                  ] : false
+                isBookmarked={
+                  bookmarks
+                    ? !!bookmarks?.[`${item.id}-${item.media_type || itemType}`]
+                    : false
                 }
               />
             ))

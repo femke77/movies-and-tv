@@ -16,8 +16,6 @@ const Carousel = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const bookmarks = useSuspenseStore(useShallow((state) => state.bookmarks));
 
-  
-  
   const scrollLeft = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
@@ -47,20 +45,17 @@ const Carousel = ({
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {items.map((item) => (
-          <div
-            key={`${item.id}`}
-            className='w-[180px] flex-shrink-0'
-          >
+          <div key={`${item.id}`} className='w-[180px] flex-shrink-0'>
             <ItemCard
               textSize={'md'}
               item={item}
               itemType={itemType || item.media_type}
               showRating={showRating}
               showGenres={false}
-              isBookmarked={bookmarks ? 
-                !!bookmarks?.[
-                  `${item.id}-${item.media_type || itemType}`
-                ] : false
+              isBookmarked={
+                bookmarks
+                  ? !!bookmarks?.[`${item.id}-${item.media_type || itemType}`]
+                  : false
               }
             />
           </div>

@@ -8,7 +8,6 @@ const TrendingTV = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const { data: shows, isLoading } = useTrendingTv(sectionRef);
 
-
   return (
     <div ref={sectionRef} className=' h-[475px]' id='trending-tv-section'>
       <Link to='/explore/tv'>

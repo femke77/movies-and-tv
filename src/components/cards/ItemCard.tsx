@@ -23,8 +23,6 @@ const ItemCard = ({
   textSize?: string;
   isBookmarked: boolean;
 }) => {
-
-  
   const [isVisible, setIsVisible] = useState(false);
   const [lowResLoaded, setLowResLoaded] = useState(false);
   const [highResLoaded, setHighResLoaded] = useState(false);
@@ -61,8 +59,6 @@ const ItemCard = ({
       setHighResLoaded(false);
     };
   }, [item]);
-
-
 
   const movieGenres = item?.genre_ids?.map((genreId) => {
     const genre = genres.find((genre) => genre.id === genreId);

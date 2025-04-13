@@ -59,11 +59,11 @@ export default function SwiperElement() {
                   isVisible={index === currentIndex}
                   currentIndex={index}
                   movieList={items}
-                  isBookmarked={bookmarks ? 
-                !!bookmarks?.[
-                  `${item.id}-${item.media_type}`
-                ] : false
-              }
+                  isBookmarked={
+                    bookmarks
+                      ? !!bookmarks?.[`${item.id}-${item.media_type}`]
+                      : false
+                  }
                 />
               </Suspense>
             </SwiperSlide>
