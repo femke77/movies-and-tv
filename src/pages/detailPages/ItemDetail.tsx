@@ -13,6 +13,7 @@ import Share from '../../components/buttons/ShareButtons';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import BackButton from '../../components/buttons/BackBtn';
 import { useShallow } from 'zustand/react/shallow';
+import { useItemQuality } from '../../hooks/useItemOrWatchDetail';
 
 const ItemDetail = () => {
   const [backgroundLoaded, setBackgroundLoaded] = useState(false);
@@ -21,7 +22,8 @@ const ItemDetail = () => {
   const [highResPosterLoaded, setHighResPosterLoaded] = useState(false);
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
-
+  const { data: quality } = useItemQuality(id!);
+ 
   const bookmark = useSuspenseStore(
     useShallow((state) => state.bookmarks[`${id}-${item_type}`]),
   );
@@ -207,11 +209,11 @@ const ItemDetail = () => {
                     {item.rating}
                   </span>
                 </p>
-                {item[String(id)]?.bestQuality && (
+                {quality[String(id)]?.bestQuality && (
                   <div className='flex items-center'>
                     <p className='text-lg text-light mr-3'>Best Quality: </p>
                     <Chip
-                      label={item[String(id)]?.bestQuality}
+                      label={quality[String(id)]?.bestQuality}
                       fontSize='text-md'
                     />
                   </div>

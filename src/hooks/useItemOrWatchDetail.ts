@@ -66,36 +66,53 @@ export const useItemDetail = (type: string, id: string) => {
       }
 
       if (type === 'movie') {
-        const [movie, rating, credits, quality] = await Promise.all([
+        const [movie, rating, credits] = await Promise.all([
           fetchItemDetail(type, id),
           fetchMovieRating(id),
           fetchItemCredits(type, id),
-          fetchItemQuality(id),
         ]);
 
         return {
           ...movie,
           rating,
           ...credits,
-          ...quality,
+      
         };
       } else if (type === 'tv') {
-        const [tv, rating, credits, quality] = await Promise.all([
+        const [tv, rating, credits] = await Promise.all([
           fetchItemDetail(type, id),
           fetchTVContentRating(id),
           fetchItemCredits(type, id),
-          fetchItemQuality(id),
+    
         ]);
 
         return {
           ...tv,
           rating,
           ...credits,
-          ...quality,
+      
         };
       }
     },
 
+    staleTime: 1000 * 60 * 10, // 10 minutes
+    gcTime: 1000 * 60 * 11, // 11 minutes
+    refetchOnWindowFocus: false,
+    retry: 2,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
+  });
+};
+
+export const useItemQuality = (id: string) => {
+  return useSuspenseQuery({
+    queryKey: ['item-quality', id],
+    queryFn: async () => {
+      if (!id) {
+        throw new Error('ID is required');
+      }
+      const quality = await fetchItemQuality(id);
+      return quality;
+    },
     staleTime: 1000 * 60 * 10, // 10 minutes
     gcTime: 1000 * 60 * 11, // 11 minutes
     refetchOnWindowFocus: false,

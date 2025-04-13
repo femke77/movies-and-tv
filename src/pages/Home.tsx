@@ -40,8 +40,8 @@ const Home = () => {
 
       <div className='my-28'>
         <TrendingMovies />
-        <PopularMovies />
         <TrendingTV />
+        <PopularMovies />
         <Network
           header='Top Series on Netflix'
           network_name='Netflix'
