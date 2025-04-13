@@ -19,7 +19,7 @@ const Provider = ({
     media_type,
     provider_name,
     provider_id,
-    sectionRef
+    sectionRef,
   );
 
   return (

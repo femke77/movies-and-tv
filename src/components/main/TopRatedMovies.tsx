@@ -7,19 +7,16 @@ const TopRatedMovies = () => {
 
   return (
     <>
-    <Showcase
-       ref={sectionRef}
-       header='All-time Top Rated Movies'
-       items={movies}
-       isLoading={isLoading}
-       media_type='movie'
-       linkTo='/explore/toprated'
-       section_id='toprated-movies'
- 
- 
-       />
+      <Showcase
+        ref={sectionRef}
+        header='All-time Top Rated Movies'
+        items={movies}
+        isLoading={isLoading}
+        media_type='movie'
+        linkTo='/explore/toprated'
+        section_id='toprated-movies'
+      />
     </>
-   
   );
 };
 

@@ -22,19 +22,16 @@ const ProductionCo = ({
 
   return (
     <>
-    <Showcase
-       ref={sectionRef}
-       header={header}
-       items={items}
-       isLoading={isLoading}
-       media_type='movie'
-       linkTo='/explore/movies'
-       section_id={`${company_name}-section`}
-    
- 
-       />
+      <Showcase
+        ref={sectionRef}
+        header={header}
+        items={items}
+        isLoading={isLoading}
+        media_type='movie'
+        linkTo='/explore/movies'
+        section_id={`${company_name}-section`}
+      />
     </>
- 
   );
 };
 

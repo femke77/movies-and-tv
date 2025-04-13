@@ -9,17 +9,16 @@ const TrendingTV = () => {
   return (
     <>
       <Showcase
-         ref={sectionRef}
-         header={`Today's Trending TV Shows`}
-         items={shows}
-         isLoading={isLoading}
-         media_type='tv'
-         linkTo='/explore/tv'
-         section_id='trending-tv'
-         link_state={{ time: 'day' }}
-   
-         />
-      </>
+        ref={sectionRef}
+        header={`Today's Trending TV Shows`}
+        items={shows}
+        isLoading={isLoading}
+        media_type='tv'
+        linkTo='/explore/tv'
+        section_id='trending-tv'
+        link_state={{ time: 'day' }}
+      />
+    </>
   );
 };
 

@@ -7,20 +7,17 @@ const TopRatedTv = () => {
   const { data: shows = [], isLoading } = useTopRatedTv(sectionRef);
 
   return (
-
-     <>
-       <Showcase
-          ref={sectionRef}
-          header='Top Rated Series'
-          items={shows}
-          isLoading={isLoading}
-          media_type='tv'
-          linkTo='/explore/top-series'
-          section_id='top-tv'
-      
-          />
-       </>
-   
+    <>
+      <Showcase
+        ref={sectionRef}
+        header='Top Rated Series'
+        items={shows}
+        isLoading={isLoading}
+        media_type='tv'
+        linkTo='/explore/top-series'
+        section_id='top-tv'
+      />
+    </>
   );
 };
 

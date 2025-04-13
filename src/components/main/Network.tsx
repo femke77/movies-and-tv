@@ -19,21 +19,17 @@ const Network = ({
   );
 
   return (
-
     <>
-    <Showcase
-       ref={sectionRef}
-       header={header}
-       items={items}
-       isLoading={isLoading}
-       media_type='tv'
-       linkTo='/explore/tv'
-       section_id={`${network_name}-section`}
-    
- 
-       />
+      <Showcase
+        ref={sectionRef}
+        header={header}
+        items={items}
+        isLoading={isLoading}
+        media_type='tv'
+        linkTo='/explore/tv'
+        section_id={`${network_name}-section`}
+      />
     </>
-   
   );
 };
 
