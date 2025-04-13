@@ -7,7 +7,6 @@ export const useIntersectionObserver = (
 ) => {
   const [shouldFetch, setShouldFetch] = useState(false);
 
- 
   useEffect(() => {
     if (!targetRef.current) return;
 
@@ -25,8 +24,6 @@ export const useIntersectionObserver = (
 
     return () => observer.disconnect();
   }, [targetRef]);
-
- 
 
   return shouldFetch;
 };

@@ -9,7 +9,6 @@ const TrendingMovies = () => {
 
   return (
     <div ref={sectionRef} className='h-[475px]' id='trending-section'>
-     
       <Link to='/explore/movies' state={{ time: 'day' }}>
         <h2 className='text-2xl font-bold mb-6 ml-5 '>
           Today's Trending Movies
