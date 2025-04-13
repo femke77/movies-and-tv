@@ -15,6 +15,7 @@ const createPopularFetcher = (type: 'movie' | 'tv') => async () => {
 };
 
 export const usePopularMovies = (ref: React.RefObject<HTMLElement>) => {
+  
   const shouldFetch = useIntersectionObserver(ref);
   return useQuery<IItem[], Error>(
     useQueryConfig(

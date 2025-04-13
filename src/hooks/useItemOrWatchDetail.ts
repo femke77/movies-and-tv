@@ -1,5 +1,5 @@
 import { TMDBClient } from '../utils/axiosConfig';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery, useQuery } from '@tanstack/react-query';
 
 export const fetchItemDetail = async (type: string, id: string) => {
   const { data } = await TMDBClient.get(`/${type}/${id}`);
@@ -104,7 +104,7 @@ export const useItemDetail = (type: string, id: string) => {
 };
 
 export const useItemQuality = (id: string) => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['item-quality', id],
     queryFn: async () => {
       if (!id) {

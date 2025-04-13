@@ -22,7 +22,7 @@ interface WatchItem {
 const ContinueWatching = () => {
   const location = useLocation();
   const continueWatching = useSuspenseStore(
-    useShallow((state) => state.continueWatching),
+    useShallow((state) => state.continueWatching)
   );
 
   const { removeFromContinueWatching, clearContinueWatching } = useStore();
@@ -49,7 +49,7 @@ const ContinueWatching = () => {
       | React.TouchEvent<HTMLButtonElement>
       | React.KeyboardEvent<HTMLButtonElement>,
     id: number,
-    media_type: string,
+    media_type: string
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -80,7 +80,7 @@ const ContinueWatching = () => {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    id: number,
+    id: number
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       setActiveItemId(id);
@@ -93,8 +93,7 @@ const ContinueWatching = () => {
     const items = carouselRef.current.querySelectorAll('[data-carousel-item]');
     const currentIndex = Array.from(items).findIndex(
       (item) =>
-        item === document.activeElement ||
-        item.contains(document.activeElement),
+        item === document.activeElement || item.contains(document.activeElement)
     );
 
     switch (e.key) {
@@ -114,17 +113,16 @@ const ContinueWatching = () => {
   };
 
   return (
-    <div className='ml-6'>
-      <ConfirmModal
-        showModal={openModal}
-        closeModal={closeModal}
-        handleClick={handleClearAll}
-        message={'Are you sure you want to clear everything?'}
-      />
-
+    <>
       {items?.length !== 0 && (
-        <>
-          <div className='z-10 2-full flex justify-between items-center flex-wrap'>
+        <div className='ml-6 h-[250px]'>
+          <ConfirmModal
+            showModal={openModal}
+            closeModal={closeModal}
+            handleClick={handleClearAll}
+            message={'Are you sure you want to clear everything?'}
+          />
+          <div className='z-10  2-full flex justify-between items-center flex-wrap'>
             <Link
               to='/account/history'
               className='pointer-events-auto text-white flex items-center'
@@ -281,9 +279,9 @@ const ContinueWatching = () => {
               })}
             </DraggableCarousel>
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
