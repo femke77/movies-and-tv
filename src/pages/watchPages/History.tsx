@@ -8,9 +8,8 @@ import BackButton from '../../components/buttons/BackBtn';
 import { useShallow } from 'zustand/react/shallow';
 
 const History = () => {
-  const { previousSearches, clearPreviousSearches } = useSuspenseStore(
-    useShallow((state) => state),
-  );
+  const { previousSearches, clearPreviousSearches, continueWatching } =
+    useSuspenseStore(useShallow((state) => state));
   const [showModal, setShowModal] = useState(false);
   useDocumentTitle('Watch History | BingeBox');
   return (
@@ -21,12 +20,23 @@ const History = () => {
 
       <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800' />
 
-      <div className='mt-36'>
-        <ContinueWatching />
+      <div className='mt-36 h-[250px]'>
+        {continueWatching?.length > 0 ? (
+          <ContinueWatching />
+        ) : (
+          <>
+            <p className='z-10 relative font-semibold text-2xl ml-6 text-white'>
+              Continue Watching
+            </p>
+            <p className='relative z-10 text-md text-white ml-6 mt-6'>
+              Start watching something! It will appear here.
+            </p>
+          </>
+        )}
       </div>
 
       <div className='z-10 flex justify-between items-end mt-6'>
-        <h1 className='z-10 mt-12 text-2xl font-semibold ml-6'>
+        <h1 className='z-10 mt-4 text-2xl font-semibold ml-6'>
           Previous Search History
         </h1>
         <button
