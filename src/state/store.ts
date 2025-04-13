@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { get, set, del } from 'idb-keyval';
 import { useSyncExternalStore, useEffect } from 'react';
 
-const CONTINUE_WATCHING_LIMIT = 250 ;
+const CONTINUE_WATCHING_LIMIT = 250;
 const SEARCH_HISTORY_LIMIT = 20;
 // IndexedDB storage implementation with idb-keyval
 export const idbStorage = {
