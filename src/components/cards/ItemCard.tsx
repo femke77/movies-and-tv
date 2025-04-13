@@ -17,12 +17,14 @@ const ItemCard = ({
   isBookmarked,
 }: {
   item: IItem;
-  itemType: string;
+  itemType?: string;
   showRating?: boolean;
   showGenres?: boolean;
   textSize?: string;
   isBookmarked: boolean;
 }) => {
+
+  
   const [isVisible, setIsVisible] = useState(false);
   const [lowResLoaded, setLowResLoaded] = useState(false);
   const [highResLoaded, setHighResLoaded] = useState(false);
@@ -60,24 +62,7 @@ const ItemCard = ({
     };
   }, [item]);
 
-  // Handle the transition end event to set visibility to false
-  // prevents detached dom nodes in memory due to css transitions
-  useEffect(() => {
-    const handleTransitionEnd = () => {
-      if (!isVisible) {
-        setIsVisible(false);
-      }
-    };
-    const cardElement = document.querySelector('.item-card');
-    if (cardElement) {
-      cardElement.addEventListener('transitionend', handleTransitionEnd);
-    }
-    return () => {
-      if (cardElement) {
-        cardElement.removeEventListener('transitionend', handleTransitionEnd);
-      }
-    };
-  }, [isVisible]);
+
 
   const movieGenres = item?.genre_ids?.map((genreId) => {
     const genre = genres.find((genre) => genre.id === genreId);
@@ -164,7 +149,7 @@ const ItemCard = ({
             <div className='absolute top-0 -right-1 p-1 z-[5]'>
               <BookmarkBtn
                 id={item.id}
-                type={itemType}
+                type={itemType || item.media_type || ''}
                 isBookmarked={isBookmarked}
                 iconSize={35}
                 color='white'

@@ -7,7 +7,7 @@ import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
 const PopularMovies = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const { data: movies = [], isLoading } = usePopularMovies(sectionRef);
-  console.log('popular movies:',movies, isLoading);
+
   return (
     <div ref={sectionRef} className='h-[475px]' id='pop-movie-section'>
       
