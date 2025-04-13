@@ -42,7 +42,6 @@ const Home = () => {
         <TrendingMovies />
         <PopularMovies />
         <TrendingTV />
-        <PopularTv />
         <Network
           header='Top Series on Netflix'
           network_name='Netflix'
@@ -83,6 +82,7 @@ const Home = () => {
           // genre='27'
         />
         <TopRatedMovies />
+        <PopularTv />
         <TopRatedTv />
       </div>
     </>
