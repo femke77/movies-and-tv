@@ -17,7 +17,7 @@ export const useIntersectionObserver = (
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: '100px 0px' },
+      { threshold: 0, rootMargin: '100px 0px' },
     );
 
     observer.observe(targetRef.current);

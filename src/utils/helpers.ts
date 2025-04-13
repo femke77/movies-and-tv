@@ -42,6 +42,7 @@ export const filterMainPageResults = (results: IItem[]) => {
         item.first_air_date &&
         dayjs(item.first_air_date).isSame(dayjs(), 'day'));
     const validDate = item.release_date || item.first_air_date;
+    
     return (
       hasValidData &&
       !isInvalidDueToMissingPosterDateToday &&
