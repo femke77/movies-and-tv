@@ -19,6 +19,7 @@ export const TMDBClient = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
   headers: {
     Authorization: `Bearer ${TMDBBearerToken}`,
+    Accept: 'application/json',
     'Content-Type': 'application/json',
   },
 });

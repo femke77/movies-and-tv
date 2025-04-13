@@ -8,7 +8,7 @@ const TopRatedMovies = () => {
   const { data: movies = [], isLoading } = useTopRatedMovies(sectionRef);
 
   return (
-    <div ref={sectionRef} className=' mt-20  min-h-[350px]' id='top-section'>
+    <div ref={sectionRef} className='h-[475px]' id='top-section'>
       <Link to='/explore/toprated'>
         <h2 className='text-2xl font-bold mb-6  ml-5'>
           All-time Top Rated Movies{' '}

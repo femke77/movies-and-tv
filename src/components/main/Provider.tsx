@@ -25,11 +25,7 @@ const Provider = ({
   );
 
   return (
-    <div
-      ref={sectionRef}
-      className=' mt-20  min-h-[350px]'
-      id={`${provider_name}-section`}
-    >
+    <div ref={sectionRef} className='h-[475px]' id={`${provider_name}-section`}>
       <Link
         to={media_type === 'tv' ? `/explore/popular-tv` : `/explore/popular`}
         state={{ genre: genre }}
@@ -38,7 +34,7 @@ const Provider = ({
       </Link>
       {isLoading ? (
         <div className='flex gap-3 px-4 py-2 w-full  '>
-          {Array.from({ length: 6 }).map((_, i) => (
+          {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className=' w-[180px] flex-shrink-0'>
               <ItemCardSkeleton />
             </div>

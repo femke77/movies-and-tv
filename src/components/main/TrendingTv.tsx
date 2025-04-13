@@ -7,19 +7,16 @@ import { useRef } from 'react';
 const TrendingTV = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const { data: shows = [], isLoading } = useTrendingTv(sectionRef);
+  console.log('trending tv:', shows, isLoading);
 
   return (
-    <div
-      ref={sectionRef}
-      className='mt-20 min-h-[350px]'
-      id='trending-tv-section'
-    >
+    <div ref={sectionRef} className=' h-[475px]' id='trending-tv-section'>
       <Link to='/explore/tv'>
         <h2 className='text-2xl font-bold mb-6 ml-5'>Today's Trending TV</h2>
       </Link>
       {isLoading ? (
         <div className='flex gap-3 px-4 py-2 w-full  '>
-          {Array.from({ length: 6 }).map((_, i) => (
+          {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className=' w-[180px] flex-shrink-0'>
               <ItemCardSkeleton />
             </div>

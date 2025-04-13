@@ -209,7 +209,7 @@ const ItemDetail = () => {
                     {item.rating}
                   </span>
                 </p>
-                {quality[String(id)]?.bestQuality && (
+                {quality?.[String(id)]?.bestQuality && (
                   <div className='flex items-center'>
                     <p className='text-lg text-light mr-3'>Best Quality: </p>
                     <Chip

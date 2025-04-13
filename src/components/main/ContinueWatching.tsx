@@ -114,17 +114,16 @@ const ContinueWatching = () => {
   };
 
   return (
-    <div className='ml-6'>
-      <ConfirmModal
-        showModal={openModal}
-        closeModal={closeModal}
-        handleClick={handleClearAll}
-        message={'Are you sure you want to clear everything?'}
-      />
-
+    <>
       {items?.length !== 0 && (
-        <>
-          <div className='z-10 2-full flex justify-between items-center flex-wrap'>
+        <div className='ml-6 h-[250px]'>
+          <ConfirmModal
+            showModal={openModal}
+            closeModal={closeModal}
+            handleClick={handleClearAll}
+            message={'Are you sure you want to clear everything?'}
+          />
+          <div className='z-10  2-full flex justify-between items-center flex-wrap'>
             <Link
               to='/account/history'
               className='pointer-events-auto text-white flex items-center'
@@ -281,9 +280,9 @@ const ContinueWatching = () => {
               })}
             </DraggableCarousel>
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
