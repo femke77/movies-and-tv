@@ -16,7 +16,7 @@ const TopRatedMovies = () => {
       </Link>
       {isLoading ? (
         <div className='flex gap-3 px-4 py-2 w-full  '>
-          {Array.from({ length: 8 }).map((_, i) => (
+          {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className=' w-[180px] flex-shrink-0'>
               <ItemCardSkeleton />
             </div>

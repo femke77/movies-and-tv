@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import { get, set, del } from 'idb-keyval';
 import { useSyncExternalStore, useEffect } from 'react';
 
+const CONTINUE_WATCHING_LIMIT = 250;
+const SEARCH_HISTORY_LIMIT = 20;
 // IndexedDB storage implementation with idb-keyval
 export const idbStorage = {
   getItem: async (name: string) => {
@@ -161,7 +163,7 @@ export const useStore = create<BookmarkStore>()(
         if (get().previousSearches.includes(lowerCaseQuery)) return;
         set((state) => {
           const newSearches =
-            state.previousSearches.length >= 20
+            state.previousSearches.length >= SEARCH_HISTORY_LIMIT
               ? [...state.previousSearches.slice(1), lowerCaseQuery]
               : [...state.previousSearches, lowerCaseQuery];
 
@@ -202,7 +204,7 @@ export const useStore = create<BookmarkStore>()(
 
           const updated = [...filtered, newItem]
             .sort((a, b) => b.lastUpdated - a.lastUpdated)
-            .slice(0, 200);
+            .slice(0, CONTINUE_WATCHING_LIMIT);
 
           return { continueWatching: updated };
         });
@@ -236,7 +238,7 @@ export const useStore = create<BookmarkStore>()(
 
           const updated = [...filtered, newItem]
             .sort((a, b) => b.lastUpdated - a.lastUpdated)
-            .slice(0, 200);
+            .slice(0, CONTINUE_WATCHING_LIMIT);
 
           return { continueWatching: updated };
         });

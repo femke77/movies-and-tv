@@ -40,9 +40,8 @@ const Home = () => {
 
       <div className='my-28'>
         <TrendingMovies />
-        <PopularMovies />
         <TrendingTV />
-        <PopularTv />
+        <PopularMovies />
         <Network
           header='Top Series on Netflix'
           network_name='Netflix'
@@ -83,6 +82,7 @@ const Home = () => {
           // genre='27'
         />
         <TopRatedMovies />
+        <PopularTv />
         <TopRatedTv />
       </div>
     </>

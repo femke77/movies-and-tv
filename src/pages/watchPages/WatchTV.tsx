@@ -20,6 +20,7 @@ import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
 
 const WatchTV = () => {
+  const VIEWING_PROGRESS_LIMIT = 250;
   const { servers } = serverData;
   const { addToContinueWatchingTv } = useStore();
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -129,7 +130,7 @@ const WatchTV = () => {
     if (viewProgressObj) {
       const viewProgress = JSON.parse(viewProgressObj);
       // keep a rotation of 250 tv series in local storage and remove the oldest in favor of the most recent
-      if (Object.keys(viewProgress).length > 250) {
+      if (Object.keys(viewProgress).length > VIEWING_PROGRESS_LIMIT) {
         const oldestKey = Object.keys(viewProgress).reduce((oldest, key) => {
           if (!viewProgress[oldest].lastUpdated) return key;
           if (!viewProgress[key].lastUpdated) return oldest;
