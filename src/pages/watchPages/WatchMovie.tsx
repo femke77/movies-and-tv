@@ -134,7 +134,7 @@ const WatchMovie = () => {
             </div>
           </div>
           <main>
-            <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
+            <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'>
               <iframe
                 ref={iframeRef}
                 id='iframe'
@@ -144,7 +144,8 @@ const WatchMovie = () => {
                 src={'about:blank'}
                 allow='encrypted-media'
                 allowFullScreen
-              ></iframe>
+       
+               ></iframe>
               {isLoading && (
                 <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10'>
                   <div className='text-white text-center'>

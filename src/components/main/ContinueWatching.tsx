@@ -22,7 +22,7 @@ interface WatchItem {
 const ContinueWatching = () => {
   const location = useLocation();
   const continueWatching = useSuspenseStore(
-    useShallow((state) => state.continueWatching),
+    useShallow((state) => state.continueWatching)
   );
 
   const { removeFromContinueWatching, clearContinueWatching } = useStore();
@@ -49,7 +49,7 @@ const ContinueWatching = () => {
       | React.TouchEvent<HTMLButtonElement>
       | React.KeyboardEvent<HTMLButtonElement>,
     id: number,
-    media_type: string,
+    media_type: string
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -80,7 +80,7 @@ const ContinueWatching = () => {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    id: number,
+    id: number
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       setActiveItemId(id);
@@ -93,8 +93,7 @@ const ContinueWatching = () => {
     const items = carouselRef.current.querySelectorAll('[data-carousel-item]');
     const currentIndex = Array.from(items).findIndex(
       (item) =>
-        item === document.activeElement ||
-        item.contains(document.activeElement),
+        item === document.activeElement || item.contains(document.activeElement)
     );
 
     switch (e.key) {
@@ -133,13 +132,14 @@ const ContinueWatching = () => {
               </h1>
               <ChevronRight color='#ffffff' />
             </Link>
-
-            <button
-              onClick={() => setOpenModal(true)}
-              className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-            >
-              Clear All
-            </button>
+            {location.pathname === '/account/history' && (
+              <button
+                onClick={() => setOpenModal(true)}
+                className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+              >
+                Clear All
+              </button>
+            )}
           </div>
 
           <div
