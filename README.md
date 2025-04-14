@@ -6,9 +6,9 @@
 
 ## Description ✏️
 
-A place to track and watch upcoming and favorite movie & tv shows.
+A place to find TV shows and movies, keep track of them, stream anything and have a great time!
 
-This application is in-progress. This is the client side.
+This application is in-progress. This is the client side only. App doesn't use a server yet, uses netlify functions to proxy requests block by CORS, but this is temporary. A server will be built and deploy will move to my VPS. 
 
 ### Interesting Problems Solved During Building
 
@@ -38,11 +38,14 @@ Initial load 850-1000ms
 
 **Solution:** Refactored bookmarks to an object using id-media_type as key. Checking if a movie or tv show is in the bookmarks object is O(1) time, a new function is not created on every render and React can properly maintain memoization. A significant drop in memory use was noted.
 
+**Problem:** Routes to different pages are wrapped in suspense with skeleton fallbacks. This works fine with react query using the hooks 'useInfiniteQuery' or 'useSuspenseQuery', however, suspense only reacts to a promise, and zustand doesn't throw a promise to suspense when it loads data. If a page only relies on data from zustand suspense can never kick in. 
 
+**Solution:** Using the React hook useSyncExternalStorage, the zustand store was refactored to throw a promise when it is loading from IndexedDB (browser storage). This allows suspense to do it's thing, and trigger the skeletons under the condition that the async access takes over 300ms.  I don't expect this to be a problem most of the time, but if it should come up for the user, the appropriate UX happens. 
 
-### Metrics as of 4/7/2025
+### Metrics as of 4/14/2025
 
-- ~180-200 MB average browser memory usage after good amount of app usage with heavy caching strategies- holds steady for hours.
+- ~180-240 MB average browser memory usage after good amount of app usage with heavy caching strategies- holds steady. No leaking noted.
+- Memory rises with video play normally, falls back to above numbers in under 2 min from watch page unmounting
 - ~42-72MB heap size depending on how much is cached by react query (depends on usage)
 - 99% performance by Lighthouse
 - 0.0 CLS
