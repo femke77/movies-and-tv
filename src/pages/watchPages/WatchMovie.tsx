@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
 
+
 const WatchMovie = () => {
   const { addToContinueWatchingMovie } = useStore();
   const { movie_id } = useParams<{ movie_id: string }>();
@@ -104,6 +105,8 @@ const WatchMovie = () => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+         timeoutRef.current = null;
+         
       }
     };
   }, [selectedServer, movie_id]);
@@ -127,7 +130,7 @@ const WatchMovie = () => {
             {/* iphone safari doesn't support the FS api */}
             <div
               className={`${
-                isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''
+                isIphoneSafari() || isIPad()} ? 'invisible' : ''
               }`}
             >
               <FullscreenBtn elementId='iframe' />

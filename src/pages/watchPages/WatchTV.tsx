@@ -18,6 +18,7 @@ import EpisodeList from '../../components/lists/EpisodeList';
 import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
+import { time } from 'console';
 
 const WatchTV = () => {
   const VIEWING_PROGRESS_LIMIT = 250;
@@ -166,6 +167,7 @@ const WatchTV = () => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
       }
     };
   }, []);
@@ -237,6 +239,7 @@ const WatchTV = () => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
       }
       if (iframeLoadRef.current) {
         clearTimeout(iframeLoadRef.current);
