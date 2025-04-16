@@ -54,16 +54,18 @@ const ContinueWatching = () => {
   ) => {
     e.preventDefault();
     e.stopPropagation();
-    // debounce the last item to avoid clicking the item card.
+    // debounce the last item more to avoid clicking the item card after layout shift
     // eventually make all deleting a modal interaction
-    if (items.length === 1) {
+    if (items.length > 1) {
+      setTimeout(() => {
+        removeFromContinueWatching(id, media_type);
+        setActiveItemId(null);
+      }, 50);
+    } else {
       setTimeout(() => {
         removeFromContinueWatching(id, media_type);
         setActiveItemId(null);
       }, 300);
-    } else {
-      removeFromContinueWatching(id, media_type);
-      setActiveItemId(null);
     }
   };
 

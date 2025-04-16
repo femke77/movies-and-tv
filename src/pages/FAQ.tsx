@@ -36,18 +36,18 @@ const FAQPage = () => {
     {
       question: 'Do I have to pay anything to use your site?',
       answer:
-        'BingeBox is 100% free. We host on a private VPS and operate at a loss in order to get you the best streaming service around. We love to code and build amazing websites and it is our pleasure to have you as a user. ',
+        'BingeBox is 100% free. ',
     },
     {
-      question: 'Do you have a browser recommendation?',
+      question: 'What about all these popups & redirects?',
       answer:
-        "BingeBox strongly recommends the Brave browser in 'Shields Up' mode for safety and to avoid annoying pop-up, clickjack adverts.",
+        "We aren't putting those on you, they come from the servers we link to that allow you to stream content. To some extent it is understandable that content providers need money coming in, but we can't be sure that the popups are safe. If you want to fully block the popups, the recommendations are as follows: 1) If you are on Safari IOS mobile, you can go into settings for Safari, and under advanced options you can find a toggle to verify the window.open function. This will stop everything and some of your taps will appear to do nothing.  2) On Chrome desktop, you can add poper blocker. 3) Firefox + uBlock is a good option. 4) Brave browser will help but on iOS it can't stop all the pop-ups. 4) If you use our site on a laptop/destop with a mouse, you'll note that again, some of your clicks don't do anything, because we are blocking some of the popups ourselves. We just don't have that level of control for many situations.",
     },
     {
       question:
         'Is this site illegal for me to use? Will my ISP know I am using it?',
       answer:
-        'Your ISP will only know that you are watching videos, not what the videos are or whether you paid for them or not. Your ISP will see it as similar to YouTube. BingeBox uses servers with DMCA protected links and we do not engage in any copyright infrigement. We recommend that you use a VPN if you are concerned about your privacy.',
+        'Your ISP will only know that you are watching videos, not what the videos are or whether you paid for them or not. Your ISP will see it as similar to YouTube. BingeBox uses servers with DMCA protected links and we do not engage in any copyright infrigement. We recommend that you use a VPN if you are concerned about your privacy. ',
     },
     {
       question: "Sometimes I can't find what I am looking for, what do I do?",
