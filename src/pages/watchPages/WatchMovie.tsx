@@ -22,7 +22,7 @@ const WatchMovie = () => {
   useDocumentTitle(
     movie?.title
       ? `Watch ${movie?.title || 'Movie'}  | BingeBox`
-      : 'Loading... | BingeBox'
+      : 'Loading... | BingeBox',
   );
 
   const [isLoading, setIsLoading] = useState(false);
@@ -78,7 +78,7 @@ const WatchMovie = () => {
       movie.title,
       movie.backdrop_path,
       movie.release_date,
-      movie.runtime
+      movie.runtime,
     );
     // }, 180000);
 
@@ -172,10 +172,10 @@ const WatchMovie = () => {
           </div>
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'>
-            {!unlocked && (
-              //  overlay that absorbs 'bad' clicks based on cursor state
-              <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer' />
-            )}
+              {!unlocked && (
+                //  overlay that absorbs 'bad' clicks based on cursor state
+                <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer' />
+              )}
               <iframe
                 ref={iframeRef}
                 id='iframe'
@@ -194,7 +194,7 @@ const WatchMovie = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer
+                          (server) => server.value === selectedServer,
                         )?.name
                       }
                       ...{' '}
@@ -204,7 +204,7 @@ const WatchMovie = () => {
               )}
             </div>
 
-              {/* description */}
+            {/* description */}
             <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]'>
               {movie && (
                 <WatchDescription
