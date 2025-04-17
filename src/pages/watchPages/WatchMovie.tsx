@@ -31,6 +31,43 @@ const WatchMovie = () => {
     return lastSelectedServer || servers[0].value;
   });
 
+  const [unlocked, setUnlocked] = useState(false);
+  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseMove = (e: MouseEvent) => {
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    if (!el) return;
+
+    const cursor = getComputedStyle(el).cursor;
+    // cursor is arrow when clickjack overlay is on
+    if (cursor === 'pointer' && !unlocked) {
+      console.log('Cursor is pointer. Unlocking iframe interaction.');
+
+      setUnlocked(true);
+
+      if (interactionTimeoutRef.current)
+        clearTimeout(interactionTimeoutRef.current);
+      interactionTimeoutRef.current = setTimeout(() => {
+        setUnlocked(false);
+        console.log('Locking iframe interaction again.');
+      }, 1000); //unlock for 1 second
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+
+      if (interactionTimeoutRef.current) {
+        console.log('Clearing timeout...');
+        clearTimeout(interactionTimeoutRef.current);
+        interactionTimeoutRef.current = null;
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (!movie) return;
     // setTimeout(() => {
@@ -104,6 +141,7 @@ const WatchMovie = () => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
       }
     };
   }, [selectedServer, movie_id]);
@@ -111,7 +149,7 @@ const WatchMovie = () => {
   return (
     <div className='min-h-screen pt-[60px]'>
       <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
-        <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
+        <div className='relative primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
           <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
               <BackButton color='text-white' />
@@ -126,15 +164,18 @@ const WatchMovie = () => {
             )}
             {/* iphone safari doesn't support the FS api */}
             <div
-              className={`${
-                isIphoneSafari() || `${isIPad()}` ? 'invisible' : ''
+              className={`${isIphoneSafari() || isIPad()} ? 'invisible' : ''
               }`}
             >
               <FullscreenBtn elementId='iframe' />
             </div>
           </div>
           <main>
-            <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f]'>
+            <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'>
+              {!unlocked && (
+                //  overlay that absorbs 'bad' clicks based on cursor state
+                <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer' />
+              )}
               <iframe
                 ref={iframeRef}
                 id='iframe'
@@ -163,8 +204,8 @@ const WatchMovie = () => {
               )}
             </div>
 
+            {/* description */}
             <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]'>
-              {/* description */}
               {movie && (
                 <WatchDescription
                   title={movie?.title}

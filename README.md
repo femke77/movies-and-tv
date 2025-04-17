@@ -6,9 +6,9 @@
 
 ## Description ✏️
 
-A place to track and watch upcoming and favorite movie & tv shows.
+A place to find TV shows and movies, keep track of them, stream anything and have a great time!
 
-This appication is in-progress. This is the client side.
+This application is in-progress. This is the client side only. App doesn't use a server yet, uses netlify functions to proxy requests otherwise blocked by CORS policy, but this is temporary. A server will be built and deploy will move to my VPS. 
 
 ### Interesting Problems Solved During Building
 
@@ -22,9 +22,9 @@ Initial load 850-1000ms
 
 **Solution:** Created a fetch on demand only when the user scrolls down, as caught by the react intersection observer. This prevents any fetching if the user never scrolls down, but fetches each carousel component at a threshold of 0.0 and a rootMargin of 100px, 0px when the user continues scrolling down on the page.
 
-**Problem:** The addition of more carousel item components on the main page to feature shows from Netflix or movies from Hulu, for example, was causing a increasing drag on the back button responsiveness to get back to that page from the item detail page. The user is encouraged to click on a card to find out more about a show or a movie on a detail page, and the detail page is preloaded on hover with that intent, however when the user hits the back button to resume looking at more items back navigation was experiencing delays of up to 275ms. This was noticeable and ultimately discouraging use of the detail page.
+**Problem:** The addition of more carousel item components on the main page to feature shows from Netflix or movies from Hulu, for example, was causing a increasing drag on the back button responsiveness to get back to that page from the item detail page. The user is encouraged to click on a card to find out more about a show or a movie on a detail page, and the detail page is preloaded on hover with that intent, however when the user hits the back button to resume looking at more items back navigation was experiencing delays of up to 275ms. This was noticeable, would be discouraging use of the detail page and just unacceptable.
 
-**Solution:**: An educated guess was that the delay came from React unmounting and remounting the slide and all the carousel components on every navigation and back navigation respectively. KeepAlive from react-activation was employed to stop the unmounting of the page and indeed, back button response is now instant - in line with user expectations. A state hook in App.js was removed and refactored to use zustand due to a warning about the hook and timing of mounting. StrictMode in dev mode will throw a warning about state continuously, but that is not a problem in production or if StrictMode is removed in dev.
+**Solution:**: An educated guess was that the delay came from React unmounting and remounting the slide and all the carousel components on every navigation and back navigation respectively. KeepAlive from react-activation was employed to stop the unmounting of the page and indeed, back button response is now instant - back in line with user expectations. A state hook in App.js was removed and refactored to use zustand due to a warning about the hook and timing of mounting. StrictMode in dev mode will throw a warning about state continuously, but that is not a problem in production or if StrictMode is removed in dev.
 
 **Problem:** Image loading is janky if internet speeds are down or general resources are compromised (processing, memory). Images attempt to load immediately by default but paint in blurry, ugly pieces instead of the entire image coming in nicely all at once.
 
@@ -34,13 +34,20 @@ Initial load 850-1000ms
 
 **Solution:**  Adding an explict unregister command in the helper component calling registerSW and generating the prompt helped the browser to let go of the old service worker quickly without needing the tab closed and allowed memory to go back to baseline after reload. Caches were removed by vite and memory was back to normal in just a few minutes. 
 
-**Problem:** Bookmarks were originally stored as an array and a 'some' function was used to see if any particular item was in the bookmarks array. This could lead to a performance bottleneck as bookmarks array grows and the 'some' function was breaking memoization in the map of MemoizedItemCards due to new function creation on every render.
+**Problem:** Bookmarks were originally stored as an array and a 'some' function was used to see if any particular item was in the bookmarks array. This could lead to a performance bottleneck as bookmarks array grows and the 'some' function was breaking memoization in MemoizedItemCards due to new function creation on every render.
 
-**Solution:** Refactored bookmarks to an object using id-media_type as key. Checking if a movie or tv show is in the bookmarks object is O(1) time, a new function is not created on every render and React can properly maintain memoization. A significant drop in memory use was noted.
+**Solution:** Refactored bookmarks to an object using id-media_type as key. Checking if a movie or tv show is in the bookmarks object is O(1) time, a new function is not created on every render and React can properly maintain memoization. A drop in memory use was noted. 
 
-### Metrics as of 4/7/2025
+**Problem:** Routes to different pages are wrapped in suspense with skeleton fallbacks. This works fine with react query using the hooks 'useInfiniteQuery' or 'useSuspenseQuery', however, suspense only reacts to a promise, and zustand doesn't throw a promise to suspense when it loads data. If a page only relies on data from zustand, suspense can never kick in. 
 
-- ~180-200 MB average browser memory usage after good amount of app usage with heavy caching strategies- holds steady for hours.
+**Solution:** Using the React hook useSyncExternalStorage, the zustand store was refactored to throw a promise when it is loading from IndexedDB (browser storage). This allows suspense to do it's thing, and trigger the skeletons under the condition that the async access takes over 300ms (this number is my delay on suspense to avoid flashing skels for no reason).  I don't expect this to be a problem most of the time, but if it should come up for the user, the appropriate UX now happens. 
+
+**Problem:** History page is designed to show continue watching items as a carousel (similar to AppleTV app on iPad). Users are allowed a good amount of items to be in the continue watching array and the images are brought in using the tmdb api. The concern was that on history page mount, many api calls would go out all at once for all those images. That could be for nothing since 1. the most recent items are always kept up front, and 2. the history page also holds the search history, so the user might be on that page for that and not even look at continue watching items. To improve efficiency and performance, an intersection observer now grabs the image from the api only when the user scrolls the item into view.
+
+### Metrics as of 4/14/2025
+
+- ~180-240 MB average browser memory usage after good amount of app usage with heavy caching strategies- holds steady. No leaking!
+- Memory rises with video play normally, falls back to above numbers in under 2 min from watch page unmounting
 - ~42-72MB heap size depending on how much is cached by react query (depends on usage)
 - 99% performance by Lighthouse
 - 0.0 CLS
@@ -116,7 +123,8 @@ Final deploy link TBD.
 
 ## Known Issues
 
-TBD
+- StrictMode and react-activation in development. A state warning will throw. It can be disregarded. 
+- npm i will show a warning about react-context version number. Again, ok to disregard. 
 
 ## How To Contribute
 

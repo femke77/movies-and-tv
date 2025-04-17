@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import DraggableCarousel from '../containers/SimpleCarousel';
 import ConfirmModal from '../modals/ConfirmModal';
 import { ChevronRight } from 'lucide-react';
-import { useSuspenseStore, useStore } from '../../state/store';
+import { useNonSuspenseStore, useStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
 import LazyImage from '../helpers/LazyImage';
 
@@ -21,7 +21,8 @@ interface WatchItem {
 
 const ContinueWatching = () => {
   const location = useLocation();
-  const continueWatching = useSuspenseStore(
+  // useNonSuspense to avoid access to indexeddb blocking page load. History page will use useSuspense for the previous searches.
+  const continueWatching = useNonSuspenseStore(
     useShallow((state) => state.continueWatching),
   );
 
@@ -53,16 +54,18 @@ const ContinueWatching = () => {
   ) => {
     e.preventDefault();
     e.stopPropagation();
-    // debounce the last item to avoid clicking the item card.
+    // debounce the last item more to avoid clicking the item card after layout shift
     // eventually make all deleting a modal interaction
-    if (items.length === 1) {
+    if (items.length > 1) {
+      setTimeout(() => {
+        removeFromContinueWatching(id, media_type);
+        setActiveItemId(null);
+      }, 50);
+    } else {
       setTimeout(() => {
         removeFromContinueWatching(id, media_type);
         setActiveItemId(null);
       }, 300);
-    } else {
-      removeFromContinueWatching(id, media_type);
-      setActiveItemId(null);
     }
   };
 
@@ -133,13 +136,14 @@ const ContinueWatching = () => {
               </h1>
               <ChevronRight color='#ffffff' />
             </Link>
-
-            <button
-              onClick={() => setOpenModal(true)}
-              className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
-            >
-              Clear All
-            </button>
+            {location.pathname === '/account/history' && (
+              <button
+                onClick={() => setOpenModal(true)}
+                className='bg-gray-700 h-7 z-10  w-30 rounded-lg hover:bg-gray-800 hover:translate-[1px] active:translate-[1px] mr-6'
+              >
+                Clear All
+              </button>
+            )}
           </div>
 
           <div

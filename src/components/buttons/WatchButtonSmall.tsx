@@ -19,19 +19,21 @@ const WatchButton = ({
   };
 
   return (
-    <button
-      onClick={handleClick}
-      aria-describedby='tooltip-id'
-      className='rounded-[50%]  cursor-pointer w-[64px] h-[64px] flex items-center  bg-white text-black  hover:bg-gray-200'
-    >
-      <img
-        src='/play.svg'
-        alt='black play icon'
-        height='35px'
-        width='35px'
-        className='mx-auto'
-      />
-    </button>
+    <div className='relative z-10 rounded-[50%] cursor-pointer w-[64px] h-[64px]'>
+      <button
+        onClick={handleClick}
+        aria-describedby='tooltip-id'
+        className=' rounded-[50%]  cursor-pointer w-[64px] h-[64px] flex items-center  bg-white text-black  hover:bg-gray-200'
+      >
+        <img
+          src='/play.svg'
+          alt='black play icon'
+          height='35px'
+          width='35px'
+          className='rounded-[50%] mx-auto'
+        />
+      </button>
+    </div>
   );
 };
 

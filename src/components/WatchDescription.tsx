@@ -62,7 +62,7 @@ const WatchDescription = ({
             <circle cx='12' cy='12' r='10' />
             <polyline points='12 6 12 12 16.5 12' />
           </svg>
-          <p className='ml-2'>{rt || 'unk'} min</p>
+          <p className='ml-2'>{rt || 0} min</p>
         </div>
       </div>
       {getTextLength() ? (

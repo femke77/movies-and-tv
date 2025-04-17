@@ -77,6 +77,41 @@ const WatchTV = () => {
 
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
   const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
+  const [unlocked, setUnlocked] = useState(false);
+  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseMove = (e: MouseEvent) => {
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    if (!el) return;
+
+    const cursor = getComputedStyle(el).cursor;
+    // cursor is arrow when clickjack overlay is on
+    if (cursor === 'pointer' && !unlocked) {
+      console.log('Cursor is pointer. Unlocking iframe interaction.');
+
+      setUnlocked(true);
+
+      if (interactionTimeoutRef.current)
+        clearTimeout(interactionTimeoutRef.current);
+      interactionTimeoutRef.current = setTimeout(() => {
+        setUnlocked(false);
+        console.log('Locking iframe interaction again.');
+      }, 1000); //unlock for 1.5 seconds
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+
+      if (interactionTimeoutRef.current) {
+        console.log('Clearing timeout...');
+        clearTimeout(interactionTimeoutRef.current);
+        interactionTimeoutRef.current = null;
+      }
+    };
+  }, []);
 
   const prevServerRef = useRef(selectedServer);
 
@@ -166,6 +201,7 @@ const WatchTV = () => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
       }
     };
   }, []);
@@ -237,6 +273,7 @@ const WatchTV = () => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
       }
       if (iframeLoadRef.current) {
         clearTimeout(iframeLoadRef.current);
@@ -272,6 +309,10 @@ const WatchTV = () => {
               id='video-player'
               className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'
             >
+              {!unlocked && (
+                //  overlay that absorbs 'bad' clicks based on cursor state
+                <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer'></div>
+              )}
               <iframe
                 ref={iframeRef}
                 id='player_iframe'
