@@ -51,6 +51,11 @@
 			"id": 10,
 			"name": "Server 10",
 			"value": "superembed.stream"
+		},
+		{
+			"id": 11,
+			"name": "Server 11 - Ad Free (Beta)",
+			"value": "vidsrc.xyz.adfree"
 		}
 		
 		

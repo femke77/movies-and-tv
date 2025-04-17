@@ -20,6 +20,12 @@ import WatchPageSkeleton from './components/loadingSkeletons/WatchPageSkeleton.t
 import TextSkeleton from './components/loadingSkeletons/TextSkeleton.tsx';
 import HistoryPageSkeleton from './components/loadingSkeletons/HistoryPageSkeleton.tsx';
 
+const AdFreeWatchTv = lazy(
+  () => import('./pages/watchPages/AdFreeTestTV.tsx'),
+);
+const MovieAdFree = lazy(
+  () => import('./pages/watchPages/AdFreeTestMovie.tsx'),
+);
 const History = lazy(() => import('./pages/watchPages/History.tsx'));
 const CastMemberDetail = lazy(
   () => import('./pages/detailPages/CastMemberDetail.tsx'),
@@ -195,10 +201,26 @@ const router = createBrowserRouter([
             ),
           },
           {
+            path: 'movie/adfree/:movie_id',
+            element: (
+              <DelayedSuspense fallback={<WatchPageSkeleton />}>
+              <MovieAdFree/>
+              </DelayedSuspense>
+            ),
+          },
+          {
             path: 'tv/:series_id',
             element: (
               <DelayedSuspense fallback={<WatchPageSkeleton />}>
                 <WatchTV />
+              </DelayedSuspense>
+            ),
+          },
+          {
+            path: 'tv/adfree/:series_id',
+            element: (
+              <DelayedSuspense fallback={<WatchPageSkeleton />}>
+                <AdFreeWatchTv />
               </DelayedSuspense>
             ),
           },

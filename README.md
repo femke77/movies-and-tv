@@ -46,7 +46,7 @@ Initial load 850-1000ms
 
 ### Metrics as of 4/14/2025
 
-- ~180-240 MB average browser memory usage after good amount of app usage with heavy caching strategies- holds steady. No leaking!
+- Browser memory allocation is appropriate and doesn't increase over time with no activity. 
 - Memory rises with video play normally, falls back to above numbers in under 2 min from watch page unmounting
 - ~42-72MB heap size depending on how much is cached by react query (depends on usage)
 - 99% performance by Lighthouse

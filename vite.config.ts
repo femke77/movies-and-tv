@@ -118,8 +118,9 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: 'https://api.offlinetv.net',
+        target: 'http://localhost:3000',
         changeOrigin: true,
+        secure: false,
       },
     },
   },
