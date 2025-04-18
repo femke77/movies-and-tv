@@ -4,7 +4,6 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import NavMovies from './NavMovies';
 import NavTVShow from './NavTVShow';
 import NavMe from './NavMe';
-// import NavDiscover from './NavComponents/NavDiscover';
 import Search from '../HeaderSearchBar';
 import { Clapperboard, Tv, CircleUser } from 'lucide-react';
 
@@ -47,10 +46,10 @@ export default function Navigation() {
 
   const location = useLocation();
 
-useEffect(() => {
-  // Automatically close the mobile menu on route change
-  setMobileMenuOpen(false);
-}, [location]);
+  useEffect(() => {
+    // Automatically close the mobile menu on route change
+    setMobileMenuOpen(false);
+  }, [location]);
   useEffect(() => {
     if (!searchOpen) return;
 
@@ -74,27 +73,22 @@ useEffect(() => {
 
   // handles the mobile menu open state and scroll position without causing flickering and/or shifting
   useEffect(() => {
-    
-
     const handleMobileMenu = (open: boolean) => {
       if (open) {
-        // Save current scroll position without immediate DOM updates
-        // scrollPos = window.scrollY;
-
+    
         // Use requestAnimationFrame to sync with browser's rendering cycle
         requestAnimationFrame(() => {
-          // document.body.style.top = `-${scrollPos}px`;
           document.body.style.position = 'fixed';
           document.body.style.width = '100%';
         });
       } else {
         // Small delay before removing fixed position to avoid render flickering
-
         setTimeout(() => {
+          if (!mobileMenuOpen) {
           document.body.style.position = '';
           document.body.style.top = '';
           document.body.style.width = '';
-
+          }
         }, 50);
       }
     };
@@ -162,7 +156,6 @@ useEffect(() => {
           </div>
 
           {/* Fullscreen Mobile Nav */}
-
           <div
             className={`block z-50 [@media(min-width:825px)]:hidden fixed inset-0 my-16 bg-black
       ${
@@ -187,10 +180,7 @@ useEffect(() => {
                       key={index}
                       onClick={(e) => {
                         e.preventDefault();
-                        // Navigate first
                         navigate(item.url);
-                        // Then close the menu with a slight delay
-                       
                       }}
                     >
                       {item.title}
@@ -212,10 +202,7 @@ useEffect(() => {
                       key={index}
                       onClick={(e) => {
                         e.preventDefault();
-                        // Navigate first
                         navigate(item.url);
-                        // Then close the menu with a slight delay
-                      
                       }}
                     >
                       {item.title}
@@ -237,10 +224,7 @@ useEffect(() => {
                       key={index}
                       onClick={(e) => {
                         e.preventDefault();
-                        // Navigate first
                         navigate(item.url);
-                        // Then close the menu with a slight delay
-                       
                       }}
                     >
                       {item.title}
