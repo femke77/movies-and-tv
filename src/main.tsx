@@ -19,6 +19,7 @@ import { AliveScope, KeepAlive } from 'react-activation';
 import WatchPageSkeleton from './components/loadingSkeletons/WatchPageSkeleton.tsx';
 import TextSkeleton from './components/loadingSkeletons/TextSkeleton.tsx';
 import HistoryPageSkeleton from './components/loadingSkeletons/HistoryPageSkeleton.tsx';
+import ScrollToTop from './components/helpers/ScrollToTop.tsx';
 
 const History = lazy(() => import('./pages/watchPages/History.tsx'));
 const CastMemberDetail = lazy(
@@ -211,7 +212,9 @@ const router = createBrowserRouter([
             path: 'saved',
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
-                <Watchlist />
+                <ScrollToTop>
+                  <Watchlist />
+                </ScrollToTop>
               </DelayedSuspense>
             ),
           },
@@ -219,7 +222,9 @@ const router = createBrowserRouter([
             path: 'history',
             element: (
               <DelayedSuspense fallback={<HistoryPageSkeleton />}>
-                <History />
+                <ScrollToTop>
+                  <History />
+                </ScrollToTop>
               </DelayedSuspense>
             ),
           },
