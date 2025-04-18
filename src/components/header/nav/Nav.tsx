@@ -46,10 +46,13 @@ export default function Navigation() {
 
   const location = useLocation();
 
+  // Automatically close the mobile menu on route change (avoids mobile layout close > old page flickers > new page opens)
+  // correct behavior is mobile menu open > route change > mobile menu close
   useEffect(() => {
-    // Automatically close the mobile menu on route change
     setMobileMenuOpen(false);
   }, [location]);
+
+
   useEffect(() => {
     if (!searchOpen) return;
 
@@ -76,7 +79,7 @@ export default function Navigation() {
     const handleMobileMenu = (open: boolean) => {
       if (open) {
     
-        // Use requestAnimationFrame to sync with browser's rendering cycle
+        // Use requestAnimationFrame to sync with browser's rendering cycle to stop the background scrolling
         requestAnimationFrame(() => {
           document.body.style.position = 'fixed';
           document.body.style.width = '100%';
@@ -86,7 +89,6 @@ export default function Navigation() {
         setTimeout(() => {
           if (!mobileMenuOpen) {
           document.body.style.position = '';
-          document.body.style.top = '';
           document.body.style.width = '';
           }
         }, 50);
@@ -97,7 +99,6 @@ export default function Navigation() {
 
     return () => {
       document.body.style.position = '';
-      document.body.style.top = '';
       document.body.style.width = '';
     };
   }, [mobileMenuOpen]);
@@ -105,7 +106,6 @@ export default function Navigation() {
   return (
     <div>
       <nav className='bg-gray-900 h-16 relative z-40 '>
-        <>
           <div className='mx-auto mr-4 sm:px-2 lg:px-4  '>
             <div className='relative flex h-16 items-center justify-between '>
               <div className='absolute inset-y-0 -left-10 flex items-center [@media(min-width:825px)]:hidden'>
@@ -130,7 +130,7 @@ export default function Navigation() {
                     {/* <NavDiscover /> */}
                   </div>
                 </div>
-                {mobileMenuOpen ? (
+        
                   <button
                     role='search'
                     onClick={() => openSearch()}
@@ -138,19 +138,7 @@ export default function Navigation() {
                   >
                     <img src='/mag.svg' alt='search' className='w-8 h-8 ml-2' />
                   </button>
-                ) : (
-                  <button
-                    role='search'
-                    onClick={() => openSearch()}
-                    className='relative -right-2  [@media(min-width:825px)]:top-5  h-[50px] w-[50px] hover:cursor-pointer rounded-[50%] active:bg-gray-700 bg-gray-800 hover:bg-gray-700'
-                  >
-                    <img
-                      src='/mag.svg'
-                      alt='search'
-                      className='w-8 h-8 ml-2 '
-                    />
-                  </button>
-                )}
+              
               </div>
             </div>
           </div>
@@ -175,7 +163,7 @@ export default function Navigation() {
                 </div>
                 <div className='flex flex-col'>
                   {moviesNav.map((item, index) => (
-                    <button
+                    <button      
                       className='transition-all duration-200 ease-in-out bg-white/15 w-50 p-2 rounded-lg text-sm text-white/90 text-center cursor-pointer m-2 hover:transform hover:translate-0.5 hover:text-white hover:bg-[#1B1B1B]'
                       key={index}
                       onClick={(e) => {
@@ -234,7 +222,6 @@ export default function Navigation() {
               </div>
             </div>
           </div>
-        </>
       </nav>
 
       {/* Search Bar */}
