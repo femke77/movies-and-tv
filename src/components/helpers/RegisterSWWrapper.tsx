@@ -39,7 +39,7 @@ export function RegisterSWWrapper() {
       <span>A new update is available!</span>
       <div className='flex gap-2'>
         <button
-          className='bg-white text-blue-800 text-sm h-6 p-3 rounded flex items-center justify-center'
+          className='bg-white text-blue-800 text-sm h-6 p-3 rounded flex items-center justify-center cursor-pointer'
           onClick={handleUpdate}
         >
           Reload
