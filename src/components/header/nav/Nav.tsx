@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import NavMovies from './NavMovies';
 import NavTVShow from './NavTVShow';
@@ -45,6 +45,12 @@ export default function Navigation() {
     setTimeout(() => setIsVisible(false), 0);
   };
 
+  const location = useLocation();
+
+useEffect(() => {
+  // Automatically close the mobile menu on route change
+  setMobileMenuOpen(false);
+}, [location]);
   useEffect(() => {
     if (!searchOpen) return;
 
@@ -68,44 +74,37 @@ export default function Navigation() {
 
   // handles the mobile menu open state and scroll position without causing flickering and/or shifting
   useEffect(() => {
-    let isMounted = true;
-    let scrollPos = 0;
+    
 
     const handleMobileMenu = (open: boolean) => {
-      if (!isMounted) return;
       if (open) {
         // Save current scroll position without immediate DOM updates
-        scrollPos = window.scrollY;
+        // scrollPos = window.scrollY;
+
         // Use requestAnimationFrame to sync with browser's rendering cycle
         requestAnimationFrame(() => {
-          if (!isMounted) return;
+          // document.body.style.top = `-${scrollPos}px`;
           document.body.style.position = 'fixed';
-          document.body.style.top = `-${scrollPos}px`;
           document.body.style.width = '100%';
         });
       } else {
         // Small delay before removing fixed position to avoid render flickering
 
-        if (!isMounted) return;
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        if (scrollPos) {
-          window.scrollTo(0, scrollPos);
-        }
+        setTimeout(() => {
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.width = '';
+
+        }, 50);
       }
     };
 
     handleMobileMenu(mobileMenuOpen);
 
     return () => {
-      isMounted = false;
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
-      if (scrollPos) {
-        window.scrollTo(0, scrollPos);
-      }
     };
   }, [mobileMenuOpen]);
 
@@ -169,9 +168,9 @@ export default function Navigation() {
       ${
         mobileMenuOpen
           ? 'opacity-98 h-screen overflow-y-auto'
-          : 'opacity-0 h-0 pointer-events-none overflow-hidden'
+          : 'opacity-0 h-0 overflow-hidden pointer-events-none'
       }
-      transition-opacity duration-300 ease-in-out`}
+      `}
           >
             <div className='flex justify-center flex-wrap mt-6 mb-28 sm:mt-12 pb-20'>
               <div className='text-white'>
@@ -191,9 +190,7 @@ export default function Navigation() {
                         // Navigate first
                         navigate(item.url);
                         // Then close the menu with a slight delay
-                        setTimeout(() => {
-                          setMobileMenuOpen(false);
-                        }, 50);
+                       
                       }}
                     >
                       {item.title}
@@ -218,9 +215,7 @@ export default function Navigation() {
                         // Navigate first
                         navigate(item.url);
                         // Then close the menu with a slight delay
-                        setTimeout(() => {
-                          setMobileMenuOpen(false);
-                        }, 50);
+                      
                       }}
                     >
                       {item.title}
@@ -245,9 +240,7 @@ export default function Navigation() {
                         // Navigate first
                         navigate(item.url);
                         // Then close the menu with a slight delay
-                        setTimeout(() => {
-                          setMobileMenuOpen(false);
-                        }, 50);
+                       
                       }}
                     >
                       {item.title}
