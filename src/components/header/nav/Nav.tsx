@@ -75,7 +75,6 @@ export default function Navigation() {
   useEffect(() => {
     const handleMobileMenu = (open: boolean) => {
       if (open) {
-    
         // Use requestAnimationFrame to sync with browser's rendering cycle
         requestAnimationFrame(() => {
           document.body.style.position = 'fixed';
@@ -85,9 +84,9 @@ export default function Navigation() {
         // Small delay before removing fixed position to avoid render flickering
         setTimeout(() => {
           if (!mobileMenuOpen) {
-          document.body.style.position = '';
-          document.body.style.top = '';
-          document.body.style.width = '';
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
           }
         }, 50);
       }
