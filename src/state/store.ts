@@ -143,9 +143,6 @@ export const useStore = create<BookmarkStore>()(
           });
 
 
-          // notify listeners
-          get().listeners.forEach((listener) => listener());
-
           return {
             bookmarks: get().bookmarks,
             previousSearches: get().previousSearches,
