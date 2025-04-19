@@ -136,12 +136,11 @@ export const useStore = create<BookmarkStore>()(
           // return the current state which will be populated by the persist middleware
 
           await new Promise((resolve) => setTimeout(resolve, 0));
-          const unsub = useStore.persist.onFinishHydration?.(() => {
-            set({ isLoaded: true, isLoading: false });
-            get().listeners.forEach((l) => l());
-            unsub?.(); // cleanup
-          });
 
+          set({ isLoaded: true, isLoading: false });
+
+          // notify listeners
+          get().listeners.forEach((listener) => listener());
 
           return {
             bookmarks: get().bookmarks,
