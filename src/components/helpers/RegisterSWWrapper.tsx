@@ -15,12 +15,12 @@ export function RegisterSWWrapper() {
 
     if ('serviceWorker' in navigator) {
       try {
-        // const registration = await navigator.serviceWorker.getRegistration();
+        const registration = await navigator.serviceWorker.getRegistration();
 
-        // if (registration) {
-        //   await registration.unregister();
-        //   console.log('Previous service worker unregistered');
-        // }
+        if (registration) {
+          await registration.unregister();
+          console.log('Previous service worker unregistered');
+        }
 
         updateSW(true);
       } catch (error) {

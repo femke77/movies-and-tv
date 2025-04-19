@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { get, set, del } from 'idb-keyval';
 import { useSyncExternalStore, useEffect } from 'react';
 
+
 const CONTINUE_WATCHING_LIMIT = 250;
 const SEARCH_HISTORY_LIMIT = 20;
 // IndexedDB storage implementation with idb-keyval
@@ -76,16 +77,12 @@ interface BookmarkStore {
   subscribe: (_listener: () => void) => () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initializeStore: () => Promise<any>;
-  setHasHydrated: (_v: boolean) => void;
-  _hasHydrated: boolean;
 }
 
 export const useStore = create<BookmarkStore>()(
   persist(
     (set, get) => ({
       // state
-      _hasHydrated: false,
-      setHasHydrated: (v) => set({ _hasHydrated: v }),
       bookmarks: {},
       modalData: null,
       showModal: false,
@@ -108,6 +105,8 @@ export const useStore = create<BookmarkStore>()(
       // method to initialize the store and handle Suspense
       initializeStore: async () => {
         // If already loaded, return the data immediately
+        console.log('Initializing store...');
+        
         if (get().isLoaded) {
           return {
             bookmarks: get().bookmarks,
@@ -118,39 +117,44 @@ export const useStore = create<BookmarkStore>()(
 
         // if currently loading, don't start another load
         if (get().isLoading) {
+          // will be caught by suspense
           throw new Promise((resolve) => {
             const unsubscribe = get().subscribe(() => {
               if (get().isLoaded || get().loadError) {
                 unsubscribe();
-                resolve(null);
+                resolve(get().bookmarks);
               }
             });
           });
         }
-      
+
+        // start loading
         set({ isLoading: true });
-        get().listeners.forEach((l) => l());
-      
+
+
         try {
-          const persistedState = await idbStorage.getItem('bingebox-idb-storage');
-          if (persistedState) {
-            set({
-              bookmarks: persistedState.bookmarks ?? {},
-              previousSearches: persistedState.previousSearches ?? [],
-              continueWatching: persistedState.continueWatching ?? [],
-            });
-          }
-      
+          // persist middleware will handle the actual loading from IndexedDB
+          // wait for it to complete, which happens after initialization
+          // return the current state which will be populated by the persist middleware
+
+          await new Promise((resolve) => setTimeout(resolve, 50));
+
           set({ isLoaded: true, isLoading: false });
-          get().listeners.forEach((l) => l());
-      
+
+          // notify listeners
+          get().listeners.forEach((listener) => listener());
+
           return {
             bookmarks: get().bookmarks,
             previousSearches: get().previousSearches,
             continueWatching: get().continueWatching,
           };
         } catch (error) {
-          set({ loadError: error instanceof Error ? error : new Error(String(error)), isLoading: false });
+          set({
+            loadError:
+              error instanceof Error ? error : new Error(String(error)),
+            isLoading: false,
+          });
           throw error;
         }
       },
@@ -302,15 +306,12 @@ export const useStore = create<BookmarkStore>()(
       name: 'bingebox-idb-storage',
       storage: idbStorage,
       version: 0, 
-      migrate: async (persistedState, version) => {
+      migrate: async (persistedState, _version) => {
         // handle migration logic here if needed
         // gor now, just return the state as-is
-        console.log("MIGRATING FROM VERSION", version);
+        console.log('Migrating state:', persistedState);
+        
         return persistedState as BookmarkStore;
-      },
-      skipHydration: true, 
-      onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true);
       },
       partialize: (state) => ({
         bookmarks: state.bookmarks,
