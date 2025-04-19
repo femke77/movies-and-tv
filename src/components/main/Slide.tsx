@@ -227,7 +227,7 @@ const Slide = ({
             {/* Buttons section */}
             <div
               className={clsx(
-                `[@media(max-width:1050px)]:pl-5 flex flex-row flex-wrap items-center w-full justify-center [@media(min-width:1050px)]:justify-start pt-6 h-[50px]`,
+                `[@media(max-width:1050px)]:pl-7 flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start pt-6 h-[50px]`,
               )}
             >
               <div className='mr-5'>
@@ -249,7 +249,7 @@ const Slide = ({
                   <ButtonPlaceholder />
                 )}
               </div>
-              <div className='mr-5 rounded-[50%] cursor-pointer w-[64px] h-[64px] flex items-center bg-[#ffffff1a] border-2 border-white/20 backdrop-blur-[5px] hover:bg-gray-700'>
+              <div className='mr-5 rounded-[50%] cursor-pointer w-[64px] h-[64px] flex flex-shrink-0 items-center bg-[#ffffff1a] border-2 border-white/20 backdrop-blur-[5px] hover:bg-gray-700'>
                 {/* Bookmark */}
                 <div className='mx-auto mt-1 '>
                   <Tooltip
