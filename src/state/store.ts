@@ -76,12 +76,16 @@ interface BookmarkStore {
   subscribe: (_listener: () => void) => () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initializeStore: () => Promise<any>;
+  setHasHydrated: (_v: boolean) => void;
+  _hasHydrated: boolean;
 }
 
 export const useStore = create<BookmarkStore>()(
   persist(
     (set, get) => ({
       // state
+      _hasHydrated: false,
+      setHasHydrated: (v) => set({ _hasHydrated: v }),
       bookmarks: {},
       modalData: null,
       showModal: false,
@@ -114,45 +118,39 @@ export const useStore = create<BookmarkStore>()(
 
         // if currently loading, don't start another load
         if (get().isLoading) {
-          // will be caught by suspense
           throw new Promise((resolve) => {
             const unsubscribe = get().subscribe(() => {
               if (get().isLoaded || get().loadError) {
                 unsubscribe();
-                resolve(get().bookmarks);
+                resolve(null);
               }
             });
           });
         }
-
-        // start loading
+      
         set({ isLoading: true });
-        // notify listeners
-        get().listeners.forEach((listener) => listener());
-
+        get().listeners.forEach((l) => l());
+      
         try {
-          // persist middleware will handle the actual loading from IndexedDB
-          // wait for it to complete, which happens after initialization
-          // return the current state which will be populated by the persist middleware
-
-          await new Promise((resolve) => setTimeout(resolve, 0));
-
+          const persistedState = await idbStorage.getItem('bingebox-idb-storage');
+          if (persistedState) {
+            set({
+              bookmarks: persistedState.bookmarks ?? {},
+              previousSearches: persistedState.previousSearches ?? [],
+              continueWatching: persistedState.continueWatching ?? [],
+            });
+          }
+      
           set({ isLoaded: true, isLoading: false });
-
-          // notify listeners
-          get().listeners.forEach((listener) => listener());
-
+          get().listeners.forEach((l) => l());
+      
           return {
             bookmarks: get().bookmarks,
             previousSearches: get().previousSearches,
             continueWatching: get().continueWatching,
           };
         } catch (error) {
-          set({
-            loadError:
-              error instanceof Error ? error : new Error(String(error)),
-            isLoading: false,
-          });
+          set({ loadError: error instanceof Error ? error : new Error(String(error)), isLoading: false });
           throw error;
         }
       },
@@ -309,6 +307,10 @@ export const useStore = create<BookmarkStore>()(
         // gor now, just return the state as-is
         console.log("MIGRATING FROM VERSION", version);
         return persistedState as BookmarkStore;
+      },
+      skipHydration: true, 
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
       },
       partialize: (state) => ({
         bookmarks: state.bookmarks,
