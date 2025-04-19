@@ -304,9 +304,10 @@ export const useStore = create<BookmarkStore>()(
       name: 'bingebox-idb-storage',
       storage: idbStorage,
       version: 0, 
-      migrate: async (persistedState, _version) => {
+      migrate: async (persistedState, version) => {
         // handle migration logic here if needed
         // gor now, just return the state as-is
+        console.log("MIGRATING FROM VERSION", version);
         return persistedState as BookmarkStore;
       },
       partialize: (state) => ({
