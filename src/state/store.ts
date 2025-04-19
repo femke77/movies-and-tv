@@ -4,7 +4,6 @@ import dayjs from 'dayjs';
 import { get, set, del } from 'idb-keyval';
 import { useSyncExternalStore, useEffect } from 'react';
 
-
 const CONTINUE_WATCHING_LIMIT = 250;
 const SEARCH_HISTORY_LIMIT = 20;
 // IndexedDB storage implementation with idb-keyval
@@ -55,7 +54,7 @@ interface BookmarkStore {
     _title: string,
     _season: number,
     _episode: number,
-    _poster_path: string,
+    _poster_path: string
   ) => void;
   addToContinueWatchingMovie: (
     _id: number,
@@ -64,7 +63,7 @@ interface BookmarkStore {
     _title: string,
     _poster_path: string,
     _release_date: string,
-    _runtime: string,
+    _runtime: string
   ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
@@ -82,13 +81,6 @@ interface BookmarkStore {
 export const useStore = create<BookmarkStore>()(
   persist(
     (set, get) => ({
-      // state
-      bookmarks: {},
-      modalData: null,
-      showModal: false,
-      previousSearches: [],
-      continueWatching: [],
-
       // suspense-related state
       isLoaded: false,
       isLoading: false,
@@ -106,7 +98,7 @@ export const useStore = create<BookmarkStore>()(
       initializeStore: async () => {
         // If already loaded, return the data immediately
         console.log('Initializing store...');
-        
+
         if (get().isLoaded) {
           return {
             bookmarks: get().bookmarks,
@@ -130,7 +122,6 @@ export const useStore = create<BookmarkStore>()(
 
         // start loading
         set({ isLoading: true });
-
 
         try {
           // persist middleware will handle the actual loading from IndexedDB
@@ -187,7 +178,7 @@ export const useStore = create<BookmarkStore>()(
         title,
         season,
         episode,
-        poster_path,
+        poster_path
       ) => {
         const newItem = {
           id,
@@ -201,7 +192,7 @@ export const useStore = create<BookmarkStore>()(
 
         set((state) => {
           const filtered = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type),
+            (item) => !(item.id === id && item.media_type === media_type)
           );
 
           const updated = [...filtered, newItem]
@@ -221,7 +212,7 @@ export const useStore = create<BookmarkStore>()(
         title,
         poster_path,
         release_date,
-        runtime,
+        runtime
       ) => {
         const newItem = {
           id,
@@ -235,7 +226,7 @@ export const useStore = create<BookmarkStore>()(
 
         set((state) => {
           const filtered = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type),
+            (item) => !(item.id === id && item.media_type === media_type)
           );
 
           const updated = [...filtered, newItem]
@@ -251,7 +242,7 @@ export const useStore = create<BookmarkStore>()(
       removeFromContinueWatching: (id, media_type) => {
         set((state) => {
           const newContinueWatching = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type),
+            (item) => !(item.id === id && item.media_type === media_type)
           );
           return { continueWatching: newContinueWatching };
         });
@@ -301,16 +292,22 @@ export const useStore = create<BookmarkStore>()(
 
       isBookmarked: (id, type) =>
         get().bookmarks[`${id}-${type}`] !== undefined,
+      // state
+      bookmarks: {},
+      modalData: null,
+      showModal: false,
+      previousSearches: [],
+      continueWatching: [],
     }),
     {
       name: 'bingebox-idb-storage',
       storage: idbStorage,
-      version: 0, 
+      version: 0,
       migrate: async (persistedState, _version) => {
         // handle migration logic here if needed
         // gor now, just return the state as-is
         console.log('Migrating state:', persistedState);
-        
+
         return persistedState as BookmarkStore;
       },
       partialize: (state) => ({
@@ -318,8 +315,8 @@ export const useStore = create<BookmarkStore>()(
         previousSearches: state.previousSearches,
         continueWatching: state.continueWatching,
       }),
-    },
-  ),
+    }
+  )
 );
 
 //hook to use store data with suspense
@@ -354,7 +351,7 @@ export function useSuspenseStore<T>(selector: (_state: BookmarkStore) => T): T {
 
 // for components that don't need suspense
 export function useNonSuspenseStore<T>(
-  selector: (_state: BookmarkStore) => T,
+  selector: (_state: BookmarkStore) => T
 ): T {
   const store = useStore();
 
