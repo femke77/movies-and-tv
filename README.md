@@ -44,10 +44,14 @@ Initial load 850-1000ms
 
 **Problem:** History page is designed to show continue watching items as a carousel (similar to AppleTV app on iPad). Users are allowed a good amount of items to be in the continue watching array and the images are brought in using the tmdb api. The concern was that on history page mount, many api calls would go out all at once for all those images. That could be for nothing since 1. the most recent items are always kept up front, and 2. the history page also holds the search history, so the user might be on that page for that and not even look at continue watching items. To improve efficiency and performance, an intersection observer now grabs the image from the api only when the user scrolls the item into view.
 
+**Problem:** As per the zustand docs, there is a "cost" for using async storage to persist data. This app is using indexed db with zustand and react's uSES hook to allow suspense triggering. The problem comes into play when a new version of the app is deployed, and a race condition between hydration of the saved store in indexed db and zustand setting up a new store was causing the indexed db store to be wiped out with all state objects and arrays now EMPTY! This was one of my more challenging problems. Even realizing what was happening took a bit of careful thinking, researching, and coming to terms with how hacky my uSES/Suspense integration really was!
+
+**Solution:** So should we take control of hydration ourselves (doable - but I really don't want to) or is there a way to force zustand to merge with indexed db even as it wants to make a new store? The problem isn't happening on refreshes/reloads or opening new browser tabs. The issue specifically has to do with a new JS bundle thanks to a new build and fresh deploy. I always want to go with the simpliest solution but it also has to be robust. Just moving the state initialization to the bottom of the store seemed to do the trick, but as the store grows is that going to hold? I had to make sure I had a solution for all browsers/devices and even when indexed db is on the larger of it's allowed size. 
+
 ### Metrics as of 4/14/2025
 
-- ~180-240 MB average browser memory usage after good amount of app usage with heavy caching strategies- holds steady. No leaking!
-- Memory rises with video play normally, falls back to above numbers in under 2 min from watch page unmounting
+- Browser memory allocation is appropriate and doesn't increase over time with no activity after 72 hours.
+- Memory rises with video play normally, falls back to baseline in under 2 min from watch page unmounting.
 - ~42-72MB heap size depending on how much is cached by react query (depends on usage)
 - 99% performance by Lighthouse
 - 0.0 CLS

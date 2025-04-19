@@ -21,8 +21,9 @@ export const idbStorage = {
   },
 };
 
-interface BookmarkStore {
+interface BingeBoxStore {
   // state
+
   bookmarks: { [key: string]: { id: string; type: string; dateAdded: number } };
   modalData: { id: string; type: string; isBookmarked: boolean } | null;
   showModal: boolean;
@@ -78,9 +79,15 @@ interface BookmarkStore {
   initializeStore: () => Promise<any>;
 }
 
-export const useStore = create<BookmarkStore>()(
+export const useStore = create<BingeBoxStore>()(
   persist(
     (set, get) => ({
+        // state
+        bookmarks: {},
+        modalData: null,
+        showModal: false,
+        previousSearches: [],
+        continueWatching: [],
       // suspense-related state
       isLoaded: false,
       isLoading: false,
@@ -107,7 +114,7 @@ export const useStore = create<BookmarkStore>()(
           };
         }
 
-        // if currently loading, don't start another load
+        // if currently loading, don't start another load, just throw a promise
         if (get().isLoading) {
           // will be caught by suspense
           throw new Promise((resolve) => {
@@ -122,6 +129,7 @@ export const useStore = create<BookmarkStore>()(
 
         // start loading
         set({ isLoading: true });
+        get().listeners.forEach((listener) => listener());
 
         try {
           // persist middleware will handle the actual loading from IndexedDB
@@ -150,7 +158,7 @@ export const useStore = create<BookmarkStore>()(
         }
       },
 
-      // state methods
+      //  methods
       addToPreviousSearches: (query) => {
         const lowerCaseQuery = query.toLocaleLowerCase();
         if (get().previousSearches.includes(lowerCaseQuery)) return;
@@ -268,6 +276,7 @@ export const useStore = create<BookmarkStore>()(
       closeModal: () => set({ showModal: false, modalData: null }),
 
       addBookmark: (id, type) => {
+        if (!get().isLoaded) return; // user would have to very VERY fast to get here before the store is loaded, but JIC
         set((state) => ({
           bookmarks: {
             ...state.bookmarks,
@@ -292,23 +301,40 @@ export const useStore = create<BookmarkStore>()(
 
       isBookmarked: (id, type) =>
         get().bookmarks[`${id}-${type}`] !== undefined,
-      // state
-      bookmarks: {},
-      modalData: null,
-      showModal: false,
-      previousSearches: [],
-      continueWatching: [],
+
+    
     }),
     {
       name: 'bingebox-idb-storage',
       storage: idbStorage,
       version: 0,
-      migrate: async (persistedState, _version) => {
-        // handle migration logic here if needed
-        // gor now, just return the state as-is
-        console.log('Migrating state:', persistedState);
+      merge: (persistedState, currentState) => {
+        const persisted = persistedState as Partial<BingeBoxStore>;
 
-        return persistedState as BookmarkStore;
+        // If the persisted state has data (not empty objects),
+        // prefer it over the initial empty state
+        return {
+          ...currentState,
+          bookmarks:
+            Object.keys(persisted.bookmarks || {}).length > 0
+              ? persisted.bookmarks!
+              : currentState.bookmarks,
+          previousSearches:
+            (persisted.previousSearches || []).length > 0
+              ? persisted.previousSearches!
+              : currentState.previousSearches,
+          continueWatching:
+            (persisted.continueWatching || []).length > 0
+              ? persisted.continueWatching!
+              : currentState.continueWatching,
+        };
+      },
+     
+      migrate: async (persistedState, version) => {
+        // handle migration logic here later as needed
+        console.log('Migrating state:', persistedState, version);
+
+        return persistedState as BingeBoxStore;
       },
       partialize: (state) => ({
         bookmarks: state.bookmarks,
@@ -320,7 +346,7 @@ export const useStore = create<BookmarkStore>()(
 );
 
 //hook to use store data with suspense
-export function useSuspenseStore<T>(selector: (_state: BookmarkStore) => T): T {
+export function useSuspenseStore<T>(selector: (_state: BingeBoxStore) => T): T {
   const store = useStore();
 
   // if the store isn't loaded yet, initialize it and throw the promise
@@ -351,7 +377,7 @@ export function useSuspenseStore<T>(selector: (_state: BookmarkStore) => T): T {
 
 // for components that don't need suspense
 export function useNonSuspenseStore<T>(
-  selector: (_state: BookmarkStore) => T
+  selector: (_state: BingeBoxStore) => T
 ): T {
   const store = useStore();
 
@@ -375,3 +401,7 @@ export function useNonSuspenseStore<T>(
 In the context of the store's initializeStore function, this is giving the persist middleware enough time to load and hydrate the store from IndexedDB before proceeding. The function is waiting for any pending asynchronous operations to complete before marking the store as loaded.
 
 This is a common pattern in JavaScript when you need to ensure that other asynchronous operations have a chance to complete before continuing with execution, especially when dealing with operations that might be scheduled but not yet executed in the event loop.*/
+
+/*There is a race at redeploy between persist middleware setting up a new store and the async hydrating of the store from indexedDb.
+Persist middleware doesn't wait for hydration and just sets up a new store with the default values, which are empty.
+*/
