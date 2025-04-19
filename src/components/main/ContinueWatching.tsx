@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import DraggableCarousel from '../containers/SimpleCarousel';
 import ConfirmModal from '../modals/ConfirmModal';
 import { ChevronRight } from 'lucide-react';
-import { useSuspenseStore, useStore } from '../../state/store';
+import { useNonSuspenseStore, useStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
 import LazyImage from '../helpers/LazyImage';
 
@@ -22,7 +22,7 @@ interface WatchItem {
 const ContinueWatching = () => {
   const location = useLocation();
   // useNonSuspense to avoid access to indexeddb blocking page load. History page will use useSuspense for the previous searches.
-  const continueWatching = useSuspenseStore(
+  const continueWatching = useNonSuspenseStore(
     useShallow((state) => state.continueWatching),
   );
 
