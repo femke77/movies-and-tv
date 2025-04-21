@@ -67,5 +67,3 @@ const SimpleCarousel = ({ children }: { children: ReactNode }) => {
 };
 
 export default SimpleCarousel;
-
-

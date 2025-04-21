@@ -55,7 +55,7 @@ interface BingeBoxStore {
     _title: string,
     _season: number,
     _episode: number,
-    _poster_path: string
+    _poster_path: string,
   ) => void;
   addToContinueWatchingMovie: (
     _id: number,
@@ -64,7 +64,7 @@ interface BingeBoxStore {
     _title: string,
     _poster_path: string,
     _release_date: string,
-    _runtime: string
+    _runtime: string,
   ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
@@ -105,8 +105,6 @@ export const useStore = create<BingeBoxStore>()(
       initializeStore: async () => {
         // If already loaded, return the data immediately
         console.log('Initializing store...');
-     
-        
 
         if (get().isLoaded) {
           return {
@@ -138,7 +136,9 @@ export const useStore = create<BingeBoxStore>()(
           // wait for it to complete, which happens after initialization
           // return the current state which will be populated by the persist middleware
 
-          await new Promise((resolve) => {setTimeout(resolve, 100)}); // got to refactor this out and use the hyrdration method
+          await new Promise((resolve) => {
+            setTimeout(resolve, 100);
+          }); // got to refactor this out and use the hyrdration method
 
           set({ isLoaded: true, isLoading: false });
 
@@ -188,7 +188,7 @@ export const useStore = create<BingeBoxStore>()(
         title,
         season,
         episode,
-        poster_path
+        poster_path,
       ) => {
         const newItem = {
           id,
@@ -202,7 +202,7 @@ export const useStore = create<BingeBoxStore>()(
 
         set((state) => {
           const filtered = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type)
+            (item) => !(item.id === id && item.media_type === media_type),
           );
 
           const updated = [...filtered, newItem]
@@ -222,7 +222,7 @@ export const useStore = create<BingeBoxStore>()(
         title,
         poster_path,
         release_date,
-        runtime
+        runtime,
       ) => {
         const newItem = {
           id,
@@ -236,7 +236,7 @@ export const useStore = create<BingeBoxStore>()(
 
         set((state) => {
           const filtered = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type)
+            (item) => !(item.id === id && item.media_type === media_type),
           );
 
           const updated = [...filtered, newItem]
@@ -252,7 +252,7 @@ export const useStore = create<BingeBoxStore>()(
       removeFromContinueWatching: (id, media_type) => {
         set((state) => {
           const newContinueWatching = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type)
+            (item) => !(item.id === id && item.media_type === media_type),
           );
           return { continueWatching: newContinueWatching };
         });
@@ -337,16 +337,13 @@ export const useStore = create<BingeBoxStore>()(
 
         if (error) {
           console.log('an error happened during hydration', error);
-        }
-        else {
+        } else {
           console.log('hydration finished');
           console.log('hydrated state:', state);
           useStore.setState({ isLoaded: true, isLoading: false });
           useStore.getState().listeners.forEach((listener) => listener());
         }
         // optional
-       
-      
       },
 
       migrate: async (persistedState, version) => {
@@ -360,8 +357,8 @@ export const useStore = create<BingeBoxStore>()(
         previousSearches: state.previousSearches,
         continueWatching: state.continueWatching,
       }),
-    }
-  )
+    },
+  ),
 );
 
 //hook to use store data with suspense
@@ -396,7 +393,7 @@ export function useSuspenseStore<T>(selector: (_state: BingeBoxStore) => T): T {
 
 // for components that don't need suspense
 export function useNonSuspenseStore<T>(
-  selector: (_state: BingeBoxStore) => T
+  selector: (_state: BingeBoxStore) => T,
 ): T {
   const store = useStore();
 
@@ -404,7 +401,7 @@ export function useNonSuspenseStore<T>(
   useEffect(() => {
     if (!store.isLoaded && !store.isLoading) {
       // this will throw a promise to trigger suspense in the component using it');
-      
+
       store.initializeStore().catch(console.error);
     }
   }, [store]);

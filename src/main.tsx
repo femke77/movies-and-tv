@@ -58,8 +58,6 @@ const persister = createSyncStoragePersister({
   storage: window.localStorage,
 });
 
-
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -71,7 +69,6 @@ const router = createBrowserRouter([
         index: true,
         element: (
           <KeepAlive saveScrollPosition='screen' name='home'>
-    
             <Home />
           </KeepAlive>
         ),
