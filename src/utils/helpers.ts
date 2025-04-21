@@ -78,12 +78,30 @@ export const isIphoneSafari = () => {
   );
 };
 
-export const isIPad = () => {
-  return (
-    /iPad/.test(navigator.userAgent) ||
-    (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1)
-  );
-};
+// Extend Navigator interface for userAgentData
+declare global {
+  interface Navigator {
+    userAgentData?: {
+      platform: string;
+    };
+  }
+}
+
+export function isIPad(): boolean {
+  if (typeof navigator === 'undefined') return false;
+
+  const ua = navigator.userAgent || '';
+  const maxTouchPoints = navigator.maxTouchPoints || 0;
+
+  // Classic iPad check
+  const isOldiPad = /iPad/.test(ua);
+
+  // iPadOS 13+ (reports as Macintosh but with touch)
+  const isMac = /Macintosh/.test(ua);
+  const isModerniPad = isMac && maxTouchPoints > 1;
+
+  return isOldiPad || isModerniPad;
+}
 
 export const isBraveBrowser = async (): Promise<boolean> => {
   return !!(navigator.brave && (await navigator.brave.isBrave?.()));

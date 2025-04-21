@@ -121,7 +121,7 @@ export const useStore = create<BingeBoxStore>()(
             const unsubscribe = get().subscribe(() => {
               if (get().isLoaded || get().loadError) {
                 unsubscribe();
-                resolve(get().bookmarks);
+                resolve(get());
               }
             });
           });
@@ -137,7 +137,7 @@ export const useStore = create<BingeBoxStore>()(
           // return the current state which will be populated by the persist middleware
 
           await new Promise((resolve) => {
-            setTimeout(resolve, 100);
+            setTimeout(resolve, 50);
           }); // got to refactor this out and use the hyrdration method
 
           set({ isLoaded: true, isLoading: false });

@@ -164,8 +164,8 @@ const WatchMovie = () => {
             )}
             {/* iphone safari doesn't support the FS api */}
             <div
-              className={`${isIphoneSafari() || isIPad()} ? 'invisible' : ''
-              }`}
+              className={isIphoneSafari() || isIPad() ? 'invisible' : ''
+              }
             >
               <FullscreenBtn elementId='iframe' />
             </div>
