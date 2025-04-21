@@ -103,9 +103,6 @@ export const useStore = create<BingeBoxStore>()(
 
       // method to initialize the store and handle Suspense
       initializeStore: async () => {
-        // If already loaded, return the data immediately
-        console.log('Initializing store...');
-
         if (get().isLoaded) {
           return {
             bookmarks: get().bookmarks,
@@ -113,51 +110,33 @@ export const useStore = create<BingeBoxStore>()(
             continueWatching: get().continueWatching,
           };
         }
-
-        // if currently loading, don't start another load, just throw a promise
+      
         if (get().isLoading) {
-          // will be caught by suspense
           throw new Promise((resolve) => {
             const unsubscribe = get().subscribe(() => {
               if (get().isLoaded || get().loadError) {
                 unsubscribe();
-                resolve(get());
+                resolve(get().bookmarks);
               }
             });
           });
         }
-
-        // start loading
+      
         set({ isLoading: true });
         get().listeners.forEach((listener) => listener());
-
-        try {
-          // persist middleware will handle the actual loading from IndexedDB
-          // wait for it to complete, which happens after initialization
-          // return the current state which will be populated by the persist middleware
-
-          await new Promise((resolve) => {
-            setTimeout(resolve, 50);
-          }); // got to refactor this out and use the hyrdration method
-
-          set({ isLoaded: true, isLoading: false });
-
-          // notify listeners
-          get().listeners.forEach((listener) => listener());
-
-          return {
-            bookmarks: get().bookmarks,
-            previousSearches: get().previousSearches,
-            continueWatching: get().continueWatching,
-          };
-        } catch (error) {
-          set({
-            loadError:
-              error instanceof Error ? error : new Error(String(error)),
-            isLoading: false,
+      
+        // Instead of setTimeout, just wait for isLoaded to be true
+        throw new Promise((resolve, reject) => {
+          const unsubscribe = get().subscribe(() => {
+            if (get().isLoaded) {
+              unsubscribe();
+              resolve(get());
+            } else if (get().loadError) {
+              unsubscribe();
+              reject(get().loadError);
+            }
           });
-          throw error;
-        }
+        });
       },
 
       //  methods

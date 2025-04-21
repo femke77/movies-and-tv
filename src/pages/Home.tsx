@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import SwiperElement from '../components/main/Swiper';
 import ContinueWatching from '../components/main/ContinueWatching';
 import Network from '../components/main/Network';
@@ -14,6 +14,7 @@ import PopularTv from '../components/main/PopularTv';
 import { useActivate } from 'react-activation';
 
 const Home = () => {
+
   useDocumentTitle('Home | BingeBox');
   useActivate(() => {
     document.title = 'Home | BingeBox';
@@ -33,9 +34,12 @@ const Home = () => {
 
   return (
     <>
+
       <SwiperElement />
       <div className='mt-46'>
+        <Suspense fallback={<div className='h-96' />}>
         <ContinueWatching />
+        </Suspense>
       </div>
 
       <div className='my-28'>
@@ -85,6 +89,8 @@ const Home = () => {
         <PopularTv />
         <TopRatedTv />
       </div>
+
+  
     </>
   );
 };

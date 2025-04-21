@@ -63,14 +63,17 @@ const router = createBrowserRouter([
     path: '/',
     errorElement: <ChunkErrorHandler />,
 
-    element: <App />,
+    element: <Suspense fallback={<div></div>}><App /></Suspense>,
     children: [
       {
         index: true,
         element: (
+     
+         <Suspense fallback={<ItemCardSkeletonGrid />}>
           <KeepAlive saveScrollPosition='screen' name='home'>
             <Home />
           </KeepAlive>
+      </Suspense>
         ),
       },
       {
