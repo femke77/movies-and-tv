@@ -32,8 +32,7 @@ export default function SwiperElement() {
   };
 
   return (
-    <>
-  
+    <> 
       <Swiper
         tabIndex={-1}
         onSlideChange={(swiper) => setCurrentIndex(swiper.activeIndex)}

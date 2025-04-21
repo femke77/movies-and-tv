@@ -55,7 +55,7 @@ interface BingeBoxStore {
     _title: string,
     _season: number,
     _episode: number,
-    _poster_path: string,
+    _poster_path: string
   ) => void;
   addToContinueWatchingMovie: (
     _id: number,
@@ -64,7 +64,7 @@ interface BingeBoxStore {
     _title: string,
     _poster_path: string,
     _release_date: string,
-    _runtime: string,
+    _runtime: string
   ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
@@ -88,6 +88,7 @@ export const useStore = create<BingeBoxStore>()(
       showModal: false,
       previousSearches: [],
       continueWatching: [],
+      
       // suspense-related state
       isLoaded: false,
       isLoading: false,
@@ -110,7 +111,7 @@ export const useStore = create<BingeBoxStore>()(
             continueWatching: get().continueWatching,
           };
         }
-      
+
         if (get().isLoading) {
           throw new Promise((resolve) => {
             const unsubscribe = get().subscribe(() => {
@@ -121,10 +122,10 @@ export const useStore = create<BingeBoxStore>()(
             });
           });
         }
-      
+
         set({ isLoading: true });
         get().listeners.forEach((listener) => listener());
-      
+
         // Instead of setTimeout, just wait for isLoaded to be true
         throw new Promise((resolve, reject) => {
           const unsubscribe = get().subscribe(() => {
@@ -167,7 +168,7 @@ export const useStore = create<BingeBoxStore>()(
         title,
         season,
         episode,
-        poster_path,
+        poster_path
       ) => {
         const newItem = {
           id,
@@ -181,7 +182,7 @@ export const useStore = create<BingeBoxStore>()(
 
         set((state) => {
           const filtered = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type),
+            (item) => !(item.id === id && item.media_type === media_type)
           );
 
           const updated = [...filtered, newItem]
@@ -201,7 +202,7 @@ export const useStore = create<BingeBoxStore>()(
         title,
         poster_path,
         release_date,
-        runtime,
+        runtime
       ) => {
         const newItem = {
           id,
@@ -215,7 +216,7 @@ export const useStore = create<BingeBoxStore>()(
 
         set((state) => {
           const filtered = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type),
+            (item) => !(item.id === id && item.media_type === media_type)
           );
 
           const updated = [...filtered, newItem]
@@ -231,7 +232,7 @@ export const useStore = create<BingeBoxStore>()(
       removeFromContinueWatching: (id, media_type) => {
         set((state) => {
           const newContinueWatching = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type),
+            (item) => !(item.id === id && item.media_type === media_type)
           );
           return { continueWatching: newContinueWatching };
         });
@@ -311,18 +312,24 @@ export const useStore = create<BingeBoxStore>()(
               : currentState.continueWatching,
         };
       },
-      onRehydrateStorage: () => (state, error) => {
-        console.log('hydration starts');
-
+      onRehydrateStorage: () => (_state, error) => {
         if (error) {
-          console.log('an error happened during hydration', error);
+          console.log('An error occurred during hydration', error);
+
+          useStore.setState({
+            isLoaded: true,
+            isLoading: false,
+            loadError: error as Error,
+          });
         } else {
-          console.log('hydration finished');
-          console.log('hydrated state:', state);
-          useStore.setState({ isLoaded: true, isLoading: false });
-          useStore.getState().listeners.forEach((listener) => listener());
+          useStore.setState({
+            isLoaded: true,
+            isLoading: false,
+          });
         }
-        // optional
+
+        // Always trigger listeners to ensure the UI is updated
+        useStore.getState().listeners.forEach((listener) => listener());
       },
 
       migrate: async (persistedState, version) => {
@@ -336,8 +343,8 @@ export const useStore = create<BingeBoxStore>()(
         previousSearches: state.previousSearches,
         continueWatching: state.continueWatching,
       }),
-    },
-  ),
+    }
+  )
 );
 
 //hook to use store data with suspense
@@ -372,7 +379,7 @@ export function useSuspenseStore<T>(selector: (_state: BingeBoxStore) => T): T {
 
 // for components that don't need suspense
 export function useNonSuspenseStore<T>(
-  selector: (_state: BingeBoxStore) => T,
+  selector: (_state: BingeBoxStore) => T
 ): T {
   const store = useStore();
 
@@ -397,9 +404,11 @@ export function useNonSuspenseStore<T>(
 /*Even though the timeout is set to 0 milliseconds, this actually defers the resolution until after the current event loop iteration completes. It effectively creates a "microtask" that allows other pending operations to finish first.
 In the context of the store's initializeStore function, this is giving the persist middleware enough time to load and hydrate the store from IndexedDB before proceeding. The function is waiting for any pending asynchronous operations to complete before marking the store as loaded.
 
-This is a common pattern in JavaScript when you need to ensure that other asynchronous operations have a chance to complete before continuing with execution, especially when dealing with operations that might be scheduled but not yet executed in the event loop.*/
+This is a common pattern in JavaScript when you need to ensure that other asynchronous operations have a chance to complete before continuing with execution, especially when dealing with operations that might be scheduled but not yet executed in the event loop. -THIS IS REMOVED (it was a hacky guessing game) in favor of an actual nod that hydration has happened thanks to zustand's onRehydratedStorage fn*/
 
 /*There is a race at redeploy between persist middleware setting up a new store and the async hydrating of the store from indexedDb.
 Persist middleware doesn't wait for hydration and just sets up a new store with the default values, which are empty. Two solutions, one
-was moving state down to the bottom, which got delayed in creation/persitence by task queue, but a more robust solution is the merge method.
+was moving state down to the bottom, which got delayed in creation/persitence maybe/probably by task queue, but a more robust solution is the merge method.
+
+--In addition, added hydration flags with onRehydrateStorage should tie everything together.
 */
