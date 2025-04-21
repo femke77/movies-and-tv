@@ -82,12 +82,12 @@ interface BingeBoxStore {
 export const useStore = create<BingeBoxStore>()(
   persist(
     (set, get) => ({
-        // state
-        bookmarks: {},
-        modalData: null,
-        showModal: false,
-        previousSearches: [],
-        continueWatching: [],
+      // state
+      bookmarks: {},
+      modalData: null,
+      showModal: false,
+      previousSearches: [],
+      continueWatching: [],
       // suspense-related state
       isLoaded: false,
       isLoading: false,
@@ -105,6 +105,8 @@ export const useStore = create<BingeBoxStore>()(
       initializeStore: async () => {
         // If already loaded, return the data immediately
         console.log('Initializing store...');
+     
+        
 
         if (get().isLoaded) {
           return {
@@ -136,7 +138,7 @@ export const useStore = create<BingeBoxStore>()(
           // wait for it to complete, which happens after initialization
           // return the current state which will be populated by the persist middleware
 
-          await new Promise((resolve) => setTimeout(resolve, 50));
+          await new Promise((resolve) => {setTimeout(resolve, 100)}); // got to refactor this out and use the hyrdration method
 
           set({ isLoaded: true, isLoading: false });
 
@@ -301,11 +303,12 @@ export const useStore = create<BingeBoxStore>()(
 
       isBookmarked: (id, type) =>
         get().bookmarks[`${id}-${type}`] !== undefined,
-
-    
     }),
     {
-      name: 'bingebox-idb-storage',
+      name:
+        process.env.NODE_ENV === 'production'
+          ? 'bingebox-idb-storage'
+          : 'bingebox-idb-storage-dev',
       storage: idbStorage,
       version: 0,
       merge: (persistedState, currentState) => {
@@ -329,9 +332,25 @@ export const useStore = create<BingeBoxStore>()(
               : currentState.continueWatching,
         };
       },
-     
+      onRehydrateStorage: () => (state, error) => {
+        console.log('hydration starts');
+
+        if (error) {
+          console.log('an error happened during hydration', error);
+        }
+        else {
+          console.log('hydration finished');
+          console.log('hydrated state:', state);
+          useStore.setState({ isLoaded: true, isLoading: false });
+          useStore.getState().listeners.forEach((listener) => listener());
+        }
+        // optional
+       
+      
+      },
+
       migrate: async (persistedState, version) => {
-        // handle migration logic here later as needed
+        // handle migration logic here later as needed, this console log should not run
         console.log('Migrating state:', persistedState, version);
 
         return persistedState as BingeBoxStore;
@@ -384,6 +403,8 @@ export function useNonSuspenseStore<T>(
   // still need to initialize the store if needed, but don't throw
   useEffect(() => {
     if (!store.isLoaded && !store.isLoading) {
+      // this will throw a promise to trigger suspense in the component using it');
+      
       store.initializeStore().catch(console.error);
     }
   }, [store]);
@@ -403,5 +424,6 @@ In the context of the store's initializeStore function, this is giving the persi
 This is a common pattern in JavaScript when you need to ensure that other asynchronous operations have a chance to complete before continuing with execution, especially when dealing with operations that might be scheduled but not yet executed in the event loop.*/
 
 /*There is a race at redeploy between persist middleware setting up a new store and the async hydrating of the store from indexedDb.
-Persist middleware doesn't wait for hydration and just sets up a new store with the default values, which are empty.
+Persist middleware doesn't wait for hydration and just sets up a new store with the default values, which are empty. Two solutions, one
+was moving state down to the bottom, which got delayed in creation/persitence by task queue, but a more robust solution is the merge method.
 */

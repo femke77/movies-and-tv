@@ -12,6 +12,8 @@ import 'swiper/css/navigation';
 const Slide = lazy(() => import('./Slide'));
 
 export default function SwiperElement() {
+
+    
   const { data: items = [] } = useTrendingAll();
   // subscribe to bookmarks array in zustand store for reactivity and don't use suspense b/c it will block the entire component
   const bookmarks = useNonSuspenseStore(useShallow((state) => state.bookmarks));
