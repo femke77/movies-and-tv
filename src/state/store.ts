@@ -58,7 +58,7 @@ interface BingeBoxStore {
     _title: string,
     _season: number,
     _episode: number,
-    _poster_path: string
+    _poster_path: string,
   ) => void;
   addToContinueWatchingMovie: (
     _id: number,
@@ -67,7 +67,7 @@ interface BingeBoxStore {
     _title: string,
     _poster_path: string,
     _release_date: string,
-    _runtime: string
+    _runtime: string,
   ) => void;
   removeFromContinueWatching: (_id: number, _media_type: string) => void;
   clearContinueWatching: () => void;
@@ -91,7 +91,7 @@ export const useStore = create<BingeBoxStore>()(
       showModal: false,
       previousSearches: [],
       continueWatching: [],
-      
+
       // suspense-related state
       isLoaded: false,
       isLoading: false,
@@ -186,7 +186,7 @@ export const useStore = create<BingeBoxStore>()(
         title,
         season,
         episode,
-        poster_path
+        poster_path,
       ) => {
         const newItem = {
           id,
@@ -200,7 +200,7 @@ export const useStore = create<BingeBoxStore>()(
 
         set((state) => {
           const filtered = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type)
+            (item) => !(item.id === id && item.media_type === media_type),
           );
 
           const updated = [...filtered, newItem]
@@ -220,7 +220,7 @@ export const useStore = create<BingeBoxStore>()(
         title,
         poster_path,
         release_date,
-        runtime
+        runtime,
       ) => {
         const newItem = {
           id,
@@ -234,7 +234,7 @@ export const useStore = create<BingeBoxStore>()(
 
         set((state) => {
           const filtered = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type)
+            (item) => !(item.id === id && item.media_type === media_type),
           );
 
           const updated = [...filtered, newItem]
@@ -250,7 +250,7 @@ export const useStore = create<BingeBoxStore>()(
       removeFromContinueWatching: (id, media_type) => {
         set((state) => {
           const newContinueWatching = state.continueWatching.filter(
-            (item) => !(item.id === id && item.media_type === media_type)
+            (item) => !(item.id === id && item.media_type === media_type),
           );
           return { continueWatching: newContinueWatching };
         });
@@ -362,8 +362,8 @@ export const useStore = create<BingeBoxStore>()(
         previousSearches: state.previousSearches,
         continueWatching: state.continueWatching,
       }),
-    }
-  )
+    },
+  ),
 );
 
 //hook to use store data with suspense
