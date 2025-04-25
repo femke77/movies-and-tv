@@ -2,7 +2,10 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import dayjs from 'dayjs';
 import { get, set, del } from 'idb-keyval';
-import { useSyncExternalStore, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
+
+// for components that don't need to trigger suspense, use the useStore hook, ln 85
+// if the component needs to trigger suspense, e.g. react query is not involved - comp only uses data from the store - use the useSuspenseStore hook
 
 const CONTINUE_WATCHING_LIMIT = 250;
 const SEARCH_HISTORY_LIMIT = 20;
@@ -88,6 +91,7 @@ export const useStore = create<BingeBoxStore>()(
       showModal: false,
       previousSearches: [],
       continueWatching: [],
+
       // suspense-related state
       isLoaded: false,
       isLoading: false,
@@ -103,9 +107,7 @@ export const useStore = create<BingeBoxStore>()(
 
       // method to initialize the store and handle Suspense
       initializeStore: async () => {
-        // If already loaded, return the data immediately
-        console.log('Initializing store...');
-
+        // Return immediately if already loaded
         if (get().isLoaded) {
           return {
             bookmarks: get().bookmarks,
@@ -114,50 +116,45 @@ export const useStore = create<BingeBoxStore>()(
           };
         }
 
-        // if currently loading, don't start another load, just throw a promise
+        // If already loading, wait for completion
         if (get().isLoading) {
-          // will be caught by suspense
-          throw new Promise((resolve) => {
+          return new Promise((resolve, reject) => {
             const unsubscribe = get().subscribe(() => {
-              if (get().isLoaded || get().loadError) {
+              if (get().isLoaded) {
                 unsubscribe();
-                resolve(get().bookmarks);
+                resolve({
+                  bookmarks: get().bookmarks,
+                  previousSearches: get().previousSearches,
+                  continueWatching: get().continueWatching,
+                });
+              } else if (get().loadError) {
+                unsubscribe();
+                reject(get().loadError);
               }
             });
           });
         }
 
-        // start loading
+        // Start loading process
         set({ isLoading: true });
         get().listeners.forEach((listener) => listener());
 
-        try {
-          // persist middleware will handle the actual loading from IndexedDB
-          // wait for it to complete, which happens after initialization
-          // return the current state which will be populated by the persist middleware
-
-          await new Promise((resolve) => {
-            setTimeout(resolve, 100);
-          }); // got to refactor this out and use the hyrdration method
-
-          set({ isLoaded: true, isLoading: false });
-
-          // notify listeners
-          get().listeners.forEach((listener) => listener());
-
-          return {
-            bookmarks: get().bookmarks,
-            previousSearches: get().previousSearches,
-            continueWatching: get().continueWatching,
-          };
-        } catch (error) {
-          set({
-            loadError:
-              error instanceof Error ? error : new Error(String(error)),
-            isLoading: false,
+        // Return a promise that resolves when loaded
+        return new Promise((resolve, reject) => {
+          const unsubscribe = get().subscribe(() => {
+            if (get().isLoaded) {
+              unsubscribe();
+              resolve({
+                bookmarks: get().bookmarks,
+                previousSearches: get().previousSearches,
+                continueWatching: get().continueWatching,
+              });
+            } else if (get().loadError) {
+              unsubscribe();
+              reject(get().loadError);
+            }
           });
-          throw error;
-        }
+        });
       },
 
       //  methods
@@ -332,18 +329,23 @@ export const useStore = create<BingeBoxStore>()(
               : currentState.continueWatching,
         };
       },
-      onRehydrateStorage: () => (state, error) => {
-        console.log('hydration starts');
-
+      onRehydrateStorage: () => (_state, error) => {
         if (error) {
-          console.log('an error happened during hydration', error);
+          console.log('An error occurred during hydration', error);
+          useStore.setState({
+            isLoaded: true,
+            isLoading: false,
+            loadError: error as Error,
+          });
         } else {
-          console.log('hydration finished');
-          console.log('hydrated state:', state);
-          useStore.setState({ isLoaded: true, isLoading: false });
-          useStore.getState().listeners.forEach((listener) => listener());
+          useStore.setState({
+            isLoaded: true,
+            isLoading: false,
+          });
         }
-        // optional
+
+        // Always trigger listeners to ensure the UI is updated
+        useStore.getState().listeners.forEach((listener) => listener());
       },
 
       migrate: async (persistedState, version) => {
@@ -365,12 +367,13 @@ export const useStore = create<BingeBoxStore>()(
 export function useSuspenseStore<T>(selector: (_state: BingeBoxStore) => T): T {
   const store = useStore();
 
-  // if the store isn't loaded yet, initialize it and throw the promise
+  // if not loaded and not loading, start the loading process
   if (!store.isLoaded && !store.isLoading) {
+    // This will be caught by React Suspense
     throw store.initializeStore();
   }
 
-  // if the store is currently loading, throw a promise to trigger suspense
+  // If currently loading, throw a promise to trigger suspense
   if (store.isLoading) {
     throw new Promise((resolve) => {
       const unsubscribe = store.subscribe(() => {
@@ -382,31 +385,12 @@ export function useSuspenseStore<T>(selector: (_state: BingeBoxStore) => T): T {
     });
   }
 
-  // throw error if error while loading
+  // If there was an error, throw it
   if (store.loadError) {
     throw store.loadError;
   }
 
-  //  useSyncExternalStore to subscribe to changes
-  return useSyncExternalStore(store.subscribe, () => selector(store));
-}
-
-// for components that don't need suspense
-export function useNonSuspenseStore<T>(
-  selector: (_state: BingeBoxStore) => T,
-): T {
-  const store = useStore();
-
-  // still need to initialize the store if needed, but don't throw
-  useEffect(() => {
-    if (!store.isLoaded && !store.isLoading) {
-      // this will throw a promise to trigger suspense in the component using it');
-
-      store.initializeStore().catch(console.error);
-    }
-  }, [store]);
-
-  // use useSyncExternalStore to subscribe to changes
+  // Store is loaded, use it
   return useSyncExternalStore(store.subscribe, () => selector(store));
 }
 
@@ -418,9 +402,14 @@ export function useNonSuspenseStore<T>(
 /*Even though the timeout is set to 0 milliseconds, this actually defers the resolution until after the current event loop iteration completes. It effectively creates a "microtask" that allows other pending operations to finish first.
 In the context of the store's initializeStore function, this is giving the persist middleware enough time to load and hydrate the store from IndexedDB before proceeding. The function is waiting for any pending asynchronous operations to complete before marking the store as loaded.
 
-This is a common pattern in JavaScript when you need to ensure that other asynchronous operations have a chance to complete before continuing with execution, especially when dealing with operations that might be scheduled but not yet executed in the event loop.*/
+This is a common pattern in JavaScript when you need to ensure that other asynchronous operations have a chance to complete before continuing with execution, especially when dealing with operations that might be scheduled but not yet executed in the event loop. -THIS IS REMOVED (it was a hacky guessing game) in favor of an actual nod that hydration has happened thanks to zustand's onRehydratedStorage fn*/
 
 /*There is a race at redeploy between persist middleware setting up a new store and the async hydrating of the store from indexedDb.
 Persist middleware doesn't wait for hydration and just sets up a new store with the default values, which are empty. Two solutions, one
-was moving state down to the bottom, which got delayed in creation/persitence by task queue, but a more robust solution is the merge method.
+was moving state down to the bottom, which got delayed in creation/persitence maybe/probably by task queue, but a more robust solution is the merge method.
+
+--In addition, added hydration flags with onRehydrateStorage should tie everything together.
 */
+
+// try taking out useNonSuspense and just use useStore. if the page is totally reliant on data from the store and you want suspense, then useSuspense
+// otherwise useStore.

@@ -62,7 +62,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     errorElement: <ChunkErrorHandler />,
-
+    // purposefully an empty div so the page ones show, but this must be here for the onRehydrateStorage/initStore to work
     element: <App />,
     children: [
       {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import SwiperElement from '../components/main/Swiper';
 import ContinueWatching from '../components/main/ContinueWatching';
 import Network from '../components/main/Network';
@@ -35,7 +35,9 @@ const Home = () => {
     <>
       <SwiperElement />
       <div className='mt-46'>
-        <ContinueWatching />
+        <Suspense fallback={<div className='h-96' />}>
+          <ContinueWatching />
+        </Suspense>
       </div>
 
       <div className='my-28'>
