@@ -14,7 +14,6 @@ import PopularTv from '../components/main/PopularTv';
 import { useActivate } from 'react-activation';
 
 const Home = () => {
-
   useDocumentTitle('Home | BingeBox');
   useActivate(() => {
     document.title = 'Home | BingeBox';
@@ -34,11 +33,10 @@ const Home = () => {
 
   return (
     <>
-
       <SwiperElement />
       <div className='mt-46'>
         <Suspense fallback={<div className='h-96' />}>
-        <ContinueWatching />
+          <ContinueWatching />
         </Suspense>
       </div>
 
@@ -89,8 +87,6 @@ const Home = () => {
         <PopularTv />
         <TopRatedTv />
       </div>
-
-  
     </>
   );
 };
