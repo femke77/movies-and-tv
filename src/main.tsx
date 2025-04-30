@@ -68,9 +68,9 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-            <KeepAlive saveScrollPosition='screen' name='home'>
-              <Home />
-            </KeepAlive>
+          <KeepAlive saveScrollPosition='screen' name='home'>
+            <Home />
+          </KeepAlive>
         ),
       },
       {

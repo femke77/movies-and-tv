@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import dayjs from 'dayjs';
 import { get, set, del } from 'idb-keyval';
-import { useSyncExternalStore} from 'react';
+import { useSyncExternalStore } from 'react';
 
 // for components that don't need to trigger suspense, use the useStore hook, ln 85
 // if the component needs to trigger suspense, e.g. react query is not involved - comp only uses data from the store - use the useSuspenseStore hook
@@ -115,7 +115,7 @@ export const useStore = create<BingeBoxStore>()(
             continueWatching: get().continueWatching,
           };
         }
-        
+
         // If already loading, wait for completion
         if (get().isLoading) {
           return new Promise((resolve, reject) => {
@@ -134,11 +134,11 @@ export const useStore = create<BingeBoxStore>()(
             });
           });
         }
-        
+
         // Start loading process
         set({ isLoading: true });
         get().listeners.forEach((listener) => listener());
-        
+
         // Return a promise that resolves when loaded
         return new Promise((resolve, reject) => {
           const unsubscribe = get().subscribe(() => {
@@ -156,7 +156,6 @@ export const useStore = create<BingeBoxStore>()(
           });
         });
       },
-      
 
       //  methods
       addToPreviousSearches: (query) => {
@@ -301,8 +300,6 @@ export const useStore = create<BingeBoxStore>()(
 
       isBookmarked: (id, type) =>
         get().bookmarks[`${id}-${type}`] !== undefined,
-   
-     
     }),
     {
       name:
@@ -376,7 +373,7 @@ export function useSuspenseStore<T>(selector: (_state: BingeBoxStore) => T): T {
     throw store.initializeStore();
   }
 
-  // If currently loading, throw a promise to trigger suspense 
+  // If currently loading, throw a promise to trigger suspense
   if (store.isLoading) {
     throw new Promise((resolve) => {
       const unsubscribe = store.subscribe(() => {
@@ -397,7 +394,6 @@ export function useSuspenseStore<T>(selector: (_state: BingeBoxStore) => T): T {
   return useSyncExternalStore(store.subscribe, () => selector(store));
 }
 
-
 //useSyncExternalStorage needs subscribe which uses listeners to notify changes.
 
 // rationale for:
@@ -408,14 +404,12 @@ In the context of the store's initializeStore function, this is giving the persi
 
 This is a common pattern in JavaScript when you need to ensure that other asynchronous operations have a chance to complete before continuing with execution, especially when dealing with operations that might be scheduled but not yet executed in the event loop. -THIS IS REMOVED (it was a hacky guessing game) in favor of an actual nod that hydration has happened thanks to zustand's onRehydratedStorage fn*/
 
-/*There is a race at redeploy between persist middleware setting up a new store and the async hydrating of the store from indexedDb.    
+/*There is a race at redeploy between persist middleware setting up a new store and the async hydrating of the store from indexedDb.
 Persist middleware doesn't wait for hydration and just sets up a new store with the default values, which are empty. Two solutions, one
 was moving state down to the bottom, which got delayed in creation/persitence maybe/probably by task queue, but a more robust solution is the merge method.
 
 --In addition, added hydration flags with onRehydrateStorage should tie everything together.
 */
 
-
-
 // try taking out useNonSuspense and just use useStore. if the page is totally reliant on data from the store and you want suspense, then useSuspense
-// otherwise useStore. 
+// otherwise useStore.
