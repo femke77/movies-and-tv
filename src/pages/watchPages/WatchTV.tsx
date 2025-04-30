@@ -96,7 +96,7 @@ const WatchTV = () => {
       interactionTimeoutRef.current = setTimeout(() => {
         setUnlocked(false);
         console.log('Locking iframe interaction again.');
-      }, 1000); //unlock for 1.5 seconds
+      }, 250); //unlock for 1/4 second
     }
   };
   useEffect(() => {
