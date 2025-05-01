@@ -17,12 +17,14 @@ const WatchMovie = () => {
   const { data: movie } = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
 
+  const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
   useDocumentTitle(
     movie?.title
       ? `Watch ${movie?.title || 'Movie'}  | BingeBox`
-      : 'Loading... | BingeBox',
+      : 'Loading... | BingeBox'
   );
 
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +61,7 @@ const WatchMovie = () => {
   //     if (event.data ) {
   //      console.log(event.data.message);
   //     }});
-      
+
   //     return () => {
   //       window.removeEventListener('message', (event) => {
   //         if (event.data) {
@@ -93,7 +95,7 @@ const WatchMovie = () => {
       movie.title,
       movie.backdrop_path,
       movie.release_date,
-      movie.runtime,
+      movie.runtime
     );
     // }, 180000);
 
@@ -147,6 +149,11 @@ const WatchMovie = () => {
     }
     setTimeout(() => {
       iframeRef.current?.contentWindow?.location.replace(newURL);
+      // embed.su 404 causes extra history entry
+      if (historyRef.current < window.history.length) {
+        window.history.back();
+      }
+
       timeoutRef.current = setTimeout(() => {
         setIsLoading(false);
       }, 750);
@@ -206,7 +213,7 @@ const WatchMovie = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer,
+                          (server) => server.value === selectedServer
                         )?.name
                       }
                       ...{' '}
