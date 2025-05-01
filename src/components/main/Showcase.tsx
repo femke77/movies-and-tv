@@ -17,14 +17,15 @@ const Showcase = forwardRef<
   }
 >(function Showcase(
   { header, items, isLoading, media_type, linkTo, section_id, link_state },
-  ref,
+  ref
 ) {
   return (
     <div ref={ref} className='h-[475px]' id={section_id}>
-      <Link to={linkTo} state={link_state}>
-        <h2 className='text-2xl font-bold mb-6 ml-5 '>{header}</h2>
-      </Link>
-
+      <div className='w-fit'>
+        <Link to={linkTo} state={link_state}>
+          <h2 className='text-2xl font-bold mb-6 ml-5 w-fit'>{header}</h2>
+        </Link>
+      </div>
       {isLoading && items.length === 0 ? (
         <div className='flex gap-3 px-4 py-2 w-full  '>
           {Array.from({ length: 8 }).map((_, i) => (
