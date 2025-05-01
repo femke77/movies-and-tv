@@ -309,7 +309,7 @@ export const useStore = create<BingeBoxStore>()(
       storage: idbStorage,
       version: 0,
       merge: (persistedState, currentState) => {
-        const persisted = persistedState as Partial<BingeBoxStore> || {};
+        const persisted = (persistedState as Partial<BingeBoxStore>) || {};
 
         // If the persisted state has data (not empty objects),
         // prefer it over the initial empty state
