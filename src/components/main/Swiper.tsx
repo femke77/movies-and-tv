@@ -51,8 +51,7 @@ export default function SwiperElement() {
         }}
         tabIndex={-1}
         onSlideChange={(swiper) => {
-          setCurrentIndex(swiper.activeIndex)
-                  
+          setCurrentIndex(swiper.activeIndex);
         }}
         spaceBetween={30}
         centeredSlides={true}
