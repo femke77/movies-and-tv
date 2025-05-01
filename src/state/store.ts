@@ -309,23 +309,23 @@ export const useStore = create<BingeBoxStore>()(
       storage: idbStorage,
       version: 0,
       merge: (persistedState, currentState) => {
-        const persisted = persistedState as Partial<BingeBoxStore>;
+        const persisted = (persistedState as Partial<BingeBoxStore>) || {};
 
         // If the persisted state has data (not empty objects),
         // prefer it over the initial empty state
         return {
           ...currentState,
           bookmarks:
-            Object.keys(persisted.bookmarks || {}).length > 0
-              ? persisted.bookmarks!
+            persisted.bookmarks && Object.keys(persisted.bookmarks).length > 0
+              ? persisted.bookmarks
               : currentState.bookmarks,
           previousSearches:
-            (persisted.previousSearches || []).length > 0
-              ? persisted.previousSearches!
+            persisted.previousSearches && persisted.previousSearches.length > 0
+              ? persisted.previousSearches
               : currentState.previousSearches,
           continueWatching:
-            (persisted.continueWatching || []).length > 0
-              ? persisted.continueWatching!
+            persisted.continueWatching && persisted.continueWatching.length > 0
+              ? persisted.continueWatching
               : currentState.continueWatching,
         };
       },

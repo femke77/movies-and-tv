@@ -50,7 +50,7 @@ const WatchMovie = () => {
       interactionTimeoutRef.current = setTimeout(() => {
         setUnlocked(false);
         console.log('Locking iframe interaction again.');
-      }, 1000); //unlock for 1 second
+      }, 250); //unlock for 1/4 second
     }
   };
 
