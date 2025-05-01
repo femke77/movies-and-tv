@@ -24,9 +24,9 @@ export default function SwiperElement() {
 
   const handlePlayPause = () => {
     if (isPlaying) {
-      swiperRef.current?.swiper.autoplay.pause();
+      swiperRef.current?.swiper.autoplay.stop();
     } else {
-      swiperRef.current?.swiper.autoplay.resume();
+      swiperRef.current?.swiper.autoplay.start();
     }
     setIsPlaying(!isPlaying);
    
@@ -52,7 +52,10 @@ export default function SwiperElement() {
           swiperRef.current = { swiper };
         }}
         tabIndex={-1}
-        onSlideChange={(swiper) => setCurrentIndex(swiper.activeIndex)}
+        onSlideChange={(swiper) => {
+          setCurrentIndex(swiper.activeIndex)
+                  
+        }}
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
