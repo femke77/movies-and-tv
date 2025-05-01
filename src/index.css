@@ -157,7 +157,19 @@ nav {
 .swiper-button-prev::after {
   color: white;
 }
-
+.autoplay-pause {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+}
 .autoplay-progress {
   position: absolute;
   right: 16px;
@@ -198,7 +210,7 @@ nav {
   bottom: 0px !important;
   left: 0 !important;
   right: 0 !important;
-  padding: 0 20px !important;
+  padding: 0 60px !important;
 
 }
 

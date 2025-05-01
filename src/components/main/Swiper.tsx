@@ -5,9 +5,12 @@ import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
 import SlideSkeleton from '../loadingSkeletons/SlideSkeleton';
 import { useStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
+import Tooltip from '../modals/ToolTip';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { PauseIcon, Play} from 'lucide-react';
+
 
 const Slide = lazy(() => import('./Slide'));
 
@@ -15,8 +18,19 @@ export default function SwiperElement() {
   const { data: items = [] } = useTrendingAll();
   // subscribe to bookmarks array in zustand store for reactivity and don't use suspense b/c it will block the entire component
   const bookmarks = useStore(useShallow((state) => state.bookmarks));
-
+  const swiperRef = useRef<{ swiper: any } | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      swiperRef.current?.swiper.autoplay.stop();
+    } else {
+      swiperRef.current?.swiper.autoplay.start();
+    }
+    setIsPlaying(!isPlaying);
+   
+  };
 
   const progressCircle = useRef<SVGSVGElement>(null);
   const progressContent = useRef<HTMLSpanElement>(null);
@@ -25,7 +39,7 @@ export default function SwiperElement() {
     if (progressCircle.current && progressContent.current) {
       progressCircle.current.style.setProperty(
         '--progress',
-        (1 - progress).toString(),
+        (1 - progress).toString()
       );
       progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
     }
@@ -34,6 +48,9 @@ export default function SwiperElement() {
   return (
     <>
       <Swiper
+        onSwiper={(swiper) => {
+          swiperRef.current = { swiper };
+        }}
         tabIndex={-1}
         onSlideChange={(swiper) => setCurrentIndex(swiper.activeIndex)}
         spaceBetween={30}
@@ -68,6 +85,16 @@ export default function SwiperElement() {
               </Suspense>
             </SwiperSlide>
           ))}
+
+        <div onClick={handlePlayPause} className='autoplay-pause'>
+          {isPlaying ? (
+            <PauseIcon size={28} />
+          ) : (
+            <Tooltip text='Play' mb='mb-2'>
+              <Play size={28} />
+            </Tooltip>
+          )}
+        </div>
 
         <div className='autoplay-progress' slot='container-end'>
           <svg viewBox='0 0 48 48' ref={progressCircle}>
