@@ -168,7 +168,7 @@ const ItemCard = ({
                 )}
                 {/* Genres*/}
                 {showGenres && movieGenres?.length >= 1 && (
-                  <div className='flex flex-col items-end flex-wrap gap-1 absolute bottom-18 w-full z-4'>
+                  <div className='flex flex-col items-end flex-wrap gap-1 absolute bottom-14 w-full z-4'>
                     {width > 400 ? (
                       <>
                         {movieGenres

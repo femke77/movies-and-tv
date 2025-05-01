@@ -1,8 +1,8 @@
 import { useEffect, memo } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { IItem } from '../interfaces/IItem';
-import { MemoizedItemCard } from './cards/ItemCard';
-import { useSuspenseStore } from '../state/store';
+import { IItem } from '../../interfaces/IItem';
+import { MemoizedItemCard } from '../cards/ItemCard';
+import { useSuspenseStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
 
 interface IExploreProps {
