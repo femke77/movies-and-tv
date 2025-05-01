@@ -21,6 +21,10 @@ import TextSkeleton from './components/loadingSkeletons/TextSkeleton.tsx';
 import HistoryPageSkeleton from './components/loadingSkeletons/HistoryPageSkeleton.tsx';
 import ScrollToTop from './components/helpers/ScrollToTop.tsx';
 
+const TvUpcoming = lazy(() => import('./pages/tvPages/TvUpcoming.tsx'));
+const MovieUpcoming = lazy(
+  () => import('./pages/moviePages/MovieUpcoming.tsx'),
+);
 const History = lazy(() => import('./pages/watchPages/History.tsx'));
 const CastMemberDetail = lazy(
   () => import('./pages/detailPages/CastMemberDetail.tsx'),
@@ -143,6 +147,14 @@ const router = createBrowserRouter([
             ),
           },
           {
+            path: 'upcoming',
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <MovieUpcoming />
+              </DelayedSuspense>
+            ),
+          },
+          {
             path: 'tv',
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
@@ -171,6 +183,14 @@ const router = createBrowserRouter([
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <TvAll />
+              </DelayedSuspense>
+            ),
+          },
+          {
+            path: 'upcoming-tv',
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <TvUpcoming />
               </DelayedSuspense>
             ),
           },

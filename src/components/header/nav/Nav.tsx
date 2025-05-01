@@ -12,6 +12,7 @@ const moviesNav = [
   { title: 'Top Rated Movies', url: '/explore/toprated' },
   { title: 'Popular Movies', url: '/explore/popular' },
   { title: 'All Movies', url: '/explore/all-movies' },
+  { title: 'Upcoming Movies', url: '/explore/upcoming' },
 ];
 
 const tvNav = [
@@ -19,6 +20,7 @@ const tvNav = [
   { title: 'Top Rated Series', url: '/explore/top-series' },
   { title: 'Popular TV', url: '/explore/popular-tv' },
   { title: 'All TV', url: '/explore/all-tv' },
+  { title: 'Upcoming New TV', url: '/explore/upcoming-tv' },
 ];
 
 const meNav = [
