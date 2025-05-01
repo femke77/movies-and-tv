@@ -4,6 +4,7 @@ import { IItem } from '../interfaces/IItem';
 import { MemoizedItemCard } from './cards/ItemCard';
 import { useSuspenseStore } from '../state/store';
 import { useShallow } from 'zustand/react/shallow';
+
 interface IExploreProps {
   data: {
     pages: { results: IItem[] }[];
@@ -13,6 +14,7 @@ interface IExploreProps {
   isFetchingNextPage: boolean;
   isLoading: boolean;
   itemType?: string;
+  showRating?: boolean;
 }
 
 const Explore = memo(
@@ -23,6 +25,7 @@ const Explore = memo(
     isFetchingNextPage,
     isLoading,
     itemType = 'movie',
+    showRating = true,
   }: IExploreProps) => {
     const { ref, inView } = useInView();
     const bookmarks = useSuspenseStore(useShallow((state) => state.bookmarks));
@@ -45,7 +48,7 @@ const Explore = memo(
                 key={`${itemType}-${item.id}`}
                 item={item}
                 showGenres={true}
-                showRating={true}
+                showRating={showRating}
                 isBookmarked={
                   bookmarks
                     ? !!bookmarks?.[`${item.id}-${item.media_type || itemType}`]

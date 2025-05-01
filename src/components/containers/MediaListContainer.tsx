@@ -16,6 +16,14 @@ interface MediaListContainerProps {
   sortOptions: { id: number; name: string; value: string }[];
   voteCount?: number;
   genre?: string;
+  primary_release_date_gte?: string;
+  primary_release_date_lte?: string;
+  first_air_date_gte?: string;
+  first_air_date_lte?: string;
+  with_companies?: string;
+  with_networks?: string;
+  watch_providers?: string;
+  showRating?: boolean;
 }
 
 const MediaListContainer = ({
@@ -27,6 +35,14 @@ const MediaListContainer = ({
   sortOptions,
   voteCount,
   genre,
+  primary_release_date_gte,
+  primary_release_date_lte,
+  first_air_date_gte,
+  first_air_date_lte,
+  with_companies,
+  with_networks,
+  watch_providers,
+  showRating = true,
 }: MediaListContainerProps) => {
   const isInitialMount = useRef(true);
 
@@ -62,11 +78,11 @@ const MediaListContainer = ({
 
     sessionStorage.setItem(
       `${mediaType}-selectedGenres`,
-      JSON.stringify(selectedGenres),
+      JSON.stringify(selectedGenres)
     );
     sessionStorage.setItem(
       `${mediaType}-deSelectedGenres`,
-      JSON.stringify(deSelectedGenres),
+      JSON.stringify(deSelectedGenres)
     );
     sessionStorage.setItem(`${mediaType}-sortBy`, sortByOption);
   }, [
@@ -84,7 +100,7 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setDeSelectedGenres((deselected) =>
-          deselected.filter((genre) => genre !== genreId),
+          deselected.filter((genre) => genre !== genreId)
         );
 
         return [...prev, genreId];
@@ -98,23 +114,35 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setSelectedGenres((selected) =>
-          selected.filter((genre) => genre !== genreId),
+          selected.filter((genre) => genre !== genreId)
         );
         return [...prev, genreId];
       }
     });
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteDiscoverQuery(
-      mediaType,
-      selectedGenres?.join(','),
-      sortByOption,
-      '',
-      voteAverage,
-      voteCount,
-      deSelectedGenres.join(','),
-    );
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteDiscoverQuery(
+    mediaType,
+    selectedGenres?.join(','),
+    sortByOption,
+    '', //lang is english only
+    voteAverage,
+    voteCount,
+    deSelectedGenres.join(','),
+    with_companies,
+    with_networks,
+    watch_providers,
+    primary_release_date_gte,
+    primary_release_date_lte,
+    first_air_date_gte,
+    first_air_date_lte
+  );
 
   return (
     <div className='mt-24'>
@@ -125,7 +153,7 @@ const MediaListContainer = ({
         <h2 className='chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text mb-2 mt-4 lg:mb-6 mr-4'>
           {heading}
         </h2>
-        <div className={`mr-[50px] h-[50px] w-[300px] mb-6 lg:mb-0 pt-2 `}>
+        <div className={`mr-[50px] h-[50px] w-[300px] mt-4 mb-6 lg:mb-0 pt-2 `}>
           <SortByListbox
             selectedOption={sortByOption}
             setSelectedOption={setSortByOption}
@@ -149,6 +177,7 @@ const MediaListContainer = ({
           isFetchingNextPage={isFetchingNextPage}
           isLoading={isLoading}
           itemType={mediaType}
+          showRating={showRating}
         />
       )}
     </div>
