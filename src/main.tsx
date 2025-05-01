@@ -21,9 +21,7 @@ import TextSkeleton from './components/loadingSkeletons/TextSkeleton.tsx';
 import HistoryPageSkeleton from './components/loadingSkeletons/HistoryPageSkeleton.tsx';
 import ScrollToTop from './components/helpers/ScrollToTop.tsx';
 
-const TvUpcoming = lazy(
-  () => import('./pages/tvPages/TvUpcoming.tsx'),
-);
+const TvUpcoming = lazy(() => import('./pages/tvPages/TvUpcoming.tsx'));
 const MovieUpcoming = lazy(
   () => import('./pages/moviePages/MovieUpcoming.tsx'),
 );
@@ -152,7 +150,7 @@ const router = createBrowserRouter([
             path: 'upcoming',
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
-                <MovieUpcoming/>
+                <MovieUpcoming />
               </DelayedSuspense>
             ),
           },

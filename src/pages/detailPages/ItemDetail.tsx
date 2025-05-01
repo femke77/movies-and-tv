@@ -24,7 +24,6 @@ const ItemDetail = () => {
   const { data: item } = useItemDetail(item_type!, id!);
   const { data: quality } = useItemQuality(id!);
 
-
   const bookmark = useStore(
     useShallow((state) => state.bookmarks[`${id}-${item_type}`]),
   );

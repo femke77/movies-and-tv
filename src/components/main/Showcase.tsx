@@ -17,7 +17,7 @@ const Showcase = forwardRef<
   }
 >(function Showcase(
   { header, items, isLoading, media_type, linkTo, section_id, link_state },
-  ref
+  ref,
 ) {
   return (
     <div ref={ref} className='h-[475px]' id={section_id}>

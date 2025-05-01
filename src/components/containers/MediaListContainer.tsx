@@ -78,11 +78,11 @@ const MediaListContainer = ({
 
     sessionStorage.setItem(
       `${mediaType}-selectedGenres`,
-      JSON.stringify(selectedGenres)
+      JSON.stringify(selectedGenres),
     );
     sessionStorage.setItem(
       `${mediaType}-deSelectedGenres`,
-      JSON.stringify(deSelectedGenres)
+      JSON.stringify(deSelectedGenres),
     );
     sessionStorage.setItem(`${mediaType}-sortBy`, sortByOption);
   }, [
@@ -100,7 +100,7 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setDeSelectedGenres((deselected) =>
-          deselected.filter((genre) => genre !== genreId)
+          deselected.filter((genre) => genre !== genreId),
         );
 
         return [...prev, genreId];
@@ -114,35 +114,30 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setSelectedGenres((selected) =>
-          selected.filter((genre) => genre !== genreId)
+          selected.filter((genre) => genre !== genreId),
         );
         return [...prev, genreId];
       }
     });
   };
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteDiscoverQuery(
-    mediaType,
-    selectedGenres?.join(','),
-    sortByOption,
-    '', //lang is english only
-    voteAverage,
-    voteCount,
-    deSelectedGenres.join(','),
-    with_companies,
-    with_networks,
-    watch_providers,
-    primary_release_date_gte,
-    primary_release_date_lte,
-    first_air_date_gte,
-    first_air_date_lte
-  );
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteDiscoverQuery(
+      mediaType,
+      selectedGenres?.join(','),
+      sortByOption,
+      '', //lang is english only
+      voteAverage,
+      voteCount,
+      deSelectedGenres.join(','),
+      with_companies,
+      with_networks,
+      watch_providers,
+      primary_release_date_gte,
+      primary_release_date_lte,
+      first_air_date_gte,
+      first_air_date_lte,
+    );
 
   return (
     <div className='mt-24'>

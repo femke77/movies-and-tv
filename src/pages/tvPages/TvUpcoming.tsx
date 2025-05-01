@@ -21,7 +21,7 @@ const TvUpcoming = () => {
       voteAverage={0}
       voteCount={0}
       first_air_date_gte={dayjs().format('YYYY-MM-DD')}
-     first_air_date_lte={dayjs().add(30, 'day').format('YYYY-MM-DD')}
+      first_air_date_lte={dayjs().add(30, 'day').format('YYYY-MM-DD')}
       showRating={false}
     />
   );
