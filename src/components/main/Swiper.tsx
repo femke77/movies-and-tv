@@ -9,8 +9,7 @@ import Tooltip from '../modals/ToolTip';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { PauseIcon, Play} from 'lucide-react';
-
+import { PauseIcon, Play } from 'lucide-react';
 
 const Slide = lazy(() => import('./Slide'));
 
@@ -29,7 +28,6 @@ export default function SwiperElement() {
       swiperRef.current?.swiper.autoplay.start();
     }
     setIsPlaying(!isPlaying);
-   
   };
 
   const progressCircle = useRef<SVGSVGElement>(null);
@@ -39,7 +37,7 @@ export default function SwiperElement() {
     if (progressCircle.current && progressContent.current) {
       progressCircle.current.style.setProperty(
         '--progress',
-        (1 - progress).toString()
+        (1 - progress).toString(),
       );
       progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
     }
