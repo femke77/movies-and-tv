@@ -54,6 +54,21 @@ const WatchMovie = () => {
     }
   };
 
+  // useEffect(() => {
+  //   window.addEventListener('message', (event) => {
+  //     if (event.data ) {
+  //      console.log(event.data.message);
+  //     }});
+      
+  //     return () => {
+  //       window.removeEventListener('message', (event) => {
+  //         if (event.data) {
+  //           console.log(event.data);
+  //         }
+  //       });
+  //     }
+  //   }, [selectedServer]);
+
   useEffect(() => {
     window.addEventListener('mousemove', handleMouseMove);
 
@@ -175,7 +190,7 @@ const WatchMovie = () => {
               )}
               <iframe
                 ref={iframeRef}
-                id='iframe'
+                key={`${selectedServer}-${movie_id}`}
                 className='absolute top-0 left-0 w-full h-full bg-black'
                 width='100%'
                 height='100%'
