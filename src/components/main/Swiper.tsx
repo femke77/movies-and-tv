@@ -1,4 +1,4 @@
-import { useRef, useState, lazy, Suspense} from 'react';
+import { useRef, useState, lazy, Suspense } from 'react';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useTrendingAll } from '../../hooks/useTrendingWithLogoFetch';
@@ -12,7 +12,6 @@ import 'swiper/css/navigation';
 import { PauseIcon, Play } from 'lucide-react';
 import { useActivate } from 'react-activation';
 
-
 const Slide = lazy(() => import('./Slide'));
 
 export default function SwiperElement() {
@@ -23,13 +22,10 @@ export default function SwiperElement() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
- 
   // keep alive doesn't allow this to remount, isPlaying stays false, yet swiper always restarts if you go back to this page
   useActivate(() => {
-   setIsPlaying(true);
-   
-  })
-
+    setIsPlaying(true);
+  });
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -53,8 +49,6 @@ export default function SwiperElement() {
     }
   };
 
-
-  
   return (
     <>
       <Swiper
@@ -98,7 +92,10 @@ export default function SwiperElement() {
             </SwiperSlide>
           ))}
 
-        <div onClick={handlePlayPause} className='autoplay-pause cursor-pointer'>
+        <div
+          onClick={handlePlayPause}
+          className='autoplay-pause cursor-pointer'
+        >
           {isPlaying ? (
             <PauseIcon size={28} />
           ) : (
