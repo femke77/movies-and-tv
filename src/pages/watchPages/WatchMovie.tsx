@@ -20,11 +20,11 @@ const WatchMovie = () => {
   const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   useDocumentTitle(
     movie?.title
       ? `Watch ${movie?.title || 'Movie'}  | BingeBox`
-      : 'Loading... | BingeBox'
+      : 'Loading... | BingeBox',
   );
 
   const [isLoading, setIsLoading] = useState(false);
@@ -95,7 +95,7 @@ const WatchMovie = () => {
       movie.title,
       movie.backdrop_path,
       movie.release_date,
-      movie.runtime
+      movie.runtime,
     );
     // }, 180000);
 
@@ -213,7 +213,7 @@ const WatchMovie = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer
+                          (server) => server.value === selectedServer,
                         )?.name
                       }
                       ...{' '}
