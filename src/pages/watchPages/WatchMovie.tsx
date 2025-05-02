@@ -17,8 +17,10 @@ const WatchMovie = () => {
   const { data: movie } = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
 
+  const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   useDocumentTitle(
     movie?.title
       ? `Watch ${movie?.title || 'Movie'}  | BingeBox`
@@ -53,6 +55,21 @@ const WatchMovie = () => {
       }, 250); //unlock for 1/4 second
     }
   };
+
+  // useEffect(() => {
+  //   window.addEventListener('message', (event) => {
+  //     if (event.data ) {
+  //      console.log(event.data.message);
+  //     }});
+
+  //     return () => {
+  //       window.removeEventListener('message', (event) => {
+  //         if (event.data) {
+  //           console.log(event.data);
+  //         }
+  //       });
+  //     }
+  //   }, [selectedServer]);
 
   useEffect(() => {
     window.addEventListener('mousemove', handleMouseMove);
@@ -132,6 +149,11 @@ const WatchMovie = () => {
     }
     setTimeout(() => {
       iframeRef.current?.contentWindow?.location.replace(newURL);
+      // embed.su 404 causes extra history entry
+      if (historyRef.current < window.history.length) {
+        window.history.back();
+      }
+
       timeoutRef.current = setTimeout(() => {
         setIsLoading(false);
       }, 750);
@@ -175,7 +197,7 @@ const WatchMovie = () => {
               )}
               <iframe
                 ref={iframeRef}
-                id='iframe'
+                key={`${selectedServer}-${movie_id}`}
                 className='absolute top-0 left-0 w-full h-full bg-black'
                 width='100%'
                 height='100%'

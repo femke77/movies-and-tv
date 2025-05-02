@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useInfiniteDiscoverQuery } from '../../hooks/useSearchAndDiscover';
 import GenreSelector from '../selectors/GenreSelector';
-import Explore from '../ExploreDisplay';
+import Explore from './ExploreDisplay';
 import { IGenre } from '../../interfaces/IGenre';
 import SortByListbox from '../selectors/ListBox';
 import { useLocation } from 'react-router-dom';
