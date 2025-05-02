@@ -314,10 +314,10 @@ const WatchTV = () => {
               id='video-player'
               className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'
             >
-              {!unlocked && (
+              {/* {!unlocked && (
                 //  overlay that absorbs 'bad' clicks based on cursor state
                 <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer'></div>
-              )}
+              )} */}
               <iframe
                 ref={iframeRef}
                 key={`${selectedServer}-${series_id}`}
