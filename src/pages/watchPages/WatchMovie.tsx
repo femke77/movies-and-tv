@@ -20,7 +20,7 @@ const WatchMovie = () => {
   const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   useDocumentTitle(
     movie?.title
       ? `Watch ${movie?.title || 'Movie'}  | BingeBox`
@@ -191,10 +191,10 @@ const WatchMovie = () => {
           </div>
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'>
-              {!unlocked && (
+              {/* {!unlocked && (
                 //  overlay that absorbs 'bad' clicks based on cursor state
                 <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer' />
-              )}
+              )} */}
               <iframe
                 ref={iframeRef}
                 key={`${selectedServer}-${movie_id}`}
