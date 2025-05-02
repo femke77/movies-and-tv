@@ -19,7 +19,7 @@ const Home = () => {
     document.title = 'Home | BingeBox';
   });
   useEffect(() => {
-    // fixes the scroll position bug on page reload that was showing the contintue watching section
+    // fixes the scroll position bug on page reload that was showing the continue watching section as the top of the page
     const isPageReload = !window.performance
       .getEntriesByType('navigation')
       .some(
