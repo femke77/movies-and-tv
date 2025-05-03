@@ -16,24 +16,23 @@ const Slide = lazy(() => import('./Slide'));
 
 export default function SwiperElement() {
   const { data: items = [] } = useTrendingAll();
-  // subscribe to bookmarks array in zustand store for reactivity and don't use suspense b/c it will block the entire component
   const bookmarks = useStore(useShallow((state) => state.bookmarks));
+
   const swiperRef = useRef<{ swiper: SwiperClass } | null>(null);
   const lastIndexRef = useRef(0);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
-
   const handleSwiperInit = (swiper: any) => {
-    swiperRef.current = {swiper} ;
+    swiperRef.current = { swiper };
     // stop autoplay if paused
     if (!isPlaying) {
       swiper.autoplay?.stop();
     }
     // restore slide position
     if (lastIndexRef.current) {
-      swiper.slideTo(lastIndexRef.current, 0); 
+      swiper.slideTo(lastIndexRef.current, 0);
     }
   };
 
@@ -76,9 +75,10 @@ export default function SwiperElement() {
   return (
     <>
       <Swiper
-      onBeforeInit={(swiper) => {
-        swiperRef.current = {swiper};
-      }}
+        onBeforeInit={(swiper) => {
+          // makes sure ref is set before useActivate is called
+          swiperRef.current = { swiper };
+        }}
         onSwiper={handleSwiperInit}
         tabIndex={-1}
         onSlideChange={(swiper) => {
@@ -100,23 +100,22 @@ export default function SwiperElement() {
         speed={10}
       >
         {items.map((item, index) => (
-            <SwiperSlide key={`item-${item.id}`}>
-              <Suspense fallback={<SlideSkeleton />}>
-                <Slide
-                  slide={item}
-                  isVisible={index === currentIndex}
-                  currentIndex={index}
-                  movieList={items}
-                  isBookmarked={!!bookmarks?.[`${item.id}-${item.media_type}`]
-                     
-                  }
-                />
-              </Suspense>
-            </SwiperSlide>
-          ))}
+          <SwiperSlide key={`item-${item.id}`}>
+            <Suspense fallback={<SlideSkeleton />}>
+              <Slide
+                slide={item}
+                isVisible={index === currentIndex}
+                currentIndex={index}
+                movieList={items}
+                isBookmarked={!!bookmarks?.[`${item.id}-${item.media_type}`]}
+              />
+            </Suspense>
+          </SwiperSlide>
+        ))}
 
         <div
           onClick={handlePlayPause}
+          tabIndex={0}
           className='autoplay-pause cursor-pointer'
         >
           {isPlaying ? (
