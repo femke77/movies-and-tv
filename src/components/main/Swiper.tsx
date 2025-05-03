@@ -19,12 +19,36 @@ export default function SwiperElement() {
   // subscribe to bookmarks array in zustand store for reactivity and don't use suspense b/c it will block the entire component
   const bookmarks = useStore(useShallow((state) => state.bookmarks));
   const swiperRef = useRef<{ swiper: SwiperClass } | null>(null);
+  const lastIndexRef = useRef(0);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  // keep alive doesn't allow this to remount, isPlaying stays false, yet swiper always restarts if you go back to this page
+
+  const handleSwiperInit = (swiper: any) => {
+    swiperRef.current = {swiper} ;
+    // stop autoplay if paused
+    if (!isPlaying) {
+      swiper.autoplay?.stop();
+    }
+    // restore slide position
+    if (lastIndexRef.current) {
+      swiper.slideTo(lastIndexRef.current, 0); 
+    }
+  };
+
   useActivate(() => {
-    setIsPlaying(true);
+    const swiper = swiperRef.current?.swiper;
+    if (!swiper || swiper.destroyed) return;
+
+    swiper.update(); // force re-render/layout
+    swiper.slideTo(lastIndexRef.current || 0, 0);
+
+    if (isPlaying) {
+      swiper.autoplay?.start();
+    } else {
+      swiper.autoplay?.stop();
+    }
   });
 
   const handlePlayPause = () => {
@@ -43,7 +67,7 @@ export default function SwiperElement() {
     if (progressCircle.current && progressContent.current) {
       progressCircle.current.style.setProperty(
         '--progress',
-        (1 - progress).toString(),
+        (1 - progress).toString()
       );
       progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
     }
@@ -52,12 +76,14 @@ export default function SwiperElement() {
   return (
     <>
       <Swiper
-        onSwiper={(swiper) => {
-          swiperRef.current = { swiper };
-        }}
+      onBeforeInit={(swiper) => {
+        swiperRef.current = {swiper};
+      }}
+        onSwiper={handleSwiperInit}
         tabIndex={-1}
         onSlideChange={(swiper) => {
-          setCurrentIndex(swiper.activeIndex);
+          setCurrentIndex(swiper.realIndex);
+          if (swiper) lastIndexRef.current = swiper.activeIndex;
         }}
         spaceBetween={30}
         centeredSlides={true}
@@ -73,8 +99,7 @@ export default function SwiperElement() {
         onAutoplayTimeLeft={onAutoplayTimeLeft}
         speed={10}
       >
-        {items &&
-          items.map((item, index) => (
+        {items.map((item, index) => (
             <SwiperSlide key={`item-${item.id}`}>
               <Suspense fallback={<SlideSkeleton />}>
                 <Slide
@@ -82,10 +107,8 @@ export default function SwiperElement() {
                   isVisible={index === currentIndex}
                   currentIndex={index}
                   movieList={items}
-                  isBookmarked={
-                    bookmarks
-                      ? !!bookmarks?.[`${item.id}-${item.media_type}`]
-                      : false
+                  isBookmarked={!!bookmarks?.[`${item.id}-${item.media_type}`]
+                     
                   }
                 />
               </Suspense>

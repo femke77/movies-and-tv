@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import BackButton from '../components/buttons/BackBtn';
+import useDocumentTitle from '../hooks/usePageTitles';
+
 interface FAQItemProps {
   question: string;
   answer: string;
@@ -8,6 +10,7 @@ interface FAQItemProps {
 }
 
 const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
+  useDocumentTitle('FAQ | BingeBox');
   return (
     <div className='faq-item mb-4'>
       <div className='absolute top-20 left-3 z-1'>
@@ -40,7 +43,7 @@ const FAQPage = () => {
     {
       question: 'What about all these popups & redirects?',
       answer:
-        "We aren't putting those on you, they come from the servers we link to that allow you to stream content. To some extent it is understandable that content providers need money coming in, but we can't always be sure that the popups are safe. If you want to block the popups, the recommendations are as follows: 1) If you are on Safari IOS mobile, you can go into settings for Safari, and under advanced options you can find a toggle to verify the window.open function. This will stop everything and some of your taps will appear to do nothing.  2) On Chrome desktop, you can add poper blocker. 3) Firefox + uBlock is a good option. 4) Brave browser will help but on iOS it can't stop all the pop-ups. 4) If you use our site on a laptop/destop with a mouse, you'll note that again, some of your clicks don't do anything, because we are blocking some of the popups ourselves. We just don't have that level of control for many situations.",
+        "We aren't putting those on you, they come from the servers we link to that allow you to stream content. To some extent it is understandable that content providers need money coming in, but we can't always be sure that the popups are safe or appropriate. If you want to block the popups, the recommendations are as follows: 1) If you are on Safari IOS mobile, you can go into settings for Safari, and under advanced options, then feature flags, you can find a toggle to verify the window.open function. This will stop everything and some of your taps will appear to do nothing. This is the absolute most comprehensive approach. 2) On Chrome desktop, you can add poper blocker. 3) For Android, we think Firefox + uBlock is a good option. 4) Brave browser will help but on iOS it can't stop all the pop-ups and honestly isn't nearly as good as #1. 4) We are working on ad blocking options you will be able to opt into later.",
     },
     {
       question:
