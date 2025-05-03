@@ -24,7 +24,7 @@ export default function SwiperElement() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const handleSwiperInit = (swiper: any) => {
+  const handleSwiperInit = (swiper: SwiperClass) => {
     swiperRef.current = { swiper };
     // stop autoplay if paused
     if (!isPlaying) {
@@ -66,7 +66,7 @@ export default function SwiperElement() {
     if (progressCircle.current && progressContent.current) {
       progressCircle.current.style.setProperty(
         '--progress',
-        (1 - progress).toString()
+        (1 - progress).toString(),
       );
       progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
     }

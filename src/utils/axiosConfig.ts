@@ -21,6 +21,5 @@ export const TMDBClient = axios.create({
     Authorization: `Bearer ${TMDBBearerToken}`,
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    
   },
 });
