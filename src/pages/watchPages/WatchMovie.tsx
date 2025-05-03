@@ -43,7 +43,7 @@ const WatchMovie = () => {
     const cursor = getComputedStyle(el).cursor;
     // cursor is arrow when clickjack overlay is on
     if (cursor === 'pointer' && !unlocked) {
-      console.log('Cursor is pointer. Unlocking iframe interaction.');
+      // console.log('Cursor is pointer. Unlocking iframe interaction.');
 
       setUnlocked(true);
 
@@ -51,7 +51,7 @@ const WatchMovie = () => {
         clearTimeout(interactionTimeoutRef.current);
       interactionTimeoutRef.current = setTimeout(() => {
         setUnlocked(false);
-        console.log('Locking iframe interaction again.');
+        // console.log('Locking iframe interaction again.');
       }, 250); //unlock for 1/4 second
     }
   };
@@ -186,7 +186,7 @@ const WatchMovie = () => {
             )}
             {/* iphone safari doesn't support the FS api */}
             <div className={isIphoneSafari() || isIPad() ? 'invisible' : ''}>
-              <FullscreenBtn elementId='iframe' />
+              <FullscreenBtn elementId='iframe-movie' />
             </div>
           </div>
           <main>
@@ -198,6 +198,7 @@ const WatchMovie = () => {
               <iframe
                 ref={iframeRef}
                 key={`${selectedServer}-${movie_id}`}
+                id='iframe-movie'
                 className='absolute top-0 left-0 w-full h-full bg-black'
                 width='100%'
                 height='100%'

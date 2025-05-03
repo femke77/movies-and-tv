@@ -26,6 +26,7 @@ const tvNav = [
 const meNav = [
   { title: 'My Watchlist', url: '/account/saved' },
   { title: 'Watch & Search History', url: '/account/history' },
+  { title: 'FAQs', url: '/faqs' },
 ];
 
 export default function Navigation() {

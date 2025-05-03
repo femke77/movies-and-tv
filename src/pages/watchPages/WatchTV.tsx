@@ -88,7 +88,7 @@ const WatchTV = () => {
     const cursor = getComputedStyle(el).cursor;
     // cursor is arrow when clickjack overlay is on
     if (cursor === 'pointer' && !unlocked) {
-      console.log('Cursor is pointer. Unlocking iframe interaction.');
+      // console.log('Cursor is pointer. Unlocking iframe interaction.');
 
       setUnlocked(true);
 
@@ -96,7 +96,7 @@ const WatchTV = () => {
         clearTimeout(interactionTimeoutRef.current);
       interactionTimeoutRef.current = setTimeout(() => {
         setUnlocked(false);
-        console.log('Locking iframe interaction again.');
+        // console.log('Locking iframe interaction again.');
       }, 250); //unlock for 1/4 second
     }
   };
@@ -107,7 +107,7 @@ const WatchTV = () => {
       window.removeEventListener('mousemove', handleMouseMove);
 
       if (interactionTimeoutRef.current) {
-        console.log('Clearing timeout...');
+        // console.log('Clearing timeout...');
         clearTimeout(interactionTimeoutRef.current);
         interactionTimeoutRef.current = null;
       }
@@ -306,7 +306,7 @@ const WatchTV = () => {
             <div
               className={`${isIphoneSafari() || isIPad() ? 'invisible' : ''}`}
             >
-              <FullscreenBtn elementId='video-player' />
+              <FullscreenBtn elementId='iframe-tv' />
             </div>
           </div>
           <main>
@@ -321,6 +321,7 @@ const WatchTV = () => {
               <iframe
                 ref={iframeRef}
                 key={`${selectedServer}-${series_id}`}
+                id='iframe-tv'
                 className='absolute top-0 left-0 w-full h-full bg-black'
                 width='100%'
                 height='100%'

@@ -37,6 +37,7 @@ const NavMe = () => {
         </div>
         <MenuItemLink to='/account/saved' name='My Watchlist' />
         <MenuItemLink to='/account/history' name='Watch & Search History' />
+        <MenuItemLink to='/faqs' name='FAQs' />
       </MenuItems>
     </Menu>
   );
