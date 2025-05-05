@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import SwiperElement from '../components/main/Swiper';
 import ContinueWatching from '../components/main/ContinueWatching';
 import Network from '../components/main/Network';
@@ -19,7 +19,7 @@ const Home = () => {
     document.title = 'Home | BingeBox';
   });
   useEffect(() => {
-    // fixes the scroll position bug on page reload that was showing the contintue watching section
+    // fixes the scroll position bug on page reload that was showing the continue watching section as the top of the page
     const isPageReload = !window.performance
       .getEntriesByType('navigation')
       .some(
@@ -35,7 +35,9 @@ const Home = () => {
     <>
       <SwiperElement />
       <div className='mt-46'>
-        <ContinueWatching />
+        <Suspense fallback={<div className='h-96' />}>
+          <ContinueWatching />
+        </Suspense>
       </div>
 
       <div className='my-28'>

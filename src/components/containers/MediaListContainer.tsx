@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useInfiniteDiscoverQuery } from '../../hooks/useSearchAndDiscover';
 import GenreSelector from '../selectors/GenreSelector';
-import Explore from '../ExploreDisplay';
+import Explore from './ExploreDisplay';
 import { IGenre } from '../../interfaces/IGenre';
 import SortByListbox from '../selectors/ListBox';
 import { useLocation } from 'react-router-dom';
@@ -16,6 +16,14 @@ interface MediaListContainerProps {
   sortOptions: { id: number; name: string; value: string }[];
   voteCount?: number;
   genre?: string;
+  primary_release_date_gte?: string;
+  primary_release_date_lte?: string;
+  first_air_date_gte?: string;
+  first_air_date_lte?: string;
+  with_companies?: string;
+  with_networks?: string;
+  watch_providers?: string;
+  showRating?: boolean;
 }
 
 const MediaListContainer = ({
@@ -27,6 +35,14 @@ const MediaListContainer = ({
   sortOptions,
   voteCount,
   genre,
+  primary_release_date_gte,
+  primary_release_date_lte,
+  first_air_date_gte,
+  first_air_date_lte,
+  with_companies,
+  with_networks,
+  watch_providers,
+  showRating = true,
 }: MediaListContainerProps) => {
   const isInitialMount = useRef(true);
 
@@ -43,9 +59,12 @@ const MediaListContainer = ({
   });
 
   const [sortByOption, setSortByOption] = useState<string>(() => {
+    // reset the page's default sortBy if the path has changed
     if (location.pathname !== sessionStorage.getItem('lastPath')) {
+      sessionStorage.setItem(`${mediaType}-sortBy`, sortBy || '');
       return sortBy || '';
     }
+    // if the path is the same, use the saved sortBy from most recent selection
     const stored = sessionStorage.getItem(`${mediaType}-sortBy`);
     return stored || sortBy || '';
   });
@@ -110,10 +129,17 @@ const MediaListContainer = ({
       mediaType,
       selectedGenres?.join(','),
       sortByOption,
-      '',
+      '', //lang is english only
       voteAverage,
       voteCount,
       deSelectedGenres.join(','),
+      with_companies,
+      with_networks,
+      watch_providers,
+      primary_release_date_gte,
+      primary_release_date_lte,
+      first_air_date_gte,
+      first_air_date_lte,
     );
 
   return (
@@ -125,7 +151,7 @@ const MediaListContainer = ({
         <h2 className='chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text mb-2 mt-4 lg:mb-6 mr-4'>
           {heading}
         </h2>
-        <div className={`mr-[50px] h-[50px] w-[300px] mb-6 lg:mb-0 pt-2 `}>
+        <div className={`mr-[50px] h-[50px] w-[300px] mt-4 mb-6 lg:mb-0 pt-2 `}>
           <SortByListbox
             selectedOption={sortByOption}
             setSelectedOption={setSortByOption}
@@ -149,6 +175,7 @@ const MediaListContainer = ({
           isFetchingNextPage={isFetchingNextPage}
           isLoading={isLoading}
           itemType={mediaType}
+          showRating={showRating}
         />
       )}
     </div>

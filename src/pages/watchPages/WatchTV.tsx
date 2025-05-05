@@ -23,6 +23,7 @@ const WatchTV = () => {
   const VIEWING_PROGRESS_LIMIT = 250;
   const { servers } = serverData;
   const { addToContinueWatchingTv } = useStore();
+  const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
@@ -87,7 +88,7 @@ const WatchTV = () => {
     const cursor = getComputedStyle(el).cursor;
     // cursor is arrow when clickjack overlay is on
     if (cursor === 'pointer' && !unlocked) {
-      console.log('Cursor is pointer. Unlocking iframe interaction.');
+      // console.log('Cursor is pointer. Unlocking iframe interaction.');
 
       setUnlocked(true);
 
@@ -95,8 +96,8 @@ const WatchTV = () => {
         clearTimeout(interactionTimeoutRef.current);
       interactionTimeoutRef.current = setTimeout(() => {
         setUnlocked(false);
-        console.log('Locking iframe interaction again.');
-      }, 1000); //unlock for 1.5 seconds
+        // console.log('Locking iframe interaction again.');
+      }, 250); //unlock for 1/4 second
     }
   };
   useEffect(() => {
@@ -106,7 +107,7 @@ const WatchTV = () => {
       window.removeEventListener('mousemove', handleMouseMove);
 
       if (interactionTimeoutRef.current) {
-        console.log('Clearing timeout...');
+        // console.log('Clearing timeout...');
         clearTimeout(interactionTimeoutRef.current);
         interactionTimeoutRef.current = null;
       }
@@ -118,12 +119,12 @@ const WatchTV = () => {
   const { data: series } = useWatchDetails('tv', series_id!);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
-    String(selectedSeason)
+    String(selectedSeason),
   );
   useDocumentTitle(
     series?.original_name
       ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
-      : 'Loading... | BingeBox'
+      : 'Loading... | BingeBox',
   );
 
   useEffect(() => {
@@ -137,7 +138,7 @@ const WatchTV = () => {
       series.original_name,
       selectedSeason,
       selectedEpisode,
-      series.backdrop_path
+      series.backdrop_path,
     );
 
     // }, 180000);
@@ -183,12 +184,12 @@ const WatchTV = () => {
 
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgress)
+        JSON.stringify(updatedViewProgress),
       );
     } else {
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgressItem)
+        JSON.stringify(updatedViewProgressItem),
       );
     }
   }, [series_id, selectedSeason, selectedEpisode]);
@@ -260,6 +261,10 @@ const WatchTV = () => {
 
       iframeLoadRef.current = setTimeout(() => {
         iframeRef.current?.contentWindow?.location.replace(newURL);
+        // embed.su 404 causes extra history entry, this removes it.
+        if (historyRef.current < window.history.length) {
+          window.history.back();
+        }
         timeoutRef.current = setTimeout(() => {
           setIsLoading(false);
         }, 750);
@@ -301,7 +306,7 @@ const WatchTV = () => {
             <div
               className={`${isIphoneSafari() || isIPad() ? 'invisible' : ''}`}
             >
-              <FullscreenBtn elementId='video-player' />
+              <FullscreenBtn elementId='iframe-tv' />
             </div>
           </div>
           <main>
@@ -309,13 +314,14 @@ const WatchTV = () => {
               id='video-player'
               className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'
             >
-              {!unlocked && (
+              {/* {!unlocked && (
                 //  overlay that absorbs 'bad' clicks based on cursor state
                 <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer'></div>
-              )}
+              )} */}
               <iframe
                 ref={iframeRef}
-                id='player_iframe'
+                key={`${selectedServer}-${series_id}`}
+                id='iframe-tv'
                 className='absolute top-0 left-0 w-full h-full bg-black'
                 width='100%'
                 height='100%'
@@ -333,7 +339,7 @@ const WatchTV = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer
+                          (server) => server.value === selectedServer,
                         )?.name
                       }
                       ...{' '}
@@ -460,7 +466,7 @@ const WatchTV = () => {
                         <p className='text-white/70 text-sm truncate text-ellipsis'>
                           {
                             servers.find(
-                              (server) => server.value === selectedServer
+                              (server) => server.value === selectedServer,
                             )?.name
                           }
                         </p>

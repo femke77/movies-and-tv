@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import DraggableCarousel from '../containers/SimpleCarousel';
 import ConfirmModal from '../modals/ConfirmModal';
 import { ChevronRight } from 'lucide-react';
-import { useNonSuspenseStore, useStore } from '../../state/store';
+import { useStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
 import LazyImage from '../helpers/LazyImage';
 
@@ -21,9 +21,8 @@ interface WatchItem {
 
 const ContinueWatching = () => {
   const location = useLocation();
-  // useNonSuspense to avoid access to indexeddb blocking page load. History page will use useSuspense for the previous searches.
-  const continueWatching = useNonSuspenseStore(
-    useShallow((state) => state.continueWatching)
+  const continueWatching = useStore(
+    useShallow((state) => state.continueWatching),
   );
 
   const { removeFromContinueWatching, clearContinueWatching } = useStore();
@@ -50,7 +49,7 @@ const ContinueWatching = () => {
       | React.TouchEvent<HTMLButtonElement>
       | React.KeyboardEvent<HTMLButtonElement>,
     id: number,
-    media_type: string
+    media_type: string,
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -83,7 +82,7 @@ const ContinueWatching = () => {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    id: number
+    id: number,
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       setActiveItemId(id);
@@ -96,7 +95,8 @@ const ContinueWatching = () => {
     const items = carouselRef.current.querySelectorAll('[data-carousel-item]');
     const currentIndex = Array.from(items).findIndex(
       (item) =>
-        item === document.activeElement || item.contains(document.activeElement)
+        item === document.activeElement ||
+        item.contains(document.activeElement),
     );
 
     switch (e.key) {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import TrendingToggle from '../buttons/TrendingToggle';
-import Explore from '../ExploreDisplay';
+import Explore from './ExploreDisplay';
 import { useInfiniteTrendingQuery } from '../../hooks/useSearchAndDiscover';
 import BackButton from '../buttons/BackBtn';
 const TrendingContainer = ({

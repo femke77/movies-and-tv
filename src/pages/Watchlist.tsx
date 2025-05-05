@@ -1,4 +1,4 @@
-import { useStore } from '../state/store';
+import { useSuspenseStore } from '../state/store';
 import { ItemCard } from '../components/cards/ItemCard';
 import {
   useQueries,
@@ -15,7 +15,7 @@ import { useShallow } from 'zustand/react/shallow';
 
 const Watchlist = () => {
   useDocumentTitle('Your Watchlist | BingeBox');
-  const bookmarks = useStore(useShallow((state) => state.bookmarks));
+  const bookmarks = useSuspenseStore(useShallow((state) => state.bookmarks));
 
   const [filterType, setFilterType] = useState<string>('all');
   const queryClient = useQueryClient();

@@ -72,14 +72,14 @@ const Slide = ({
       if (slide.backdrop_path) {
         const bgImg = new Image();
         bgImg.onload = () => setHighResBgLoaded(true);
-        bgImg.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}&cache=true'`;
+        bgImg.src = `https://image.tmdb.org/t/p/w1280${slide.backdrop_path}?cache=true`;
       }
 
       // Preload poster
       if (slide.poster_path) {
         const posterImg = new Image();
         posterImg.onload = () => setPosterLoaded(true);
-        posterImg.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}&cache=true'`;
+        posterImg.src = `https://image.tmdb.org/t/p/w500${slide.poster_path}?cache=true`;
       }
 
       return () => {
@@ -97,7 +97,7 @@ const Slide = ({
       logoImg.onload = () => {
         setLogoStatus((prev) => ({ ...prev, loaded: true }));
       };
-      logoImg.src = `https://image.tmdb.org/t/p/w185${displayLogo}&cache=true'`;
+      logoImg.src = `https://image.tmdb.org/t/p/w185${displayLogo}?cache=true`;
     }
   }, [isVisible, currentIndex, displayLogo]);
 
@@ -120,11 +120,11 @@ const Slide = ({
     >
       <div
         className={clsx(`mt-12 absolute inset-0 bg-cover  bg-center md:bg-top transition-opacity 
-         duration-1500 ease-in-out ${
+         duration-1200 ease-in-out ${
            isVisible && highResBgLoaded ? 'opacity-100' : 'opacity-0'
          } z-0`)}
         style={{
-          backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}&cache=true')`,
+          backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}?cache=true')`,
         }}
       >
         {/* gradient overlays */}
@@ -192,12 +192,12 @@ const Slide = ({
                     <div className='relative h-[120px] flex items-center'>
                       {/* Safari-friendly image rendering */}
                       <img
-                        className={`h-auto max-h-[250px] transition-all duration-800 ease-in-out ${
+                        className={`h-auto max-h-[235px] py-2 transition-all duration-800 ease-in-out ${
                           logoStatus.visible && isVisible
                             ? 'opacity-100 transform-none'
                             : 'opacity-0 translate-y-2'
                         }`}
-                        src={`https://image.tmdb.org/t/p/w185${displayLogo}&cache=true'`}
+                        src={`https://image.tmdb.org/t/p/w185${displayLogo}?cache=true`}
                         alt={slide.title || slide.name}
                         width={250}
                         height={120}
@@ -227,7 +227,7 @@ const Slide = ({
             {/* Buttons section */}
             <div
               className={clsx(
-                `[@media(max-width:1050px)]:pl-5 flex flex-row flex-wrap items-center w-full justify-center [@media(min-width:1050px)]:justify-start pt-6 h-[50px]`,
+                `[@media(max-width:1050px)]:pl-7 flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start pt-6 h-[50px]`,
               )}
             >
               <div className='mr-5'>
@@ -249,7 +249,7 @@ const Slide = ({
                   <ButtonPlaceholder />
                 )}
               </div>
-              <div className='mr-5 rounded-[50%] cursor-pointer w-[64px] h-[64px] flex items-center bg-[#ffffff1a] border-2 border-white/20 backdrop-blur-[5px] hover:bg-gray-700'>
+              <div className='mr-5 rounded-[50%] cursor-pointer w-[64px] h-[64px] flex flex-shrink-0 items-center bg-[#ffffff1a] border-2 border-white/20 backdrop-blur-[5px] hover:bg-gray-700'>
                 {/* Bookmark */}
                 <div className='mx-auto mt-1 '>
                   <Tooltip
@@ -285,7 +285,7 @@ const Slide = ({
               className={`w-full h-auto rounded-lg object-cover transition-opacity duration-500 ${
                 posterLoaded ? 'opacity-100' : 'opacity-0'
               }`}
-              src={`https://image.tmdb.org/t/p/w500${slide.poster_path}&cache=true'`}
+              src={`https://image.tmdb.org/t/p/w500${slide.poster_path}?cache=true`}
               alt={slide.title || slide.name}
               loading='eager'
               width={320}

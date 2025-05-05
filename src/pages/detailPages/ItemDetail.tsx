@@ -8,7 +8,7 @@ import { getStrokeColor } from '../../utils/helpers';
 import { CastList } from '../../components/lists/CastList';
 import dayjs from 'dayjs';
 import BookmarkBtn from '../../components/buttons/BookmarkBtn';
-import { useSuspenseStore } from '../../state/store';
+import { useStore } from '../../state/store';
 import Share from '../../components/buttons/ShareButtons';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import BackButton from '../../components/buttons/BackBtn';
@@ -24,7 +24,7 @@ const ItemDetail = () => {
   const { data: item } = useItemDetail(item_type!, id!);
   const { data: quality } = useItemQuality(id!);
 
-  const bookmark = useSuspenseStore(
+  const bookmark = useStore(
     useShallow((state) => state.bookmarks[`${id}-${item_type}`]),
   );
 
@@ -61,7 +61,6 @@ const ItemDetail = () => {
         setLogoLoaded(true);
       };
     }
-    // TMDB provides a fake poster_path of nothing if image is not available
 
     if (item?.poster_path) {
       const lowResPoster = new Image();

@@ -17,12 +17,14 @@ const WatchMovie = () => {
   const { data: movie } = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
 
+  const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   useDocumentTitle(
     movie?.title
       ? `Watch ${movie?.title || 'Movie'}  | BingeBox`
-      : 'Loading... | BingeBox'
+      : 'Loading... | BingeBox',
   );
 
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +43,7 @@ const WatchMovie = () => {
     const cursor = getComputedStyle(el).cursor;
     // cursor is arrow when clickjack overlay is on
     if (cursor === 'pointer' && !unlocked) {
-      console.log('Cursor is pointer. Unlocking iframe interaction.');
+      // console.log('Cursor is pointer. Unlocking iframe interaction.');
 
       setUnlocked(true);
 
@@ -49,10 +51,25 @@ const WatchMovie = () => {
         clearTimeout(interactionTimeoutRef.current);
       interactionTimeoutRef.current = setTimeout(() => {
         setUnlocked(false);
-        console.log('Locking iframe interaction again.');
-      }, 1000); //unlock for 1 second
+        // console.log('Locking iframe interaction again.');
+      }, 250); //unlock for 1/4 second
     }
   };
+
+  // useEffect(() => {
+  //   window.addEventListener('message', (event) => {
+  //     if (event.data ) {
+  //      console.log(event.data.message);
+  //     }});
+
+  //     return () => {
+  //       window.removeEventListener('message', (event) => {
+  //         if (event.data) {
+  //           console.log(event.data);
+  //         }
+  //       });
+  //     }
+  //   }, [selectedServer]);
 
   useEffect(() => {
     window.addEventListener('mousemove', handleMouseMove);
@@ -78,7 +95,7 @@ const WatchMovie = () => {
       movie.title,
       movie.backdrop_path,
       movie.release_date,
-      movie.runtime
+      movie.runtime,
     );
     // }, 180000);
 
@@ -132,6 +149,11 @@ const WatchMovie = () => {
     }
     setTimeout(() => {
       iframeRef.current?.contentWindow?.location.replace(newURL);
+      // embed.su 404 causes extra history entry
+      if (historyRef.current < window.history.length) {
+        window.history.back();
+      }
+
       timeoutRef.current = setTimeout(() => {
         setIsLoading(false);
       }, 750);
@@ -163,22 +185,20 @@ const WatchMovie = () => {
               </p>
             )}
             {/* iphone safari doesn't support the FS api */}
-            <div
-              className={`${isIphoneSafari() || isIPad()} ? 'invisible' : ''
-              }`}
-            >
-              <FullscreenBtn elementId='iframe' />
+            <div className={isIphoneSafari() || isIPad() ? 'invisible' : ''}>
+              <FullscreenBtn elementId='iframe-movie' />
             </div>
           </div>
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'>
-            {!unlocked && (
-              //  overlay that absorbs 'bad' clicks based on cursor state
-              <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer' />
-            )}
+              {/* {!unlocked && (
+                //  overlay that absorbs 'bad' clicks based on cursor state
+                <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer' />
+              )} */}
               <iframe
                 ref={iframeRef}
-                id='iframe'
+                key={`${selectedServer}-${movie_id}`}
+                id='iframe-movie'
                 className='absolute top-0 left-0 w-full h-full bg-black'
                 width='100%'
                 height='100%'
@@ -194,7 +214,7 @@ const WatchMovie = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer
+                          (server) => server.value === selectedServer,
                         )?.name
                       }
                       ...{' '}
@@ -204,7 +224,7 @@ const WatchMovie = () => {
               )}
             </div>
 
-              {/* description */}
+            {/* description */}
             <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] p-[24px] mb-[24px]'>
               {movie && (
                 <WatchDescription

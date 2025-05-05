@@ -19,6 +19,7 @@ import { AliveScope, KeepAlive } from 'react-activation';
 import WatchPageSkeleton from './components/loadingSkeletons/WatchPageSkeleton.tsx';
 import TextSkeleton from './components/loadingSkeletons/TextSkeleton.tsx';
 import HistoryPageSkeleton from './components/loadingSkeletons/HistoryPageSkeleton.tsx';
+import ScrollToTop from './components/helpers/ScrollToTop.tsx';
 
 const AdFreeWatchTv = lazy(
   () => import('./pages/watchPages/AdFreeTestTV.tsx'),
@@ -26,6 +27,11 @@ const AdFreeWatchTv = lazy(
 const MovieAdFree = lazy(
   () => import('./pages/watchPages/AdFreeTestMovie.tsx'),
 );
+const MovieUpcoming = lazy(
+  () => import('./pages/moviePages/MovieUpcoming.tsx'),
+);
+const TvUpcoming = lazy(() => import('./pages/tvPages/TvUpcoming.tsx'));
+
 const History = lazy(() => import('./pages/watchPages/History.tsx'));
 const CastMemberDetail = lazy(
   () => import('./pages/detailPages/CastMemberDetail.tsx'),
@@ -67,7 +73,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     errorElement: <ChunkErrorHandler />,
-
+    // purposefully an empty div so the page ones show, but this must be here for the onRehydrateStorage/initStore to work
     element: <App />,
     children: [
       {
@@ -148,6 +154,14 @@ const router = createBrowserRouter([
             ),
           },
           {
+            path: 'upcoming',
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <MovieUpcoming />
+              </DelayedSuspense>
+            ),
+          },
+          {
             path: 'tv',
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
@@ -176,6 +190,14 @@ const router = createBrowserRouter([
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
                 <TvAll />
+              </DelayedSuspense>
+            ),
+          },
+          {
+            path: 'upcoming-tv',
+            element: (
+              <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
+                <TvUpcoming />
               </DelayedSuspense>
             ),
           },
@@ -233,7 +255,9 @@ const router = createBrowserRouter([
             path: 'saved',
             element: (
               <DelayedSuspense fallback={<ItemCardSkeletonGrid />}>
-                <Watchlist />
+                <ScrollToTop>
+                  <Watchlist />
+                </ScrollToTop>
               </DelayedSuspense>
             ),
           },
@@ -241,7 +265,9 @@ const router = createBrowserRouter([
             path: 'history',
             element: (
               <DelayedSuspense fallback={<HistoryPageSkeleton />}>
-                <History />
+                <ScrollToTop>
+                  <History />
+                </ScrollToTop>
               </DelayedSuspense>
             ),
           },
