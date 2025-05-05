@@ -59,9 +59,12 @@ const MediaListContainer = ({
   });
 
   const [sortByOption, setSortByOption] = useState<string>(() => {
+    // reset the page's default sortBy if the path has changed
     if (location.pathname !== sessionStorage.getItem('lastPath')) {
+      sessionStorage.setItem(`${mediaType}-sortBy`, sortBy || '');
       return sortBy || '';
     }
+    // if the path is the same, use the saved sortBy from most recent selection
     const stored = sessionStorage.getItem(`${mediaType}-sortBy`);
     return stored || sortBy || '';
   });
