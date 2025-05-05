@@ -119,8 +119,8 @@ export default function SwiperElement() {
           className='autoplay-pause cursor-pointer'
         >
           {isPlaying ? (
-             <Tooltip text='Pause' mb='mb-3'>
-            <PauseIcon size={24} />
+            <Tooltip text='Pause' mb='mb-3'>
+              <PauseIcon size={24} />
             </Tooltip>
           ) : (
             <Tooltip text='Play' mb='mb-3'>
