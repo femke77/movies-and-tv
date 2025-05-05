@@ -40,7 +40,7 @@ export default function SwiperElement() {
     const swiper = swiperRef.current?.swiper;
     if (!swiper || swiper.destroyed) return;
 
-    swiper.update(); // force re-render/layout
+    swiper.update(); // force re-render/layout since keep alive is not allowing a re-mount
     swiper.slideTo(lastIndexRef.current || 0, 0);
 
     if (isPlaying) {
@@ -119,10 +119,12 @@ export default function SwiperElement() {
           className='autoplay-pause cursor-pointer'
         >
           {isPlaying ? (
-            <PauseIcon size={28} />
+             <Tooltip text='Pause' mb='mb-2'>
+            <PauseIcon size={24} />
+            </Tooltip>
           ) : (
             <Tooltip text='Play' mb='mb-2'>
-              <Play size={28} />
+              <Play size={24} />
             </Tooltip>
           )}
         </div>
