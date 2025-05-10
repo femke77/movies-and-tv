@@ -120,7 +120,7 @@ export const useItemQuality = (id: string) => {
 
 //  Watch Movie or Watch TV details including list of season 1 episodes.
 export const useWatchDetails = (type: string, id: string) => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['watch-details', id, type],
     queryFn: async () => {
       if (!id) {
@@ -159,7 +159,7 @@ export const useWatchDetails = (type: string, id: string) => {
 
 // get TV show episodes for a specific season
 export const useTVSeasonEpisodes = (id: string, season_num: string) => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['tv-season-episodes', id, season_num],
     queryFn: async () => {
       if (!id || !season_num) {

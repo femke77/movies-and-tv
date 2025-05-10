@@ -146,7 +146,7 @@ const MovieAdFree = () => {
                 height='100%'
                 src={`/api/video/movie/${movie_id}`}
                 allow='encrypted-media'
-                sandbox='allow-scripts allow-same-origin allow-presentation'
+                sandbox='allow-scripts allow-same-origin'
                 allowFullScreen
               ></iframe>
               {isLoading && (

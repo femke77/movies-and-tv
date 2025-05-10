@@ -319,7 +319,7 @@ const AdFreeWatchTv = () => {
                   className='absolute top-0 left-0 w-full h-full bg-black'
                   width='100%'
                   height='100%'
-                  sandbox='allow-scripts allow-same-origin allow-presentation'
+                  sandbox='allow-scripts allow-same-origin'
                   allow='encrypted-media; autoplay;'
                   src={'about:blank'}
                   allowFullScreen
