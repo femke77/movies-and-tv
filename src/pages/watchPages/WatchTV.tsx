@@ -23,10 +23,12 @@ const WatchTV = () => {
   const VIEWING_PROGRESS_LIMIT = 250;
   const { servers } = serverData;
   const { addToContinueWatchingTv } = useStore();
+
   const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
+
   const { series_id } = useParams<{ series_id: string }>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -370,6 +372,7 @@ const WatchTV = () => {
                         )}
                       </div>
                     </div>
+                    {/* next/prev episode buttons */}
                     {episodes ? (
                       <div className='min-h-[36px] flex gap-2 my-3 mt-5 mx-5 sm:mx-0 '>
                         <WatchPrevBtn
@@ -451,7 +454,7 @@ const WatchTV = () => {
             </div>
           </main>
         </div>
-        {/* Sidebar */}
+        {/* sidebar */}
         <div className=' lg:w-[400px] lg:flex-shrink-0'>
           <div className='sidebar bg-[#1f1f1f] max-h-[900px] flex flex-col  rounded-lg'>
             <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
@@ -479,7 +482,7 @@ const WatchTV = () => {
                 />
               </div>
               <div className='season-nav mb-[16px]'>
-                {/* season nav here */}
+                {/* season nav buttons */}
                 <SeasonNavigation
                   selectedSeason={selectedSeason}
                   setSelectedSeason={setSelectedSeason}
@@ -488,9 +491,9 @@ const WatchTV = () => {
                 />
               </div>
             </div>
-            <div className='episode-list'>
-              {/* episode list here */}
-              {episodes && (
+            <div>
+              {/* episode list  */}
+              {episodes ? (
                 <EpisodeList
                   episodes={episodes?.episodes}
                   selectedSeason={selectedSeason}
@@ -498,6 +501,8 @@ const WatchTV = () => {
                   setSelectedEpisode={setSelectedEpisode}
                   setSelectedSeason={setSelectedSeason}
                 />
+              ) : (
+                <div className='episode-list-placeholder h-[700px] p-[16px] mb-3 ' />
               )}
             </div>
           </div>

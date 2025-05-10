@@ -142,7 +142,7 @@ Final deploy link TBD.
 
 ## How To Contribute
 
-This is not licensed as open source, but if you want to contribute please email me. 
+This is not licensed as open source, but if you want to contribute please email me (email is in the questions section). 
 
 ## Tests
 
