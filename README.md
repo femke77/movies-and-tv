@@ -4,6 +4,10 @@
 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white) ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![React Query](https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white) ![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white) ![HeadlessUI](https://img.shields.io/badge/Headless%20UI-66E3FF.svg?style=for-the-badge&logo=Headless-UI&logoColor=black) ![Zustand](https://img.shields.io/badge/react%20zustand-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 
+## License
+
+**NO LICENSE**. You may clone/fork this code for one reason only - you wish to study/play with the code for educational purposes. **I do not authorize anyone to take this code for purposes of deploying their own version and running this code as their own website for any reason whether financial gain is involved or not.**.  Please respect that and appreciate that I am happy to show code, discuss coding problems, and allow others to play with this code for their singular, personal improvement because I am an educator and want to support others in their learning/growth as long as deployment is not a part of that process.
+
 ## Description ✏️
 
 A place to find TV shows and movies, keep track of them, stream anything and have a great time!
@@ -138,7 +142,7 @@ Final deploy link TBD.
 
 ## How To Contribute
 
-Fork the repository and make a pull request with your new code.
+This is not licensed as open source, but if you want to contribute please email me. 
 
 ## Tests
 
