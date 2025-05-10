@@ -23,10 +23,12 @@ const WatchTV = () => {
   const VIEWING_PROGRESS_LIMIT = 250;
   const { servers } = serverData;
   const { addToContinueWatchingTv } = useStore();
+
   const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
+
   const { series_id } = useParams<{ series_id: string }>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -119,12 +121,12 @@ const WatchTV = () => {
   const { data: series } = useWatchDetails('tv', series_id!);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
-    String(selectedSeason),
+    String(selectedSeason)
   );
   useDocumentTitle(
     series?.original_name
       ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
-      : 'Loading... | BingeBox',
+      : 'Loading... | BingeBox'
   );
 
   useEffect(() => {
@@ -138,7 +140,7 @@ const WatchTV = () => {
       series.original_name,
       selectedSeason,
       selectedEpisode,
-      series.backdrop_path,
+      series.backdrop_path
     );
 
     // }, 180000);
@@ -184,12 +186,12 @@ const WatchTV = () => {
 
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgress),
+        JSON.stringify(updatedViewProgress)
       );
     } else {
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgressItem),
+        JSON.stringify(updatedViewProgressItem)
       );
     }
   }, [series_id, selectedSeason, selectedEpisode]);
@@ -339,7 +341,7 @@ const WatchTV = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer,
+                          (server) => server.value === selectedServer
                         )?.name
                       }
                       ...{' '}
@@ -466,7 +468,7 @@ const WatchTV = () => {
                         <p className='text-white/70 text-sm truncate text-ellipsis'>
                           {
                             servers.find(
-                              (server) => server.value === selectedServer,
+                              (server) => server.value === selectedServer
                             )?.name
                           }
                         </p>
@@ -488,9 +490,9 @@ const WatchTV = () => {
                 />
               </div>
             </div>
-            <div className='episode-list'>
+            <div>
               {/* episode list here */}
-              {episodes && (
+              {episodes ? (
                 <EpisodeList
                   episodes={episodes?.episodes}
                   selectedSeason={selectedSeason}
@@ -498,6 +500,8 @@ const WatchTV = () => {
                   setSelectedEpisode={setSelectedEpisode}
                   setSelectedSeason={setSelectedSeason}
                 />
+              ) : (
+                <div className='episode-list-placeholder h-[700px]  p-[16px] mb-3 ' />
               )}
             </div>
           </div>
