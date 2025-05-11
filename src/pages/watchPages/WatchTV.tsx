@@ -28,6 +28,7 @@ const WatchTV = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
+  const prevSeasonLengthRef = useRef<number>(0);
 
   const { series_id } = useParams<{ series_id: string }>();
   const [isLoading, setIsLoading] = useState(true);
@@ -79,7 +80,7 @@ const WatchTV = () => {
   });
 
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
-  const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
+  // const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
   const [unlocked, setUnlocked] = useState(false);
   const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -121,17 +122,19 @@ const WatchTV = () => {
   const { data: series } = useWatchDetails('tv', series_id!);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
-    String(selectedSeason),
+    String(selectedSeason)
   );
+
   useDocumentTitle(
     series?.original_name
       ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
-      : 'Loading... | BingeBox',
+      : 'Loading... | BingeBox'
   );
 
   useEffect(() => {
     if (!series) return;
-
+    
+    // add to continue watching list
     // setTimeout(() => {
     addToContinueWatchingTv(
       Number(series_id!),
@@ -140,23 +143,19 @@ const WatchTV = () => {
       series.original_name,
       selectedSeason,
       selectedEpisode,
-      series.backdrop_path,
+      series.backdrop_path
     );
 
     // }, 180000);
-    // es-lint-disable-next-line react-hooks/exhaustive-deps
-  }, [series_id, series, selectedSeason, selectedEpisode]);
 
-  useEffect(() => {
+    // keep track of previous season length to shift when moving to a new season
     if (episodes) {
       // Shift previous season length when moving to a new season
-      setPreviousSeasonLength(currentSeasonLength);
+      prevSeasonLengthRef.current = currentSeasonLength;
       setCurrentSeasonLength(episodes?.episodes?.length);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedSeason, episodes]);
 
-  useEffect(() => {
+    // update viewing progress in local storage
     const updatedViewProgressItem = {
       [`tv-${series_id}`]: {
         season: selectedSeason,
@@ -186,15 +185,15 @@ const WatchTV = () => {
 
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgress),
+        JSON.stringify(updatedViewProgress)
       );
     } else {
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgressItem),
+        JSON.stringify(updatedViewProgressItem)
       );
     }
-  }, [series_id, selectedSeason, selectedEpisode]);
+  }, [series_id, series, selectedSeason, selectedEpisode]);
 
   // when page is remounted, user will see loading spinner for 750ms
   useEffect(() => {
@@ -341,7 +340,7 @@ const WatchTV = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer,
+                          (server) => server.value === selectedServer
                         )?.name
                       }
                       ...{' '}
@@ -380,7 +379,7 @@ const WatchTV = () => {
                           setSelectedEpisode={setSelectedEpisode}
                           selectedSeason={selectedSeason}
                           setSelectedSeason={setSelectedSeason}
-                          previousSeasonLength={previousSeasonLength}
+                          previousSeasonLength={prevSeasonLengthRef.current}
                         />
                         <WatchNextBtn
                           selectedEpisode={selectedEpisode}
@@ -469,7 +468,7 @@ const WatchTV = () => {
                         <p className='text-white/70 text-sm truncate text-ellipsis'>
                           {
                             servers.find(
-                              (server) => server.value === selectedServer,
+                              (server) => server.value === selectedServer
                             )?.name
                           }
                         </p>
