@@ -204,7 +204,6 @@ const Slide = ({
                         onLoad={() =>
                           setLogoStatus((prev) => ({ ...prev, loaded: true }))
                         }
-                    
                       />
                     </div>
                   ) : (
