@@ -366,7 +366,7 @@ const WatchTV = () => {
                             {episodes?.episodes?.[selectedEpisode - 1]?.name}
                           </span>
                         ) : (
-                          <span className='ml-3 text-center min-h-[20px]'>
+                          <span className='ml-3 text-center min-h-[30px]'>
                             Loading...
                           </span>
                         )}
