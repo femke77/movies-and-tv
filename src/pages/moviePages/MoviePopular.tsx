@@ -22,7 +22,7 @@ const MoviePopular = () => {
       sortOptions={sortOptions}
       voteCount={500}
       voteAverage={5}
-      genre={state && state.genre}
+      genre={state?.genre}
     />
   );
 };

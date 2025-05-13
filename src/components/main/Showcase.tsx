@@ -13,7 +13,7 @@ const Showcase = forwardRef<
     media_type: string;
     linkTo: string;
     section_id: string;
-    link_state?: { time?: string; genre?: string };
+    link_state?: { time?: string; genre?: string; provider?: number };
   }
 >(function Showcase(
   { header, items, isLoading, media_type, linkTo, section_id, link_state },

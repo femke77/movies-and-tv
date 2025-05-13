@@ -21,6 +21,7 @@ interface MediaListContainerProps {
   primary_release_date_lte?: string;
   first_air_date_gte?: string;
   first_air_date_lte?: string;
+  watchProvider?: string;
   with_companies?: string;
   with_networks?: string;
   showRating?: boolean;
@@ -39,6 +40,7 @@ const MediaListContainer = ({
   primary_release_date_lte,
   first_air_date_gte,
   first_air_date_lte,
+  watchProvider,
   with_companies,
   with_networks,
   showRating = true,
@@ -69,11 +71,13 @@ const MediaListContainer = ({
   });
 
   const [watchProviderOption, setWatchProviderOption] = useState<string>(() => {
+    if (location.pathname !== sessionStorage.getItem('lastPath')) {
+      sessionStorage.setItem(`watchProvider`, watchProvider || '');
+      return watchProvider || '';
+    }
     const stored = sessionStorage.getItem(`watchProvider`);
-    return stored || '';
+    return watchProvider || stored || '';
   });
-
-  console.log(watchProviderOption, 'watchProviderOption');
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -82,6 +86,7 @@ const MediaListContainer = ({
       if (genre) {
         setSelectedGenres([genre]);
       }
+
       return;
     }
     sessionStorage.setItem('watchProvider', watchProviderOption);

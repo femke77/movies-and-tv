@@ -30,11 +30,9 @@ const Provider = ({
         items={items}
         isLoading={isLoading}
         media_type={media_type}
-        linkTo={
-          media_type === 'tv' ? `/explore/popular-tv` : `/explore/popular`
-        }
+        linkTo={media_type === 'tv' ? `/explore/all-tv` : `/explore/all-movies`}
         section_id={`${provider_name}-section`}
-        link_state={{ genre: genre }}
+        link_state={{ genre: genre, provider: provider_id }}
       />
     </>
   );
