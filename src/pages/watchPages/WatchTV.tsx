@@ -445,7 +445,7 @@ const WatchTV = () => {
                 <WatchDescription
                   title={series?.original_name}
                   rt={episodes?.episodes?.[selectedEpisode - 1]?.runtime}
-                  date={series?.first_air_date}
+                  date={episodes?.episodes?.[selectedEpisode - 1]?.air_date}
                   overview={episodes?.episodes?.[selectedEpisode - 1]?.overview}
                 />
               )}
