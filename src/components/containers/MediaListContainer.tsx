@@ -3,9 +3,10 @@ import { useInfiniteDiscoverQuery } from '../../hooks/useSearchAndDiscover';
 import GenreSelector from '../selectors/GenreSelector';
 import Explore from './ExploreDisplay';
 import { IGenre } from '../../interfaces/IGenre';
-import SortByListbox from '../selectors/ListBox';
+import Listbox from '../selectors/ListBox';
 import { useLocation } from 'react-router-dom';
 import BackButton from '../buttons/BackBtn';
+import providers from '../../utils/data/providers.json';
 
 interface MediaListContainerProps {
   mediaType: 'movie' | 'tv';
@@ -20,9 +21,9 @@ interface MediaListContainerProps {
   primary_release_date_lte?: string;
   first_air_date_gte?: string;
   first_air_date_lte?: string;
+  watchProvider?: string;
   with_companies?: string;
   with_networks?: string;
-  watch_providers?: string;
   showRating?: boolean;
 }
 
@@ -39,9 +40,9 @@ const MediaListContainer = ({
   primary_release_date_lte,
   first_air_date_gte,
   first_air_date_lte,
+  watchProvider,
   with_companies,
   with_networks,
-  watch_providers,
   showRating = true,
 }: MediaListContainerProps) => {
   const isInitialMount = useRef(true);
@@ -69,6 +70,15 @@ const MediaListContainer = ({
     return stored || sortBy || '';
   });
 
+  const [watchProviderOption, setWatchProviderOption] = useState<string>(() => {
+    if (location.pathname !== sessionStorage.getItem('lastPath')) {
+      sessionStorage.setItem(`watchProvider`, watchProvider || '');
+      return watchProvider || '';
+    }
+    const stored = sessionStorage.getItem(`watchProvider`);
+    return watchProvider || stored || '';
+  });
+
   useEffect(() => {
     if (isInitialMount.current) {
       sessionStorage.setItem('lastPath', location.pathname);
@@ -76,9 +86,10 @@ const MediaListContainer = ({
       if (genre) {
         setSelectedGenres([genre]);
       }
+
       return;
     }
-
+    sessionStorage.setItem('watchProvider', watchProviderOption);
     sessionStorage.setItem(
       `${mediaType}-selectedGenres`,
       JSON.stringify(selectedGenres),
@@ -94,6 +105,7 @@ const MediaListContainer = ({
     deSelectedGenres,
     sortByOption,
     mediaType,
+    watchProviderOption,
     location.pathname,
   ]);
 
@@ -135,7 +147,7 @@ const MediaListContainer = ({
       deSelectedGenres.join(','),
       with_companies,
       with_networks,
-      watch_providers,
+      watchProviderOption,
       primary_release_date_gte,
       primary_release_date_lte,
       first_air_date_gte,
@@ -151,22 +163,32 @@ const MediaListContainer = ({
         <h2 className='chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text mb-2 mt-4 lg:mb-6 mr-4'>
           {heading}
         </h2>
-        <div className={`mr-[50px] h-[50px] w-[300px] mt-4 mb-6 lg:mb-0 pt-2 `}>
-          <SortByListbox
+        <div
+          className={`mr-[50px] h-[50px] w-[300px] mt-0 mb-14 lg:mb-0 pt-2 `}
+        >
+          <Listbox
             selectedOption={sortByOption}
             setSelectedOption={setSortByOption}
             availableOptions={sortOptions}
           />
+          <div className='mt-3'>
+            <Listbox
+              selectedOption={watchProviderOption}
+              setSelectedOption={setWatchProviderOption}
+              availableOptions={providers}
+            />
+          </div>
         </div>
       </div>
-      <GenreSelector
-        genres={genres}
-        onGenreToggle={toggleGenre}
-        selectedGenres={selectedGenres}
-        deselectedGenres={deSelectedGenres}
-        onUnwantedGenreToggle={toggleUnwantedGenre}
-      />
-
+      <div>
+        <GenreSelector
+          genres={genres}
+          onGenreToggle={toggleGenre}
+          selectedGenres={selectedGenres}
+          deselectedGenres={deSelectedGenres}
+          onUnwantedGenreToggle={toggleUnwantedGenre}
+        />
+      </div>
       {data && (
         <Explore
           data={data}

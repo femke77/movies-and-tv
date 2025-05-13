@@ -23,10 +23,14 @@ const WatchTV = () => {
   const VIEWING_PROGRESS_LIMIT = 250;
   const { servers } = serverData;
   const { addToContinueWatchingTv } = useStore();
+
   const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
+  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const prevSeasonLengthRef = useRef<number>(0);
+
   const { series_id } = useParams<{ series_id: string }>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -77,9 +81,7 @@ const WatchTV = () => {
   });
 
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
-  const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
   const [unlocked, setUnlocked] = useState(false);
-  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseMove = (e: MouseEvent) => {
     const el = document.elementFromPoint(e.clientX, e.clientY);
@@ -121,6 +123,7 @@ const WatchTV = () => {
     series_id ?? '',
     String(selectedSeason),
   );
+
   useDocumentTitle(
     series?.original_name
       ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
@@ -130,6 +133,7 @@ const WatchTV = () => {
   useEffect(() => {
     if (!series) return;
 
+    // add to continue watching list
     // setTimeout(() => {
     addToContinueWatchingTv(
       Number(series_id!),
@@ -142,19 +146,15 @@ const WatchTV = () => {
     );
 
     // }, 180000);
-    // es-lint-disable-next-line react-hooks/exhaustive-deps
-  }, [series_id, series, selectedSeason, selectedEpisode]);
 
-  useEffect(() => {
+    // keep track of previous season length to shift when moving to a new season
     if (episodes) {
       // Shift previous season length when moving to a new season
-      setPreviousSeasonLength(currentSeasonLength);
+      prevSeasonLengthRef.current = currentSeasonLength;
       setCurrentSeasonLength(episodes?.episodes?.length);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedSeason, episodes]);
 
-  useEffect(() => {
+    // update viewing progress in local storage
     const updatedViewProgressItem = {
       [`tv-${series_id}`]: {
         season: selectedSeason,
@@ -192,7 +192,7 @@ const WatchTV = () => {
         JSON.stringify(updatedViewProgressItem),
       );
     }
-  }, [series_id, selectedSeason, selectedEpisode]);
+  }, [series_id, series, selectedSeason, selectedEpisode]);
 
   // when page is remounted, user will see loading spinner for 750ms
   useEffect(() => {
@@ -364,12 +364,13 @@ const WatchTV = () => {
                             {episodes?.episodes?.[selectedEpisode - 1]?.name}
                           </span>
                         ) : (
-                          <span className='ml-3 text-center min-h-[20px]'>
+                          <span className='ml-3 text-center min-h-[30px]'>
                             Loading...
                           </span>
                         )}
                       </div>
                     </div>
+                    {/* next/prev episode buttons */}
                     {episodes ? (
                       <div className='min-h-[36px] flex gap-2 my-3 mt-5 mx-5 sm:mx-0 '>
                         <WatchPrevBtn
@@ -377,7 +378,7 @@ const WatchTV = () => {
                           setSelectedEpisode={setSelectedEpisode}
                           selectedSeason={selectedSeason}
                           setSelectedSeason={setSelectedSeason}
-                          previousSeasonLength={previousSeasonLength}
+                          previousSeasonLength={prevSeasonLengthRef.current}
                         />
                         <WatchNextBtn
                           selectedEpisode={selectedEpisode}
@@ -451,7 +452,7 @@ const WatchTV = () => {
             </div>
           </main>
         </div>
-        {/* Sidebar */}
+        {/* sidebar */}
         <div className=' lg:w-[400px] lg:flex-shrink-0'>
           <div className='sidebar bg-[#1f1f1f] max-h-[900px] flex flex-col  rounded-lg'>
             <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
@@ -479,7 +480,7 @@ const WatchTV = () => {
                 />
               </div>
               <div className='season-nav mb-[16px]'>
-                {/* season nav here */}
+                {/* season nav buttons */}
                 <SeasonNavigation
                   selectedSeason={selectedSeason}
                   setSelectedSeason={setSelectedSeason}
@@ -488,9 +489,9 @@ const WatchTV = () => {
                 />
               </div>
             </div>
-            <div className='episode-list'>
-              {/* episode list here */}
-              {episodes && (
+            <div>
+              {/* episode list  */}
+              {episodes ? (
                 <EpisodeList
                   episodes={episodes?.episodes}
                   selectedSeason={selectedSeason}
@@ -498,6 +499,8 @@ const WatchTV = () => {
                   setSelectedEpisode={setSelectedEpisode}
                   setSelectedSeason={setSelectedSeason}
                 />
+              ) : (
+                <div className='episode-list-placeholder h-[700px] p-[16px] mb-3 ' />
               )}
             </div>
           </div>
