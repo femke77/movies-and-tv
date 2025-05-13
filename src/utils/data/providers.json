@@ -1,108 +1,139 @@
 [
   {
+    "id": 0,
+    "name": "All Providers",
+    "value": ""
+  },
+  {
+    "id": 1,
     "name": "Netflix",
-    "provider_id": 8
+    "value": "8"
   },
   {
+    "id": 2,
     "name": "Disney+",
-    "provider_id": 337
+    "value": "337"
   },
   {
+    "id": 3,
     "name": "Amazon Prime Video",
-    "provider_id": 9
+    "value": "9"
   },
   {
+    "id": 4,
     "name": "Apple TV+",
-    "provider_id": 350
+    "value": "350"
   },
   {
+    "id": 5,
     "name": "Amazon Video",
-    "provider_id": 10
+    "value": "10"
   },
   {
+    "id": 6,
     "name": "Hulu",
-    "provider_id": 15
+    "value": "15"
   },
   {
+    "id": 7,
     "name": "Max",
-    "provider_id": 1899
+    "value": "1899"
   },
   {
+    "id": 8,
     "name": "Peacock Premium",
-    "provider_id": 386
+    "value": "386"
   },
   {
+    "id": 9,
     "name": "Paramount+",
-    "provider_id": 531
+    "value": "531"
   },
   {
+    "id": 10,
     "name": "Paramount+ with Showtime",
-    "provider_id": 1770
+    "value": "1770"
   },
   {
+    "id": 11,
     "name": "AMC+",
-    "provider_id": 526
+    "value": "526"
   },
   {
+    "id": 12,
     "name": "Starz",
-    "provider_id": 43
+    "value": "43"
   },
   {
+    "id": 13,
     "name": "FXNow",
-    "provider_id": 123
+    "value": "123"
   },
   {
+    "id": 14,
     "name": "MGM+",
-    "provider_id": 34
+    "value": "34"
   },
   {
+    "id": 15,
     "name": "Shudder",
-    "provider_id": 99
+    "value": "99"
   },
   {
+    "id": 16,
     "name": "Screambox",
-    "provider_id": 185
+    "value": "185"
   },
   {
+    "id": 17,
     "name": "Sundance Now",
-    "provider_id": 143
+    "value": "143"
   },
   {
+    "id": 18,
     "name": "BritBox",
-    "provider_id": 151
+    "value": "151"
   },
   {
+    "id": 19,
     "name": "MUBI",
-    "provider_id": 11
+    "value": "11"
   },
   {
+    "id": 20,
     "name": "Lifetime Movie Club",
-    "provider_id": 284
+    "value": "284"
   },
   {
+    "id": 21,
     "name": "USA Network",
-    "provider_id": 322
+    "value": "322"
   },
   {
+    "id": 22,
     "name": "TCM",
-    "provider_id": 361
+    "value": "361"
   },
   {
+    "id": 23,
     "name": "TNT",
-    "provider_id": 363
+    "value": "363"
   },
 
   {
+    "id": 24,
     "name": "BBC America",
-    "provider_id": 397
+    "value": "397"
   },
 
   {
+    "id": 25,
     "name": "ESPN",
-    "provider_id": 1718
+    "value": "1718"
   },
   {
+    "id": 26,
     "name": "BET+",
-    "provider_id": 1759
+    "value": "1759"
   }
 ]
