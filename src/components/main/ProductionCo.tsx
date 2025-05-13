@@ -7,7 +7,7 @@ const ProductionCo = ({
   company_name,
   company_id,
   header,
-  provider_id
+  provider_id,
 }: {
   company_name: string;
   company_id: number;

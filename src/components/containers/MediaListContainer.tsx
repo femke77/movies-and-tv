@@ -8,7 +8,6 @@ import { useLocation } from 'react-router-dom';
 import BackButton from '../buttons/BackBtn';
 import providers from '../../utils/data/providers.json';
 
-
 interface MediaListContainerProps {
   mediaType: 'movie' | 'tv';
   heading: string;
@@ -72,14 +71,13 @@ const MediaListContainer = ({
   });
 
   const [watchProviderOption, setWatchProviderOption] = useState<string>(() => {
-      if (location.pathname !== sessionStorage.getItem('lastPath')) {
+    if (location.pathname !== sessionStorage.getItem('lastPath')) {
       sessionStorage.setItem(`watchProvider`, watchProvider || '');
       return watchProvider || '';
     }
     const stored = sessionStorage.getItem(`watchProvider`);
     return watchProvider || stored || '';
   });
-
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -88,7 +86,7 @@ const MediaListContainer = ({
       if (genre) {
         setSelectedGenres([genre]);
       }
-     
+
       return;
     }
     sessionStorage.setItem('watchProvider', watchProviderOption);

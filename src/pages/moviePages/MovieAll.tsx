@@ -11,7 +11,6 @@ const MovieAll = () => {
   if (!genres) return null;
   if (!sortOptions) return null;
 
-  
   return (
     <MediaListContainer
       mediaType='movie'
@@ -21,7 +20,7 @@ const MovieAll = () => {
       sortOptions={sortOptions}
       voteAverage={0}
       voteCount={0}
-      watchProvider={(state && String(state?.provider)) || ""}
+      watchProvider={(state && String(state?.provider)) || ''}
     />
   );
 };

@@ -22,9 +22,8 @@ export default function ListBoxComp({
   setSelectedOption,
   availableOptions,
 }: IListBox) {
-
   console.log('selectedOption', selectedOption);
-  
+
   return (
     <div className='w-full  mr-4 hover:translate-[1px] rounded-md  z-50 '>
       <Listbox value={selectedOption} onChange={setSelectedOption}>

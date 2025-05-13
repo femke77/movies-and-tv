@@ -20,7 +20,7 @@ const TvAll = () => {
       voteAverage={0}
       voteCount={0}
       sortOptions={sortOptions}
-      watchProvider={(state && String(state?.provider)) || ""}
+      watchProvider={(state && String(state?.provider)) || ''}
     />
   );
 };

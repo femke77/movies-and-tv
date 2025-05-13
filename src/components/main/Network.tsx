@@ -5,7 +5,7 @@ const Network = ({
   network_name,
   network_id,
   header,
-  provider_id
+  provider_id,
 }: {
   network_name: string;
   network_id: number;
@@ -30,7 +30,7 @@ const Network = ({
         media_type='tv'
         linkTo='/explore/all-tv'
         section_id={`${network_name}-section`}
-        link_state={{provider: provider_id}}
+        link_state={{ provider: provider_id }}
       />
     </>
   );

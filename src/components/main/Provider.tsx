@@ -7,14 +7,12 @@ const Provider = ({
   header,
   media_type,
   genre,
-
 }: {
   provider_name: string;
   provider_id: number;
   header: string;
   media_type: 'movie' | 'tv';
   genre?: string;
-
 }) => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const { data: items = [], isLoading } = useProvider(
@@ -32,9 +30,7 @@ const Provider = ({
         items={items}
         isLoading={isLoading}
         media_type={media_type}
-        linkTo={
-          media_type === 'tv' ? `/explore/all-tv` : `/explore/all-movies`
-        }
+        linkTo={media_type === 'tv' ? `/explore/all-tv` : `/explore/all-movies`}
         section_id={`${provider_name}-section`}
         link_state={{ genre: genre, provider: provider_id }}
       />

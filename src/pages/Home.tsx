@@ -56,8 +56,11 @@ const Home = () => {
           network_id={453}
           provider_id={15}
         />
-        <Network header='Apple TV+' network_name='AppleTV+' network_id={2552} 
-        provider_id={350}
+        <Network
+          header='Apple TV+'
+          network_name='AppleTV+'
+          network_id={2552}
+          provider_id={350}
         />
         <Network
           header='Now Streaming on Paramount+'
@@ -76,14 +79,12 @@ const Home = () => {
           company_name='DisneyMovies'
           company_id={2}
           provider_id={337}
-          
         />
         <Provider
           header='Movies on Hulu'
           provider_name='Hulu'
           provider_id={15}
           media_type='movie'
-         
         />
         <Provider
           header='So Good, It’s Scary - Shudder'
