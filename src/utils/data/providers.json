@@ -1,0 +1,108 @@
+[
+  {
+    "name": "Netflix",
+    "provider_id": 8
+  },
+  {
+    "name": "Disney+",
+    "provider_id": 337
+  },
+  {
+    "name": "Amazon Prime Video",
+    "provider_id": 9
+  },
+  {
+    "name": "Apple TV+",
+    "provider_id": 350
+  },
+  {
+    "name": "Amazon Video",
+    "provider_id": 10
+  },
+  {
+    "name": "Hulu",
+    "provider_id": 15
+  },
+  {
+    "name": "Max",
+    "provider_id": 1899
+  },
+  {
+    "name": "Peacock Premium",
+    "provider_id": 386
+  },
+  {
+    "name": "Paramount+",
+    "provider_id": 531
+  },
+  {
+    "name": "Paramount+ with Showtime",
+    "provider_id": 1770
+  },
+  {
+    "name": "AMC+",
+    "provider_id": 526
+  },
+  {
+    "name": "Starz",
+    "provider_id": 43
+  },
+  {
+    "name": "FXNow",
+    "provider_id": 123
+  },
+  {
+    "name": "MGM+",
+    "provider_id": 34
+  },
+  {
+    "name": "Shudder",
+    "provider_id": 99
+  },
+  {
+    "name": "Screambox",
+    "provider_id": 185
+  },
+  {
+    "name": "Sundance Now",
+    "provider_id": 143
+  },
+  {
+    "name": "BritBox",
+    "provider_id": 151
+  },
+  {
+    "name": "MUBI",
+    "provider_id": 11
+  },
+  {
+    "name": "Lifetime Movie Club",
+    "provider_id": 284
+  },
+  {
+    "name": "USA Network",
+    "provider_id": 322
+  },
+  {
+    "name": "TCM",
+    "provider_id": 361
+  },
+  {
+    "name": "TNT",
+    "provider_id": 363
+  },
+
+  {
+    "name": "BBC America",
+    "provider_id": 397
+  },
+
+  {
+    "name": "ESPN",
+    "provider_id": 1718
+  },
+  {
+    "name": "BET+",
+    "provider_id": 1759
+  }
+]
