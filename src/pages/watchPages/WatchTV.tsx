@@ -28,6 +28,7 @@ const WatchTV = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
+  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const prevSeasonLengthRef = useRef<number>(0);
 
   const { series_id } = useParams<{ series_id: string }>();
@@ -80,9 +81,7 @@ const WatchTV = () => {
   });
 
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
-  // const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
   const [unlocked, setUnlocked] = useState(false);
-  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseMove = (e: MouseEvent) => {
     const el = document.elementFromPoint(e.clientX, e.clientY);

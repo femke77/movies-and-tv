@@ -18,13 +18,13 @@ import clsx from 'clsx';
 
 export default function ListBoxComp({
   title,
-  selectedOption: sortByOption,
-  setSelectedOption: setSortByOption,
-  availableOptions: sortOptions,
+  selectedOption,
+  setSelectedOption,
+  availableOptions,
 }: IListBox) {
   return (
     <div className='w-full  mr-4 hover:translate-[1px] rounded-md  z-50 '>
-      <Listbox value={sortByOption} onChange={setSortByOption}>
+      <Listbox value={selectedOption} onChange={setSelectedOption}>
         <ListboxButton
           tabIndex={0}
           className={clsx(
@@ -33,8 +33,9 @@ export default function ListBoxComp({
           )}
         >
           {title ??
-            sortOptions.find((opt) => opt.value === sortByOption)?.name ??
-            'Sort By'}
+            availableOptions.find((opt) => opt.value === selectedOption)
+              ?.name ??
+            'Select...'}
           <ChevronDownIcon
             className='group pointer-events-none absolute top-2.5 right-2.5 size-4 fill-white/60'
             aria-hidden='true'
@@ -48,7 +49,7 @@ export default function ListBoxComp({
             'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0',
           )}
         >
-          {sortOptions.map((opt) => (
+          {availableOptions.map((opt) => (
             <ListboxOption
               key={opt.name}
               value={opt.value}
