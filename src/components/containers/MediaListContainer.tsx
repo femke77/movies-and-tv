@@ -87,11 +87,11 @@ const MediaListContainer = ({
     sessionStorage.setItem('watchProvider', watchProviderOption);
     sessionStorage.setItem(
       `${mediaType}-selectedGenres`,
-      JSON.stringify(selectedGenres)
+      JSON.stringify(selectedGenres),
     );
     sessionStorage.setItem(
       `${mediaType}-deSelectedGenres`,
-      JSON.stringify(deSelectedGenres)
+      JSON.stringify(deSelectedGenres),
     );
     sessionStorage.setItem(`${mediaType}-sortBy`, sortByOption);
   }, [
@@ -110,7 +110,7 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setDeSelectedGenres((deselected) =>
-          deselected.filter((genre) => genre !== genreId)
+          deselected.filter((genre) => genre !== genreId),
         );
 
         return [...prev, genreId];
@@ -124,35 +124,30 @@ const MediaListContainer = ({
         return prev.filter((genre) => genre !== genreId);
       } else {
         setSelectedGenres((selected) =>
-          selected.filter((genre) => genre !== genreId)
+          selected.filter((genre) => genre !== genreId),
         );
         return [...prev, genreId];
       }
     });
   };
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteDiscoverQuery(
-    mediaType,
-    selectedGenres?.join(','),
-    sortByOption,
-    '', //lang is english only
-    voteAverage,
-    voteCount,
-    deSelectedGenres.join(','),
-    with_companies,
-    with_networks,
-    watchProviderOption,
-    primary_release_date_gte,
-    primary_release_date_lte,
-    first_air_date_gte,
-    first_air_date_lte
-  );
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteDiscoverQuery(
+      mediaType,
+      selectedGenres?.join(','),
+      sortByOption,
+      '', //lang is english only
+      voteAverage,
+      voteCount,
+      deSelectedGenres.join(','),
+      with_companies,
+      with_networks,
+      watchProviderOption,
+      primary_release_date_gte,
+      primary_release_date_lte,
+      first_air_date_gte,
+      first_air_date_lte,
+    );
 
   return (
     <div className='mt-24'>
@@ -163,7 +158,9 @@ const MediaListContainer = ({
         <h2 className='chrome text-[1.5rem] sm:text-[2rem] font-bold bg-gradient-to-r from-white to-white/70 text-transparent bg-clip-text mb-2 mt-4 lg:mb-6 mr-4'>
           {heading}
         </h2>
-        <div className={`mr-[50px] h-[50px] w-[300px] mt-0 mb-14 lg:mb-0 pt-2 `}>
+        <div
+          className={`mr-[50px] h-[50px] w-[300px] mt-0 mb-14 lg:mb-0 pt-2 `}
+        >
           <Listbox
             selectedOption={sortByOption}
             setSelectedOption={setSortByOption}

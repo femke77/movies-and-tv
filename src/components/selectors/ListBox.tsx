@@ -33,7 +33,8 @@ export default function ListBoxComp({
           )}
         >
           {title ??
-            availableOptions.find((opt) => opt.value === selectedOption)?.name ??
+            availableOptions.find((opt) => opt.value === selectedOption)
+              ?.name ??
             'Select...'}
           <ChevronDownIcon
             className='group pointer-events-none absolute top-2.5 right-2.5 size-4 fill-white/60'

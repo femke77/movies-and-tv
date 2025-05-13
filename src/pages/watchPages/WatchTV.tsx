@@ -81,7 +81,7 @@ const WatchTV = () => {
   });
 
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
-   const [unlocked, setUnlocked] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
 
   const handleMouseMove = (e: MouseEvent) => {
     const el = document.elementFromPoint(e.clientX, e.clientY);
