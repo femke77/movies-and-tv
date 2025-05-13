@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import BackButton from '../buttons/BackBtn';
 import providers from '../../utils/data/providers.json';
 
+
 interface MediaListContainerProps {
   mediaType: 'movie' | 'tv';
   heading: string;
@@ -21,6 +22,7 @@ interface MediaListContainerProps {
   primary_release_date_lte?: string;
   first_air_date_gte?: string;
   first_air_date_lte?: string;
+  watchProvider?: string;
   with_companies?: string;
   with_networks?: string;
   showRating?: boolean;
@@ -39,6 +41,7 @@ const MediaListContainer = ({
   primary_release_date_lte,
   first_air_date_gte,
   first_air_date_lte,
+  watchProvider,
   with_companies,
   with_networks,
   showRating = true,
@@ -69,11 +72,9 @@ const MediaListContainer = ({
   });
 
   const [watchProviderOption, setWatchProviderOption] = useState<string>(() => {
-    const stored = sessionStorage.getItem(`watchProvider`);
-    return stored || '';
+    return watchProvider || '';
   });
 
-  console.log(watchProviderOption, 'watchProviderOption');
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -82,9 +83,10 @@ const MediaListContainer = ({
       if (genre) {
         setSelectedGenres([genre]);
       }
+     
       return;
     }
-    sessionStorage.setItem('watchProvider', watchProviderOption);
+  
     sessionStorage.setItem(
       `${mediaType}-selectedGenres`,
       JSON.stringify(selectedGenres),

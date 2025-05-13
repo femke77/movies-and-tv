@@ -48,33 +48,42 @@ const Home = () => {
           header='Top Series on Netflix'
           network_name='Netflix'
           network_id={213}
+          provider_id={8}
         />
         <Network
           header='Popular on Hulu'
           network_name='HuluTV'
           network_id={453}
+          provider_id={15}
         />
-        <Network header='Apple TV+' network_name='AppleTV+' network_id={2552} />
+        <Network header='Apple TV+' network_name='AppleTV+' network_id={2552} 
+        provider_id={350}
+        />
         <Network
           header='Now Streaming on Paramount+'
           network_name='Paramount+'
           network_id={4330}
+          provider_id={531}
         />
         <ProductionCo
           header='Marvel Movies'
           company_name='MarvelMovies'
           company_id={420}
+          provider_id={337}
         />
         <ProductionCo
           header='The Happiest Movies on Earth - Disney'
           company_name='DisneyMovies'
           company_id={2}
+          provider_id={337}
+          
         />
         <Provider
           header='Movies on Hulu'
           provider_name='Hulu'
           provider_id={15}
           media_type='movie'
+         
         />
         <Provider
           header='So Good, It’s Scary - Shudder'

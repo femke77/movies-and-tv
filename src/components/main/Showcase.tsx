@@ -4,6 +4,7 @@ import ItemCardSkeleton from '../loadingSkeletons/ItemCardSkeleton';
 import { Link } from 'react-router-dom';
 import { IItem } from '../../interfaces/IItem';
 
+
 const Showcase = forwardRef<
   HTMLDivElement,
   {
@@ -13,12 +14,15 @@ const Showcase = forwardRef<
     media_type: string;
     linkTo: string;
     section_id: string;
-    link_state?: { time?: string; genre?: string };
+    link_state?: { time?: string; genre?: string; provider?: number };
   }
 >(function Showcase(
   { header, items, isLoading, media_type, linkTo, section_id, link_state },
   ref,
 ) {
+
+
+  
   return (
     <div ref={ref} className='h-[475px]' id={section_id}>
       <div className='w-fit'>
