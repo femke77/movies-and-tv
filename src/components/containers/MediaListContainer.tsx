@@ -72,7 +72,12 @@ const MediaListContainer = ({
   });
 
   const [watchProviderOption, setWatchProviderOption] = useState<string>(() => {
-    return watchProvider || '';
+      if (location.pathname !== sessionStorage.getItem('lastPath')) {
+      sessionStorage.setItem(`watchProvider`, watchProvider || '');
+      return watchProvider || '';
+    }
+    const stored = sessionStorage.getItem(`watchProvider`);
+    return watchProvider || stored || '';
   });
 
 
@@ -86,7 +91,7 @@ const MediaListContainer = ({
      
       return;
     }
-  
+    sessionStorage.setItem('watchProvider', watchProviderOption);
     sessionStorage.setItem(
       `${mediaType}-selectedGenres`,
       JSON.stringify(selectedGenres),
