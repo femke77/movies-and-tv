@@ -320,6 +320,7 @@ const AdFreeWatchTv = () => {
                   width='100%'
                   height='100%'
                   sandbox='allow-scripts allow-same-origin'
+                  referrerPolicy="no-referrer"
                   allow='encrypted-media; autoplay;'
                   src={'about:blank'}
                   allowFullScreen
