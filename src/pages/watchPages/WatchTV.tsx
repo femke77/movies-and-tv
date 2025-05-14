@@ -440,12 +440,12 @@ const WatchTV = () => {
             )}
 
             <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] px-[24px] py-3 mb-[24px]'>
-              {/* description */}
+              {/* series & episode description */}
               {series && (
                 <WatchDescription
                   title={series?.original_name}
                   rt={episodes?.episodes?.[selectedEpisode - 1]?.runtime}
-                  date={series?.first_air_date}
+                  date={episodes?.episodes?.[selectedEpisode - 1]?.air_date}
                   overview={episodes?.episodes?.[selectedEpisode - 1]?.overview}
                 />
               )}
