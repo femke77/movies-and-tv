@@ -244,7 +244,7 @@ const WatchTV = () => {
         newURL = `https://multiembed.mov/directstream.php?video_id=${series_id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`;
         break;
       case 'vidsrc.xyz.safe':
-        newURL = `/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+        newURL = `https://bingebox-server-54dc60d03f7d.herokuapp.com/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
       case 'videasy.net.safe':
         newURL = `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;

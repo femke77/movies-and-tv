@@ -139,7 +139,7 @@ const WatchMovie = () => {
         newURL = ` https://multiembed.mov/directstream.php?video_id=${movie_id}&tmdb=1`;
         break;
       case 'vidsrc.xyz.safe':
-        newURL = `/api/video/movie/${movie_id}`;
+        newURL = `https://bingebox-server-54dc60d03f7d.herokuapp.com/api/video/movie/${movie_id}`;
         break;
       case 'videasy.net.safe':
         newURL = `https://player.videasy.net/movie/${movie_id}`;
