@@ -11,16 +11,14 @@ import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
 
-const WatchMovie = () => {
+const MovieAdFree = () => {
   const { addToContinueWatchingMovie } = useStore();
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
 
-  const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
   useDocumentTitle(
     movie?.title
       ? `Watch ${movie?.title || 'Movie'}  | BingeBox`
@@ -32,58 +30,6 @@ const WatchMovie = () => {
     const lastSelectedServer = localStorage.getItem('lastSelectedServer');
     return lastSelectedServer || servers[0].value;
   });
-
-  const [unlocked, setUnlocked] = useState(false);
-  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleMouseMove = (e: MouseEvent) => {
-    const el = document.elementFromPoint(e.clientX, e.clientY);
-    if (!el) return;
-
-    const cursor = getComputedStyle(el).cursor;
-    // cursor is arrow when clickjack overlay is on
-    if (cursor === 'pointer' && !unlocked) {
-      // console.log('Cursor is pointer. Unlocking iframe interaction.');
-
-      setUnlocked(true);
-
-      if (interactionTimeoutRef.current)
-        clearTimeout(interactionTimeoutRef.current);
-      interactionTimeoutRef.current = setTimeout(() => {
-        setUnlocked(false);
-        // console.log('Locking iframe interaction again.');
-      }, 250); //unlock for 1/4 second
-    }
-  };
-
-  // useEffect(() => {
-  //   window.addEventListener('message', (event) => {
-  //     if (event.data ) {
-  //      console.log(event.data.message);
-  //     }});
-
-  //     return () => {
-  //       window.removeEventListener('message', (event) => {
-  //         if (event.data) {
-  //           console.log(event.data);
-  //         }
-  //       });
-  //     }
-  //   }, [selectedServer]);
-
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-
-      if (interactionTimeoutRef.current) {
-        console.log('Clearing timeout...');
-        clearTimeout(interactionTimeoutRef.current);
-        interactionTimeoutRef.current = null;
-      }
-    };
-  }, []);
 
   useEffect(() => {
     if (!movie) return;
@@ -106,7 +52,7 @@ const WatchMovie = () => {
     let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
-        newURL = `https://vidsrc.net/embed/movie/${movie_id}`;
+        newURL = `https://bingebox-server-54dc60d03f7d.herokuapp.com/api/video/movie/${movie_id}`;
         break;
       case 'videasy.net':
         newURL = `https://player.videasy.net/movie/${movie_id}`;
@@ -138,12 +84,6 @@ const WatchMovie = () => {
       case 'superembed.stream':
         newURL = ` https://multiembed.mov/directstream.php?video_id=${movie_id}&tmdb=1`;
         break;
-      case 'vidsrc.xyz.safe':
-        newURL = `https://bingebox-server-54dc60d03f7d.herokuapp.com/api/video/movie/${movie_id}`;
-        break;
-      case 'videasy.net.safe':
-        newURL = `https://player.videasy.net/movie/${movie_id}`;
-        break;
     }
 
     if (timeoutRef.current) {
@@ -155,11 +95,6 @@ const WatchMovie = () => {
     }
     setTimeout(() => {
       iframeRef.current?.contentWindow?.location.replace(newURL);
-      // embed.su 404 causes extra history entry
-      if (historyRef.current < window.history.length) {
-        window.history.back();
-      }
-
       timeoutRef.current = setTimeout(() => {
         setIsLoading(false);
       }, 750);
@@ -191,44 +126,27 @@ const WatchMovie = () => {
               </p>
             )}
             {/* iphone safari doesn't support the FS api */}
-            <div className={isIphoneSafari() || isIPad() ? 'invisible' : ''}>
-              <FullscreenBtn elementId='iframe-movie' />
+            <div
+              className={`${isIphoneSafari() || isIPad()} ? 'invisible' : ''
+              }`}
+            >
+              <FullscreenBtn elementId='iframe' />
             </div>
           </div>
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'>
-              {selectedServer === 'vidsrc.xyz.safe' ||
-              selectedServer === 'videasy.net.safe' ? (
-                <iframe
-                  ref={iframeRef}
-                  id='player_iframe'
-                  className='absolute top-0 left-0 w-full h-full bg-black'
-                  width='100%'
-                  height='100%'
-                  sandbox='allow-scripts allow-same-origin'
-                  referrerPolicy='no-referrer'
-                  allow='encrypted-media; autoplay;'
-                  src={'about:blank'}
-                  allowFullScreen
-                ></iframe>
-              ) : (
-                <>
-                  {/* {!unlocked && (
-                    //  overlay that absorbs 'bad' clicks based on cursor state
-                    <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer'></div>
-                  )} */}
-                  <iframe
-                    ref={iframeRef}
-                    id='player_iframe'
-                    className='absolute top-0 left-0 w-full h-full bg-black'
-                    width='100%'
-                    height='100%'
-                    allow='encrypted-media; autoplay;'
-                    src={'about:blank'}
-                    allowFullScreen
-                  ></iframe>
-                </>
-              )}
+              <iframe
+                ref={iframeRef}
+                id='iframe'
+                className='absolute top-0 left-0 w-full h-full bg-black'
+                width='100%'
+                height='100%'
+                src={`/api/video/movie/${movie_id}`}
+                allow='encrypted-media'
+                sandbox='allow-scripts allow-same-origin'
+                referrerPolicy='no-referrer'
+                allowFullScreen
+              ></iframe>
               {isLoading && (
                 <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10'>
                   <div className='text-white text-center'>
@@ -275,4 +193,4 @@ const WatchMovie = () => {
   );
 };
 
-export default WatchMovie;
+export default MovieAdFree;
