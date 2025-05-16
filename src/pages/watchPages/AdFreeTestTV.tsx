@@ -19,18 +19,13 @@ import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
 
-const WatchTV = () => {
+const AdFreeWatchTv = () => {
   const VIEWING_PROGRESS_LIMIT = 250;
   const { servers } = serverData;
   const { addToContinueWatchingTv } = useStore();
-
-  const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
-  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const prevSeasonLengthRef = useRef<number>(0);
-
   const { series_id } = useParams<{ series_id: string }>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -81,7 +76,22 @@ const WatchTV = () => {
   });
 
   const [currentSeasonLength, setCurrentSeasonLength] = useState(0);
+  const [previousSeasonLength, setPreviousSeasonLength] = useState(0);
+
+  const prevServerRef = useRef(selectedServer);
+
+  const { data: series } = useWatchDetails('tv', series_id!);
+  const { data: episodes } = useTVSeasonEpisodes(
+    series_id ?? '',
+    String(selectedSeason),
+  );
+  useDocumentTitle(
+    series?.original_name
+      ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
+      : 'Loading... | BingeBox',
+  );
   const [unlocked, setUnlocked] = useState(false);
+  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseMove = (e: MouseEvent) => {
     const el = document.elementFromPoint(e.clientX, e.clientY);
@@ -90,7 +100,7 @@ const WatchTV = () => {
     const cursor = getComputedStyle(el).cursor;
     // cursor is arrow when clickjack overlay is on
     if (cursor === 'pointer' && !unlocked) {
-      // console.log('Cursor is pointer. Unlocking iframe interaction.');
+      console.log('Cursor is pointer. Unlocking iframe interaction.');
 
       setUnlocked(true);
 
@@ -98,8 +108,8 @@ const WatchTV = () => {
         clearTimeout(interactionTimeoutRef.current);
       interactionTimeoutRef.current = setTimeout(() => {
         setUnlocked(false);
-        // console.log('Locking iframe interaction again.');
-      }, 250); //unlock for 1/4 second
+        console.log('Locking iframe interaction again.');
+      }, 1000); //unlock for 1 second
     }
   };
   useEffect(() => {
@@ -109,31 +119,16 @@ const WatchTV = () => {
       window.removeEventListener('mousemove', handleMouseMove);
 
       if (interactionTimeoutRef.current) {
-        // console.log('Clearing timeout...');
+        console.log('Clearing timeout...');
         clearTimeout(interactionTimeoutRef.current);
         interactionTimeoutRef.current = null;
       }
     };
   }, []);
 
-  const prevServerRef = useRef(selectedServer);
-
-  const { data: series } = useWatchDetails('tv', series_id!);
-  const { data: episodes } = useTVSeasonEpisodes(
-    series_id ?? '',
-    String(selectedSeason),
-  );
-
-  useDocumentTitle(
-    series?.original_name
-      ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
-      : 'Loading... | BingeBox',
-  );
-
   useEffect(() => {
     if (!series) return;
 
-    // add to continue watching list
     // setTimeout(() => {
     addToContinueWatchingTv(
       Number(series_id!),
@@ -146,15 +141,19 @@ const WatchTV = () => {
     );
 
     // }, 180000);
+    // es-lint-disable-next-line react-hooks/exhaustive-deps
+  }, [series_id, series, selectedSeason, selectedEpisode]);
 
-    // keep track of previous season length to shift when moving to a new season
+  useEffect(() => {
     if (episodes) {
       // Shift previous season length when moving to a new season
-      prevSeasonLengthRef.current = currentSeasonLength;
+      setPreviousSeasonLength(currentSeasonLength);
       setCurrentSeasonLength(episodes?.episodes?.length);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSeason, episodes]);
 
-    // update viewing progress in local storage
+  useEffect(() => {
     const updatedViewProgressItem = {
       [`tv-${series_id}`]: {
         season: selectedSeason,
@@ -192,7 +191,7 @@ const WatchTV = () => {
         JSON.stringify(updatedViewProgressItem),
       );
     }
-  }, [series_id, series, selectedSeason, selectedEpisode]);
+  }, [series_id, selectedSeason, selectedEpisode]);
 
   // when page is remounted, user will see loading spinner for 750ms
   useEffect(() => {
@@ -211,7 +210,7 @@ const WatchTV = () => {
     let newURL = '';
     switch (selectedServer) {
       case 'vidsrc.xyz':
-        newURL = `https://vidsrc.net/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
+        newURL = `http://vidsrc.net/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
       case 'videasy.net':
         newURL = `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
@@ -243,11 +242,8 @@ const WatchTV = () => {
       case 'superembed.stream':
         newURL = `https://multiembed.mov/directstream.php?video_id=${series_id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`;
         break;
-      case 'vidsrc.xyz.safe':
-        newURL = `https://bingebox-server-54dc60d03f7d.herokuapp.com/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
-        break;
-      case 'videasy.net.safe':
-        newURL = `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+      case 'vidsrc.xyz.adfree':
+        newURL = `/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
     }
 
@@ -267,10 +263,6 @@ const WatchTV = () => {
 
       iframeLoadRef.current = setTimeout(() => {
         iframeRef.current?.contentWindow?.location.replace(newURL);
-        // embed.su 404 causes extra history entry, this removes it.
-        if (historyRef.current < window.history.length) {
-          window.history.back();
-        }
         timeoutRef.current = setTimeout(() => {
           setIsLoading(false);
         }, 750);
@@ -312,7 +304,7 @@ const WatchTV = () => {
             <div
               className={`${isIphoneSafari() || isIPad() ? 'invisible' : ''}`}
             >
-              <FullscreenBtn elementId='iframe-tv' />
+              <FullscreenBtn elementId='video-player' />
             </div>
           </div>
           <main>
@@ -320,8 +312,7 @@ const WatchTV = () => {
               id='video-player'
               className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'
             >
-              {selectedServer === 'vidsrc.xyz.safe' ||
-              selectedServer === 'videasy.net.safe' ? (
+              {selectedServer === 'vidsrc.xyz.adfree' ? (
                 <iframe
                   ref={iframeRef}
                   id='player_iframe'
@@ -336,10 +327,10 @@ const WatchTV = () => {
                 ></iframe>
               ) : (
                 <>
-                  {/* {!unlocked && (
+                  {!unlocked && (
                     //  overlay that absorbs 'bad' clicks based on cursor state
                     <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer'></div>
-                  )} */}
+                  )}
                   <iframe
                     ref={iframeRef}
                     id='player_iframe'
@@ -385,13 +376,12 @@ const WatchTV = () => {
                             {episodes?.episodes?.[selectedEpisode - 1]?.name}
                           </span>
                         ) : (
-                          <span className='ml-3 text-center min-h-[30px]'>
+                          <span className='ml-3 text-center min-h-[20px]'>
                             Loading...
                           </span>
                         )}
                       </div>
                     </div>
-                    {/* next/prev episode buttons */}
                     {episodes ? (
                       <div className='min-h-[36px] flex gap-2 my-3 mt-5 mx-5 sm:mx-0 '>
                         <WatchPrevBtn
@@ -399,7 +389,7 @@ const WatchTV = () => {
                           setSelectedEpisode={setSelectedEpisode}
                           selectedSeason={selectedSeason}
                           setSelectedSeason={setSelectedSeason}
-                          previousSeasonLength={prevSeasonLengthRef.current}
+                          previousSeasonLength={previousSeasonLength}
                         />
                         <WatchNextBtn
                           selectedEpisode={selectedEpisode}
@@ -461,19 +451,19 @@ const WatchTV = () => {
             )}
 
             <div className='rounded-lg bg-[#1f1f1f] border-[#2f2f2f] px-[24px] py-3 mb-[24px]'>
-              {/* series & episode description */}
+              {/* description */}
               {series && (
                 <WatchDescription
                   title={series?.original_name}
                   rt={episodes?.episodes?.[selectedEpisode - 1]?.runtime}
-                  date={episodes?.episodes?.[selectedEpisode - 1]?.air_date}
+                  date={series?.first_air_date}
                   overview={episodes?.episodes?.[selectedEpisode - 1]?.overview}
                 />
               )}
             </div>
           </main>
         </div>
-        {/* sidebar */}
+        {/* Sidebar */}
         <div className=' lg:w-[400px] lg:flex-shrink-0'>
           <div className='sidebar bg-[#1f1f1f] max-h-[900px] flex flex-col  rounded-lg'>
             <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
@@ -501,7 +491,7 @@ const WatchTV = () => {
                 />
               </div>
               <div className='season-nav mb-[16px]'>
-                {/* season nav buttons */}
+                {/* season nav here */}
                 <SeasonNavigation
                   selectedSeason={selectedSeason}
                   setSelectedSeason={setSelectedSeason}
@@ -510,9 +500,9 @@ const WatchTV = () => {
                 />
               </div>
             </div>
-            <div>
-              {/* episode list  */}
-              {episodes ? (
+            <div className='episode-list'>
+              {/* episode list here */}
+              {episodes && (
                 <EpisodeList
                   episodes={episodes?.episodes}
                   selectedSeason={selectedSeason}
@@ -520,8 +510,6 @@ const WatchTV = () => {
                   setSelectedEpisode={setSelectedEpisode}
                   setSelectedSeason={setSelectedSeason}
                 />
-              ) : (
-                <div className='episode-list-placeholder h-[700px] p-[16px] mb-3 ' />
               )}
             </div>
           </div>
@@ -531,4 +519,4 @@ const WatchTV = () => {
   );
 };
 
-export default WatchTV;
+export default AdFreeWatchTv;

@@ -51,6 +51,16 @@
 			"id": 10,
 			"name": "Server 10",
 			"value": "superembed.stream"
+		},
+		{
+			"id": 11,
+			"name": "Safe Server 1", 
+			"value": "vidsrc.xyz.safe"
+		},
+		{
+			"id": 12,
+			"name": "Safe Server 2", 
+			"value": "videasy.net.safe"
 		}
 		
 		
