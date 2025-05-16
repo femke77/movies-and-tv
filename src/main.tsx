@@ -216,7 +216,7 @@ const router = createBrowserRouter([
               </DelayedSuspense>
             ),
           },
-         
+
           {
             path: 'tv/:series_id',
             element: (
@@ -225,7 +225,6 @@ const router = createBrowserRouter([
               </DelayedSuspense>
             ),
           },
-         
         ],
       },
       {

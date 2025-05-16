@@ -38,7 +38,8 @@ const FAQPage = () => {
   const faqData = [
     {
       question: 'Do I have to pay anything to use your site?',
-      answer: 'BingeBox is 100% free. We may start accepting donations in the future, strictly for your appreciation of the site, not the content.',
+      answer:
+        'BingeBox is 100% free. We may start accepting donations in the future, strictly for your appreciation of the site, not the content.',
     },
     {
       question: 'What about all these popups & redirects?',

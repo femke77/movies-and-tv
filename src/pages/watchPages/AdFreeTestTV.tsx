@@ -83,12 +83,12 @@ const AdFreeWatchTv = () => {
   const { data: series } = useWatchDetails('tv', series_id!);
   const { data: episodes } = useTVSeasonEpisodes(
     series_id ?? '',
-    String(selectedSeason)
+    String(selectedSeason),
   );
   useDocumentTitle(
     series?.original_name
       ? `Watch ${series?.original_name || 'TV Show'} | BingeBox`
-      : 'Loading... | BingeBox'
+      : 'Loading... | BingeBox',
   );
   const [unlocked, setUnlocked] = useState(false);
   const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -137,7 +137,7 @@ const AdFreeWatchTv = () => {
       series.original_name,
       selectedSeason,
       selectedEpisode,
-      series.backdrop_path
+      series.backdrop_path,
     );
 
     // }, 180000);
@@ -183,12 +183,12 @@ const AdFreeWatchTv = () => {
 
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgress)
+        JSON.stringify(updatedViewProgress),
       );
     } else {
       localStorage.setItem(
         `viewing-progress`,
-        JSON.stringify(updatedViewProgressItem)
+        JSON.stringify(updatedViewProgressItem),
       );
     }
   }, [series_id, selectedSeason, selectedEpisode]);
@@ -320,7 +320,7 @@ const AdFreeWatchTv = () => {
                   width='100%'
                   height='100%'
                   sandbox='allow-scripts allow-same-origin'
-                  referrerPolicy="no-referrer"
+                  referrerPolicy='no-referrer'
                   allow='encrypted-media; autoplay;'
                   src={'about:blank'}
                   allowFullScreen
@@ -351,7 +351,7 @@ const AdFreeWatchTv = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer
+                          (server) => server.value === selectedServer,
                         )?.name
                       }
                       ...{' '}
@@ -478,7 +478,7 @@ const AdFreeWatchTv = () => {
                         <p className='text-white/70 text-sm truncate text-ellipsis'>
                           {
                             servers.find(
-                              (server) => server.value === selectedServer
+                              (server) => server.value === selectedServer,
                             )?.name
                           }
                         </p>

@@ -320,7 +320,8 @@ const WatchTV = () => {
               id='video-player'
               className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'
             >
-              {selectedServer === 'vidsrc.xyz.safe' || selectedServer === 'videasy.net.safe'? (
+              {selectedServer === 'vidsrc.xyz.safe' ||
+              selectedServer === 'videasy.net.safe' ? (
                 <iframe
                   ref={iframeRef}
                   id='player_iframe'
@@ -328,7 +329,7 @@ const WatchTV = () => {
                   width='100%'
                   height='100%'
                   sandbox='allow-scripts allow-same-origin'
-                  referrerPolicy="no-referrer"
+                  referrerPolicy='no-referrer'
                   allow='encrypted-media; autoplay;'
                   src={'about:blank'}
                   allowFullScreen
