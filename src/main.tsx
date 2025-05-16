@@ -21,12 +21,6 @@ import TextSkeleton from './components/loadingSkeletons/TextSkeleton.tsx';
 import HistoryPageSkeleton from './components/loadingSkeletons/HistoryPageSkeleton.tsx';
 import ScrollToTop from './components/helpers/ScrollToTop.tsx';
 
-const AdFreeWatchTv = lazy(
-  () => import('./pages/watchPages/AdFreeTestTV.tsx'),
-);
-const MovieAdFree = lazy(
-  () => import('./pages/watchPages/AdFreeTestMovie.tsx'),
-);
 const MovieUpcoming = lazy(
   () => import('./pages/moviePages/MovieUpcoming.tsx'),
 );
@@ -222,14 +216,7 @@ const router = createBrowserRouter([
               </DelayedSuspense>
             ),
           },
-          {
-            path: 'movie/adfree/:movie_id',
-            element: (
-              <DelayedSuspense fallback={<WatchPageSkeleton />}>
-              <MovieAdFree/>
-              </DelayedSuspense>
-            ),
-          },
+         
           {
             path: 'tv/:series_id',
             element: (
@@ -238,14 +225,7 @@ const router = createBrowserRouter([
               </DelayedSuspense>
             ),
           },
-          {
-            path: 'tv/adfree/:series_id',
-            element: (
-              <DelayedSuspense fallback={<WatchPageSkeleton />}>
-                <AdFreeWatchTv />
-              </DelayedSuspense>
-            ),
-          },
+         
         ],
       },
       {

@@ -147,6 +147,7 @@ const MovieAdFree = () => {
                 src={`/api/video/movie/${movie_id}`}
                 allow='encrypted-media'
                 sandbox='allow-scripts allow-same-origin'
+                referrerPolicy='no-referrer'
                 allowFullScreen
               ></iframe>
               {isLoading && (

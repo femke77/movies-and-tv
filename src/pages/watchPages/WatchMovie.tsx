@@ -24,7 +24,7 @@ const WatchMovie = () => {
   useDocumentTitle(
     movie?.title
       ? `Watch ${movie?.title || 'Movie'}  | BingeBox`
-      : 'Loading... | BingeBox',
+      : 'Loading... | BingeBox'
   );
 
   const [isLoading, setIsLoading] = useState(false);
@@ -95,7 +95,7 @@ const WatchMovie = () => {
       movie.title,
       movie.backdrop_path,
       movie.release_date,
-      movie.runtime,
+      movie.runtime
     );
     // }, 180000);
 
@@ -137,6 +137,12 @@ const WatchMovie = () => {
         break;
       case 'superembed.stream':
         newURL = ` https://multiembed.mov/directstream.php?video_id=${movie_id}&tmdb=1`;
+        break;
+      case 'vidsrc.xyz.safe':
+        newURL = `/api/video/movie/${movie_id}`;
+        break;
+      case 'videasy.net.safe':
+        newURL = `https://player.videasy.net/movie/${movie_id}`;
         break;
     }
 
@@ -191,21 +197,38 @@ const WatchMovie = () => {
           </div>
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'>
-              {/* {!unlocked && (
-                //  overlay that absorbs 'bad' clicks based on cursor state
-                <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer' />
-              )} */}
-              <iframe
-                ref={iframeRef}
-                key={`${selectedServer}-${movie_id}`}
-                id='iframe-movie'
-                className='absolute top-0 left-0 w-full h-full bg-black'
-                width='100%'
-                height='100%'
-                src={'about:blank'}
-                allow='encrypted-media'
-                allowFullScreen
-              ></iframe>
+              {selectedServer === 'vidsrc.xyz.safe' ||
+              selectedServer === 'videasy.net.safe' ? (
+                <iframe
+                  ref={iframeRef}
+                  id='player_iframe'
+                  className='absolute top-0 left-0 w-full h-full bg-black'
+                  width='100%'
+                  height='100%'
+                  sandbox='allow-scripts allow-same-origin'
+                  referrerPolicy='no-referrer'
+                  allow='encrypted-media; autoplay;'
+                  src={'about:blank'}
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <>
+                  {/* {!unlocked && (
+                    //  overlay that absorbs 'bad' clicks based on cursor state
+                    <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer'></div>
+                  )} */}
+                  <iframe
+                    ref={iframeRef}
+                    id='player_iframe'
+                    className='absolute top-0 left-0 w-full h-full bg-black'
+                    width='100%'
+                    height='100%'
+                    allow='encrypted-media; autoplay;'
+                    src={'about:blank'}
+                    allowFullScreen
+                  ></iframe>
+                </>
+              )}
               {isLoading && (
                 <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10'>
                   <div className='text-white text-center'>
@@ -214,7 +237,7 @@ const WatchMovie = () => {
                       Loading{' '}
                       {
                         servers.find(
-                          (server) => server.value === selectedServer,
+                          (server) => server.value === selectedServer
                         )?.name
                       }
                       ...{' '}

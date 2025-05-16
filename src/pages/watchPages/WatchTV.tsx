@@ -243,6 +243,12 @@ const WatchTV = () => {
       case 'superembed.stream':
         newURL = `https://multiembed.mov/directstream.php?video_id=${series_id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`;
         break;
+      case 'vidsrc.xyz.safe':
+        newURL = `/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+        break;
+      case 'videasy.net.safe':
+        newURL = `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+        break;
     }
 
     const serverChanged = prevServerRef.current !== selectedServer;
@@ -314,23 +320,37 @@ const WatchTV = () => {
               id='video-player'
               className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'
             >
-              {/* {!unlocked && (
-                //  overlay that absorbs 'bad' clicks based on cursor state
-                <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer'></div>
-              )} */}
-              <iframe
-                ref={iframeRef}
-                key={`${selectedServer}-${series_id}`}
-                id='iframe-tv'
-                className='absolute top-0 left-0 w-full h-full bg-black'
-                width='100%'
-                height='100%'
-                // sandbox="allow-scripts allow-same-origin"
-                // src={`/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`}
-                allow='encrypted-media; autoplay;'
-                src={'about:blank'}
-                allowFullScreen
-              ></iframe>
+              {selectedServer === 'vidsrc.xyz.safe' || selectedServer === 'videasy.net.safe'? (
+                <iframe
+                  ref={iframeRef}
+                  id='player_iframe'
+                  className='absolute top-0 left-0 w-full h-full bg-black'
+                  width='100%'
+                  height='100%'
+                  sandbox='allow-scripts allow-same-origin'
+                  referrerPolicy="no-referrer"
+                  allow='encrypted-media; autoplay;'
+                  src={'about:blank'}
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <>
+                  {/* {!unlocked && (
+                    //  overlay that absorbs 'bad' clicks based on cursor state
+                    <div className='overlay absolute inset-0 z-20 bg-transparent cursor-pointer'></div>
+                  )} */}
+                  <iframe
+                    ref={iframeRef}
+                    id='player_iframe'
+                    className='absolute top-0 left-0 w-full h-full bg-black'
+                    width='100%'
+                    height='100%'
+                    allow='encrypted-media; autoplay;'
+                    src={'about:blank'}
+                    allowFullScreen
+                  ></iframe>
+                </>
+              )}
               {isLoading && (
                 <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10'>
                   <div className='text-white text-center'>
