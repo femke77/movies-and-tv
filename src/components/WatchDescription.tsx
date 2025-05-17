@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import clsx from 'clsx';
 
 const WatchDescription = ({
   title,
@@ -69,7 +70,7 @@ const WatchDescription = ({
       </div>
       {media_type ===  'tv' && getTextLength() ? (
         <div
-          className={`my-2  ${open ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'} `}
+          className={clsx(`my-2  ${open ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'}`)}
         >
           {`${open ? overview : overview?.slice(0, 200)}` || ''}
 
@@ -77,11 +78,11 @@ const WatchDescription = ({
             className={`inline-block text-[#fff9] cursor-pointer `}
             onClick={() => setOpen(!open)}
           >
-            {open ? <p className='ml-1'>Show less</p> : '...Show more'}
+            {open ? <p className='ml-2'>Show less</p> : '...Show more'}
           </span>
         </div>
       ) : (
-        <div className={`${media_type === 'movie' ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'} my-2 `}>
+        <div className={clsx(`${media_type === 'movie' ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'} my-2 `)}>
           {overview || ''}
         </div>
       )}
