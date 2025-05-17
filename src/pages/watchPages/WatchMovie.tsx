@@ -144,7 +144,7 @@ const WatchMovie = () => {
       case 'videasy.net.safe':
         newURL = `https://player.videasy.net/movie/${movie_id}`;
         break;
-        case 'vidfast.pro.safe':
+      case 'vidfast.pro.safe':
         newURL = `https://vidfast.pro/movie/${movie_id}`;
         break;
     }
@@ -202,7 +202,7 @@ const WatchMovie = () => {
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'>
               {selectedServer === 'vidsrc.xyz.safe' ||
               selectedServer === 'videasy.net.safe' ||
-              selectedServer ===  "vidfast.pro.safe" ? (
+              selectedServer === 'vidfast.pro.safe' ? (
                 <iframe
                   ref={iframeRef}
                   id='player_iframe'
@@ -228,7 +228,6 @@ const WatchMovie = () => {
                     width='100%'
                     height='100%'
                     allow='encrypted-media; autoplay;'
-
                     src={'about:blank'}
                     allowFullScreen
                   ></iframe>
