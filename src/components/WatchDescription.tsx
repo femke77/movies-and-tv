@@ -68,7 +68,7 @@ const WatchDescription = ({
           <p className='ml-2'>{rt || 0} min</p>
         </div>
       </div>
-      {media_type ===  'tv' && getTextLength() ? (
+      {media_type === 'tv' && getTextLength() ? (
         <div
           className={clsx(`my-2  ${open ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'}`)}
         >
@@ -82,7 +82,9 @@ const WatchDescription = ({
           </span>
         </div>
       ) : (
-        <div className={clsx(`${media_type === 'movie' ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'} my-2 `)}>
+        <div
+          className={`${media_type === 'movie' ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'} my-2 `}
+        >
           {overview || ''}
         </div>
       )}
