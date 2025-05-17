@@ -468,6 +468,7 @@ const WatchTV = () => {
               {/* series & episode description */}
               {series && (
                 <WatchDescription
+                media_type='tv'
                   title={series?.original_name}
                   rt={episodes?.episodes?.[selectedEpisode - 1]?.runtime}
                   date={episodes?.episodes?.[selectedEpisode - 1]?.air_date}

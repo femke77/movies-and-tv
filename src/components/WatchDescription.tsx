@@ -6,11 +6,13 @@ const WatchDescription = ({
   rt,
   date,
   overview,
+  media_type = 'movie',
 }: {
   title?: string;
   rt?: string;
   date?: string;
   overview?: string;
+  media_type?: string;
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -65,7 +67,7 @@ const WatchDescription = ({
           <p className='ml-2'>{rt || 0} min</p>
         </div>
       </div>
-      {getTextLength() ? (
+      {media_type ===  'tv' && getTextLength() ? (
         <div
           className={`my-2  ${open ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'} `}
         >
@@ -79,7 +81,7 @@ const WatchDescription = ({
           </span>
         </div>
       ) : (
-        <div className={`my-2 h-42 sm:h-16 md:h-14 lg:h-fit`}>
+        <div className={`${media_type === 'movie' ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'} my-2 `}>
           {overview || ''}
         </div>
       )}
