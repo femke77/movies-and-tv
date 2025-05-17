@@ -70,7 +70,9 @@ const WatchDescription = ({
       </div>
       {media_type === 'tv' && getTextLength() ? (
         <div
-          className={clsx(`my-2  ${open ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'}`)}
+          className={clsx(
+            `my-2  ${open ? 'h-fit' : 'h-42 sm:h-16 md:h-14 lg:h-fit'}`,
+          )}
         >
           {`${open ? overview : overview?.slice(0, 200)}` || ''}
 

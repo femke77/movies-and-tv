@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       fetch(
-        'https://bingebox-server-54dc60d03f7d.herokuapp.com/api/video/wakeup'
+        'https://bingebox-server-54dc60d03f7d.herokuapp.com/api/video/wakeup',
       ).then((res) => {
         console.log('wake up status', res.status);
       });
