@@ -144,6 +144,9 @@ const WatchMovie = () => {
       case 'videasy.net.safe':
         newURL = `https://player.videasy.net/movie/${movie_id}`;
         break;
+      case 'vidfast.pro.safe':
+        newURL = `https://vidfast.pro/movie/${movie_id}`;
+        break;
     }
 
     if (timeoutRef.current) {
@@ -198,7 +201,8 @@ const WatchMovie = () => {
           <main>
             <div className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'>
               {selectedServer === 'vidsrc.xyz.safe' ||
-              selectedServer === 'videasy.net.safe' ? (
+              selectedServer === 'videasy.net.safe' ||
+              selectedServer === 'vidfast.pro.safe' ? (
                 <iframe
                   ref={iframeRef}
                   id='player_iframe'
@@ -262,7 +266,7 @@ const WatchMovie = () => {
         </div>
         <div className='secondary lg:w-[400px] lg:flex-shrink-0 '>
           {/* right side with server choices and episodes for tv*/}
-          <div className='sidebar bg-[#1f1f1f] max-h-[800px] flex flex-col rounded-lg'>
+          <div className='sidebar bg-[#1f1f1f] max-h-[900px] flex flex-col rounded-lg'>
             <ServerList
               serverData={servers}
               selectedServer={selectedServer}

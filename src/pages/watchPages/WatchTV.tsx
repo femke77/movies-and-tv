@@ -249,6 +249,9 @@ const WatchTV = () => {
       case 'videasy.net.safe':
         newURL = `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
+      case 'vidfast.pro.safe':
+        newURL = `https://vidfast.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+        break;
     }
 
     const serverChanged = prevServerRef.current !== selectedServer;
@@ -321,7 +324,8 @@ const WatchTV = () => {
               className='relative pt-[56.25%] w-full overflow-hidden mb-[24px] rounded-lg bg-[#1f1f1f] min-h-[300px]'
             >
               {selectedServer === 'vidsrc.xyz.safe' ||
-              selectedServer === 'videasy.net.safe' ? (
+              selectedServer === 'videasy.net.safe' ||
+              selectedServer === 'vidfast.pro.safe' ? (
                 <iframe
                   ref={iframeRef}
                   id='player_iframe'

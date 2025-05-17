@@ -43,7 +43,7 @@ const ServerList = ({
   setSelectedServer: (_server: string) => void;
 }) => {
   return (
-    <div className='max-h-[800px] p-[16px] '>
+    <div className='max-h-[900px] p-[16px] '>
       <h1 className='text-lg mb-3 text-center'>Change Server</h1>
       {serverData &&
         serverData.map(
