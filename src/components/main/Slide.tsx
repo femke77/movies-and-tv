@@ -130,8 +130,28 @@ const Slide = ({
         }}
       >
         {/* gradient overlays */}
-        <div className='absolute bottom-0 left-0 w-full h-1/4 sm:h-1/2 bg-gradient-to-t from-black to-transparent' />
-        <div className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent' />
+        <div
+          className='absolute bottom-0 left-0 w-full h-1/4 sm:h-1/2 bg-gradient-to-t from-black to-transparent'
+          style={
+            isTvBrowser
+              ? {
+                  background:
+                    'linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0) 100%)',
+                }
+              : undefined
+          }
+        />
+        <div
+          className='absolute inset-0 bg-gradient-to-r from-black via-black/30 sm:via-black/50 md:via-black/50 lg:via-black/50 to-transparent'
+          style={
+            isTvBrowser
+              ? {
+                  background:
+                    'linear-gradient(to right, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.78) 26%, rgba(0,0,0,0.36) 52%, rgba(0,0,0,0) 82%)',
+                }
+              : undefined
+          }
+        />
       </div>
 
       {/* card content */}
@@ -157,7 +177,7 @@ const Slide = ({
                   width: '50%',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  paddingLeft: '4.5rem',
+                  paddingLeft: '5.5rem',
                   paddingRight: '1rem',
                 }
               : undefined
