@@ -157,7 +157,7 @@ const Slide = ({
                   width: '50%',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  paddingLeft: '3rem',
+                  paddingLeft: '4.5rem',
                   paddingRight: '1rem',
                 }
               : undefined
