@@ -33,14 +33,11 @@ function App() {
   return (
     <>
       <ScrollRestoration />
-      <div className='bg-black text-white h-full '>
+      <div className='bg-black text-white h-full'>
         <Header isTvBrowser={isTvBrowser}>
-          <Nav />
+          <Nav isTvBrowser={isTvBrowser} />
         </Header>
-        <main
-          className='min-h-screen'
-          style={{ paddingTop: isTvBrowser ? '8.75rem' : undefined }}
-        >
+        <main className='min-h-screen'>
           <Outlet />
         </main>
         <Footer />

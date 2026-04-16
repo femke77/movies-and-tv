@@ -1,14 +1,22 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
 import MenuItemLink from './MenuItemLink';
+import clsx from 'clsx';
 
-const NavTVShows = () => {
+const NavTVShows = ({ isTvBrowser = false }: { isTvBrowser?: boolean }) => {
   return (
     <Menu>
       <MenuButton className='hover:cursor-pointer relative inline-flex items-center gap-2 rounded-md py-1.5 px-3 text-md/6 font-semibold text-white focus:outline-white data-[hover]:bg-gray-700  data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white'>
         {({ open }) => (
           <>
-            <h2 className='text-lg font-bold text-white'>
+            <h2
+              className={clsx(
+                'text-lg font-bold',
+                isTvBrowser
+                  ? 'text-white'
+                  : 'bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text',
+              )}
+            >
               TV Shows
             </h2>
 

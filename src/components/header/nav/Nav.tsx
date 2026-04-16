@@ -6,6 +6,7 @@ import NavTVShow from './NavTVShow';
 import NavMe from './NavMe';
 import Search from '../HeaderSearchBar';
 import { Clapperboard, Tv, CircleUser } from 'lucide-react';
+import clsx from 'clsx';
 
 const moviesNav = [
   { title: 'Trending Movies', url: '/explore/movies' },
@@ -29,7 +30,11 @@ const meNav = [
   { title: 'FAQs', url: '/faqs' },
 ];
 
-export default function Navigation() {
+export default function Navigation({
+  isTvBrowser = false,
+}: {
+  isTvBrowser?: boolean;
+}) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -125,9 +130,9 @@ export default function Navigation() {
             <div className='flex flex-1 items-center justify-center md:items-stretch md:justify-start'>
               <div className='[@media(max-width:825px)]:hidden md:flex flex-1 items-center py-6 pl-2'>
                 <div className='flex space-x-3 items-center pr-4 '>
-                  <NavMovies />
-                  <NavTVShow />
-                  <NavMe />
+                  <NavMovies isTvBrowser={isTvBrowser} />
+                  <NavTVShow isTvBrowser={isTvBrowser} />
+                  <NavMe isTvBrowser={isTvBrowser} />
                   {/* <NavDiscover /> */}
                 </div>
               </div>
@@ -157,7 +162,14 @@ export default function Navigation() {
             <div className='text-white'>
               <div className='flex justify-start items-center p-4 '>
                 <Clapperboard className='text-white' />
-                <h2 className='ml-3 text-xl font-bold text-white'>
+                <h2
+                  className={clsx(
+                    'ml-3 text-xl font-bold',
+                    isTvBrowser
+                      ? 'text-white'
+                      : 'bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text',
+                  )}
+                >
                   Movies
                 </h2>
               </div>
@@ -179,7 +191,14 @@ export default function Navigation() {
             <div className='text-white'>
               <div className='flex justify-start items-center p-4 '>
                 <Tv className='text-white' />
-                <h2 className='ml-3 text-xl font-bold text-white'>
+                <h2
+                  className={clsx(
+                    'ml-3 text-xl font-bold',
+                    isTvBrowser
+                      ? 'text-white'
+                      : 'bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text',
+                  )}
+                >
                   TV Shows
                 </h2>
               </div>
@@ -201,7 +220,14 @@ export default function Navigation() {
             <div className='text-white'>
               <div className='flex justify-start items-center p-4 '>
                 <CircleUser className='text-white' />
-                <h2 className='ml-3 text-xl font-bold text-white'>
+                <h2
+                  className={clsx(
+                    'ml-3 text-xl font-bold',
+                    isTvBrowser
+                      ? 'text-white'
+                      : 'bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text',
+                  )}
+                >
                   My BingeBox
                 </h2>
               </div>

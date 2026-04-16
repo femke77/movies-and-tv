@@ -2,8 +2,9 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
 import MenuItemLink from './MenuItemLink';
 import { CircleUser } from 'lucide-react';
+import clsx from 'clsx';
 
-const NavMe = () => {
+const NavMe = ({ isTvBrowser = false }: { isTvBrowser?: boolean }) => {
   return (
     <Menu>
       <MenuButton
@@ -12,7 +13,14 @@ const NavMe = () => {
       >
         {({ open }) => (
           <>
-            <h2 className='text-lg font-bold text-white'>
+            <h2
+              className={clsx(
+                'text-lg font-bold',
+                isTvBrowser
+                  ? 'text-white'
+                  : 'bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text',
+              )}
+            >
               My BingeBox
             </h2>
             {open ? (
