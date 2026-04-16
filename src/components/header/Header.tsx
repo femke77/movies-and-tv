@@ -38,7 +38,7 @@ const Header = ({
           }`,
         )}
         style={{
-          top: isTvBrowser ? '3.25rem' : '0px',
+          top: isTvBrowser ? '3.75rem' : '0px',
           paddingTop: 'env(safe-area-inset-top, 0px)',
         }}
       >

@@ -39,7 +39,7 @@ function App() {
         </Header>
         <main
           className='min-h-screen'
-          style={{ paddingTop: isTvBrowser ? '10.5rem' : undefined }}
+          style={{ paddingTop: isTvBrowser ? '8.75rem' : undefined }}
         >
           <Outlet />
         </main>
