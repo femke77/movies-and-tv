@@ -157,7 +157,7 @@ export default function Navigation() {
             <div className='text-white'>
               <div className='flex justify-start items-center p-4 '>
                 <Clapperboard className='text-white' />
-                <h2 className='ml-3 text-xl font-bold bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text'>
+                <h2 className='ml-3 text-xl font-bold text-white'>
                   Movies
                 </h2>
               </div>
@@ -179,7 +179,7 @@ export default function Navigation() {
             <div className='text-white'>
               <div className='flex justify-start items-center p-4 '>
                 <Tv className='text-white' />
-                <h2 className='ml-3 text-xl font-bold bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text'>
+                <h2 className='ml-3 text-xl font-bold text-white'>
                   TV Shows
                 </h2>
               </div>
@@ -201,7 +201,7 @@ export default function Navigation() {
             <div className='text-white'>
               <div className='flex justify-start items-center p-4 '>
                 <CircleUser className='text-white' />
-                <h2 className='ml-3 text-xl font-bold bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text'>
+                <h2 className='ml-3 text-xl font-bold text-white'>
                   My BingeBox
                 </h2>
               </div>

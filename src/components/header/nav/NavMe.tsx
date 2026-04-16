@@ -12,7 +12,7 @@ const NavMe = () => {
       >
         {({ open }) => (
           <>
-            <h2 className='text-lg font-bold bg-gradient-to-r from-white to-gray-300/70 text-transparent bg-clip-text'>
+            <h2 className='text-lg font-bold text-white'>
               My BingeBox
             </h2>
             {open ? (

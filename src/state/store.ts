@@ -107,53 +107,39 @@ export const useStore = create<BingeBoxStore>()(
 
       // method to initialize the store and handle Suspense
       initializeStore: async () => {
-        // Return immediately if already loaded
-        if (get().isLoaded) {
+        const { isLoaded, isLoading, subscribe } = get();
+      
+        // Already loaded
+        if (isLoaded) {
           return {
             bookmarks: get().bookmarks,
             previousSearches: get().previousSearches,
             continueWatching: get().continueWatching,
           };
         }
-
-        // If already loading, wait for completion
-        if (get().isLoading) {
-          return new Promise((resolve, reject) => {
-            const unsubscribe = get().subscribe(() => {
-              if (get().isLoaded) {
-                unsubscribe();
+      
+        // Wait for loading or trigger it if we're first
+        return new Promise((resolve, reject) => {
+          const unsubscribe = subscribe(() => {
+            const { isLoaded, loadError } = get();
+            if (isLoaded || loadError) {
+              unsubscribe();
+              if (isLoaded) {
                 resolve({
                   bookmarks: get().bookmarks,
                   previousSearches: get().previousSearches,
                   continueWatching: get().continueWatching,
                 });
-              } else if (get().loadError) {
-                unsubscribe();
-                reject(get().loadError);
+              } else {
+                reject(loadError);
               }
-            });
-          });
-        }
-
-        // Start loading process
-        set({ isLoading: true });
-        get().listeners.forEach((listener) => listener());
-
-        // Return a promise that resolves when loaded
-        return new Promise((resolve, reject) => {
-          const unsubscribe = get().subscribe(() => {
-            if (get().isLoaded) {
-              unsubscribe();
-              resolve({
-                bookmarks: get().bookmarks,
-                previousSearches: get().previousSearches,
-                continueWatching: get().continueWatching,
-              });
-            } else if (get().loadError) {
-              unsubscribe();
-              reject(get().loadError);
             }
           });
+      
+          if (!isLoading) {
+            set({ isLoading: true });
+            get().listeners.forEach((listener) => listener());
+          }
         });
       },
 

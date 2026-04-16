@@ -15,11 +15,16 @@ export function RegisterSWWrapper() {
 
     if ('serviceWorker' in navigator) {
       try {
-        const registration = await navigator.serviceWorker.getRegistration();
+        const registrations = await navigator.serviceWorker.getRegistrations();
+  
+        for (const registration of registrations) {
+          const worker = registration.waiting || registration.active;
 
-        if (registration) {
-          await registration.unregister();
-          console.log('Previous service worker unregistered');
+          if (worker?.state === 'redundant') {
+            await registration.unregister();
+            window.location.reload();
+            return;
+          }
         }
 
         updateSW(true);

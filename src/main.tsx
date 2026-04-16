@@ -63,6 +63,8 @@ const persister = createSyncStoragePersister({
   storage: window.localStorage,
 });
 
+
+
 const router = createBrowserRouter([
   {
     path: '/',

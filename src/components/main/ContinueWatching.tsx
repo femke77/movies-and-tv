@@ -25,7 +25,7 @@ const ContinueWatching = () => {
     useShallow((state) => state.continueWatching),
   );
 
-  const { removeFromContinueWatching, clearContinueWatching } = useStore();
+  const { removeFromContinueWatching, clearContinueWatching} = useStore();
   const [items, setItems] = useState<WatchItem[]>([]);
   const [activeItemId, setActiveItemId] = useState<number | null>(null);
   const [openModal, setOpenModal] = useState(false);

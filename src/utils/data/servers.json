@@ -54,18 +54,13 @@
 		},
 		{
 			"id": 11,
-			"name": "Safe Server 1", 
+			"name": "Safer Server 1", 
 			"value": "vidsrc.xyz.safe"
 		},
 		{
 			"id": 12,
 			"name": "Safe Server 2", 
 			"value": "videasy.net.safe"
-		},
-		{
-			"id": 13,
-			"name": "Safe Server 3",
-			"value": "vidfast.pro.safe"
 		}
 		
 		

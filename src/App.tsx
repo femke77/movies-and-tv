@@ -8,6 +8,7 @@ import { ScrollRestoration } from 'react-router-dom';
 import BookmarkModal from './components/modals/BookmarkModal';
 import { useEffect } from 'react';
 
+
 function App() {
   useEffect(() => {
     fetch(

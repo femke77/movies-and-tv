@@ -145,7 +145,7 @@ const WatchMovie = () => {
         newURL = `https://player.videasy.net/movie/${movie_id}`;
         break;
       case 'vidfast.pro.safe':
-        newURL = `https://vidfast.pro/movie/${movie_id}`;
+        newURL = `/api/video/movie/vidfast/${movie_id}`;
         break;
     }
 
@@ -209,7 +209,7 @@ const WatchMovie = () => {
                   className='absolute top-0 left-0 w-full h-full bg-black'
                   width='100%'
                   height='100%'
-                  sandbox='allow-scripts allow-same-origin'
+           
                   referrerPolicy='no-referrer'
                   allow='encrypted-media; autoplay;'
                   src={'about:blank'}

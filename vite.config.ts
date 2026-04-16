@@ -8,7 +8,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 const { icons } = iconsData;
-
+const revision = process.env.BUILD_ID || new Date().toISOString().split('T')[0];
 // https://vite.dev/config/
 export default defineConfig({
   build: {
@@ -39,6 +39,7 @@ export default defineConfig({
       registerType: 'prompt',
       injectRegister: 'auto',
       includeManifestIcons: false,
+
       devOptions: {
         enabled: true,
         type: 'module',
@@ -54,6 +55,7 @@ export default defineConfig({
       },
       workbox: {
         cleanupOutdatedCaches: true,
+        navigateFallback: 'index.html',
         globPatterns: ['**/*.{js,css,html,svg,jsx,png,jpg,webp,jpeg,ttf}'],
         globIgnores: [
           'node_modules/**/*',
@@ -62,6 +64,9 @@ export default defineConfig({
           'android/**/*',
           'ios/**/*',
           'windows11/**/*',
+        ],
+        additionalManifestEntries: [
+          { url: '/', revision },
         ],
         runtimeCaching: [
           {
@@ -99,11 +104,12 @@ export default defineConfig({
               },
             },
           },
+         
         ],
         // these should be set automatically by the plugin for prompt mode:
         // skipWaiting: false,
         // clientsClaim: true,
-        navigateFallback: '/index.html',
+
         disableDevLogs: true,
       },
     }),
