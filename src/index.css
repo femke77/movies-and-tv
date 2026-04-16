@@ -4,18 +4,20 @@
 @font-face {
   font-family: 'FakeID';
   src: url('./assets/fonts/FakeIdentity.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'KyrillaSansSerif';
   src: url('./assets/fonts/KyrillaSansSerif-Black.ttf') format('truetype');
+  font-display: swap;
 }
 
 @theme {
   --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-fakeId: FakeID, sans-serif;
-  --font-kyrilla: KyrillaSansSerif, sans-serif;
+  --font-fakeId: FakeID, "Bebas Neue", Anton, Impact, "Arial Narrow", sans-serif;
+  --font-kyrilla: KyrillaSansSerif, "Bebas Neue", Anton, Impact, "Arial Narrow", sans-serif;
   --font-poppins: 'Poppins', sans-serif;
 
 

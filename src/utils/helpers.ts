@@ -106,3 +106,22 @@ export function isIPad(): boolean {
 export const isBraveBrowser = async (): Promise<boolean> => {
   return !!(navigator.brave && (await navigator.brave.isBrave?.()));
 };
+
+export const isSmartTvBrowser = (): boolean => {
+  if (typeof navigator === 'undefined') return false;
+
+  const ua = (navigator.userAgent || '').toLowerCase();
+
+  return [
+    'webos',
+    'web0s',
+    'smart-tv',
+    'smarttv',
+    'netcast',
+    'tizen',
+    'hbbtv',
+    'viera',
+    'aquos',
+    'bravia',
+  ].some((token) => ua.includes(token));
+};
