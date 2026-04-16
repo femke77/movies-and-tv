@@ -13,7 +13,7 @@ import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
 import { Settings } from 'lucide-react';
 import SeasonNavigation from '../../components/buttons/SeasonNavigation';
-import { isIPad, isIphoneSafari } from '../../utils/helpers';
+import { isIPad, isIphoneSafari, isSmartTvBrowser } from '../../utils/helpers';
 import EpisodeList from '../../components/lists/EpisodeList';
 import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
@@ -23,6 +23,7 @@ const WatchTV = () => {
   const VIEWING_PROGRESS_LIMIT = 250;
   const { servers } = serverData;
   const { addToContinueWatchingTv } = useStore();
+  const isTvBrowser = isSmartTvBrowser();
 
   const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -297,8 +298,29 @@ const WatchTV = () => {
 
   return (
     <div className='min-h-screen pt-[60px]'>
-      <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] mb-6 lg:mx-auto'>
-        <div className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
+      <div
+        className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] mb-6 lg:mx-auto'
+        style={
+          isTvBrowser
+            ? {
+                flexDirection: 'row',
+                gap: '24px',
+                maxWidth: '2200px',
+                marginInline: 'auto',
+              }
+            : undefined
+        }
+      >
+        <div
+          className='primary flex-1 w-full lg:max-w-[calc(100%-424px)]'
+          style={
+            isTvBrowser
+              ? {
+                  maxWidth: 'calc(100% - 424px)',
+                }
+              : undefined
+          }
+        >
           <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
               <BackButton color='text-white' />
@@ -377,9 +399,18 @@ const WatchTV = () => {
             {series && (
               <div className='min-h-[100px] mb-1 rounded-lg flex items-center justify-between gap-[16px]  p-[16px] bg-[#1f1f1f]'>
                 <div className='flex flex-col  w-full '>
-                  <div className='flex justify-center sm:justify-between items-center flex-wrap'>
-                    <div className='text-[#fff9] flex  mx-5 sm:mx-0'>
-                      <div className='flex flex-col mt-[15px] sm:flex-row'>
+                  <div
+                    className='flex justify-center sm:justify-between items-center flex-wrap'
+                    style={isTvBrowser ? { justifyContent: 'space-between' } : undefined}
+                  >
+                    <div
+                      className='text-[#fff9] flex  mx-5 sm:mx-0'
+                      style={isTvBrowser ? { marginInline: 0 } : undefined}
+                    >
+                      <div
+                        className='flex flex-col mt-[15px] sm:flex-row'
+                        style={isTvBrowser ? { flexDirection: 'row' } : undefined}
+                      >
                         <span className='text-white ml-3'>
                           Season {selectedSeason} &#x2022; Episode{' '}
                           {selectedEpisode}
@@ -397,7 +428,10 @@ const WatchTV = () => {
                     </div>
                     {/* next/prev episode buttons */}
                     {episodes ? (
-                      <div className='min-h-[36px] flex gap-2 my-3 mt-5 mx-5 sm:mx-0 '>
+                      <div
+                        className='min-h-[36px] flex gap-2 my-3 mt-5 mx-5 sm:mx-0 '
+                        style={isTvBrowser ? { marginInline: 0 } : undefined}
+                      >
                         <WatchPrevBtn
                           selectedEpisode={selectedEpisode}
                           setSelectedEpisode={setSelectedEpisode}
@@ -415,7 +449,10 @@ const WatchTV = () => {
                         />
                       </div>
                     ) : (
-                      <div className='min-h-[36px] flex gap-2 my-3 mt-5 mx-5 sm:mx-0'>
+                      <div
+                        className='min-h-[36px] flex gap-2 my-3 mt-5 mx-5 sm:mx-0'
+                        style={isTvBrowser ? { marginInline: 0 } : undefined}
+                      >
                         <button
                           className={`min-h-[36px] back-button flex hover:cursor-pointer p-2 px-4 mx-2 bg-gray-700/50 pr-5 rounded-lg hover:bg-gray-700/70 hover:translate-[0.5px] active:translate-[0.5px] `}
                         >
@@ -479,7 +516,17 @@ const WatchTV = () => {
           </main>
         </div>
         {/* sidebar */}
-        <div className=' lg:w-[400px] lg:flex-shrink-0'>
+        <div
+          className=' lg:w-[400px] lg:flex-shrink-0'
+          style={
+            isTvBrowser
+              ? {
+                  width: '400px',
+                  flexShrink: 0,
+                }
+              : undefined
+          }
+        >
           <div className='sidebar bg-[#1f1f1f] max-h-[900px] flex flex-col  rounded-lg'>
             <div className='sidebar-header border-b-[1px] border-[#2f2f2f] p-[16px]'>
               <div className='server-selection mb-8 sm:mb-10 md:mb-8 pt-1'>

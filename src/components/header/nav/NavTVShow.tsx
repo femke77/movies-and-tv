@@ -33,7 +33,12 @@ const NavTVShows = ({ isTvBrowser = false }: { isTvBrowser?: boolean }) => {
         transition
         anchor='bottom end'
         modal={false}
-        className='relative z-50 w-64 origin-top-right rounded-xl border border-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:12px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0  bg-gray-900/95'
+        className={clsx(
+          'relative z-50 w-64 origin-top-right rounded-xl p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:12px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0',
+          isTvBrowser
+            ? 'bg-[#111827] border border-white/15 shadow-2xl'
+            : 'bg-gray-900/95 border border-white/5',
+        )}
       >
         {' '}
         <div className='flex justify-start items-center p-4 '>
@@ -54,11 +59,31 @@ const NavTVShows = ({ isTvBrowser = false }: { isTvBrowser?: boolean }) => {
           </svg>
           <h3 className='text-md font-bold ml-3'>Explore New TV Shows</h3>
         </div>
-        <MenuItemLink to='/explore/tv' name='Trending Series' />
-        <MenuItemLink to='/explore/top-series' name='Top Rated Series' />
-        <MenuItemLink to='/explore/popular-tv' name='Popular TV' />
-        <MenuItemLink to='/explore/all-tv' name='Explore All TV Shows' />
-        <MenuItemLink to='/explore/upcoming-tv' name='Upcoming New TV' />
+        <MenuItemLink
+          to='/explore/tv'
+          name='Trending Series'
+          isTvBrowser={isTvBrowser}
+        />
+        <MenuItemLink
+          to='/explore/top-series'
+          name='Top Rated Series'
+          isTvBrowser={isTvBrowser}
+        />
+        <MenuItemLink
+          to='/explore/popular-tv'
+          name='Popular TV'
+          isTvBrowser={isTvBrowser}
+        />
+        <MenuItemLink
+          to='/explore/all-tv'
+          name='Explore All TV Shows'
+          isTvBrowser={isTvBrowser}
+        />
+        <MenuItemLink
+          to='/explore/upcoming-tv'
+          name='Upcoming New TV'
+          isTvBrowser={isTvBrowser}
+        />
       </MenuItems>
     </Menu>
   );

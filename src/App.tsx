@@ -33,7 +33,13 @@ function App() {
   return (
     <>
       <ScrollRestoration />
-      <div className='bg-black text-white h-full'>
+      <div
+        className='bg-black text-white h-full'
+        style={{
+          transform: isTvBrowser ? 'translateY(1.25rem)' : undefined,
+          transformOrigin: 'top center',
+        }}
+      >
         <Header isTvBrowser={isTvBrowser}>
           <Nav isTvBrowser={isTvBrowser} />
         </Header>

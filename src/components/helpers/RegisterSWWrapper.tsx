@@ -1,8 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { registerSW } from 'virtual:pwa-register';
+import { isSmartTvBrowser } from '../../utils/helpers';
 
 export function RegisterSWWrapper() {
   const [updateAvailable, setUpdateAvailable] = useState(false);
+  const isTvBrowser = isSmartTvBrowser();
+
+  useEffect(() => {
+    if (!isTvBrowser || !('serviceWorker' in navigator)) return;
+
+    const clearTvServiceWorkers = async () => {
+      try {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(
+          registrations.map((registration) => registration.unregister()),
+        );
+      } catch (error) {
+        console.error('Error unregistering TV service workers:', error);
+      }
+    };
+
+    void clearTvServiceWorkers();
+  }, [isTvBrowser]);
+
+  if (isTvBrowser) return null;
 
   const updateSW = registerSW({
     onNeedRefresh() {

@@ -12,10 +12,12 @@ import useDocumentTitle from '../hooks/usePageTitles';
 
 import BackButton from '../components/buttons/BackBtn';
 import { useShallow } from 'zustand/react/shallow';
+import { isSmartTvBrowser } from '../utils/helpers';
 
 const Watchlist = () => {
   useDocumentTitle('Your Watchlist | BingeBox');
   const bookmarks = useSuspenseStore(useShallow((state) => state.bookmarks));
+  const isTvBrowser = isSmartTvBrowser();
 
   const [filterType, setFilterType] = useState<string>('all');
   const queryClient = useQueryClient();
@@ -101,7 +103,16 @@ const Watchlist = () => {
         </div>
       ) : (
         <>
-          <div className='max-w-[1800px] mx-auto  grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
+          <div
+            className='max-w-[1800px] mx-auto  grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'
+            style={
+              isTvBrowser
+                ? {
+                    gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+                  }
+                : undefined
+            }
+          >
             {filteredItems.map((item) => (
               <ItemCard
                 key={item.id}

@@ -11,12 +11,14 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { PauseIcon, Play } from 'lucide-react';
 import { useActivate } from 'react-activation';
+import { isSmartTvBrowser } from '../../utils/helpers';
 
 const Slide = lazy(() => import('./Slide'));
 
 export default function SwiperElement() {
   const { data: items = [] } = useTrendingAll();
   const bookmarks = useStore(useShallow((state) => state.bookmarks));
+  const isTvBrowser = isSmartTvBrowser();
 
   const swiperRef = useRef<{ swiper: SwiperClass } | null>(null);
   const lastIndexRef = useRef(0);
@@ -108,6 +110,7 @@ export default function SwiperElement() {
                 currentIndex={index}
                 movieList={items}
                 isBookmarked={!!bookmarks?.[`${item.id}-${item.media_type}`]}
+                isTvBrowser={isTvBrowser}
               />
             </Suspense>
           </SwiperSlide>

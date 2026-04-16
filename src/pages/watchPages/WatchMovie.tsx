@@ -4,7 +4,7 @@ import WatchDescription from '../../components/WatchDescription';
 import BackButton from '../../components/buttons/BackBtn';
 import FullscreenBtn from '../../components/buttons/FullScreenBtn';
 import ServerList from '../../components/lists/ServerList';
-import { isIphoneSafari, isIPad } from '../../utils/helpers';
+import { isIphoneSafari, isIPad, isSmartTvBrowser } from '../../utils/helpers';
 import serverData from '../../utils/data/servers.json';
 import { useEffect, useState, useRef } from 'react';
 import dayjs from 'dayjs';
@@ -16,6 +16,7 @@ const WatchMovie = () => {
   const { movie_id } = useParams<{ movie_id: string }>();
   const { data: movie } = useWatchDetails('movie', movie_id ?? '');
   const { servers } = serverData;
+  const isTvBrowser = isSmartTvBrowser();
 
   const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -179,8 +180,29 @@ const WatchMovie = () => {
 
   return (
     <div className='min-h-screen pt-[60px]'>
-      <div className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'>
-        <div className='relative primary flex-1 w-full lg:max-w-[calc(100%-424px)]'>
+      <div
+        className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'
+        style={
+          isTvBrowser
+            ? {
+                flexDirection: 'row',
+                gap: '24px',
+                maxWidth: '2200px',
+                marginInline: 'auto',
+              }
+            : undefined
+        }
+      >
+        <div
+          className='relative primary flex-1 w-full lg:max-w-[calc(100%-424px)]'
+          style={
+            isTvBrowser
+              ? {
+                  maxWidth: 'calc(100% - 424px)',
+                }
+              : undefined
+          }
+        >
           <div className='flex items-center justify-between text-xl mb-[16px] rounded-lg bg-[#1f1f1f] py-[12px] px-[16px]'>
             <div>
               <BackButton color='text-white' />
@@ -264,7 +286,17 @@ const WatchMovie = () => {
             </div>
           </main>
         </div>
-        <div className='secondary lg:w-[400px] lg:flex-shrink-0 '>
+        <div
+          className='secondary lg:w-[400px] lg:flex-shrink-0 '
+          style={
+            isTvBrowser
+              ? {
+                  width: '400px',
+                  flexShrink: 0,
+                }
+              : undefined
+          }
+        >
           {/* right side with server choices and episodes for tv*/}
           <div className='sidebar bg-[#1f1f1f] max-h-[900px] flex flex-col rounded-lg'>
             <ServerList

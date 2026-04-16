@@ -11,6 +11,7 @@ import { CastCard } from '../components/cards/CastCard';
 import { ICast } from '../interfaces/ICast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useShallow } from 'zustand/react/shallow';
+import { isSmartTvBrowser } from '../utils/helpers';
 
 interface ResultsProps {
   personOnly: boolean;
@@ -20,6 +21,7 @@ const Results = memo(({ personOnly }: ResultsProps) => {
   const { query } = useParams<{ query: string }>();
   const queryClient = useQueryClient();
   const lastResultsRef = useRef<IItem[]>([]);
+  const isTvBrowser = isSmartTvBrowser();
 
   const { ref, inView } = useInView();
   const bookmarks = useStore(useShallow((state) => state.bookmarks));
@@ -50,13 +52,22 @@ const Results = memo(({ personOnly }: ResultsProps) => {
 
   return (
     <div className='mt-8 mx-3'>
-      <div className='absolute top-20 left-3 z-1'>
+        <div className='absolute top-20 left-3 z-1'>
         <BackButton />
       </div>
 
       {personOnly ? (
         <>
-          <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
+          <div
+            className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'
+            style={
+              isTvBrowser
+                ? {
+                    gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+                  }
+                : undefined
+            }
+          >
             {allPersons?.length > 0 ? (
               allPersons.map((item: ICast) => (
                 <div
@@ -82,7 +93,16 @@ const Results = memo(({ personOnly }: ResultsProps) => {
         </>
       ) : (
         <>
-          <div className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
+          <div
+            className='max-w-[1800px] mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'
+            style={
+              isTvBrowser
+                ? {
+                    gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+                  }
+                : undefined
+            }
+          >
             {allItems?.length > 0 ? (
               allItems.map((item: IItem) => (
                 <div

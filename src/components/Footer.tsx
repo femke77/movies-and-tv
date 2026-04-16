@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Mail } from 'lucide-react';
+import { isSmartTvBrowser } from '../utils/helpers';
 
 const Footer = () => {
+  const isTvBrowser = isSmartTvBrowser();
   const [openSection, setOpenSection] = useState<
     'about' | 'discover' | 'genres' | 'legal' | null
   >(null);
@@ -19,13 +21,28 @@ const Footer = () => {
 
   return (
     <footer className='border-t-gray-500 max-w-[1800px] min-h-[440px] border-t-1 leading-5 mt-8 pt-6 text-center py-4 bg-black relative z-50 text-[#726c6c] text-lg'>
-      <div className='flex mx-10 flex-col md:flex-row md:justify-between items-top md:mx-10 md:pr-4 lg:pr-12 pb-10 lg:mx-30'>
+      <div
+        className='flex mx-10 flex-col md:flex-row md:justify-between items-top md:mx-10 md:pr-4 lg:pr-12 pb-10 lg:mx-30'
+        style={
+          isTvBrowser
+            ? {
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+              }
+            : undefined
+        }
+      >
         {/* About Section */}
-        <div className='flex flex-col items-left text-left md:w-1/5 mb-3'>
+        <div
+          className='flex flex-col items-left text-left md:w-1/5 mb-3'
+          style={isTvBrowser ? { width: '20%' } : undefined}
+        >
           <div className='flex justify-between items-center mb:w-1/5'>
             <h3>About</h3>
             <button
               className='md:hidden'
+              style={isTvBrowser ? { display: 'none' } : undefined}
               onClick={() => toggleSection('about')}
             >
               {openSection === 'about' ? '−' : '+'}
@@ -35,6 +52,7 @@ const Footer = () => {
             className={`${
               openSection === 'about' ? 'block' : 'hidden'
             } md:block`}
+            style={isTvBrowser ? { display: 'block' } : undefined}
           >
             <p className='text-white/70 text-sm text-left flex items-center my-2'>
               Stream movies & tv shows on demand. BingeBox24/7 wants to be your
@@ -53,6 +71,7 @@ const Footer = () => {
             <h3>Discover</h3>
             <button
               className='md:hidden'
+              style={isTvBrowser ? { display: 'none' } : undefined}
               onClick={() => toggleSection('discover')}
             >
               {openSection === 'discover' ? '−' : '+'}
@@ -62,6 +81,7 @@ const Footer = () => {
             className={`${
               openSection === 'discover' ? 'block' : 'hidden'
             } md:flex mt-2 flex flex-col items-left text-left text-white/70 text-sm`}
+            style={isTvBrowser ? { display: 'flex' } : undefined}
           >
             <Link to='/explore/toprated'>Top Rated Movies</Link>
             <Link to='/explore/top-series'>Top Rated TV</Link>
@@ -78,6 +98,7 @@ const Footer = () => {
             <h3>Genres</h3>
             <button
               className='md:hidden'
+              style={isTvBrowser ? { display: 'none' } : undefined}
               onClick={() => toggleSection('genres')}
             >
               {openSection === 'genres' ? '−' : '+'}
@@ -87,6 +108,7 @@ const Footer = () => {
             className={`${
               openSection === 'genres' ? 'block' : 'hidden'
             } md:flex mt-2 flex flex-col items-left text-left text-white/70 text-sm`}
+            style={isTvBrowser ? { display: 'flex' } : undefined}
           >
             <Link to='/explore/toprated'>Action</Link>
             <Link to='/explore/top-series'>Adventure</Link>
@@ -105,6 +127,7 @@ const Footer = () => {
             <h3>Legal</h3>
             <button
               className='md:hidden'
+              style={isTvBrowser ? { display: 'none' } : undefined}
               onClick={() => toggleSection('legal')}
             >
               {openSection === 'legal' ? '−' : '+'}
@@ -114,6 +137,7 @@ const Footer = () => {
             className={`${
               openSection === 'legal' ? 'block' : 'hidden'
             } md:flex mt-2 flex flex-col items-left text-left text-white/70 text-sm`}
+            style={isTvBrowser ? { display: 'flex' } : undefined}
           >
             <Link to='/dmca'>DMCA</Link>
             <Link

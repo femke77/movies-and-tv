@@ -29,12 +29,14 @@ const Slide = ({
   currentIndex,
   movieList,
   isBookmarked,
+  isTvBrowser = false,
 }: {
   slide: IItem;
   isVisible: boolean;
   currentIndex: number;
   movieList: IItem[];
   isBookmarked: boolean;
+  isTvBrowser?: boolean;
 }) => {
   const [highResBgLoaded, setHighResBgLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false);
@@ -136,6 +138,7 @@ const Slide = ({
       <div
         className='max-w-[1800px] mx-auto -mt-5 relative h-full'
         style={{
+          width: isTvBrowser ? '100%' : undefined,
           opacity: contentLoaded ? 1 : 0,
           transition: 'opacity 700ms ease-in-out',
         }}
@@ -148,14 +151,31 @@ const Slide = ({
           [@media(min-width:1050px)]:top-1/2
           [@media(min-width:1050px)]:transform
           [@media(min-width:1050px)]:-translate-y-1/2'
+          style={
+            isTvBrowser
+              ? {
+                  width: '50%',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  paddingLeft: '3rem',
+                  paddingRight: '1rem',
+                }
+              : undefined
+          }
         >
           {/* Genre and date section*/}
           <div
             className={clsx(
               `flex flex-col h-[30px] items-center [@media(min-width:1050px)]:items-start`,
+              isTvBrowser && 'items-start',
             )}
           >
-            <div className={`flex justify-start items-start mb-6 pb-6`}>
+            <div
+              className={clsx(
+                'flex justify-start items-start mb-6 pb-6',
+                isTvBrowser && 'w-full',
+              )}
+            >
               {movieGenres &&
                 movieGenres.length >= 1 &&
                 movieGenres.slice(0, 1).map((genre) => (
@@ -184,12 +204,20 @@ const Slide = ({
             {/* Title/logo section */}
             <Link to={`/${slide.media_type}/${slide.id}`} className='block'>
               <div
-                className={`flex flex-col items-center [@media(min-width:1050px)]:items-start`}
+                className={clsx(
+                  'flex flex-col items-center [@media(min-width:1050px)]:items-start',
+                  isTvBrowser && 'items-start',
+                )}
               >
                 {/* Logo  */}
                 <div className='h-[150px] my-6 mt-6 mb-10 flex items-center justify-center [@media(min-width:1050px)]:justify-start'>
                   {displayLogo ? (
-                    <div className='relative h-[120px] flex items-center'>
+                    <div
+                      className={clsx(
+                        'relative h-[120px] flex items-center',
+                        isTvBrowser && 'justify-start w-full',
+                      )}
+                    >
                       {/* Safari-friendly image rendering */}
                       <img
                         className={`h-auto max-h-[235px] py-2 transition-all duration-800 ease-in-out ${
@@ -215,7 +243,12 @@ const Slide = ({
 
                 {/* Overview text with placeholder */}
                 {contentLoaded ? (
-                  <p className='text-white line-clamp-3 text-center [@media(min-width:1050px)]:text-left mb-10 h-[72px] px-0 sm:px-6 [@media(min-width:1050px)]:px-0'>
+                  <p
+                    className={clsx(
+                      'text-white line-clamp-3 text-center [@media(min-width:1050px)]:text-left mb-10 h-[72px] px-0 sm:px-6 [@media(min-width:1050px)]:px-0',
+                      isTvBrowser && 'text-left px-0 sm:px-0',
+                    )}
+                  >
                     {slide.overview}
                   </p>
                 ) : (
@@ -228,6 +261,7 @@ const Slide = ({
             <div
               className={clsx(
                 `[@media(max-width:1050px)]:pl-7 flex flex-row items-center w-full justify-center [@media(min-width:1050px)]:justify-start pt-6 h-[50px]`,
+                isTvBrowser && 'justify-start pl-0',
               )}
             >
               <div className='mr-5'>
@@ -271,7 +305,26 @@ const Slide = ({
 
         {/* Poster image with placeholder */}
         {slide.poster_path && (
-          <div className='hidden [@media(min-width:1050px)]:block [@media(min-width:1050px)]:absolute [@media(min-width:1050px)]:right-0 [@media(min-width:1050px)]:top-1/2 [@media(min-width:1050px)]:transform [@media(min-width:1050px)]:-translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-3 [@media(min-width:1050px)]:h-[450px] [@media(min-width:1050px)]:w-[320px] z-10'>
+          <div
+            className={clsx(
+              'hidden [@media(min-width:1050px)]:block [@media(min-width:1050px)]:absolute [@media(min-width:1050px)]:right-0 [@media(min-width:1050px)]:top-1/2 [@media(min-width:1050px)]:transform [@media(min-width:1050px)]:-translate-y-1/2 mr-16 md:mr-20 lg:mr-40 mt-3 [@media(min-width:1050px)]:h-[450px] [@media(min-width:1050px)]:w-[320px] z-10',
+              isTvBrowser && 'block',
+            )}
+            style={
+              isTvBrowser
+                ? {
+                    display: 'block',
+                    position: 'absolute',
+                    right: '6rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    height: '450px',
+                    width: '320px',
+                    marginTop: '0.75rem',
+                  }
+                : undefined
+            }
+          >
             {/* Poster placeholder */}
             <div
               className={`w-78 h-[450px] rounded-lg bg-gray-800/50 absolute ${

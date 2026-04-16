@@ -4,6 +4,7 @@ import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { IItem } from '../../interfaces/IItem';
 import { useSuspenseStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
+import { isSmartTvBrowser } from '../../utils/helpers';
 const Carousel = ({
   items,
   itemType,
@@ -15,6 +16,7 @@ const Carousel = ({
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const bookmarks = useSuspenseStore(useShallow((state) => state.bookmarks));
+  const isTvBrowser = isSmartTvBrowser();
 
   const scrollLeft = () => {
     if (scrollRef.current) {
@@ -41,7 +43,11 @@ const Carousel = ({
       {/* Scrollable Container renders ItemCard */}
       <div
         ref={scrollRef}
-        className='flex gap-3 px-4 py-2 w-full overflow-x-auto scroll-smooth scrollbar-hide snap-x snap-mandatory'
+        className={`flex gap-3 px-4 py-2 w-full scroll-smooth scrollbar-hide snap-x snap-mandatory ${
+          isTvBrowser ? 'overflow-x-hidden' : 'overflow-x-auto'
+        } ${
+          isTvBrowser ? 'tv-scrollbar-hide' : ''
+        }`}
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {items.map((item) => (

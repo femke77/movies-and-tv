@@ -8,10 +8,12 @@ import BackButton from '../../components/buttons/BackBtn';
 import { useShallow } from 'zustand/react/shallow';
 import HistoryPageSkeleton from '../../components/loadingSkeletons/HistoryPageSkeleton';
 import DelayedSuspense from '../../components/helpers/DelayedSuspense';
+import { isSmartTvBrowser } from '../../utils/helpers';
 
 const History = () => {
   const { previousSearches, clearPreviousSearches, continueWatching } =
     useSuspenseStore(useShallow((state) => state));
+  const isTvBrowser = isSmartTvBrowser();
 
   const [showModal, setShowModal] = useState(false);
   useDocumentTitle('Watch History | BingeBox');
@@ -62,7 +64,16 @@ const History = () => {
         />
         <div className='z-10 flex flex-col gap-2 mt-7 ml-6'>
           {previousSearches.length > 0 ? (
-            <div className='grid grid-cols-1 sm:grid-cols-2'>
+            <div
+              className='grid grid-cols-1 sm:grid-cols-2'
+              style={
+                isTvBrowser
+                  ? {
+                      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                    }
+                  : undefined
+              }
+            >
               {previousSearches?.map((item, index) => (
                 <div key={index} className='text-white z-10 text-md leading-8'>
                   <Link to={`/search/${item}`}> {item}</Link>

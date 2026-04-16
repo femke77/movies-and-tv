@@ -7,6 +7,7 @@ import { ChevronRight } from 'lucide-react';
 import { useStore } from '../../state/store';
 import { useShallow } from 'zustand/react/shallow';
 import LazyImage from '../helpers/LazyImage';
+import { isSmartTvBrowser } from '../../utils/helpers';
 
 interface WatchItem {
   title: string;
@@ -21,6 +22,7 @@ interface WatchItem {
 
 const ContinueWatching = () => {
   const location = useLocation();
+  const isTvBrowser = isSmartTvBrowser();
   const continueWatching = useStore(
     useShallow((state) => state.continueWatching),
   );
@@ -157,7 +159,9 @@ const ContinueWatching = () => {
                   <div
                     data-carousel-item
                     tabIndex={0}
-                    className='text-white relative flex-shrink-0 focus:outline-2 focus:rounded-lg focus:outline-white '
+                    className={`text-white relative flex-shrink-0 focus:outline-2 focus:rounded-lg focus:outline-white ${
+                      isTvBrowser ? 'px-2' : ''
+                    }`}
                     key={item.id}
                     onFocus={() => setActiveItemId(item.id)}
                     onBlur={() => setActiveItemId(null)}

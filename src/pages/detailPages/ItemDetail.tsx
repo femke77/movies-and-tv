@@ -4,7 +4,7 @@ import { useItemDetail } from '../../hooks/useItemOrWatchDetail';
 import { useParams } from 'react-router-dom';
 import UserRating from '../../components/UserRatingV2';
 import WatchButton from '../../components/buttons/WatchButton';
-import { getStrokeColor } from '../../utils/helpers';
+import { getStrokeColor, isSmartTvBrowser } from '../../utils/helpers';
 import { CastList } from '../../components/lists/CastList';
 import dayjs from 'dayjs';
 import BookmarkBtn from '../../components/buttons/BookmarkBtn';
@@ -23,6 +23,7 @@ const ItemDetail = () => {
   const { item_type, id } = useParams<{ item_type: string; id: string }>();
   const { data: item } = useItemDetail(item_type!, id!);
   const { data: quality } = useItemQuality(id!);
+  const isTvBrowser = isSmartTvBrowser();
 
   const bookmark = useStore(
     useShallow((state) => state.bookmarks[`${id}-${item_type}`]),
@@ -37,7 +38,7 @@ const ItemDetail = () => {
   useEffect(() => {
     if (item?.backdrop_path) {
       const img = new Image();
-      img.src = `https://image.tmdb.org/t/p/w342${item.backdrop_path}`;
+      img.src = `https://image.tmdb.org/t/p/${isTvBrowser ? 'w1280' : 'w342'}${item.backdrop_path}`;
       img.onload = () => {
         setBackgroundLoaded(true);
       };
@@ -110,6 +111,13 @@ const ItemDetail = () => {
     calculateROI === 'Infinity' || calculateROI === '-Infinity'
       ? '0'
       : calculateROI;
+  const detailTextAlignClass = isTvBrowser ? 'text-left' : 'text-center md:text-left';
+  const detailJustifyClass = isTvBrowser
+    ? 'justify-start'
+    : 'justify-center md:justify-start';
+  const detailMetaRowClass = isTvBrowser
+    ? 'gap-x-8 gap-y-3'
+    : 'space-x-5 md:space-x-10';
 
   // const PosterPlaceHolder = () => (
   //   <div className='w-full h-full bg-gray-900 absolute inset-0 z-[1]' />
@@ -125,20 +133,49 @@ const ItemDetail = () => {
             <BackButton />
           </div>
           <div
-            className={`fixed inset-0 bg-cover bg-center blur-[10px] z-0 bg-no-repeat transition-opacity duration-800 ease-in ${
-              backgroundLoaded ? 'opacity-40' : 'opacity-0'
+            className={`fixed inset-0 bg-cover bg-center z-0 bg-no-repeat transition-opacity duration-800 ease-in ${
+              isTvBrowser ? 'blur-[4px]' : 'blur-[10px]'
+            } ${
+              backgroundLoaded ? (isTvBrowser ? 'opacity-25' : 'opacity-40') : 'opacity-0'
             }`}
             style={{
               backgroundImage: backgroundLoaded
-                ? `url('https://image.tmdb.org/t/p/w342${item?.backdrop_path}')`
+                ? `url('https://image.tmdb.org/t/p/${isTvBrowser ? 'w1280' : 'w342'}${item?.backdrop_path}')`
                 : 'none',
+              backgroundPosition: isTvBrowser ? 'center top' : undefined,
             }}
           ></div>
           {/* content */}
-          <div className='relative z-10 w-full flex flex-wrap mx-auto'>
+          <div
+            className='relative z-10 w-full flex flex-wrap mx-auto'
+            style={
+              isTvBrowser
+                ? {
+                    display: 'grid',
+                    gridTemplateColumns: '300px minmax(0, 1fr)',
+                    alignItems: 'start',
+                    columnGap: '3rem',
+                    maxWidth: '1280px',
+                  }
+                : undefined
+            }
+          >
             {/* Left Section - Poster Image */}
-            <div className='relative md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3'>
-              <section className='w-[280px] sm:w-[450px] md:w-[300px] flex-shrink-0'>
+            <div
+              className='relative md:w-[300px] h-auto mb-12 flex flex-wrap mx-auto md:ml-3'
+              style={
+                isTvBrowser
+                  ? {
+                      width: '300px',
+                      margin: 0,
+                    }
+                  : undefined
+              }
+            >
+              <section
+                className='w-[280px] sm:w-[450px] md:w-[300px] flex-shrink-0'
+                style={isTvBrowser ? { width: '300px' } : undefined}
+              >
                 {/* main poster container*/}
                 <div
                   className='relative w-full md:w-[340px] mx-auto overflow-hidden'
@@ -146,6 +183,7 @@ const ItemDetail = () => {
                     //  maintain poster dimensions before image loads
                     aspectRatio: '2/3',
                     backgroundColor: 'rgba(0,0,0,0.2)',
+                    width: isTvBrowser ? '300px' : undefined,
                   }}
                 >
                   {item.poster_path ? (
@@ -189,19 +227,39 @@ const ItemDetail = () => {
             <section
               id='item-info'
               className='md:pl-4 flex-grow md:max-h-[525px] basis-full md:basis-2/5 ml-12 pr-10 overflow-auto flex flex-col items-center md:items-start'
+              style={
+                isTvBrowser
+                  ? {
+                      marginLeft: 0,
+                      paddingLeft: '1.5rem',
+                      flexBasis: 'auto',
+                      maxHeight: '525px',
+                      alignItems: 'flex-start',
+                      maxWidth: '860px',
+                    }
+                  : undefined
+              }
             >
-              <h2 className='text-4xl mb-2 font-bold md:pr-16 text-center md:text-left'>
+              <h2
+                className={`text-4xl mb-2 font-bold md:pr-16 ${detailTextAlignClass}`}
+                style={isTvBrowser ? { lineHeight: 1.15 } : undefined}
+              >
                 {item.title || item.name} ({releaseYearMovie || releaseYearTV})
               </h2>
-              <p className='text-center md:text-left italic text-gray-200/50 text-light text-xl mb-3'>
+              <p
+                className={`${detailTextAlignClass} italic text-gray-200/50 text-light text-xl mb-3`}
+                style={isTvBrowser ? { lineHeight: 1.45 } : undefined}
+              >
                 {item.tagline}
               </p>
-              <div className='flex flex-wrap justify-center md:justify-start space-y-2 mb-4'>
+              <div className={`flex flex-wrap ${detailJustifyClass} space-y-2 mb-4`}>
                 {item.genres.map((genre: { id: string; name: string }) => (
                   <Chip key={genre.id} label={genre.name} />
                 ))}
               </div>
-              <div className='flex flex-wrap items-center justify-center md:justify-start mb-2'>
+              <div
+                className={`flex flex-wrap items-center ${detailJustifyClass} mb-2`}
+              >
                 <p className='text-lg text-light mr-3'>
                   Rating:{' '}
                   <span className='text-lg text-gray-200/70 mr-4 font-bold'>
@@ -218,7 +276,9 @@ const ItemDetail = () => {
                   </div>
                 )}
               </div>
-              <div className='justify-center flex flex-wrap items-center md:justify-start gap-x-2  mb-3'>
+              <div
+                className={`flex flex-wrap items-center ${detailJustifyClass} gap-x-2 mb-3`}
+              >
                 {(item_type === 'tv' &&
                   item.networks?.length > 0 &&
                   item.networks?.[0]?.logo_path) ||
@@ -304,20 +364,23 @@ const ItemDetail = () => {
                   />
                 </div>
               </div>
-              <div className='ml-4 flex justify-center  md:justify-start mt-4'>
+              <div className={`ml-4 flex ${detailJustifyClass} mt-4`}>
                 <Share
                   media_type={item_type === 'tv' ? 'TV Show' : 'Movie'}
                   url={window.location.href}
                 />
               </div>
-              <h3 className='text-3xl font-bold mt-4 text-center md:text-left'>
+              <h3 className={`text-3xl font-bold mt-4 ${detailTextAlignClass}`}>
                 Overview
               </h3>
-              <p className='text-lg text-center md:text-left text-white/60 my-3 mb-6 font-bold'>
+              <p
+                className={`text-lg text-white/60 my-3 mb-6 font-bold ${detailTextAlignClass}`}
+                style={isTvBrowser ? { lineHeight: 1.65, maxWidth: '95%' } : undefined}
+              >
                 {item.overview}
               </p>
 
-              <div className='flex flex-wrap justify-center md:justify-start space-x-5 md:space-x-10 mb-4'>
+              <div className={`flex flex-wrap ${detailJustifyClass} ${detailMetaRowClass} mb-4`}>
                 <p className='text-xl font-bold'>
                   Status:{' '}
                   <span className='text-lg text-gray-100/50 my-3 font-bold ml-1'>
@@ -348,7 +411,7 @@ const ItemDetail = () => {
                 </p>
               </div>
 
-              <div className='flex flex-wrap justify-center md:justify-start space-x-5 md:space-x-10 mb-4'>
+              <div className={`flex flex-wrap ${detailJustifyClass} ${detailMetaRowClass} mb-4`}>
                 {/* {item.budget > 0 && (
                   <p className='text-xl font-bold'>
                     Budget:{' '}
@@ -380,7 +443,9 @@ const ItemDetail = () => {
                   </p>
                 )}
               </div>
-              <div className='flex md:flex-col flex-wrap justify-center md:justify-start space-x-5 md:space-x-10 mb-4'>
+              <div
+                className={`flex md:flex-col flex-wrap ${detailJustifyClass} ${detailMetaRowClass} mb-4`}
+              >
                 {item_type === 'movie' ? (
                   <>
                     <p className='text-xl font-bold mb-4'>
@@ -434,7 +499,10 @@ const ItemDetail = () => {
 
             {/* Cast Section */}
             {item.cast?.length > 0 && (
-              <section className='w-full mt-14 mb-24'>
+              <section
+                className='w-full mt-14 mb-24'
+                style={isTvBrowser ? { gridColumn: '1 / -1' } : undefined}
+              >
                 <h3 className='text-2xl/14 text-white/70 text-center'>
                   Top Cast
                 </h3>

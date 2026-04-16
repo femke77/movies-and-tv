@@ -36,18 +36,43 @@ const NavMovies = ({ isTvBrowser = false }: { isTvBrowser?: boolean }) => {
         transition
         anchor='bottom end'
         modal={false}
-        className='w-64 origin-top-right rounded-xl border border-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:12px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0  bg-gray-900/95 relative z-50'
+        className={clsx(
+          'w-64 origin-top-right rounded-xl p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:12px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 relative z-50',
+          isTvBrowser
+            ? 'bg-[#111827] border border-white/15 shadow-2xl'
+            : 'bg-gray-900/95 border border-white/5',
+        )}
       >
         {' '}
         <div className='flex justify-start items-center p-4 '>
           <Clapperboard color='#ffffff' />
           <h3 className='text-md font-bold ml-3'>Discover New Movies</h3>
         </div>
-        <MenuItemLink to='/explore/movies' name='Trending Movies' />
-        <MenuItemLink to='/explore/toprated' name='Top Rated Movies' />
-        <MenuItemLink to='/explore/popular' name='Popular Movies' />
-        <MenuItemLink to='/explore/all-movies' name='Explore All Movies' />
-        <MenuItemLink to='/explore/upcoming' name='Upcoming Movies' />
+        <MenuItemLink
+          to='/explore/movies'
+          name='Trending Movies'
+          isTvBrowser={isTvBrowser}
+        />
+        <MenuItemLink
+          to='/explore/toprated'
+          name='Top Rated Movies'
+          isTvBrowser={isTvBrowser}
+        />
+        <MenuItemLink
+          to='/explore/popular'
+          name='Popular Movies'
+          isTvBrowser={isTvBrowser}
+        />
+        <MenuItemLink
+          to='/explore/all-movies'
+          name='Explore All Movies'
+          isTvBrowser={isTvBrowser}
+        />
+        <MenuItemLink
+          to='/explore/upcoming'
+          name='Upcoming Movies'
+          isTvBrowser={isTvBrowser}
+        />
       </MenuItems>
     </Menu>
   );

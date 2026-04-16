@@ -36,16 +36,29 @@ const NavMe = ({ isTvBrowser = false }: { isTvBrowser?: boolean }) => {
         transition
         anchor='bottom end'
         modal={false}
-        className='w-64 origin-top-right rounded-xl border border-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:12px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0  bg-gray-900/95 relative z-50'
+        className={clsx(
+          'w-64 origin-top-right rounded-xl p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:12px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 relative z-50',
+          isTvBrowser
+            ? 'bg-[#111827] border border-white/15 shadow-2xl'
+            : 'bg-gray-900/95 border border-white/5',
+        )}
       >
         {' '}
         <div className='flex justify-start items-center p-4 '>
           <CircleUser className='text-white' />
           <h3 className='text-md font-bold ml-3'>Account</h3>
         </div>
-        <MenuItemLink to='/account/saved' name='My Watchlist' />
-        <MenuItemLink to='/account/history' name='Watch & Search History' />
-        <MenuItemLink to='/faqs' name='FAQs' />
+        <MenuItemLink
+          to='/account/saved'
+          name='My Watchlist'
+          isTvBrowser={isTvBrowser}
+        />
+        <MenuItemLink
+          to='/account/history'
+          name='Watch & Search History'
+          isTvBrowser={isTvBrowser}
+        />
+        <MenuItemLink to='/faqs' name='FAQs' isTvBrowser={isTvBrowser} />
       </MenuItems>
     </Menu>
   );
