@@ -265,8 +265,7 @@ createRoot(document.getElementById('root')!).render(
     persistOptions={{
       persister,
       maxAge: 1000 * 60 * 60 * 24,
-      // uncomment the next line and add something to the string text to bust the cache if needed
-      // buster:'',
+      buster: __APP_VERSION__,
       dehydrateOptions: {
         shouldDehydrateQuery: (query) => {
           // Only persist specific query types

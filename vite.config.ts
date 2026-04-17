@@ -11,6 +11,9 @@ const { icons } = iconsData;
 const revision = process.env.BUILD_ID || new Date().toISOString().split('T')[0];
 // https://vite.dev/config/
 export default defineConfig({
+  define: {
+    __APP_VERSION__: JSON.stringify(revision),
+  },
   build: {
     rollupOptions: {
       plugins: [
@@ -36,7 +39,8 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: 'prompt',
+      selfDestroying: true,
+      registerType: 'autoUpdate',
       injectRegister: 'auto',
       includeManifestIcons: false,
 
