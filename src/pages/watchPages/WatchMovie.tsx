@@ -10,6 +10,7 @@ import { useEffect, useState, useRef } from 'react';
 import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
+import { getApiUrl } from '../../utils/api';
 
 const WatchMovie = () => {
   const { addToContinueWatchingMovie } = useStore();
@@ -140,13 +141,13 @@ const WatchMovie = () => {
         newURL = ` https://multiembed.mov/directstream.php?video_id=${movie_id}&tmdb=1`;
         break;
       case 'vidsrc.xyz.safe':
-        newURL = `https://bingebox-server-54dc60d03f7d.herokuapp.com/api/video/movie/${movie_id}`;
+        newURL = getApiUrl(`/api/video/movie/${movie_id}`);
         break;
       case 'videasy.net.safe':
         newURL = `https://player.videasy.net/movie/${movie_id}`;
         break;
       case 'vidfast.pro.safe':
-        newURL = `/api/video/movie/vidfast/${movie_id}`;
+        newURL = getApiUrl(`/api/video/movie/vidfast/${movie_id}`);
         break;
     }
 
@@ -231,7 +232,7 @@ const WatchMovie = () => {
                   className='absolute top-0 left-0 w-full h-full bg-black'
                   width='100%'
                   height='100%'
-           
+            
                   referrerPolicy='no-referrer'
                   allow='encrypted-media; autoplay;'
                   src={'about:blank'}

@@ -7,21 +7,18 @@ import { ScrollRestoration } from 'react-router-dom';
 import BookmarkModal from './components/modals/BookmarkModal';
 import { useEffect } from 'react';
 import { isSmartTvBrowser } from './utils/helpers';
+import { getApiUrl } from './utils/api';
 
 
 function App() {
   const isTvBrowser = isSmartTvBrowser();
 
   useEffect(() => {
-    fetch(
-      'https://bingebox-server-54dc60d03f7d.herokuapp.com/api/video/wakeup',
-    ).then((res) => {
+    fetch(getApiUrl('/api/video/wakeup')).then((res) => {
       console.log('wake up status', res.status);
     });
     const interval = setInterval(() => {
-      fetch(
-        'https://bingebox-server-54dc60d03f7d.herokuapp.com/api/video/wakeup',
-      ).then((res) => {
+      fetch(getApiUrl('/api/video/wakeup')).then((res) => {
         console.log('wake up status', res.status);
       });
     }, 600000);

@@ -18,6 +18,7 @@ import EpisodeList from '../../components/lists/EpisodeList';
 import dayjs from 'dayjs';
 import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
+import { getApiUrl } from '../../utils/api';
 
 const WatchTV = () => {
   const VIEWING_PROGRESS_LIMIT = 250;
@@ -245,7 +246,9 @@ const WatchTV = () => {
         newURL = `https://multiembed.mov/directstream.php?video_id=${series_id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`;
         break;
       case 'vidsrc.xyz.safe':
-        newURL = `https://bingebox-server-54dc60d03f7d.herokuapp.com/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+        newURL = getApiUrl(
+          `/api/video/tv/${series_id}/${selectedSeason}/${selectedEpisode}`
+        );
         break;
       case 'videasy.net.safe':
         newURL = `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
@@ -354,7 +357,7 @@ const WatchTV = () => {
                   className='absolute top-0 left-0 w-full h-full bg-black'
                   width='100%'
                   height='100%'
-              
+                  
                   referrerPolicy='no-referrer'
                   allow='encrypted-media; autoplay;'
                   src={'about:blank'}
