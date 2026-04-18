@@ -38,6 +38,8 @@ const Slide = ({
   isBookmarked: boolean;
   isTvBrowser?: boolean;
 }) => {
+  const tvHeroContentOffset = '23.5rem';
+  const tvHeroPosterOffset = '15rem';
   const [highResBgLoaded, setHighResBgLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
@@ -177,7 +179,7 @@ const Slide = ({
             isTvBrowser
               ? {
                   width: '50%',
-                  top: '50%',
+                  top: `calc(50% + ${tvHeroContentOffset})`,
                   transform: 'translateY(-50%)',
                   paddingLeft: '5.5rem',
                   paddingRight: '1rem',
@@ -339,7 +341,7 @@ const Slide = ({
                     display: 'block',
                     position: 'absolute',
                     right: '6rem',
-                    top: '50%',
+                    top: `calc(50% + ${tvHeroPosterOffset})`,
                     transform: 'translateY(-50%)',
                     height: '450px',
                     width: '320px',

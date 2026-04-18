@@ -17,16 +17,7 @@ function App() {
         <Header isTvBrowser={isTvBrowser}>
           <Nav isTvBrowser={isTvBrowser} />
         </Header>
-        <main
-          className='min-h-screen'
-          style={
-            isTvBrowser
-              ? {
-                  paddingTop: 'calc(5rem + env(safe-area-inset-top, 0px))',
-                }
-              : undefined
-          }
-        >
+        <main className='min-h-screen'>
           <Outlet />
         </main>
         <Footer />
