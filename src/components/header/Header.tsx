@@ -38,12 +38,17 @@ const Header = ({
   if (isTvBrowser) {
     return (
       <header className='bg-[#222222]'>
-        <div className='fixed top-0 left-0 right-0 z-50 bg-gray-900 flex items-center h-16 px-3 w-full justify-between pb-6' >
+        <div
+          className='fixed top-0 left-0 right-0 z-50 bg-gray-900 flex min-h-20 items-center px-3 w-full justify-between'
+          style={{
+            paddingTop: 'env(safe-area-inset-top, 0px)',
+          }}
+        >
           <h1>
             <Link
               to='/'
               className={clsx(
-                'bg-gray-900 font-kyrilla text-[1.85rem] sm:text-[2.1rem] md:text-[2.2rem] lg:text-[2.4rem] font-semibold m-0 mr-8 whitespace-nowrap flex items-center h-16 leading-none',
+                'bg-gray-900 font-kyrilla text-[1.85rem] sm:text-[2.1rem] md:text-[2.2rem] lg:text-[2.4rem] font-semibold m-0 py-3 mr-8 whitespace-nowrap flex items-center leading-none',
                 'text-white tracking-[0.02em]',
               )}
             >

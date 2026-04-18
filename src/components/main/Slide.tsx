@@ -127,6 +127,7 @@ const Slide = ({
          } z-0`)}
         style={{
           backgroundImage: `url('https://image.tmdb.org/t/p/w1280${slide.backdrop_path}?cache=true')`,
+          marginTop: isTvBrowser ? 0 : undefined,
         }}
       >
         {/* gradient overlays */}
@@ -159,6 +160,7 @@ const Slide = ({
         className='max-w-[1800px] mx-auto -mt-5 relative h-full'
         style={{
           width: isTvBrowser ? '100%' : undefined,
+          marginTop: isTvBrowser ? 0 : undefined,
           opacity: contentLoaded ? 1 : 0,
           transition: 'opacity 700ms ease-in-out',
         }}
@@ -179,6 +181,7 @@ const Slide = ({
                   transform: 'translateY(-50%)',
                   paddingLeft: '5.5rem',
                   paddingRight: '1rem',
+                  marginTop: 0,
                 }
               : undefined
           }
@@ -340,7 +343,7 @@ const Slide = ({
                     transform: 'translateY(-50%)',
                     height: '450px',
                     width: '320px',
-                    marginTop: '0.75rem',
+                    marginTop: 0,
                   }
                 : undefined
             }
