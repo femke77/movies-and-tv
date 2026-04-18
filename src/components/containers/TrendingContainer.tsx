@@ -3,6 +3,7 @@ import TrendingToggle from '../buttons/TrendingToggle';
 import Explore from './ExploreDisplay';
 import { useInfiniteTrendingQuery } from '../../hooks/useSearchAndDiscover';
 import BackButton from '../buttons/BackBtn';
+import { isSmartTvBrowser } from '../../utils/helpers';
 const TrendingContainer = ({
   mediaType,
   heading,
@@ -11,13 +12,17 @@ const TrendingContainer = ({
   heading: string;
 }) => {
   const [timePeriod, setTimePeriod] = useState('day');
+  const isTvBrowser = isSmartTvBrowser();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteTrendingQuery(mediaType, timePeriod);
 
   return (
-    <div className='mt-24'>
-      <div className='absolute top-20 left-3 z-1'>
+    <div className={isTvBrowser ? 'mt-4' : 'mt-24'}>
+      <div
+        className='absolute left-3 z-1'
+        style={{ top: isTvBrowser ? '5.75rem' : '5rem' }}
+      >
         <BackButton />
       </div>
       <div className='flex flex-col sm:flex-row items-center justify-between mx-3 mb-6'>

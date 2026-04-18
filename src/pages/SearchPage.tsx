@@ -52,7 +52,12 @@ const Results = memo(({ personOnly }: ResultsProps) => {
 
   return (
     <div className='mt-8 mx-3'>
-        <div className='absolute top-20 left-3 z-1'>
+      <div
+        className='absolute left-3 z-1'
+        style={{
+          top: isTvBrowser ? '8.75rem' : '5rem',
+        }}
+      >
         <BackButton />
       </div>
 
@@ -142,6 +147,7 @@ const SearchContainer = memo(() => {
   const { query } = useParams<{ query: string }>();
   const searchQuery = query?.replace(/%20/g, ' ') || '';
   const lastLetterRef = useRef<string | null>(null);
+  const isTvBrowser = isSmartTvBrowser();
   useDocumentTitle(
     searchQuery?.length > 0
       ? `Search results for ${searchQuery} | BingeBox`
@@ -166,7 +172,7 @@ const SearchContainer = memo(() => {
     setPersonOnly((prev) => !prev);
   };
   return (
-    <div className='mt-30'>
+    <div className={isTvBrowser ? 'mt-10' : 'mt-30'}>
       <div className='flex flex-row flex-wrap justify-between items-center'>
         <h1 className='text-3xl font-bold mt-2 mb-2 relative mr-6'>
           {headingText}

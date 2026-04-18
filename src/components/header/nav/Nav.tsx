@@ -263,7 +263,11 @@ export default function Navigation({
       {/* Search Bar */}
       {isVisible && (
         <div ref={searchRef}>
-          <Search searchOpen={searchOpen} closeSearch={closeSearch} />
+          <Search
+            searchOpen={searchOpen}
+            closeSearch={closeSearch}
+            isTvBrowser={isTvBrowser}
+          />
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import BackButton from '../components/buttons/BackBtn';
 import useDocumentTitle from '../hooks/usePageTitles';
+import { isSmartTvBrowser } from '../utils/helpers';
 
 interface FAQItemProps {
   question: string;
@@ -11,9 +12,13 @@ interface FAQItemProps {
 
 const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
   useDocumentTitle('FAQ | BingeBox');
+  const isTvBrowser = isSmartTvBrowser();
   return (
     <div className='faq-item mb-4'>
-      <div className='absolute top-20 left-3 z-1'>
+      <div
+        className='absolute left-3 z-1'
+        style={{ top: isTvBrowser ? '5.75rem' : '5rem' }}
+      >
         <BackButton />
       </div>
       <div
@@ -34,6 +39,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
 
 const FAQPage = () => {
   const [openItemIndex, setOpenItemIndex] = useState<number | null>(null);
+  const isTvBrowser = isSmartTvBrowser();
 
   const faqData = [
     {
@@ -76,7 +82,10 @@ const FAQPage = () => {
   };
 
   return (
-    <div className='faq-page text-white p-4 max-w-3xl mx-auto mt-20'>
+    <div
+      className='faq-page text-white p-4 max-w-3xl mx-auto'
+      style={{ marginTop: isTvBrowser ? '2rem' : '5rem' }}
+    >
       <h1 className='text-center text-4xl mb-8'>Frequently Asked Questions</h1>
       <div className='faq-items whitespace-pre-wrap'>
         {faqData.map((item, index) => (

@@ -1,11 +1,19 @@
 import useDocumentTitle from '../hooks/usePageTitles';
 import BackButton from '../components/buttons/BackBtn';
+import { isSmartTvBrowser } from '../utils/helpers';
 
 const DMCA = () => {
   useDocumentTitle('DMCA Declaration | BingeBox');
+  const isTvBrowser = isSmartTvBrowser();
   return (
-    <div className='text-white/70 text-md mt-40 text-center mx-10'>
-      <div className='absolute top-20 left-3 z-1'>
+    <div
+      className='text-white/70 text-md text-center mx-10'
+      style={{ marginTop: isTvBrowser ? '2rem' : '10rem' }}
+    >
+      <div
+        className='absolute left-3 z-1'
+        style={{ top: isTvBrowser ? '5.75rem' : '5rem' }}
+      >
         <BackButton />
       </div>
       <h1 className='text-3xl mb-6'>DMCA</h1>

@@ -6,10 +6,12 @@ import Carousel from '../../components/containers/CarouselContainer';
 import { IItem } from '../../interfaces/IItem';
 import BackButton from '../../components/buttons/BackBtn';
 import useDocumentTitle from '../../hooks/usePageTitles';
+import { isSmartTvBrowser } from '../../utils/helpers';
 
 const CastMemberDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { data: castData, isLoading } = useCastLookupWithWork(Number(id));
+  const isTvBrowser = isSmartTvBrowser();
 
   const [lowResImageLoaded, setLowResImageLoaded] = useState(false);
   const [hiResImageLoaded, setHiResImageLoaded] = useState(false);
@@ -47,8 +49,17 @@ const CastMemberDetail = () => {
   return (
     <>
       {castData ? (
-        <div className='text-white my-24 flex items-center flex-col'>
-          <div className='absolute top-20 left-3 z-1'>
+        <div
+          className='text-white flex items-center flex-col'
+          style={{
+            marginTop: isTvBrowser ? '1rem' : '6rem',
+            marginBottom: '6rem',
+          }}
+        >
+          <div
+            className='absolute left-3 z-1'
+            style={{ top: isTvBrowser ? '5.75rem' : '5rem' }}
+          >
             <BackButton />
           </div>
           <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800'></div>

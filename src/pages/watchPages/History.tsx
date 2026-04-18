@@ -20,14 +20,20 @@ const History = () => {
 
   return (
     <DelayedSuspense fallback={<HistoryPageSkeleton />}>
-      <div className='z-10 w-full h-full mt-26'>
-        <div className='absolute top-20 left-3 z-10 mb-10'>
+      <div
+        className='z-10 w-full h-full'
+        style={{ marginTop: isTvBrowser ? '1.5rem' : '6.5rem' }}
+      >
+        <div
+          className='absolute left-3 z-10 mb-10'
+          style={{ top: isTvBrowser ? '5.75rem' : '5rem' }}
+        >
           <BackButton />
         </div>
 
         <div className='fixed inset-0 z-0 bg-gradient-to-r from-black to-neutral-800' />
 
-        <div className='mt-36 h-[250px]'>
+        <div className={isTvBrowser ? 'mt-24 h-[250px]' : 'mt-36 h-[250px]'}>
           {continueWatching?.length > 0 ? (
             <ContinueWatching />
           ) : (

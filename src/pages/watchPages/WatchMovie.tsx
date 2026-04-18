@@ -180,7 +180,10 @@ const WatchMovie = () => {
   }, [selectedServer, movie_id]);
 
   return (
-    <div className='min-h-screen pt-[60px]'>
+    <div
+      className='min-h-screen'
+      style={isTvBrowser ? undefined : { paddingTop: '60px' }}
+    >
       <div
         className='flex flex-col lg:flex-row lg:gap-[24px] p-[16px] lg:p-[24px] lg:max-w-[2200px] lg:mx-auto'
         style={

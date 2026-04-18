@@ -69,8 +69,11 @@ const Watchlist = () => {
   }, [filteredItems, filterType]);
 
   return (
-    <div className='mt-24 mx-3 text-white min-h-screen'>
-      <div className='absolute top-20 left-3 z-1'>
+    <div className={`${isTvBrowser ? 'mt-4' : 'mt-24'} mx-3 text-white min-h-screen`}>
+      <div
+        className='absolute left-3 z-1'
+        style={{ top: isTvBrowser ? '5.75rem' : '5rem' }}
+      >
         <BackButton />
       </div>
       <h1 className='relative z-1 text-4xl text-center mx-3 mb-9'>Watchlist</h1>

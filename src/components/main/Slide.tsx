@@ -38,8 +38,8 @@ const Slide = ({
   isBookmarked: boolean;
   isTvBrowser?: boolean;
 }) => {
-  const tvHeroContentOffset = '23.5rem';
-  const tvHeroPosterOffset = '15rem';
+  const tvHeroContentOffset = '18.5rem';
+  const tvHeroPosterOffset = '10rem';
   const [highResBgLoaded, setHighResBgLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);

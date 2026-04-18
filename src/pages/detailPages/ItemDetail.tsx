@@ -127,9 +127,13 @@ const ItemDetail = () => {
       {item ? (
         <section
           id='item-detail'
-          className='max-w-[1800px] relative flex flex-wrap pt-30 justify-center mx-auto xs:px-2 sm:px-4 lg:px-8 xl:px-12 mr-2 md:mr-0'
+          className='max-w-[1800px] relative flex flex-wrap justify-center mx-auto xs:px-2 sm:px-4 lg:px-8 xl:px-12 mr-2 md:mr-0'
+          style={{ paddingTop: isTvBrowser ? '2rem' : '7.5rem' }}
         >
-          <div className='absolute top-20 left-3 z-1'>
+          <div
+            className='absolute left-3 z-1'
+            style={{ top: isTvBrowser ? '5.75rem' : '5rem' }}
+          >
             <BackButton />
           </div>
           <div

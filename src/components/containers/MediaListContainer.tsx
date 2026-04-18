@@ -7,6 +7,7 @@ import Listbox from '../selectors/ListBox';
 import { useLocation } from 'react-router-dom';
 import BackButton from '../buttons/BackBtn';
 import providers from '../../utils/data/providers.json';
+import { isSmartTvBrowser } from '../../utils/helpers';
 
 interface MediaListContainerProps {
   mediaType: 'movie' | 'tv';
@@ -46,6 +47,7 @@ const MediaListContainer = ({
   showRating = true,
 }: MediaListContainerProps) => {
   const isInitialMount = useRef(true);
+  const isTvBrowser = isSmartTvBrowser();
 
   const location = useLocation();
 
@@ -155,8 +157,11 @@ const MediaListContainer = ({
     );
 
   return (
-    <div className='mt-24'>
-      <div className='absolute top-20 left-3 z-1'>
+    <div className={isTvBrowser ? 'mt-4' : 'mt-24'}>
+      <div
+        className='absolute left-3 z-1'
+        style={{ top: isTvBrowser ? '5.75rem' : '5rem' }}
+      >
         <BackButton />
       </div>
       <div className='mx-3 flex flex-wrap justify-between items-start w-full'>

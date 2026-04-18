@@ -37,9 +37,9 @@ const Header = ({
 
   if (isTvBrowser) {
     return (
-      <header className='bg-[#222222]'>
+      <header className='relative z-50 bg-gray-900'>
         <div
-          className='fixed top-0 left-0 right-0 z-50 bg-gray-900 flex min-h-20 items-center px-3 w-full justify-between'
+          className='flex min-h-20 items-center px-3 w-full justify-between'
           style={{
             paddingTop: 'env(safe-area-inset-top, 0px)',
           }}
