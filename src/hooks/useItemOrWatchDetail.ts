@@ -39,23 +39,6 @@ const fetchItemCredits = async (type: string, id: string) => {
   return data;
 };
 
-// https://api.offlinetv.net/api/quality?tmdb_ids=1087891
-const fetchItemQuality = async (id: string) => {
-  const response = await fetch(`/api/quality?tmdb_ids=${id}`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  const data = await response.json();
-  if (!data) {
-    throw new Error('No data found');
-  }
-  if (data.error) {
-    throw new Error(data.error);
-  }
-
-  return data;
-};
-
 // This is for the ItemDetail page with tv or movie content ratings and credits/cast information
 export const useItemDetail = (type: string, id: string) => {
   return useSuspenseQuery({
@@ -92,24 +75,6 @@ export const useItemDetail = (type: string, id: string) => {
       }
     },
 
-    staleTime: 1000 * 60 * 10, // 10 minutes
-    gcTime: 1000 * 60 * 11, // 11 minutes
-    refetchOnWindowFocus: false,
-    retry: 2,
-    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), //exponential backoff
-  });
-};
-
-export const useItemQuality = (id: string) => {
-  return useQuery({
-    queryKey: ['item-quality', id],
-    queryFn: async () => {
-      if (!id) {
-        throw new Error('ID is required');
-      }
-      const quality = await fetchItemQuality(id);
-      return quality;
-    },
     staleTime: 1000 * 60 * 10, // 10 minutes
     gcTime: 1000 * 60 * 11, // 11 minutes
     refetchOnWindowFocus: false,
