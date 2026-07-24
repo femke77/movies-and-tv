@@ -27,12 +27,14 @@ const Showcase = forwardRef<
         </Link>
       </div>
       {isLoading && items.length === 0 ? (
-        <div className='flex gap-3 px-4 py-2 w-full  '>
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className=' w-[180px] flex-shrink-0'>
-              <ItemCardSkeleton />
-            </div>
-          ))}
+        <div className='pl-6 relative w-full h-[350px]'>
+          <div className='flex gap-3 px-4 py-2 w-full overflow-x-hidden'>
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div key={i} className='w-[180px] flex-shrink-0'>
+                <ItemCardSkeleton />
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
         <CarouselContainer items={items || []} itemType={media_type} />
