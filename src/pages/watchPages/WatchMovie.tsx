@@ -116,8 +116,8 @@ const WatchMovie = () => {
       case 'vidlink.pro':
         newURL = `https://vidlink.pro/movie/${movie_id}`;
         break;
-      case 'moviesapi.club':
-        newURL = `https://moviesapi.club/movie/${movie_id}`;
+      case 'primewire.pw':
+        newURL = `https://primewire.pw/embed/movie?tmdb=${movie_id}`;
         break;
       case 'embed.su':
         newURL = `https://embed.su/embed/movie/${movie_id}`;
