@@ -288,10 +288,9 @@ export const useStore = create<BingeBoxStore>()(
         get().bookmarks[`${id}-${type}`] !== undefined,
     }),
     {
-      name:
-        process.env.NODE_ENV === 'production'
-          ? 'bingebox-idb-storage'
-          : 'bingebox-idb-storage-dev',
+      name: import.meta.env.PROD
+        ? 'bingebox-idb-storage'
+        : 'bingebox-idb-storage-dev',
       storage: idbStorage,
       version: 0,
       merge: (persistedState, currentState) => {
