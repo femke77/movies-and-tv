@@ -28,9 +28,9 @@ const WatchTV = () => {
 
   const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const iframeLoadRef = useRef<NodeJS.Timeout | null>(null);
-  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const iframeLoadRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const interactionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prevSeasonLengthRef = useRef<number>(0);
 
   const { series_id } = useParams<{ series_id: string }>();
@@ -212,11 +212,9 @@ const WatchTV = () => {
   useEffect(() => {
     let newURL = '';
     switch (selectedServer) {
-      case 'vidsrc.mov':
-        newURL = `https://vidsrc.mov/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
-        break;
+      case 'vidsrc.sh':
       case 'vidsrc.xyz':
-        newURL = `https://vidsrc.net/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
+        newURL = `https://vidsrc.sh/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
         break;
       case 'videasy.net':
         newURL = `https://player.videasy.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
@@ -230,8 +228,8 @@ const WatchTV = () => {
       case 'embed.su':
         newURL = `https://embed.su/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
-      case 'nontongo.win':
-        newURL = `https://www.nontongo.win/embed/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+      case 'vidnest.fun':
+        newURL = `https://vidnest.fun/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
       case 'vidsrc.wtf':
         newURL = `https://vidsrc.wtf/api/3/tv/?id=${series_id}&s=${selectedSeason}&e=${selectedEpisode}`;
@@ -239,14 +237,16 @@ const WatchTV = () => {
       case 'vidsrc.wtf-ml':
         newURL = `https://vidsrc.wtf/api/2/tv/?id=${series_id}&s=${selectedSeason}&e=${selectedEpisode}`;
         break;
-      case '111movies.com':
-        newURL = `https://111movies.com/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+      case '111movies.net':
+        newURL = `https://111movies.net/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
-      case 'vidfast.pro':
-        newURL = `https://vidfast.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
+      case 'vidfast.vc':
+        newURL = `https://vidfast.vc/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
-      case 'superembed.stream':
-        newURL = `https://multiembed.mov/directstream.php?video_id=${series_id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`;
+      case 'multiembed.mov':
+        newURL = getApiUrl(
+          `/api/video/multiembed?video_id=${series_id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`,
+        );
         break;
       case 'vidsrc.xyz.safe':
         newURL = getApiUrl(
@@ -259,13 +259,6 @@ const WatchTV = () => {
       case 'vidfast.pro.safe':
         newURL = `https://vidfast.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
-    }
-
-    // Never navigate the iframe to an empty URL: browsers can resolve it to
-    // the current app page, creating a nested copy of the watch page.
-    if (!newURL) {
-      setIsLoading(false);
-      return;
     }
 
     const serverChanged = prevServerRef.current !== selectedServer;

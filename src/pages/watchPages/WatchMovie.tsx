@@ -12,6 +12,7 @@ import useDocumentTitle from '../../hooks/usePageTitles';
 import { useStore } from '../../state/store';
 import { getApiUrl } from '../../utils/api';
 
+
 const WatchMovie = () => {
   const { addToContinueWatchingMovie } = useStore();
   const { movie_id } = useParams<{ movie_id: string }>();
@@ -21,7 +22,7 @@ const WatchMovie = () => {
 
   const historyRef = useRef<number>(window.history.length);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useDocumentTitle(
     movie?.title
@@ -36,7 +37,7 @@ const WatchMovie = () => {
   });
 
   const [unlocked, setUnlocked] = useState(false);
-  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const interactionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleMouseMove = (e: MouseEvent) => {
     const el = document.elementFromPoint(e.clientX, e.clientY);
@@ -107,11 +108,9 @@ const WatchMovie = () => {
   useEffect(() => {
     let newURL = '';
     switch (selectedServer) {
-      case 'vidsrc.mov':
-        newURL = `https://vidsrc.mov/embed/movie/${movie_id}`;
-        break;
+      case 'vidsrc.sh':
       case 'vidsrc.xyz':
-        newURL = `https://vidsrc.net/embed/movie/${movie_id}`;
+        newURL = `https://vidsrc.sh/embed/movie/${movie_id}`;
         break;
       case 'videasy.net':
         newURL = `https://player.videasy.net/movie/${movie_id}`;
@@ -125,8 +124,8 @@ const WatchMovie = () => {
       case 'embed.su':
         newURL = `https://embed.su/embed/movie/${movie_id}`;
         break;
-      case 'nontongo.win':
-        newURL = `https://www.nontongo.win/embed/movie/${movie_id}`;
+      case 'vidnest.fun':
+        newURL = `https://vidnest.fun/movie/${movie_id}`;
         break;
       case 'vidsrc.wtf':
         newURL = `https://vidsrc.wtf/api/3/movie/?id=${movie_id}`;
@@ -134,14 +133,16 @@ const WatchMovie = () => {
       case 'vidsrc.wtf-ml':
         newURL = `https://vidsrc.wtf/api/2/movie/?id=${movie_id}`;
         break;
-      case '111movies.com':
-        newURL = ` https://111movies.com/movie/${movie_id}`;
+      case '111movies.net':
+        newURL = `https://111movies.net/movie/${movie_id}`;
         break;
-      case 'vidfast.pro':
-        newURL = `https://vidfast.pro/movie/${movie_id}`;
+      case 'vidfast.vc':
+        newURL = `https://vidfast.vc/movie/${movie_id}`;
         break;
-      case 'superembed.stream':
-        newURL = ` https://multiembed.mov/directstream.php?video_id=${movie_id}&tmdb=1`;
+      case 'multiembed.mov':
+        newURL = getApiUrl(
+          `/api/video/multiembed?video_id=${movie_id}&tmdb=1`,
+        );
         break;
       case 'vidsrc.xyz.safe':
         newURL = getApiUrl(`/api/video/movie/${movie_id}`);
@@ -152,12 +153,6 @@ const WatchMovie = () => {
       case 'vidfast.pro.safe':
         newURL = getApiUrl(`/api/video/movie/vidfast/${movie_id}`);
         break;
-    }
-
-    // An empty destination can resolve to the app itself inside the iframe.
-    if (!newURL) {
-      setIsLoading(false);
-      return;
     }
 
     if (timeoutRef.current) {
