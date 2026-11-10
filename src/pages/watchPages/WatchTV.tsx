@@ -212,6 +212,9 @@ const WatchTV = () => {
   useEffect(() => {
     let newURL = '';
     switch (selectedServer) {
+      case 'vidsrc.mov':
+        newURL = `https://vidsrc.mov/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
+        break;
       case 'vidsrc.xyz':
         newURL = `https://vidsrc.net/embed/tv/${series_id}/${selectedSeason}-${selectedEpisode}`;
         break;
@@ -256,6 +259,13 @@ const WatchTV = () => {
       case 'vidfast.pro.safe':
         newURL = `https://vidfast.pro/tv/${series_id}/${selectedSeason}/${selectedEpisode}`;
         break;
+    }
+
+    // Never navigate the iframe to an empty URL: browsers can resolve it to
+    // the current app page, creating a nested copy of the watch page.
+    if (!newURL) {
+      setIsLoading(false);
+      return;
     }
 
     const serverChanged = prevServerRef.current !== selectedServer;

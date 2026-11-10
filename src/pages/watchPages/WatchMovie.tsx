@@ -107,6 +107,9 @@ const WatchMovie = () => {
   useEffect(() => {
     let newURL = '';
     switch (selectedServer) {
+      case 'vidsrc.mov':
+        newURL = `https://vidsrc.mov/embed/movie/${movie_id}`;
+        break;
       case 'vidsrc.xyz':
         newURL = `https://vidsrc.net/embed/movie/${movie_id}`;
         break;
@@ -149,6 +152,12 @@ const WatchMovie = () => {
       case 'vidfast.pro.safe':
         newURL = getApiUrl(`/api/video/movie/vidfast/${movie_id}`);
         break;
+    }
+
+    // An empty destination can resolve to the app itself inside the iframe.
+    if (!newURL) {
+      setIsLoading(false);
+      return;
     }
 
     if (timeoutRef.current) {
